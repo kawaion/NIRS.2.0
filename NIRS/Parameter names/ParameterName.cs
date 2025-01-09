@@ -6,7 +6,20 @@ using System.Threading.Tasks;
 
 namespace NIRS.Parameter_names
 {
-    class ParameterName
+    enum ParameterName
     {
+        dynamic_m,
+        M,
+        v,
+        w,
+        r,
+        e,
+        eps,
+        psi,
+        z,
+        a,
+        m,
+        p,
+        ro
     }
 }

@@ -21,15 +21,57 @@ namespace NIRS.Numerical_Method
         public override Grid Calculate()
         {
             Grid grid = new Grid();
-            var gridWithFilledBorders = FillGridBoundaries(grid);
-            var numericalSolution = GetNumericalSolution(gridWithFilledBorders);
+            var gridWithFilledBorders = FillGridBoundaries(grid, _initialParameters, _constParameters);
+            var numericalSolution = GetNumericalSolution(gridWithFilledBorders, _initialParameters, _constParameters);
             return outputDataTransmitter.GetOutputData(numericalSolution);
         }
-        private Grid FillGridBoundaries(Grid grid)
+        private Grid FillGridBoundaries(Grid grid,InitialParameters initialParameters, ConstParameters constParameters)
         {
-
+            return GridBorderFiller.Fill
+                (grid, 
+                initialParameters, constParameters);
         }
-        private Grid GetNumericalSolution(Grid grid)
+        private Grid GetNumericalSolution(Grid grid, InitialParameters initialParameters, ConstParameters constParameters)
+        {
+            double n = 0;
+            while (!IsEndCondition())
+            {
+                grid = GetNumericalSolutionUpToN(
+                    grid, 
+                    n, 
+                    initialParameters, constParameters
+                    );
+                n += constParameters.tau;
+            }
+
+            return grid;
+
+            bool IsEndCondition()
+            {
+
+            }
+        }
+        private Grid GetNumericalSolutionUpToN(Grid grid, double n, InitialParameters initialParameters, ConstParameters constParameters)
+        {
+            double k = 0;
+            while (!IsEndCondition())
+            {
+                grid = GetNumericalSolutionUpToK(
+                    grid, 
+                    n, k, 
+                    initialParameters, constParameters);
+                k += constParameters.h;
+            }
+
+            return grid;
+
+            bool IsEndCondition()
+            {
+
+            }
+        }
+
+        private Grid GetNumericalSolutionUpToK(Grid grid, double n, double k, InitialParameters initialParameters, ConstParameters constParameters)
         {
 
         }

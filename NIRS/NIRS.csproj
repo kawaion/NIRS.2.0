@@ -61,7 +61,10 @@
     <Compile Include="Data Parameters\Input Data Parameters\ConstParameters.cs" />
     <Compile Include="Data Parameters\Input Data Parameters\InitialParameters.cs" />
     <Compile Include="Grid Folder\Grid.cs" />
+    <Compile Include="Grid Folder\GridBorderFiller.cs" />
+    <Compile Include="Numerical Method\IFunctionsForGetingTheParameterOfTheNextNPlusOneLayer.cs" />
     <Compile Include="Numerical Method\NumericalMethod.cs" />
+    <Compile Include="Parameter names\ParameterName.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Numerical Method\SEL.cs" />

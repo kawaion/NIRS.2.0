@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using NIRS.Data_Parameters.Input_Data_Parameters;
 
 namespace NIRS.Grid_Folder
 {
-    class GridBorderFiller
+    static class GridBorderFiller
     {
+        public static Grid Fill(Grid grid, InitialParameters initialParameters, ConstParameters constParameters)
+        {
+
+        }
     }
 }
