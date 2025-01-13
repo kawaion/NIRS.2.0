@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIRS.Numerical_Method
+namespace NIRS.Grid_Folder
 {
-    interface IFunctionsForGetingTheParameterOfTheNextNPlusOneLayer
+    abstract class SubGrid
     {
-        
+
     }
 }

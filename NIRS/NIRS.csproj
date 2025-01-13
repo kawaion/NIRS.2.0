@@ -62,7 +62,11 @@
     <Compile Include="Data Parameters\Input Data Parameters\InitialParameters.cs" />
     <Compile Include="Grid Folder\Grid.cs" />
     <Compile Include="Grid Folder\GridBorderFiller.cs" />
-    <Compile Include="Numerical Method\IFunctionsForGetingTheParameterOfTheNextNPlusOneLayer.cs" />
+    <Compile Include="Grid Folder\SubGrid.cs" />
+    <Compile Include="Grid Folder\TimeSpaceGrid.cs" />
+    <Compile Include="MyDouble Folder\DoubleTypeIssuer.cs" />
+    <Compile Include="MyDouble Folder\LimitedDouble.cs" />
+    <Compile Include="Numerical Method\IFunctionsParametersOfTheNextLayer.cs" />
     <Compile Include="Numerical Method\NumericalMethod.cs" />
     <Compile Include="Parameter names\ParameterName.cs" />
     <Compile Include="Program.cs" />
