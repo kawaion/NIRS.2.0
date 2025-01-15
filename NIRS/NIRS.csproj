@@ -62,13 +62,19 @@
     <Compile Include="Data Parameters\Input Data Parameters\InitialParameters.cs" />
     <Compile Include="Grid Folder\Grid.cs" />
     <Compile Include="Grid Folder\GridBorderFiller.cs" />
+    <Compile Include="Grid Folder\GridCell.cs" />
+    <Compile Include="Grid Folder\Mediator\GridMediator.cs" />
+    <Compile Include="Grid Folder\SpaceCell.cs" />
+    <Compile Include="Grid Folder\SpaceGrid.cs" />
     <Compile Include="Grid Folder\SubGrid.cs" />
     <Compile Include="Grid Folder\TimeSpaceGrid.cs" />
-    <Compile Include="MyDouble Folder\DoubleTypeIssuer.cs" />
-    <Compile Include="MyDouble Folder\LimitedDouble.cs" />
+    <Compile Include="Memory allocator\ListMemoryAllocator.cs" />
+    <Compile Include="Numerical Method\FunctionsParametersOfTheNextLayer.cs" />
     <Compile Include="Numerical Method\IFunctionsParametersOfTheNextLayer.cs" />
     <Compile Include="Numerical Method\NumericalMethod.cs" />
-    <Compile Include="Parameter names\ParameterName.cs" />
+    <Compile Include="Parameter names\PN.cs" />
+    <Compile Include="Parameter Type\DynamicCharacteristicsFlow.cs" />
+    <Compile Include="Parameter Type\MixtureStateParameters.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Numerical Method\SEL.cs" />
@@ -97,6 +103,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyDouble\MyDouble.csproj">
+      <Project>{0834c812-0dd1-413b-9ecb-5417a062269a}</Project>
+      <Name>MyDouble</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

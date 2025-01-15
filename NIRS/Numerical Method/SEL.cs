@@ -2,6 +2,9 @@
 using NIRS.Data_Parameters.Input_Data_Parameters;
 using NIRS.Data_Transmitters;
 using NIRS.Grid_Folder;
+//using NIRS.MyDouble_Folder;
+using MyDouble;
+
 
 namespace NIRS.Numerical_Method
 {
@@ -20,7 +23,7 @@ namespace NIRS.Numerical_Method
 
         public override Grid Calculate()
         {
-            Grid grid = new Grid();
+            Grid grid = new TimeSpaceGrid();
             var gridWithFilledBorders = FillGridBoundaries(grid, _initialParameters, _constParameters);
             var numericalSolution = GetNumericalSolution(gridWithFilledBorders, _initialParameters, _constParameters);
             return outputDataTransmitter.GetOutputData(numericalSolution);
@@ -33,7 +36,7 @@ namespace NIRS.Numerical_Method
         }
         private Grid GetNumericalSolution(Grid grid, InitialParameters initialParameters, ConstParameters constParameters)
         {
-            double n = 0;
+            LimitedDouble n = new LimitedDouble(0);
             while (!IsEndCondition())
             {
                 grid = GetNumericalSolutionUpToN(
@@ -51,9 +54,9 @@ namespace NIRS.Numerical_Method
 
             }
         }
-        private Grid GetNumericalSolutionUpToN(Grid grid, double n, InitialParameters initialParameters, ConstParameters constParameters)
+        private Grid GetNumericalSolutionUpToN(Grid grid, LimitedDouble n, InitialParameters initialParameters, ConstParameters constParameters)
         {
-            double k = 0;
+            LimitedDouble k = new LimitedDouble(0);
             while (!IsEndCondition())
             {
                 grid = GetNumericalSolutionUpToK(
@@ -71,7 +74,7 @@ namespace NIRS.Numerical_Method
             }
         }
 
-        private Grid GetNumericalSolutionUpToK(Grid grid, double n, double k, InitialParameters initialParameters, ConstParameters constParameters)
+        private Grid GetNumericalSolutionUpToK(Grid grid, LimitedDouble n, LimitedDouble k, InitialParameters initialParameters, ConstParameters constParameters)
         {
 
         }

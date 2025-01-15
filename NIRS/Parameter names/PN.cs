@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace NIRS.Parameter_names
 {
-    enum ParameterName
+    /// <summary>
+    /// PN - сокращенно Parameter name
+    /// </summary>
+    enum PN
     {
         dynamic_m,
         M,
