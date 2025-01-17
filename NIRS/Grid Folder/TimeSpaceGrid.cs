@@ -6,7 +6,7 @@ using System;
 
 namespace NIRS.Grid_Folder
 {
-    class TimeSpaceGrid : Grid
+    class TimeSpaceGrid : IGrid
     {
         private double _tau;
         private double _h;
@@ -17,10 +17,10 @@ namespace NIRS.Grid_Folder
         }
 
 
-        private List<SubGrid> subGrid;
+        private List<ISubGrid> subGrid;
 
 
-        public override SubGrid this[LimitedDouble n]
+        public ISubGrid this[LimitedDouble n]
         {
             get
             {
@@ -33,14 +33,13 @@ namespace NIRS.Grid_Folder
             {
                 int index = ConvertNToIndex(n);
                 subGrid = AllocateMemorySubGridForTheIndex(subGrid, index);
-                value.
                 subGrid[index] = value;
             }
         }
 
 
         private int ConvertNToIndex(LimitedDouble n) => (int)(n.Value * 2);
-        private List<SubGrid> AllocateMemorySubGridForTheIndex(List<SubGrid> subGrid, int index)
+        private List<ISubGrid> AllocateMemorySubGridForTheIndex(List<ISubGrid> subGrid, int index)
         {
             return subGrid.AllocateUpTo(index);
         }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace NIRS.Grid_Folder
 {
-    class SpaceCell : GridCell
+    class SpaceCell : IGridCell
     {
-        public override DynamicCharacteristicsFlow D { get; set; }
-        public override MixtureStateParameters M { get; set; }
+        public DynamicCharacteristicsFlow D { get; set; }
+        public MixtureStateParameters M { get; set; }
     }
 }

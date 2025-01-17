@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +48,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Boundary Interfaces\IInputDataTransmitter.cs" />
+    <Compile Include="Cannon Folder\Barrel Folder\Barrel.cs" />
+    <Compile Include="Cannon Folder\Barrel Folder\BarrelInitializationInterface.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cannon Folder\Barrel Folder\BarrelInitializationInterface.Designer.cs">
+      <DependentUpon>BarrelInitializationInterface.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cannon Folder\Barrel Folder\BarrelSize.cs" />
+    <Compile Include="Cannon Folder\Barrel Folder\FinderPointsBetweenCurrent.cs" />
+    <Compile Include="Cannon Folder\Barrel Folder\IBarrel.cs" />
+    <Compile Include="Cannon Folder\Barrel Folder\IBarrelSize.cs" />
+    <Compile Include="Cannon Folder\Barrel Folder\ShifterCannonToZero.cs" />
+    <Compile Include="Cannon Folder\Barrel Folder\VBarrelParts.cs" />
+    <Compile Include="Cannon Folder\Cannon.cs" />
+    <Compile Include="Cannon Folder\Powder Folder\Powder.cs" />
+    <Compile Include="Cannon Folder\Powder Folder\Powder_12_7.cs" />
     <Compile Include="Data Parameters\Input Data Parameters\ConstParametersCase1.cs" />
     <Compile Include="Data Parameters\Input Data Parameters\InitialParametersCase1.cs" />
     <Compile Include="Data Transmitters\InputDataTransmitter.cs" />
@@ -58,26 +75,33 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Data Parameters\Input Data Parameters\ConstParameters.cs" />
-    <Compile Include="Data Parameters\Input Data Parameters\InitialParameters.cs" />
-    <Compile Include="Grid Folder\Grid.cs" />
+    <Compile Include="Data Parameters\Input Data Parameters\IConstParameters.cs" />
+    <Compile Include="Data Parameters\Input Data Parameters\IInitialParameters.cs" />
+    <Compile Include="Grid Folder\IGrid.cs" />
     <Compile Include="Grid Folder\GridBorderFiller.cs" />
-    <Compile Include="Grid Folder\GridCell.cs" />
+    <Compile Include="Grid Folder\IGridBorderFiller.cs" />
+    <Compile Include="Grid Folder\IGridCell.cs" />
     <Compile Include="Grid Folder\Mediator\GridMediator.cs" />
     <Compile Include="Grid Folder\SpaceCell.cs" />
     <Compile Include="Grid Folder\SpaceGrid.cs" />
-    <Compile Include="Grid Folder\SubGrid.cs" />
+    <Compile Include="Grid Folder\ISubGrid.cs" />
     <Compile Include="Grid Folder\TimeSpaceGrid.cs" />
+    <Compile Include="Helpers\EquationOfLineFromTwoPoints.cs" />
+    <Compile Include="Helpers\OffseterNK.cs" />
+    <Compile Include="Helpers\Point2D.cs" />
     <Compile Include="Memory allocator\ListMemoryAllocator.cs" />
     <Compile Include="Numerical Method\FunctionsParametersOfTheNextLayer.cs" />
     <Compile Include="Numerical Method\IFunctionsParametersOfTheNextLayer.cs" />
-    <Compile Include="Numerical Method\NumericalMethod.cs" />
+    <Compile Include="Numerical Method\INumericalMethod.cs" />
     <Compile Include="Parameter names\PN.cs" />
     <Compile Include="Parameter Type\DynamicCharacteristicsFlow.cs" />
     <Compile Include="Parameter Type\MixtureStateParameters.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Numerical Method\SEL.cs" />
+    <EmbeddedResource Include="Cannon Folder\Barrel Folder\BarrelInitializationInterface.resx">
+      <DependentUpon>BarrelInitializationInterface.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

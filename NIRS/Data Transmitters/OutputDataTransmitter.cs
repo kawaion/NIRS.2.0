@@ -5,7 +5,7 @@ namespace NIRS.Data_Transmitters
 {
     class OutputDataTransmitter : IOutputDataTransmitter
     {
-        public Grid GetOutputData(Grid grid)
+        public IGrid GetOutputData(IGrid grid)
         {
             return grid;
         }

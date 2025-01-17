@@ -1,20 +1,22 @@
 ﻿using MyDouble;
 using System;
 using NIRS.Grid_Folder;
+using NIRS.Helpers;
+using NIRS.Grid_Folder.Mediator;
 
 
 namespace NIRS.Numerical_Method
 {
     class FunctionsParametersOfTheNextLayer : IFunctionsParametersOfTheNextLayer
     {
-        Grid g;
-        public FunctionsParametersOfTheNextLayer(Grid grid)
+        IGrid g;
+        public FunctionsParametersOfTheNextLayer(IGrid grid)
         {
             g = grid;
         }
         public double Calc_a(LimitedDouble n, LimitedDouble k)
         {
-            (n, k) = OffsetNK.Appoint(n, k).Offset(n + 1, k - 0.5);
+            (n, k) = OffseterNK.Appoint(n, k).Offset(n + 1, k - 0.5);
             return g[n][k - 0.5].a - Step.tau *
                 (
                     wc.Nabla("aS", "w", n + 0.5, k - 0.5) / _cannon.Barrel.S((k - 0.5) * Step.h)

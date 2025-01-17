@@ -4,6 +4,6 @@ namespace NIRS.Boundary_Interfaces
 {
     interface IInputDataTransmitter
     {
-        (InitialParameters, ConstParameters) GetInputData(InitialParameters initialParameters, ConstParameters constParameters);
+        (IInitialParameters, IConstParameters) GetInputData(IInitialParameters initialParameters, IConstParameters constParameters);
     }
 }

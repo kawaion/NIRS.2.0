@@ -8,12 +8,12 @@ using MyDouble;
 
 namespace NIRS.Numerical_Method
 {
-    class SEL : NumericalMethod
+    class SEL : INumericalMethod
     {
-        private readonly InitialParameters _initialParameters;
-        private readonly ConstParameters _constParameters;
+        private readonly IInitialParameters _initialParameters;
+        private readonly IConstParameters _constParameters;
 
-        public SEL(InitialParameters initialParameters, ConstParameters constParameters)
+        public SEL(IInitialParameters initialParameters, IConstParameters constParameters)
         {
             _initialParameters = initialParameters;
             _constParameters = constParameters;
@@ -21,20 +21,23 @@ namespace NIRS.Numerical_Method
         
         private readonly IOutputDataTransmitter outputDataTransmitter = new OutputDataTransmitter();
 
-        public override Grid Calculate()
+        public IGrid Calculate()
         {
-            Grid grid = new TimeSpaceGrid();
+            IGrid grid = new TimeSpaceGrid(_constParameters.tau, _constParameters.h);
+
             var gridWithFilledBorders = FillGridBoundaries(grid, _initialParameters, _constParameters);
             var numericalSolution = GetNumericalSolution(gridWithFilledBorders, _initialParameters, _constParameters);
             return outputDataTransmitter.GetOutputData(numericalSolution);
         }
-        private Grid FillGridBoundaries(Grid grid,InitialParameters initialParameters, ConstParameters constParameters)
+        private IGrid FillGridBoundaries(IGrid grid,IInitialParameters initialParameters, IConstParameters constParameters)
         {
-            return GridBorderFiller.Fill
+            IGridBorderFiller gridBorderFiller = new GridBorderFiller();
+
+            return gridBorderFiller.Fill
                 (grid, 
                 initialParameters, constParameters);
         }
-        private Grid GetNumericalSolution(Grid grid, InitialParameters initialParameters, ConstParameters constParameters)
+        private IGrid GetNumericalSolution(IGrid grid, IInitialParameters initialParameters, IConstParameters constParameters)
         {
             LimitedDouble n = new LimitedDouble(0);
             while (!IsEndCondition())
@@ -54,7 +57,7 @@ namespace NIRS.Numerical_Method
 
             }
         }
-        private Grid GetNumericalSolutionUpToN(Grid grid, LimitedDouble n, InitialParameters initialParameters, ConstParameters constParameters)
+        private IGrid GetNumericalSolutionUpToN(IGrid grid, LimitedDouble n, IInitialParameters initialParameters, IConstParameters constParameters)
         {
             LimitedDouble k = new LimitedDouble(0);
             while (!IsEndCondition())
@@ -74,7 +77,7 @@ namespace NIRS.Numerical_Method
             }
         }
 
-        private Grid GetNumericalSolutionUpToK(Grid grid, LimitedDouble n, LimitedDouble k, InitialParameters initialParameters, ConstParameters constParameters)
+        private IGrid GetNumericalSolutionUpToK(IGrid grid, LimitedDouble n, LimitedDouble k, IInitialParameters initialParameters, IConstParameters constParameters)
         {
 
         }

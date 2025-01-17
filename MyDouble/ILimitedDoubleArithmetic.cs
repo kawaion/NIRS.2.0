@@ -2,7 +2,7 @@
 
 namespace MyDouble
 {
-    interface ILimitedDoubleArithmetic
+    public interface ILimitedDoubleArithmetic
     {
         LimitedDouble Add(LimitedDouble myDouble1, LimitedDouble myDouble2);
         LimitedDouble Add(LimitedDouble myDouble, int otherValue);

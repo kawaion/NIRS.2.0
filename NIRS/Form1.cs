@@ -27,11 +27,11 @@ namespace NIRS
 
         private void button1_Click(object sender, EventArgs e)
         {
-            InitialParameters initialParameters = new InitialParametersCase1();
-            ConstParameters constParameters = new ConstParametersCase1();
+            IInitialParameters initialParameters = new InitialParametersCase1();
+            IConstParameters constParameters = new ConstParametersCase1();
             (var newInitialParameters, var newConstParameters) = inputDataTransmitter.GetInputData(initialParameters, constParameters);
-            NumericalMethod numericalMethod = new SEL(newInitialParameters, newConstParameters);
-            Grid grid = numericalMethod.Calculate();
+            INumericalMethod numericalMethod = new SEL(newInitialParameters, newConstParameters);
+            IGrid grid = numericalMethod.Calculate();
         }
     }
 }

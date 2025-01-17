@@ -24,6 +24,11 @@ namespace MyDouble
 
 
         private static ILimitedDoubleArithmetic limitedDoubleArithmetic = new LimitedDoubleArithmetic();
+
+        public void ChangeLimitedDoubleArithmetic(ILimitedDoubleArithmetic newLimitedDoubleArithmetic)
+        {
+            limitedDoubleArithmetic = newLimitedDoubleArithmetic;
+        }
         public static LimitedDouble operator +(LimitedDouble myDouble1, LimitedDouble myDouble2)
         {
             return limitedDoubleArithmetic.Add(myDouble1, myDouble2);

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace NIRS.Grid_Folder
 {
-    class SpaceGrid : SubGrid
+    class SpaceGrid : ISubGrid
     {
         double n;
 
-        List<GridCell> gridCells = new List<GridCell>();
+        List<IGridCell> gridCells = new List<IGridCell>();
 
-        public override GridCell this[LimitedDouble k]
+        public IGridCell this[LimitedDouble k]
         {
             get
             {
