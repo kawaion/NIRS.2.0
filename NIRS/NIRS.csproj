@@ -62,7 +62,8 @@
     <Compile Include="Cannon Folder\Barrel Folder\ShifterCannonToZero.cs" />
     <Compile Include="Cannon Folder\Barrel Folder\VBarrelParts.cs" />
     <Compile Include="Cannon Folder\Cannon.cs" />
-    <Compile Include="Cannon Folder\Powder Folder\Powder.cs" />
+    <Compile Include="Cannon Folder\Powder Folder\ICombustionFunctions.cs" />
+    <Compile Include="Cannon Folder\Powder Folder\IPowder.cs" />
     <Compile Include="Cannon Folder\Powder Folder\Powder_12_7.cs" />
     <Compile Include="Data Parameters\Input Data Parameters\ConstParametersCase1.cs" />
     <Compile Include="Data Parameters\Input Data Parameters\InitialParametersCase1.cs" />

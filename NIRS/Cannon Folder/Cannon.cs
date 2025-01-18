@@ -1,14 +1,14 @@
-﻿using NIRS.BarrelFolder;
-using NIRS.CannonFolder.PowderFolder;
+﻿using NIRS.Cannon_Folder.Barrel_Folder;
+using NIRS.Cannon_Folder.PowderFolder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIRS.CannonFolder
+namespace NIRS.Cannon_Folder
 {
-    class Cannon
+    internal class Cannon
     {
         public Cannon(Barrel barrel,Powder powder)
         {

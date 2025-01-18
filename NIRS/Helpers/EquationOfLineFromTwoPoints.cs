@@ -16,6 +16,6 @@ namespace NIRS.Helpers
             _p1 = p1;
             _p2 = p2;
         }
-        public double Y(double x) => (x - _p1.X) * (_p2.Y - _p1.Y) / (_p2.X - _p1.X) + _p1.Y;
+        public double GetY(double x) => (x - _p1.X) * (_p2.Y - _p1.Y) / (_p2.X - _p1.X) + _p1.Y;
     }
 }

@@ -21,14 +21,14 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
 
             for (int i = 1; i < bendingPoints.Count; i++)
             {
-                var vBarrelSegment = CalcVBarrelSegment(bendingPoints[i - 1], bendingPoints[i]);
+                var vBarrelSegment = CalcVBarrelSegmentBetweenTwoPoints(bendingPoints[i - 1], bendingPoints[i]);
                 listVBarrelSegments = AddVBarrelSegmentInList(listVBarrelSegments, vBarrelSegment);
             }
 
             return listVBarrelSegments;
         }        
         // перенести во что то отдельное
-        public static double CalcVBarrelSegment(Point2D p1 ,Point2D p2)
+        public static double CalcVBarrelSegmentBetweenTwoPoints(Point2D p1 ,Point2D p2)
         {
             (var h,var r1, var r2) = GetTheParametersOfTheBarrelPart(p1, p2);
 

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NIRS", "NIRS\NIRS.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDouble", "MyDouble\MyDouble.csproj", "{0834C812-0DD1-413B-9ECB-5417A062269A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NIRS.Tests", "NIRS.Tests\NIRS.Tests.csproj", "{C9B5E334-A13C-4D45-8BA7-BEADCDE9C72A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0834C812-0DD1-413B-9ECB-5417A062269A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0834C812-0DD1-413B-9ECB-5417A062269A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0834C812-0DD1-413B-9ECB-5417A062269A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9B5E334-A13C-4D45-8BA7-BEADCDE9C72A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9B5E334-A13C-4D45-8BA7-BEADCDE9C72A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9B5E334-A13C-4D45-8BA7-BEADCDE9C72A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9B5E334-A13C-4D45-8BA7-BEADCDE9C72A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
