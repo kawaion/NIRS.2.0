@@ -1,5 +1,5 @@
 ﻿using NIRS.Cannon_Folder.Barrel_Folder;
-using NIRS.Cannon_Folder.PowderFolder;
+using NIRS.Cannon_Folder.Powder_Folder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +10,13 @@ namespace NIRS.Cannon_Folder
 {
     internal class Cannon
     {
-        public Cannon(Barrel barrel,Powder powder)
+        public Cannon(IBarrel barrel,IPowder powder)
         {
             Barrel = barrel;
             Powder = powder;
         }
 
-        public Barrel Barrel { get; }
-        public Powder Powder { get; }
+        public IBarrel Barrel { get; }
+        public IPowder Powder { get; }
     }
 }

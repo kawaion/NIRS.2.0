@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NIRS.Parameter_Type
 {
-    class DynamicCharacteristicsFlow
+    public class DynamicCharacteristicsFlow
     {
         public double dynamic_m { get; set; }
         public double M { get; set; }

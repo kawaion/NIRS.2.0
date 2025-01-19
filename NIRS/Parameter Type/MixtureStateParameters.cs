@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NIRS.Parameter_Type
 {
-    class MixtureStateParameters
+    public class MixtureStateParameters
     {
         public double r { get; set; }
         public double e { get; set; }

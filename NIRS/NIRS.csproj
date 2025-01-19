@@ -56,6 +56,7 @@
       <DependentUpon>BarrelInitializationInterface.cs</DependentUpon>
     </Compile>
     <Compile Include="Cannon Folder\Barrel Folder\BarrelSize.cs" />
+    <Compile Include="Cannon Folder\Barrel Folder\BarrelSizeByIndex.cs" />
     <Compile Include="Cannon Folder\Barrel Folder\FinderPointsBetweenCurrent.cs" />
     <Compile Include="Cannon Folder\Barrel Folder\IBarrel.cs" />
     <Compile Include="Cannon Folder\Barrel Folder\IBarrelSize.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Helpers\OffseterNK.cs" />
     <Compile Include="Helpers\Point2D.cs" />
     <Compile Include="Memory allocator\ListMemoryAllocator.cs" />
+    <Compile Include="Nabla Functions\INabla.cs" />
     <Compile Include="Numerical Method\FunctionsParametersOfTheNextLayer.cs" />
     <Compile Include="Numerical Method\IFunctionsParametersOfTheNextLayer.cs" />
     <Compile Include="Numerical Method\INumericalMethod.cs" />

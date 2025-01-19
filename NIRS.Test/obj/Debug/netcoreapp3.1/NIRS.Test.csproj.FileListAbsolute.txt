@@ -1,0 +1,4 @@
+F:\нирс\NIRS.2.0\NIRS.Test\obj\Debug\netcoreapp3.1\NIRS.Test.csproj.AssemblyReference.cache
+F:\нирс\NIRS.2.0\NIRS.Test\obj\Debug\netcoreapp3.1\NIRS.Test.AssemblyInfoInputs.cache
+F:\нирс\NIRS.2.0\NIRS.Test\obj\Debug\netcoreapp3.1\NIRS.Test.AssemblyInfo.cs
+F:\нирс\NIRS.2.0\NIRS.Test\obj\Debug\netcoreapp3.1\NIRS.Test.csproj.CoreCompileInputs.cache

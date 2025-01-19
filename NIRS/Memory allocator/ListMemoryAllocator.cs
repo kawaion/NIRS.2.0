@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NIRS.Memory_allocator
 {
-    static class ListMemoryAllocator
+    public static class ListMemoryAllocator
     {
         public static List<T> AllocateUpTo<T>(this List<T> list, int index) where T: class
         {

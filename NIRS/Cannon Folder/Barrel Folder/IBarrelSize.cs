@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MyDouble;
 
 namespace NIRS.Cannon_Folder.Barrel_Folder
 {
     interface IBarrelSize
     {
+        double h { get; }
         double Skn { get; }
         double Wkm { get; }
 

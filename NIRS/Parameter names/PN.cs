@@ -23,6 +23,7 @@ namespace NIRS.Parameter_names
         a,
         m,
         p,
-        ro
+        ro,
+        S
     }
 }
