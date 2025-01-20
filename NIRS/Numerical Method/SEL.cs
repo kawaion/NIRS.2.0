@@ -2,8 +2,8 @@
 using NIRS.Data_Parameters.Input_Data_Parameters;
 using NIRS.Data_Transmitters;
 using NIRS.Grid_Folder;
-//using NIRS.MyDouble_Folder;
 using MyDouble;
+using NIRS.Parameter_Type;
 
 
 namespace NIRS.Numerical_Method
@@ -47,7 +47,7 @@ namespace NIRS.Numerical_Method
                     n, 
                     initialParameters, constParameters
                     );
-                n += constParameters.tau;
+                n += 0.5;
             }
 
             return grid;
@@ -66,7 +66,7 @@ namespace NIRS.Numerical_Method
                     grid, 
                     n, k, 
                     initialParameters, constParameters);
-                k += constParameters.h;
+                k += 0.5;
             }
 
             return grid;
@@ -79,7 +79,26 @@ namespace NIRS.Numerical_Method
 
         private IGrid GetNumericalSolutionUpToK(IGrid grid, LimitedDouble n, LimitedDouble k, IInitialParameters initialParameters, IConstParameters constParameters)
         {
-
+            IFunctionsParametersOfTheNextLayer functionsNewLayer = new FunctionsParametersOfTheNextLayer();
+            if (ParameterTypeGetter.isDynamic(n, k))
+            {
+                grid[n][k].D.dynamic_m = functionsNewLayer.Calc_dynamic_m(n, k);
+                grid[n][k].D.v = functionsNewLayer.Calc_v(n, k);
+                grid[n][k].D.M = functionsNewLayer.Calc_M(n, k);
+                grid[n][k].D.w = functionsNewLayer.Calc_w(n, k);
+                
+            }
+            if (ParameterTypeGetter.isMixture(n, k))
+            {
+                grid[n][k].M.r = functionsNewLayer.Calc_r(n, k);
+                grid[n][k].M.e = functionsNewLayer.Calc_e(n, k);
+                grid[n][k].M.psi = functionsNewLayer.Calc_psi(n, k);
+                grid[n][k].M.z = functionsNewLayer.Calc_z(n, k);
+                grid[n][k].M.a = functionsNewLayer.Calc_a(n, k);
+                grid[n][k].M.p = functionsNewLayer.Calc_p(n, k);
+                grid[n][k].M.m = functionsNewLayer.Calc_m(n, k);
+            }
+            return grid;
         }
 
     }

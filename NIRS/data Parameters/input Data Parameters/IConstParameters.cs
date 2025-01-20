@@ -6,5 +6,8 @@ namespace NIRS.Data_Parameters.Input_Data_Parameters
     {
         double tau { get; }
         double h { get; }
+        double teta { get; }
+        double alpha { get; }
+        double delta { get; }
     }
 }

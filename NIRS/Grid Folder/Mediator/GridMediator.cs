@@ -84,5 +84,12 @@ namespace NIRS.Grid_Folder.Mediator
         {
             return grid[n][k].M.z;
         }
+
+
+
+        public static double q(this IGrid grid, LimitedDouble n, LimitedDouble k)
+        {
+            
+        }
     }
 }
