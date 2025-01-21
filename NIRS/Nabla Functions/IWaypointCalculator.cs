@@ -3,7 +3,7 @@ using NIRS.Parameter_names;
 
 namespace NIRS.Nabla_Functions
 {
-    interface INabla
+    interface IWaypointCalculator
     {
         NablaNode Nabla(PN param1, PN param2, PN param3);
         NablaNode Nabla(PN param1, PN param2);

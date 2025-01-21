@@ -6,6 +6,8 @@ using NIRS.Data_Parameters.Input_Data_Parameters;
 using NIRS.Numerical_Method;
 using NIRS.Data_Transmitters;
 using NIRS.Grid_Folder;
+using NIRS.Cannon_Folder.Barrel_Folder;
+using NIRS.Cannon_Folder.Powder_Folder;
 
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,7 +32,10 @@ namespace NIRS
             IInitialParameters initialParameters = new InitialParametersCase1();
             IConstParameters constParameters = new ConstParametersCase1();
             (var newInitialParameters, var newConstParameters) = inputDataTransmitter.GetInputData(initialParameters, constParameters);
-            INumericalMethod numericalMethod = new SEL(newInitialParameters, newConstParameters);
+            IBarrel barrel = new Barrel();
+            IPowder powder = new Powder_12_7(newConstParameters.D0, newConstParameters.d0, newConstParameters.L0); 
+              
+            INumericalMethod numericalMethod = new SEL(barrel, powder, newInitialParameters, newConstParameters);
             IGrid grid = numericalMethod.Calculate();
         }
     }

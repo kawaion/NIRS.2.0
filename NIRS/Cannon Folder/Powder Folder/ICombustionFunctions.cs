@@ -10,5 +10,8 @@ namespace NIRS.Cannon_Folder.Powder_Folder
     {
         double Psi(double z);
         double z(double z);
+
+        double Sigma(double z, double psi);
+        double Uk(double p);
     }
 }

@@ -4,19 +4,30 @@ using NIRS.Data_Transmitters;
 using NIRS.Grid_Folder;
 using MyDouble;
 using NIRS.Parameter_Type;
-
+using NIRS.Parameter_names;
+using NIRS.Nabla_Functions;
+using NIRS.Cannon_Folder.Barrel_Folder;
+using NIRS.Cannon_Folder.Powder_Folder;
+using NIRS.H_Functions;
 
 namespace NIRS.Numerical_Method
 {
     class SEL : INumericalMethod
     {
+        private readonly IBarrel _barrel;
+        private readonly IPowder _powder;
         private readonly IInitialParameters _initialParameters;
         private readonly IConstParameters _constParameters;
+        private readonly IBarrelSize _barrelSize;
 
-        public SEL(IInitialParameters initialParameters, IConstParameters constParameters)
+        public SEL(IBarrel barrel, IPowder powder, IInitialParameters initialParameters, IConstParameters constParameters)
         {
+            _barrel = barrel;
+            _powder = powder;
             _initialParameters = initialParameters;
             _constParameters = constParameters;
+
+            _barrelSize = new BarrelSize(barrel,constParameters);
         }
         
         private readonly IOutputDataTransmitter outputDataTransmitter = new OutputDataTransmitter();
@@ -26,7 +37,7 @@ namespace NIRS.Numerical_Method
             IGrid grid = new TimeSpaceGrid(_constParameters.tau, _constParameters.h);
 
             var gridWithFilledBorders = FillGridBoundaries(grid, _initialParameters, _constParameters);
-            var numericalSolution = GetNumericalSolution(gridWithFilledBorders, _initialParameters, _constParameters);
+            var numericalSolution = GetNumericalSolution(gridWithFilledBorders);
             return outputDataTransmitter.GetOutputData(numericalSolution);
         }
         private IGrid FillGridBoundaries(IGrid grid,IInitialParameters initialParameters, IConstParameters constParameters)
@@ -37,19 +48,14 @@ namespace NIRS.Numerical_Method
                 (grid, 
                 initialParameters, constParameters);
         }
-        private IGrid GetNumericalSolution(IGrid grid, IInitialParameters initialParameters, IConstParameters constParameters)
+        private IGrid GetNumericalSolution(IGrid grid)
         {
             LimitedDouble n = new LimitedDouble(0);
             while (!IsEndCondition())
             {
-                grid = GetNumericalSolutionUpToN(
-                    grid, 
-                    n, 
-                    initialParameters, constParameters
-                    );
+                grid = GetNumericalSolutionUpToN(grid, n );
                 n += 0.5;
             }
-
             return grid;
 
             bool IsEndCondition()
@@ -57,18 +63,15 @@ namespace NIRS.Numerical_Method
 
             }
         }
-        private IGrid GetNumericalSolutionUpToN(IGrid grid, LimitedDouble n, IInitialParameters initialParameters, IConstParameters constParameters)
+        private IGrid GetNumericalSolutionUpToN(IGrid grid, LimitedDouble n)
         {
             LimitedDouble k = new LimitedDouble(0);
             while (!IsEndCondition())
             {
-                grid = GetNumericalSolutionUpToK(
-                    grid, 
-                    n, k, 
-                    initialParameters, constParameters);
+                if(ParameterTypeGetter.isDynamic(n, k) || ParameterTypeGetter.isMixture(n, k))
+                    grid = GetNumericalSolutionUpToK(grid, n, k );
                 k += 0.5;
             }
-
             return grid;
 
             bool IsEndCondition()
@@ -77,29 +80,49 @@ namespace NIRS.Numerical_Method
             }
         }
 
-        private IGrid GetNumericalSolutionUpToK(IGrid grid, LimitedDouble n, LimitedDouble k, IInitialParameters initialParameters, IConstParameters constParameters)
+        private IGrid GetNumericalSolutionUpToK(IGrid grid, LimitedDouble n, LimitedDouble k)
         {
-            IFunctionsParametersOfTheNextLayer functionsNewLayer = new FunctionsParametersOfTheNextLayer();
+            IWaypointCalculator nabla = new WaypointCalculator(grid);
+            IHFunctions hFunctions = new HFunctions(grid);
+            IFunctionsParametersOfTheNextLayer functionsNewLayer = new FunctionsParametersOfTheNextLayer(
+                grid,                
+                nabla,
+                hFunctions,
+                _constParameters,
+                _barrelSize,
+                _powder);
+            
             if (ParameterTypeGetter.isDynamic(n, k))
-            {
-                grid[n][k].D.dynamic_m = functionsNewLayer.Calc_dynamic_m(n, k);
-                grid[n][k].D.v = functionsNewLayer.Calc_v(n, k);
-                grid[n][k].D.M = functionsNewLayer.Calc_M(n, k);
-                grid[n][k].D.w = functionsNewLayer.Calc_w(n, k);
-                
-            }
-            if (ParameterTypeGetter.isMixture(n, k))
-            {
-                grid[n][k].M.r = functionsNewLayer.Calc_r(n, k);
-                grid[n][k].M.e = functionsNewLayer.Calc_e(n, k);
-                grid[n][k].M.psi = functionsNewLayer.Calc_psi(n, k);
-                grid[n][k].M.z = functionsNewLayer.Calc_z(n, k);
-                grid[n][k].M.a = functionsNewLayer.Calc_a(n, k);
-                grid[n][k].M.p = functionsNewLayer.Calc_p(n, k);
-                grid[n][k].M.m = functionsNewLayer.Calc_m(n, k);
-            }
+                grid = GetDynamicParametersOfNextLayer(grid, n, k, functionsNewLayer);
+
+            else if (ParameterTypeGetter.isMixture(n, k))
+                grid = GetMixtureParametersOfNextLayer(grid, n, k, functionsNewLayer);
+
             return grid;
         }
 
+
+
+        private IGrid GetDynamicParametersOfNextLayer(IGrid grid, LimitedDouble n, LimitedDouble k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
+        {
+            grid[n][k].D.dynamic_m = functionsNewLayer.Get(PN.dynamic_m, n, k);
+            grid[n][k].D.v = functionsNewLayer.Get(PN.v, n, k);
+            grid[n][k].D.M = functionsNewLayer.Get(PN.M, n, k);
+            grid[n][k].D.w = functionsNewLayer.Get(PN.w, n, k);
+
+            return grid;
+        }        
+        private IGrid GetMixtureParametersOfNextLayer(IGrid grid, LimitedDouble n, LimitedDouble k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
+        {
+            grid[n][k].M.r = functionsNewLayer.Get(PN.r, n, k);
+            grid[n][k].M.e = functionsNewLayer.Get(PN.e, n, k);
+            grid[n][k].M.psi = functionsNewLayer.Get(PN.psi, n, k);
+            grid[n][k].M.z = functionsNewLayer.Get(PN.z, n, k);
+            grid[n][k].M.a = functionsNewLayer.Get(PN.a, n, k);
+            grid[n][k].M.p = functionsNewLayer.Get(PN.p, n, k);
+            grid[n][k].M.m = functionsNewLayer.Get(PN.m, n, k);
+
+            return grid;
+        }
     }
 }

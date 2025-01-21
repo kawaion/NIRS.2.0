@@ -63,6 +63,7 @@
     <Compile Include="Cannon Folder\Barrel Folder\ShifterCannonToZero.cs" />
     <Compile Include="Cannon Folder\Barrel Folder\VBarrelParts.cs" />
     <Compile Include="Cannon Folder\Cannon.cs" />
+    <Compile Include="Cannon Folder\Powder Folder\CombustionFunctions.cs" />
     <Compile Include="Cannon Folder\Powder Folder\ICombustionFunctions.cs" />
     <Compile Include="Cannon Folder\Powder Folder\IPowder.cs" />
     <Compile Include="Cannon Folder\Powder Folder\Powder_12_7.cs" />
@@ -88,12 +89,15 @@
     <Compile Include="Grid Folder\SpaceGrid.cs" />
     <Compile Include="Grid Folder\ISubGrid.cs" />
     <Compile Include="Grid Folder\TimeSpaceGrid.cs" />
+    <Compile Include="H Functions\HFunctions.cs" />
     <Compile Include="H Functions\IHFunctions.cs" />
     <Compile Include="Helpers\EquationOfLineFromTwoPoints.cs" />
     <Compile Include="Helpers\OffseterNK.cs" />
     <Compile Include="Helpers\Point2D.cs" />
+    <Compile Include="Helpers\PseudoViscosityMechanism.cs" />
     <Compile Include="Memory allocator\ListMemoryAllocator.cs" />
-    <Compile Include="Nabla Functions\INabla.cs" />
+    <Compile Include="Nabla Functions\IWaypointCalculator.cs" />
+    <Compile Include="Nabla Functions\WaypointCalculator.cs" />
     <Compile Include="Nabla Functions\NablaFunctionType.cs" />
     <Compile Include="Nabla Functions\NablaNode.cs" />
     <Compile Include="Numerical Method\FunctionsParametersOfTheNextLayer.cs" />

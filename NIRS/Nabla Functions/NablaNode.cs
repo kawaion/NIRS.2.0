@@ -11,7 +11,7 @@ namespace NIRS.Nabla_Functions
 {
     class NablaNode
     {
-        public NablaNode(List<PN> pNs, NablaFunctionType type, INabla nabla)
+        public NablaNode(List<PN> pNs, NablaFunctionType type, IWaypointCalculator nabla)
         {
             _pNs = pNs;
             _type = type;
@@ -19,7 +19,7 @@ namespace NIRS.Nabla_Functions
         }
         private List<PN> _pNs;
         private NablaFunctionType _type;
-        private readonly INabla _nabla;
+        private readonly IWaypointCalculator _nabla;
 
         public double Cell(LimitedDouble n, LimitedDouble k)
         {
