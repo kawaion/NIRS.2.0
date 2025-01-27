@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConvenientTypeChecker.cs" />
     <Compile Include="DoubleTypeIssuer.cs" />
     <Compile Include="ILimitedDoubleArithmetic.cs" />
     <Compile Include="LimitedDouble.cs" />

@@ -7,7 +7,7 @@ using MyDouble;
 using System;
 
 
-namespace NIRS.Helpers
+namespace NIRS.Additional_calculated_values
 {
     static class PseudoViscosityMechanism
     {

@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Additional calculated values\BlurryP.cs" />
     <Compile Include="Boundary Interfaces\IInputDataTransmitter.cs" />
     <Compile Include="Cannon Folder\Barrel Folder\Barrel.cs" />
     <Compile Include="Cannon Folder\Barrel Folder\BarrelInitializationInterface.cs">
@@ -94,12 +95,13 @@
     <Compile Include="Helpers\EquationOfLineFromTwoPoints.cs" />
     <Compile Include="Helpers\OffseterNK.cs" />
     <Compile Include="Helpers\Point2D.cs" />
-    <Compile Include="Helpers\PseudoViscosityMechanism.cs" />
+    <Compile Include="Additional calculated values\PseudoViscosityMechanism.cs" />
     <Compile Include="Memory allocator\ListMemoryAllocator.cs" />
     <Compile Include="Nabla Functions\IWaypointCalculator.cs" />
     <Compile Include="Nabla Functions\WaypointCalculator.cs" />
     <Compile Include="Nabla Functions\NablaFunctionType.cs" />
     <Compile Include="Nabla Functions\NablaNode.cs" />
+    <Compile Include="Nabla Functions\WaypointCalculatorExtension.cs" />
     <Compile Include="Numerical Method\FunctionsParametersOfTheNextLayer.cs" />
     <Compile Include="Numerical Method\IFunctionsParametersOfTheNextLayer.cs" />
     <Compile Include="Numerical Method\INumericalMethod.cs" />
@@ -107,6 +109,9 @@
     <Compile Include="Parameter Type\DynamicCharacteristicsFlow.cs" />
     <Compile Include="Parameter Type\MixtureStateParameters.cs" />
     <Compile Include="Parameter Type\ParameterTypeGetter.cs" />
+    <Compile Include="Parameter Type\PT.cs" />
+    <Compile Include="Parameter Type\TypeFromParameterName.cs" />
+    <Compile Include="Parameter names\GetterValueByPN.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Numerical Method\SEL.cs" />

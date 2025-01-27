@@ -3,3 +3,4 @@ F:\нирс\NIRS.2.0\MyDouble\bin\Debug\MyDouble.pdb
 F:\нирс\NIRS.2.0\MyDouble\obj\Debug\MyDouble.csproj.CoreCompileInputs.cache
 F:\нирс\NIRS.2.0\MyDouble\obj\Debug\MyDouble.dll
 F:\нирс\NIRS.2.0\MyDouble\obj\Debug\MyDouble.pdb
+F:\нирс\NIRS.2.0\MyDouble\obj\Debug\MyDouble.csproj.AssemblyReference.cache

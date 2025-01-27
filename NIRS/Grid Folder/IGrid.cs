@@ -2,7 +2,7 @@
 
 namespace NIRS.Grid_Folder
 {
-    interface IGrid
+    public interface IGrid
     {
         ISubGrid this[LimitedDouble i] { get;set; }
     }

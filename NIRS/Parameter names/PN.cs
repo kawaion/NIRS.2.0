@@ -9,7 +9,7 @@ namespace NIRS.Parameter_names
     /// <summary>
     /// PN - сокращенно Parameter name
     /// </summary>
-    enum PN
+    public enum PN
     {
         dynamic_m,
         M,
@@ -25,7 +25,6 @@ namespace NIRS.Parameter_names
         p,
         ro,
         S,
-        pStroke,
         One_minus_m
     }
 }

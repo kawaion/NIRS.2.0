@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NIRS.Nabla_Functions.Close
 {
-    enum NablaFunctionType
+    public enum NablaFunctionType
     {
         Nabla1,
         Nabla2,
