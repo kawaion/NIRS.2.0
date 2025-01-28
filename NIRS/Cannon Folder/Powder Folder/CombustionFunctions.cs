@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NIRS.Data_Parameters.Input_Data_Parameters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,10 +10,12 @@ namespace NIRS.Cannon_Folder.Powder_Folder
     class CombustionFunctions : ICombustionFunctions
     {
         private readonly IPowder _powder;
+        private readonly IConstParameters _constP;
 
-        public CombustionFunctions(IPowder powder)
+        public CombustionFunctions(IPowder powder, IConstParameters constP)
         {
             _powder = powder;
+            _constP = constP;
         }
         public double Psi(double z)
         {
@@ -49,7 +52,7 @@ namespace NIRS.Cannon_Folder.Powder_Folder
 
         public double Uk(double p)
         {
-            return constP.u1 * p;
+            return _constP.u1 * p;
         }
     }
 }

@@ -33,7 +33,11 @@ namespace NIRS
             IConstParameters constParameters = new ConstParametersCase1();
             (var newInitialParameters, var newConstParameters) = inputDataTransmitter.GetInputData(initialParameters, constParameters);
             IBarrel barrel = new Barrel();
-            IPowder powder = new Powder_12_7(newConstParameters.D0, newConstParameters.d0, newConstParameters.L0); 
+            IPowder powder = new Powder_12_7(newConstParameters.D0, 
+                                             newConstParameters.d0, 
+                                             newConstParameters.L0, 
+                                             newConstParameters.u1, 
+                                             newConstParameters.e1); 
               
             INumericalMethod numericalMethod = new SEL(barrel, powder, newInitialParameters, newConstParameters);
             IGrid grid = numericalMethod.Calculate();

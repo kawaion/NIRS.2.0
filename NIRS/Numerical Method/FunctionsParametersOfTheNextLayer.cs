@@ -9,7 +9,7 @@ using NIRS.Nabla_Functions;
 using NIRS.Cannon_Folder.Barrel_Folder;
 using NIRS.H_Functions;
 using NIRS.Cannon_Folder.Powder_Folder;
-
+using NIRS.Additional_calculated_values;
 
 namespace NIRS.Numerical_Method
 {
@@ -66,7 +66,7 @@ namespace NIRS.Numerical_Method
                 (
                     wc.Nabla(PN.dynamic_m, PN.v).Cell(n - 0.5, k)
                    + (g.dynamic_m(n, k - 0.5) * bs.SByIndex(k - 0.5) + g.dynamic_m(n, k + 0.5) * bs.SByIndex(k + 0.5)) / 2
-                        * wc.dDivdx(PN.pStroke).Cell(n, k)
+                        * wc.dPStrokeDivdx().Cell(n, k)
                    - hf.H1(n, k)
                 );
         }
@@ -83,7 +83,7 @@ namespace NIRS.Numerical_Method
                 (
                     wc.Nabla(PN.M, PN.w).Cell(n - 0.5, k)
                    + ((1 - g.m(n, k - 0.5)) * bs.SByIndex(k - 0.5) + (1 - g.m(n, k + 0.5)) * bs.SByIndex(k + 0.5)) / 2 
-                        * wc.dDivdx(PN.pStroke, n, k)
+                        * wc.dPStrokeDivdx().Cell(n, k)
                    - hf.H2(n, k)
                 );
         }         

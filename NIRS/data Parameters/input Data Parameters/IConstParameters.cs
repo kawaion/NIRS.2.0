@@ -16,5 +16,6 @@ namespace NIRS.Data_Parameters.Input_Data_Parameters
         double lamda0 { get; }
         double Q { get; }
         double e1 { get; }
+        double u1 { get; }
     }
 }

@@ -19,6 +19,7 @@ namespace NIRS.Numerical_Method
         private readonly IInitialParameters _initialParameters;
         private readonly IConstParameters _constParameters;
         private readonly IBarrelSize _barrelSize;
+        private readonly ICombustionFunctions _combustionFunctions;
 
         public SEL(IBarrel barrel, IPowder powder, IInitialParameters initialParameters, IConstParameters constParameters)
         {
@@ -27,6 +28,7 @@ namespace NIRS.Numerical_Method
             _initialParameters = initialParameters;
             _constParameters = constParameters;
 
+            _combustionFunctions = new CombustionFunctions(powder);
             _barrelSize = new BarrelSize(barrel,constParameters);
         }
         
@@ -51,6 +53,7 @@ namespace NIRS.Numerical_Method
         private IGrid GetNumericalSolution(IGrid grid)
         {
             LimitedDouble n = new LimitedDouble(0);
+
             while (!IsEndCondition())
             {
                 grid = GetNumericalSolutionUpToN(grid, n );
@@ -66,9 +69,10 @@ namespace NIRS.Numerical_Method
         private IGrid GetNumericalSolutionUpToN(IGrid grid, LimitedDouble n)
         {
             LimitedDouble k = new LimitedDouble(0);
+
             while (!IsEndCondition())
             {
-                if(ParameterTypeGetter.isDynamic(n, k) || ParameterTypeGetter.isMixture(n, k))
+                if(ParameterTypeGetter.IsDynamic(n, k) || ParameterTypeGetter.IsMixture(n, k))
                     grid = GetNumericalSolutionUpToK(grid, n, k );
                 k += 0.5;
             }
@@ -82,25 +86,39 @@ namespace NIRS.Numerical_Method
 
         private IGrid GetNumericalSolutionUpToK(IGrid grid, LimitedDouble n, LimitedDouble k)
         {
-            IWaypointCalculator nabla = new WaypointCalculator(grid);
-            IHFunctions hFunctions = new HFunctions(grid);
-            IFunctionsParametersOfTheNextLayer functionsNewLayer = new FunctionsParametersOfTheNextLayer(
-                grid,                
-                nabla,
-                hFunctions,
-                _constParameters,
-                _barrelSize,
-                _powder);
-            
-            if (ParameterTypeGetter.isDynamic(n, k))
+            var functionsNewLayer = GetFunctionsNewLayer(grid);
+
+            if (ParameterTypeGetter.IsDynamic(n, k))
                 grid = GetDynamicParametersOfNextLayer(grid, n, k, functionsNewLayer);
 
-            else if (ParameterTypeGetter.isMixture(n, k))
+            else if (ParameterTypeGetter.IsMixture(n, k))
                 grid = GetMixtureParametersOfNextLayer(grid, n, k, functionsNewLayer);
 
             return grid;
         }
 
+
+
+        private IFunctionsParametersOfTheNextLayer GetFunctionsNewLayer(IGrid grid)
+        {
+            (var waypointCalculator, var hFunctions) = GetHAndDiffFunctions(grid);
+
+            IFunctionsParametersOfTheNextLayer functionsNewLayer = new FunctionsParametersOfTheNextLayer(
+                grid,
+                waypointCalculator,
+                hFunctions,
+                _constParameters,
+                _barrelSize,
+                _powder);
+            return functionsNewLayer;
+        }
+
+        private (IWaypointCalculator waypointCalculator, IHFunctions hFunctions) GetHAndDiffFunctions(IGrid grid)
+        {
+            IWaypointCalculator waypointCalculator = new WaypointCalculator(grid, _constParameters, _barrelSize);
+            IHFunctions hFunctions = new HFunctions(grid, _barrelSize, _powder, _combustionFunctions, _constParameters);
+            return (waypointCalculator, hFunctions);
+        }
 
 
         private IGrid GetDynamicParametersOfNextLayer(IGrid grid, LimitedDouble n, LimitedDouble k, IFunctionsParametersOfTheNextLayer functionsNewLayer)

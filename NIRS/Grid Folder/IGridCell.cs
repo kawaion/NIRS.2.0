@@ -2,7 +2,7 @@
 
 namespace NIRS.Grid_Folder
 {
-    interface IGridCell
+    public interface IGridCell
     {
         DynamicCharacteristicsFlow D { get; set; }
         MixtureStateParameters M { get; set; }

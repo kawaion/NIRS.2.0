@@ -10,7 +10,7 @@ namespace NIRS.Parameter_names
         private IGrid g;
         public GetterValueByPN(IGrid grid)
         {
-            g=grid        
+            g = grid;        
         }
         public double GetParamCell(PN param, LimitedDouble n, LimitedDouble k)
         {
