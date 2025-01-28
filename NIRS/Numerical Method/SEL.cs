@@ -28,7 +28,7 @@ namespace NIRS.Numerical_Method
             _initialParameters = initialParameters;
             _constParameters = constParameters;
 
-            _combustionFunctions = new CombustionFunctions(powder);
+            _combustionFunctions = new CombustionFunctions(powder, constParameters);
             _barrelSize = new BarrelSize(barrel,constParameters);
         }
         
