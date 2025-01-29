@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace NIRS.Projectile_Folder
 {
-    public interface IProjectile
+    class ProjectileParameters
     {
-        double q { get; }
-        double x { get; set; }
-        double v { get; set; }
-        double S { get; }
+        public double v_sn { get; set; }
+        public double x { get; set; }
     }
 }

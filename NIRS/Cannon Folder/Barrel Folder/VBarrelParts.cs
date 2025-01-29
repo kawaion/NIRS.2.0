@@ -6,7 +6,7 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
 {
     static class VBarrelParts
     {
-        public static Dictionary<Point2D, double> CalculateListOfBarrelVFromBottomToBendingPoint(this List<Point2D> bendingPoints)
+        public static Dictionary<Point2D, double> GetListOfBarrelVFromBottomToBendingPoint(this List<Point2D> bendingPoints)
         {
             var listVBarrelSegments = GetListVBarrelSegments(bendingPoints);
             var listOfVBarrelFromBottomToBendingPoint = GetListOfVBarrelFromBottomToBendingPoin(bendingPoints, listVBarrelSegments);
@@ -21,14 +21,14 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
 
             for (int i = 1; i < bendingPoints.Count; i++)
             {
-                var vBarrelSegment = CalcVBarrelSegmentBetweenTwoPoints(bendingPoints[i - 1], bendingPoints[i]);
+                var vBarrelSegment = GetVBarrelSegmentBetweenTwoPoints(bendingPoints[i - 1], bendingPoints[i]);
                 listVBarrelSegments = AddVBarrelSegmentInList(listVBarrelSegments, vBarrelSegment);
             }
 
             return listVBarrelSegments;
         }        
         // перенести во что то отдельное
-        public static double CalcVBarrelSegmentBetweenTwoPoints(Point2D p1 ,Point2D p2)
+        public static double GetVBarrelSegmentBetweenTwoPoints(Point2D p1 ,Point2D p2)
         {
             (var h,var r1, var r2) = GetTheParametersOfTheBarrelPart(p1, p2);
 

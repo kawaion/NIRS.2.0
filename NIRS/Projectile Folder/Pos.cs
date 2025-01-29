@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace NIRS.Projectile_Folder
 {
-    public interface IProjectile
+    /// <summary>
+    /// Pos - сокращенно Position
+    /// </summary>
+    enum Pos
     {
-        double q { get; }
-        double x { get; set; }
-        double v { get; set; }
-        double S { get; }
+        sn,
+        KplusOne
     }
 }

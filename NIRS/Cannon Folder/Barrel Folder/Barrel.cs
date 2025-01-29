@@ -19,7 +19,7 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
             BendingPoints = bendingPoints;
             EndChamberPoint = endChamberPoint;
             (BendingPoints, EndChamberPoint) = ShifterCannonToZero.Shift(BendingPoints, EndChamberPoint);
-            VFromBottomBoreToBendingPoints = BendingPoints.CalculateListOfBarrelVFromBottomToBendingPoint();
+            VFromBottomBoreToBendingPoints = BendingPoints.GetListOfBarrelVFromBottomToBendingPoint();
         }
     }
 }

@@ -26,6 +26,8 @@ namespace NIRS.Grid_Folder
             }
         }
 
+        
+
         List<IGridCell> gridCells = new List<IGridCell>();
 
         public IGridCell this[LimitedDouble k]
@@ -59,5 +61,8 @@ namespace NIRS.Grid_Folder
 
             throw new Exception($"значение {n} {k} не подходит ни под один из типов");
         }
+        
+        //те же значения для снаряда
+        public IGridCellProjectile sn { get; set; }
     }
 }

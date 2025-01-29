@@ -1,4 +1,9 @@
 ﻿using MyDouble;
+using NIRS.Cannon_Folder.Barrel_Folder;
+using NIRS.Data_Parameters.Input_Data_Parameters;
+using NIRS.Grid_Folder;
+using NIRS.Grid_Folder.Mediator;
+using NIRS.Parameter_names;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,52 +14,80 @@ namespace NIRS.Projectile_Folder.Projectile_functions
 {
     class ProjectileFunctions : IProjectileFunctions
     {
-        public double Culc_a(LimitedDouble n)
+        private readonly IGrid g;
+        private readonly IProjectile sn;
+        private readonly IConstParameters constP;
+
+        public ProjectileFunctions(IGrid grid, IProjectile projectile, IConstParameters constParameters)
+        {
+            g = grid;
+            sn = projectile;
+            constP = constParameters;
+        }
+        public double Get(PN pn, LimitedDouble n, Pos pos)
         {
             throw new NotImplementedException();
         }
 
-        public double Culc_e(LimitedDouble n)
+        public double Get_a(LimitedDouble n, Pos pos)
+        {
+            return g.a(n, Pos.sn) *
+                (
+                    1 - constP.tau *
+                    (
+                        (g.v_sn(n + 0.5, Pos.sn) - g.v_sn(n + 0.5, Pos.KplusOne)) /
+                        (g.x(n + 0.5, Pos.sn) - g.x(n + 0.5, Pos.KplusOne))
+                    )
+                );
+        }
+
+        public double Get_e(LimitedDouble n, Pos pos)
+        {
+            return g.e(n, Pos.sn) - constP.tau *
+                (
+                    g.e(n, Pos.sn) * (g.v_sn(n + 0.5, Pos.sn) - g.v_sn(n + 0.5, Pos.KplusOne)) /
+                                     (g.x(n + 0.5, Pos.sn) - g.x(n + 0.5, Pos.KplusOne))
+                    + g.p(n, Pos.sn) * ()
+                );
+                   
+        }
+
+        public double Get_m(LimitedDouble n, Pos pos)
         {
             throw new NotImplementedException();
         }
 
-        public double Culc_m(LimitedDouble n)
+        public double Get_p(LimitedDouble n, Pos pos)
         {
             throw new NotImplementedException();
         }
 
-        public double Culc_p(LimitedDouble n)
+        public double Get_psi(LimitedDouble n, Pos pos)
         {
             throw new NotImplementedException();
         }
 
-        public double Culc_psi(LimitedDouble n)
+        public double Get_r(LimitedDouble n, Pos pos)
         {
             throw new NotImplementedException();
         }
 
-        public double Culc_r(LimitedDouble n)
+        public double Get_ro(LimitedDouble n, Pos pos)
         {
             throw new NotImplementedException();
         }
 
-        public double Culc_ro(LimitedDouble n)
+        public double Get_v(LimitedDouble n, Pos pos)
         {
             throw new NotImplementedException();
         }
 
-        public double Culc_v(LimitedDouble n)
+        public double Get_x(LimitedDouble n, Pos pos)
         {
             throw new NotImplementedException();
         }
 
-        public double Culc_x(LimitedDouble n)
-        {
-            throw new NotImplementedException();
-        }
-
-        public double Culc_z(LimitedDouble n)
+        public double Get_z(LimitedDouble n, Pos pos)
         {
             throw new NotImplementedException();
         }

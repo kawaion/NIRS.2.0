@@ -25,6 +25,7 @@ namespace NIRS.Parameter_names
         p,
         ro,
         S,
-        One_minus_m
+        One_minus_m,
+        x
     }
 }

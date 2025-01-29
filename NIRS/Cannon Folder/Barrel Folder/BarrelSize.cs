@@ -13,8 +13,8 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
         {
             _barrel = barrel;
             _finderPointsBetweenCurrent = new FinderPointsBetweenCurrent(barrel.BendingPoints);
-            Skn = CalculateSkn();
-            Wkm = CalculateWkm();
+            Skn = GetSkn();
+            Wkm = GetWkm();
             h = constParameters.h;
         }
 
@@ -37,19 +37,19 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
             var r = GetRWhereX(x, p1, p2);
             var px = new Point2D(x, r);
 
-            var VSegment = VBarrelParts.CalcVBarrelSegmentBetweenTwoPoints(p1, px);
+            var VSegment = VBarrelParts.GetVBarrelSegmentBetweenTwoPoints(p1, px);
             var VUpToX = GetVUpToX(p1, VSegment);
             return VUpToX;
         }
         public double W(double x1, double x2) => Math.Abs(W(x1) - W(x2));
 
 
-        private double CalculateSkn()
+        private double GetSkn()
         {
             var xkn = _barrel.BendingPoints[0].X;
             return S(xkn);
         }
-        private double CalculateWkm()
+        private double GetWkm()
         {
             return _barrel.VFromBottomBoreToBendingPoints[_barrel.EndChamberPoint];
         }

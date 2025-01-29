@@ -1,6 +1,7 @@
 ﻿using System;
 using NIRS.Parameter_names;
 using MyDouble;
+using NIRS.Projectile_Folder;
 
 namespace NIRS.Grid_Folder.Mediator
 {
@@ -85,6 +86,80 @@ namespace NIRS.Grid_Folder.Mediator
             return grid[n][k].M.z;
         }
 
+
+
+
+
+
+
+
+
+
+        public static double dynamic_m(this IGrid grid, LimitedDouble n, Pos pos)
+        {
+            return grid[n].sn.D.dynamic_m;
+        }
+        public static double M(this IGrid grid, LimitedDouble n, Pos pos)
+        {
+            return grid[n].sn.D.M;
+        }
+        public static double v(this IGrid grid, LimitedDouble n, Pos pos)
+        {
+            return grid[n].sn.D.v;
+        }
+        public static double w(this IGrid grid, LimitedDouble n, Pos pos)
+        {
+            return grid[n].sn.D.w;
+        }
+
+
+
+        public static double a(this IGrid grid, LimitedDouble n, Pos pos)
+        {
+            return grid[n].sn.M.a;
+        }
+        public static double e(this IGrid grid, LimitedDouble n, Pos pos)
+        {
+            return grid[n].sn.M.e;
+        }
+        public static double eps(this IGrid grid, LimitedDouble n, Pos pos)
+        {
+            return grid[n].sn.M.eps;
+        }
+        public static double m(this IGrid grid, LimitedDouble n, Pos pos)
+        {
+            return grid[n].sn.M.m;
+        }
+        public static double p(this IGrid grid, LimitedDouble n, Pos pos)
+        {
+            return grid[n].sn.M.p;
+        }
+        public static double psi(this IGrid grid, LimitedDouble n, Pos pos)
+        {
+            return grid[n].sn.M.psi;
+        }
+        public static double r(this IGrid grid, LimitedDouble n, Pos pos)
+        {
+            return grid[n].sn.M.r;
+        }
+        public static double ro(this IGrid grid, LimitedDouble n, Pos pos)
+        {
+            return grid[n].sn.M.p;
+        }
+        public static double z(this IGrid grid, LimitedDouble n, Pos pos)
+        {
+            return grid[n].sn.M.z;
+        }
+
+
+        public static double x(this IGrid grid, LimitedDouble n, Pos pos)
+        {
+            return grid[n].sn.P.x;
+        }
+        public static double v_sn(this IGrid grid, LimitedDouble n, Pos pos)
+        {
+            return grid[n].sn.P.v_sn;
+        }
 
     }
 }

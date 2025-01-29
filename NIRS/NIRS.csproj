@@ -68,7 +68,10 @@
     <Compile Include="Cannon Folder\Powder Folder\ICombustionFunctions.cs" />
     <Compile Include="Cannon Folder\Powder Folder\IPowder.cs" />
     <Compile Include="Cannon Folder\Powder Folder\Powder_12_7.cs" />
+    <Compile Include="Grid Folder\IGridCellProjectile.cs" />
+    <Compile Include="Nabla Functions\Projectile\IWaypointCalculatorProjectile.cs" />
     <Compile Include="Projectile Folder\IProjectile.cs" />
+    <Compile Include="Projectile Folder\Pos.cs" />
     <Compile Include="Projectile Folder\Projectile functions\IProjectileFunctions.cs" />
     <Compile Include="Projectile Folder\Projectile functions\ProjectileFunctions.cs" />
     <Compile Include="Projectile Folder\Projectile.cs" />
@@ -117,6 +120,7 @@
     <Compile Include="Parameter Type\TypeFromParameterName.cs" />
     <Compile Include="Parameter names\GetterValueByPN.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Projectile Folder\ProjectileParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Numerical Method\SEL.cs" />
     <EmbeddedResource Include="Cannon Folder\Barrel Folder\BarrelInitializationInterface.resx">
