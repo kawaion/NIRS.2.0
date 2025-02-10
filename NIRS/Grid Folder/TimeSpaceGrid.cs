@@ -37,7 +37,9 @@ namespace NIRS.Grid_Folder
                 subGrid[index].N = n;
             }
         }
+
         private int ConvertNToIndex(LimitedDouble n) => (int)(n.Value * 2);
+        private LimitedDouble ConvertIntToLimitedDouble(int n) => new LimitedDouble(n / 2.0);
         private List<ISubGrid> AllocateMemorySubGridForTheIndex(List<ISubGrid> subGrid, int index)
         {
             return subGrid.AllocateUpTo(index);

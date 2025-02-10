@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NIRS.Projectile_Folder
 {
-    class ProjectileParameters
+    public class ProjectileParameters
     {
         public double v_sn { get; set; }
         public double x { get; set; }

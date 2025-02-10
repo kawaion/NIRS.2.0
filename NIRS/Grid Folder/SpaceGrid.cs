@@ -43,9 +43,16 @@ namespace NIRS.Grid_Folder
             {
                 int index = ConvertNToIndex(k);
                 gridCells = AllocateMemorygridCellsForTheIndex(gridCells, index);
-//value.
+                //value.
                 gridCells[index] = value;
             }
+        }
+
+        public LimitedDouble Count()
+        {
+            int count = gridCells.Count;
+            var value = ConvertIndexToN(count);
+            return value;
         }
 
         private List<IGridCell> AllocateMemorygridCellsForTheIndex(List<IGridCell> gridCells, int index)
@@ -61,7 +68,16 @@ namespace NIRS.Grid_Folder
 
             throw new Exception($"значение {n} {k} не подходит ни под один из типов");
         }
-        
+        private LimitedDouble ConvertIndexToN(int value)
+        {
+            if (n.IsHalfInt())
+                return new LimitedDouble(value);
+            if (n.IsInt())
+                return new LimitedDouble(value) + 0.5;
+
+            throw new Exception();
+        }
+
         //те же значения для снаряда
         public IGridCellProjectile sn { get; set; }
     }

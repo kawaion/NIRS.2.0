@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NIRS.Grid_Folder
 {
-    class IGridCellProjectile : IGridCell
+    public class IGridCellProjectile : IGridCell
     {
         public DynamicCharacteristicsFlow D { get; set; }
         public MixtureStateParameters M { get; set; }
