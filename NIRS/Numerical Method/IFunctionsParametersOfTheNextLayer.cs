@@ -1,12 +1,12 @@
 ﻿using MyDouble;
+using NIRS.FunctionsNK;
 using NIRS.Parameter_names;
 
 namespace NIRS.Numerical_Method
 {
-    interface IFunctionsParametersOfTheNextLayer
+    interface IFunctionsParametersOfTheNextLayer : IFunctionNK
     {
         double Get(PN pN, LimitedDouble n, LimitedDouble k);
-
 
         double Get_dynamic_m(LimitedDouble n, LimitedDouble k);
         double Get_v(LimitedDouble n, LimitedDouble k);

@@ -68,11 +68,14 @@
     <Compile Include="Cannon Folder\Powder Folder\ICombustionFunctions.cs" />
     <Compile Include="Cannon Folder\Powder Folder\IPowder.cs" />
     <Compile Include="Cannon Folder\Powder Folder\Powder_12_7.cs" />
+    <Compile Include="FunctionsNK\IFunctionNK.cs" />
     <Compile Include="Grid Folder\IGridCellProjectile.cs" />
     <Compile Include="Nabla Functions\Projectile\IWaypointCalculatorProjectile.cs" />
     <Compile Include="Nabla Functions\Projectile\NablaNodeProjectile.cs" />
     <Compile Include="Nabla Functions\Projectile\WaypointCalculatorExtensionProjectile.cs" />
     <Compile Include="Nabla Functions\Projectile\WaypointCalculatorProjectile.cs" />
+    <Compile Include="Node point interpolation\IInterpolationFunction.cs" />
+    <Compile Include="Node point interpolation\InterpolationFunction.cs" />
     <Compile Include="Node point interpolation\Interpolator.cs" />
     <Compile Include="Projectile Folder\IProjectile.cs" />
     <Compile Include="Projectile Folder\Pos.cs" />

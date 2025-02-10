@@ -20,6 +20,16 @@ namespace NIRS.Node_point_interpolation
             g = grid;
             constP = constParameters; 
         }
+
+        public IGrid Interpolate(LimitedDouble n)
+        {
+            var k = GetKLastNode(n);
+
+            while (isNodeToProjectile(n,k+1))
+            {
+                
+            }
+        }
         // сделать класс checker
         private double GetTheProjectileNodeCoordinate(LimitedDouble n)
         {
@@ -27,9 +37,8 @@ namespace NIRS.Node_point_interpolation
             var value = x / constP.h;
             return value;
         }
-        public bool isExistInterpolatedNode(LimitedDouble n)
+        public bool isNodeToProjectile(LimitedDouble n, LimitedDouble k)
         {
-            var k = GetKLastNode(n);
             var kStroke = GetTheProjectileNodeCoordinate(n);
 
             return k.Value < kStroke;
