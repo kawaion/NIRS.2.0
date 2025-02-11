@@ -26,7 +26,6 @@ namespace NIRS.Projectile_Folder.Projectile_functions
         }
         public double Get(PN pn, LimitedDouble n, Pos pos)
         {
-            throw new NotImplementedException();
         }
 
         public double Get_a(LimitedDouble n, Pos pos)

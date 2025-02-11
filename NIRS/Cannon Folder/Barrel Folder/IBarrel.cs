@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NIRS.Cannon_Folder.Barrel_Folder
 {
-    interface IBarrel
+    public interface IBarrel
     {
         List<Point2D> BendingPoints { get; }
         Point2D EndChamberPoint { get; }

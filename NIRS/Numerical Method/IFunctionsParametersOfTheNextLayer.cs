@@ -4,7 +4,7 @@ using NIRS.Parameter_names;
 
 namespace NIRS.Numerical_Method
 {
-    interface IFunctionsParametersOfTheNextLayer : IFunctionNK
+    public interface IFunctionsParametersOfTheNextLayer
     {
         double Get(PN pN, LimitedDouble n, LimitedDouble k);
 

@@ -4,11 +4,8 @@ using NIRS.Data_Transmitters;
 using NIRS.Grid_Folder;
 using MyDouble;
 using NIRS.Parameter_Type;
-using NIRS.Parameter_names;
-using NIRS.Nabla_Functions;
 using NIRS.Cannon_Folder.Barrel_Folder;
 using NIRS.Cannon_Folder.Powder_Folder;
-using NIRS.H_Functions;
 
 namespace NIRS.Numerical_Method
 {
@@ -27,9 +24,6 @@ namespace NIRS.Numerical_Method
             _powder = powder;
             _initialParameters = initialParameters;
             _constParameters = constParameters;
-
-            _combustionFunctions = new CombustionFunctions(powder, constParameters);
-            _barrelSize = new BarrelSize(barrel,constParameters);
         }
         
         private readonly IOutputDataTransmitter outputDataTransmitter = new OutputDataTransmitter();
@@ -42,14 +36,16 @@ namespace NIRS.Numerical_Method
             var numericalSolution = GetNumericalSolution(gridWithFilledBorders);
             return outputDataTransmitter.GetOutputData(numericalSolution);
         }
+
         private IGrid FillGridBoundaries(IGrid grid,IInitialParameters initialParameters, IConstParameters constParameters)
         {
             IGridBorderFiller gridBorderFiller = new GridBorderFiller();
 
-            return gridBorderFiller.Fill
-                (grid, 
-                initialParameters, constParameters);
+            var gridWithFilledBorders = gridBorderFiller.Fill(grid, initialParameters, constParameters);
+            return gridWithFilledBorders;
         }
+
+
         private IGrid GetNumericalSolution(IGrid grid)
         {
             LimitedDouble n = new LimitedDouble(0);
@@ -73,7 +69,12 @@ namespace NIRS.Numerical_Method
             while (!IsEndCondition())
             {
                 if(ParameterTypeGetter.IsDynamic(n, k) || ParameterTypeGetter.IsMixture(n, k))
+                {
                     grid = GetNumericalSolutionUpToK(grid, n, k );
+                    grid = GetNumericalSolutionInProjectile(grid, n);
+                }
+
+
                 k += 0.5;
             }
             return grid;
@@ -86,59 +87,19 @@ namespace NIRS.Numerical_Method
 
         private IGrid GetNumericalSolutionUpToK(IGrid grid, LimitedDouble n, LimitedDouble k)
         {
-            var functionsNewLayer = GetFunctionsNewLayer(grid);
+            IFunctionsParametersOfTheNextLayer functionsNewLayer = FunctionsNewLayerBuilder.Build(grid, _barrel, _constParameters, _powder);
+            INumericalSolutionInNodes numericalSolutionInNodes = new NumericalSolutionInNodes(functionsNewLayer);
 
-            if (ParameterTypeGetter.IsDynamic(n, k))
-                grid = GetDynamicParametersOfNextLayer(grid, n, k, functionsNewLayer);
-
-            else if (ParameterTypeGetter.IsMixture(n, k))
-                grid = GetMixtureParametersOfNextLayer(grid, n, k, functionsNewLayer);
+            grid = numericalSolutionInNodes.Get(grid, n, k);
 
             return grid;
         }
-
-
-
-        private IFunctionsParametersOfTheNextLayer GetFunctionsNewLayer(IGrid grid)
+        private IGrid GetNumericalSolutionInProjectile(IGrid grid, LimitedDouble n, LimitedDouble k)
         {
-            (var waypointCalculator, var hFunctions) = GetHAndDiffFunctions(grid);
+            IFunctionsParametersOfTheNextLayer functionsNewLayer = FunctionsNewLayerBuilder.Build(grid, _barrel, _constParameters, _powder);
+            INumericalSolutionInNodes numericalSolutionInNodes = new NumericalSolutionInNodes(functionsNewLayer);
 
-            IFunctionsParametersOfTheNextLayer functionsNewLayer = new FunctionsParametersOfTheNextLayer(
-                grid,
-                waypointCalculator,
-                hFunctions,
-                _constParameters,
-                _barrelSize,
-                _powder);
-            return functionsNewLayer;
-        }
-
-        private (IWaypointCalculator waypointCalculator, IHFunctions hFunctions) GetHAndDiffFunctions(IGrid grid)
-        {
-            IWaypointCalculator waypointCalculator = new WaypointCalculator(grid, _constParameters, _barrelSize);
-            IHFunctions hFunctions = new HFunctions(grid, _barrelSize, _powder, _combustionFunctions, _constParameters);
-            return (waypointCalculator, hFunctions);
-        }
-
-
-        private IGrid GetDynamicParametersOfNextLayer(IGrid grid, LimitedDouble n, LimitedDouble k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
-        {
-            grid[n][k].D.dynamic_m = functionsNewLayer.Get(PN.dynamic_m, n, k);
-            grid[n][k].D.v = functionsNewLayer.Get(PN.v, n, k);
-            grid[n][k].D.M = functionsNewLayer.Get(PN.M, n, k);
-            grid[n][k].D.w = functionsNewLayer.Get(PN.w, n, k);
-
-            return grid;
-        }        
-        private IGrid GetMixtureParametersOfNextLayer(IGrid grid, LimitedDouble n, LimitedDouble k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
-        {
-            grid[n][k].M.r = functionsNewLayer.Get(PN.r, n, k);
-            grid[n][k].M.e = functionsNewLayer.Get(PN.e, n, k);
-            grid[n][k].M.psi = functionsNewLayer.Get(PN.psi, n, k);
-            grid[n][k].M.z = functionsNewLayer.Get(PN.z, n, k);
-            grid[n][k].M.a = functionsNewLayer.Get(PN.a, n, k);
-            grid[n][k].M.p = functionsNewLayer.Get(PN.p, n, k);
-            grid[n][k].M.m = functionsNewLayer.Get(PN.m, n, k);
+            grid = numericalSolutionInNodes.Get(grid, n, k);
 
             return grid;
         }

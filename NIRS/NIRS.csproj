@@ -77,6 +77,9 @@
     <Compile Include="Node point interpolation\IInterpolationFunction.cs" />
     <Compile Include="Node point interpolation\InterpolationFunction.cs" />
     <Compile Include="Node point interpolation\Interpolator.cs" />
+    <Compile Include="Numerical Method\FunctionsNewLayerBuilder.cs" />
+    <Compile Include="Numerical Method\INumericalSolutionInNodes.cs" />
+    <Compile Include="Numerical Method\NumericalSolutionInNodes.cs" />
     <Compile Include="Projectile Folder\IProjectile.cs" />
     <Compile Include="Projectile Folder\Pos.cs" />
     <Compile Include="Projectile Folder\Projectile functions\IProjectileFunctions.cs" />

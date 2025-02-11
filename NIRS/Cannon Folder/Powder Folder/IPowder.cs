@@ -2,7 +2,7 @@
 
 namespace NIRS.Cannon_Folder.Powder_Folder
 {
-    interface IPowder
+    public interface IPowder
     {
         double Kappa { get; set; }
         double Lamda { get; set; }
