@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIRS.Numerical_Method
+namespace NIRS.Numerical_solution
 {
-    interface INumericalSolutionInNodes
+    public interface INumericalSolutionProjectile
     {
-        IGrid Get(IGrid grid, LimitedDouble n, LimitedDouble k)
+        IGrid Get(IGrid grid, LimitedDouble n);
     }
 }

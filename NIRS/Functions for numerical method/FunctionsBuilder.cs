@@ -4,17 +4,17 @@ using NIRS.Data_Parameters.Input_Data_Parameters;
 using NIRS.Grid_Folder;
 using NIRS.H_Functions;
 using NIRS.Nabla_Functions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NIRS.Projectile_Folder;
 
-namespace NIRS.Numerical_Method
+namespace NIRS.Functions_for_numerical_method
 {
-    public static class FunctionsNewLayerBuilder
+    public class FunctionsBuilder
     {
-        public static IFunctionsParametersOfTheNextLayer Build(IGrid grid,IBarrel barrel, IConstParameters constParameters, IPowder powder)
+        public FunctionsBuilder()
+        {
+
+        }
+        public IFunctionsParametersOfTheNextLayer FunctionsParametersOfTheNextLayerBuild(IGrid grid,IBarrel barrel, IConstParameters constParameters, IPowder powder)
         {
             IBarrelSize barrelSize = new BarrelSize(barrel, constParameters);
             ICombustionFunctions combustionFunctions = new CombustionFunctions(powder, constParameters);
@@ -29,6 +29,11 @@ namespace NIRS.Numerical_Method
                 barrelSize,
                 powder);
             return functionsNewLayer;
+        }
+        public IProjectileFunctions ProjectileFunctionsBuild(IGrid grid, IProjectile projectile, IConstParameters constParameters)
+        {
+            IProjectileFunctions projectileFunctions = new ProjectileFunctions(grid, projectile, constParameters);
+            return projectileFunctions;
         }
     }
 }

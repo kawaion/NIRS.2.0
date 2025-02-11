@@ -1,8 +1,7 @@
 ﻿using MyDouble;
-using NIRS.FunctionsNK;
 using NIRS.Parameter_names;
 
-namespace NIRS.Numerical_Method
+namespace NIRS.Functions_for_numerical_method
 {
     public interface IFunctionsParametersOfTheNextLayer
     {

@@ -4,15 +4,12 @@ using NIRS.Data_Parameters.Input_Data_Parameters;
 using NIRS.Grid_Folder;
 using NIRS.Grid_Folder.Mediator;
 using NIRS.Parameter_names;
+using NIRS.Projectile_Folder;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NIRS.Projectile_Folder.Projectile_functions
+namespace NIRS.Functions_for_numerical_method
 {
-    class ProjectileFunctions : IProjectileFunctions
+    public class ProjectileFunctions : IProjectileFunctions
     {
         private readonly IGrid g;
         private readonly IProjectile sn;
@@ -28,7 +25,12 @@ namespace NIRS.Projectile_Folder.Projectile_functions
         {
         }
 
-        public double Get_a(LimitedDouble n, Pos pos)
+        public double Get(PN pn, LimitedDouble n)
+        {
+            throw new NotImplementedException();
+        }
+
+        public double Get_a(LimitedDouble n)
         {
             return g.a(n, Pos.sn) *
                 (
@@ -39,8 +41,7 @@ namespace NIRS.Projectile_Folder.Projectile_functions
                     )
                 );
         }
-
-        public double Get_e(LimitedDouble n, Pos pos)
+        public double Get_e(LimitedDouble n)
         {
             return g.e(n, Pos.sn) - constP.tau *
                 (
@@ -50,43 +51,42 @@ namespace NIRS.Projectile_Folder.Projectile_functions
                 );
                    
         }
-
-        public double Get_m(LimitedDouble n, Pos pos)
+        public double Get_m(LimitedDouble n)
         {
             throw new NotImplementedException();
         }
 
-        public double Get_p(LimitedDouble n, Pos pos)
+        public double Get_p(LimitedDouble n)
         {
             throw new NotImplementedException();
         }
 
-        public double Get_psi(LimitedDouble n, Pos pos)
+        public double Get_psi(LimitedDouble n)
         {
             throw new NotImplementedException();
         }
 
-        public double Get_r(LimitedDouble n, Pos pos)
+        public double Get_r(LimitedDouble n)
         {
             throw new NotImplementedException();
         }
 
-        public double Get_ro(LimitedDouble n, Pos pos)
+        public double Get_ro(LimitedDouble n)
         {
             throw new NotImplementedException();
         }
 
-        public double Get_v(LimitedDouble n, Pos pos)
+        public double Get_v(LimitedDouble n)
         {
             throw new NotImplementedException();
         }
 
-        public double Get_x(LimitedDouble n, Pos pos)
+        public double Get_x(LimitedDouble n)
         {
             throw new NotImplementedException();
         }
 
-        public double Get_z(LimitedDouble n, Pos pos)
+        public double Get_z(LimitedDouble n)
         {
             throw new NotImplementedException();
         }

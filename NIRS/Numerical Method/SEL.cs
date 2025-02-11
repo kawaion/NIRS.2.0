@@ -6,6 +6,9 @@ using MyDouble;
 using NIRS.Parameter_Type;
 using NIRS.Cannon_Folder.Barrel_Folder;
 using NIRS.Cannon_Folder.Powder_Folder;
+using NIRS.Functions_for_numerical_method;
+using NIRS.Projectile_Folder;
+using NIRS.Numerical_solution;
 
 namespace NIRS.Numerical_Method
 {
@@ -15,8 +18,6 @@ namespace NIRS.Numerical_Method
         private readonly IPowder _powder;
         private readonly IInitialParameters _initialParameters;
         private readonly IConstParameters _constParameters;
-        private readonly IBarrelSize _barrelSize;
-        private readonly ICombustionFunctions _combustionFunctions;
 
         public SEL(IBarrel barrel, IPowder powder, IInitialParameters initialParameters, IConstParameters constParameters)
         {
@@ -52,7 +53,9 @@ namespace NIRS.Numerical_Method
 
             while (!IsEndCondition())
             {
-                grid = GetNumericalSolutionUpToN(grid, n );
+                grid = GetNumericalSolutionAtNodeN(grid, n);
+                grid = GetNumericalSolutionInProjectile(grid, n);
+                grid = GetNumericalSolutionAtInaccessibleNodes(grid, n);
                 n += 0.5;
             }
             return grid;
@@ -62,7 +65,7 @@ namespace NIRS.Numerical_Method
 
             }
         }
-        private IGrid GetNumericalSolutionUpToN(IGrid grid, LimitedDouble n)
+        private IGrid GetNumericalSolutionAtNodeN(IGrid grid, LimitedDouble n)
         {
             LimitedDouble k = new LimitedDouble(0);
 
@@ -70,8 +73,7 @@ namespace NIRS.Numerical_Method
             {
                 if(ParameterTypeGetter.IsDynamic(n, k) || ParameterTypeGetter.IsMixture(n, k))
                 {
-                    grid = GetNumericalSolutionUpToK(grid, n, k );
-                    grid = GetNumericalSolutionInProjectile(grid, n);
+                    grid = GetNumericalSolutionAtNodeNK(grid, n, k );
                 }
 
 
@@ -85,21 +87,24 @@ namespace NIRS.Numerical_Method
             }
         }
 
-        private IGrid GetNumericalSolutionUpToK(IGrid grid, LimitedDouble n, LimitedDouble k)
+        private IGrid GetNumericalSolutionAtNodeNK(IGrid grid, LimitedDouble n, LimitedDouble k)
         {
-            IFunctionsParametersOfTheNextLayer functionsNewLayer = FunctionsNewLayerBuilder.Build(grid, _barrel, _constParameters, _powder);
+            FunctionsBuilder functionsBuilder = new FunctionsBuilder();
+            var functionsNewLayer = functionsBuilder.FunctionsParametersOfTheNextLayerBuild(grid, _barrel, _constParameters, _powder);
             INumericalSolutionInNodes numericalSolutionInNodes = new NumericalSolutionInNodes(functionsNewLayer);
 
             grid = numericalSolutionInNodes.Get(grid, n, k);
 
             return grid;
         }
-        private IGrid GetNumericalSolutionInProjectile(IGrid grid, LimitedDouble n, LimitedDouble k)
+        private IGrid GetNumericalSolutionInProjectile(IGrid grid, LimitedDouble n)
         {
-            IFunctionsParametersOfTheNextLayer functionsNewLayer = FunctionsNewLayerBuilder.Build(grid, _barrel, _constParameters, _powder);
-            INumericalSolutionInNodes numericalSolutionInNodes = new NumericalSolutionInNodes(functionsNewLayer);
+            FunctionsBuilder functionsBuilder = new FunctionsBuilder();
+            IProjectile projectile = new Projectile(q);
+            var projectileFunctions = functionsBuilder.ProjectileFunctionsBuild(grid, projectile, _constParameters);
+            INumericalSolutionProjectile numericalSolutionProjectile = new NumericalSolutionProjectile(projectileFunctions);
 
-            grid = numericalSolutionInNodes.Get(grid, n, k);
+            grid = numericalSolutionProjectile.Get(grid, n);
 
             return grid;
         }

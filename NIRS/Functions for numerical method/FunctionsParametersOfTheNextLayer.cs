@@ -11,7 +11,7 @@ using NIRS.H_Functions;
 using NIRS.Cannon_Folder.Powder_Folder;
 using NIRS.Additional_calculated_values;
 
-namespace NIRS.Numerical_Method
+namespace NIRS.Functions_for_numerical_method
 {
     class FunctionsParametersOfTheNextLayer : IFunctionsParametersOfTheNextLayer
     {

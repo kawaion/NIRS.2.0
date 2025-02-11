@@ -1,34 +1,25 @@
 ﻿using MyDouble;
-using NIRS.Cannon_Folder.Barrel_Folder;
-using NIRS.Cannon_Folder.Powder_Folder;
-using NIRS.Data_Parameters.Input_Data_Parameters;
+using NIRS.Functions_for_numerical_method;
 using NIRS.Grid_Folder;
-using NIRS.H_Functions;
-using NIRS.Nabla_Functions;
 using NIRS.Parameter_names;
 using NIRS.Parameter_Type;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NIRS.Numerical_Method
+namespace NIRS.Numerical_solution
 {
     class NumericalSolutionInNodes : INumericalSolutionInNodes
     {
-        private IFunctionsParametersOfTheNextLayer _functionsNewLayer;
+        private IFunctionsParametersOfTheNextLayer _functions;
         public NumericalSolutionInNodes(IFunctionsParametersOfTheNextLayer functionsParametersOfTheNextLayer)
         {
-            _functionsNewLayer = functionsParametersOfTheNextLayer;
+            _functions = functionsParametersOfTheNextLayer;
         }
         public IGrid Get(IGrid grid, LimitedDouble n, LimitedDouble k)
         {
             if (ParameterTypeGetter.IsDynamic(n, k))
-                grid = GetDynamicParametersOfNextLayer(grid, n, k, _functionsNewLayer);
+                grid = GetDynamicParametersOfNextLayer(grid, n, k, _functions);
 
             else if (ParameterTypeGetter.IsMixture(n, k))
-                grid = GetMixtureParametersOfNextLayer(grid, n, k, _functionsNewLayer);
+                grid = GetMixtureParametersOfNextLayer(grid, n, k, _functions);
 
             return grid;
         }
