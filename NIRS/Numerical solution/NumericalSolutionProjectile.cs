@@ -1,6 +1,7 @@
 ﻿using MyDouble;
 using NIRS.Functions_for_numerical_method;
 using NIRS.Grid_Folder;
+using NIRS.Parameter_names;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,34 +21,34 @@ namespace NIRS.Numerical_solution
 
         public IGrid Get(IGrid grid, LimitedDouble n)
         {
-            if (ParameterTypeGetter.IsDynamic(n, k))
-                grid = GetDynamicParametersOfNextLayer(grid, n, k, _functions);
+            if (n.Type == DoubleType.HalfInt)
+                grid = GetDynamicParametersOfNextLayer(grid, n,  _functions);
 
-            else if (ParameterTypeGetter.IsMixture(n, k))
-                grid = GetMixtureParametersOfNextLayer(grid, n, k, _functions);
-
-            return grid;
-        }
-
-
-        private IGrid GetDynamicParametersOfNextLayer(IGrid grid, LimitedDouble n, LimitedDouble k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
-        {
-            grid[n][k].D.dynamic_m = functionsNewLayer.Get(PN.dynamic_m, n, k);
-            grid[n][k].D.v = functionsNewLayer.Get(PN.v, n, k);
-            grid[n][k].D.M = functionsNewLayer.Get(PN.M, n, k);
-            grid[n][k].D.w = functionsNewLayer.Get(PN.w, n, k);
+            else if (n.Type == DoubleType.Int)
+                grid = GetMixtureParametersOfNextLayer(grid, n,  _functions);
 
             return grid;
         }
-        private IGrid GetMixtureParametersOfNextLayer(IGrid grid, LimitedDouble n, LimitedDouble k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
+
+
+        private IGrid GetDynamicParametersOfNextLayer(IGrid grid, LimitedDouble n, IProjectileFunctions functions)
         {
-            grid[n][k].M.r = functionsNewLayer.Get(PN.r, n, k);
-            grid[n][k].M.e = functionsNewLayer.Get(PN.e, n, k);
-            grid[n][k].M.psi = functionsNewLayer.Get(PN.psi, n, k);
-            grid[n][k].M.z = functionsNewLayer.Get(PN.z, n, k);
-            grid[n][k].M.a = functionsNewLayer.Get(PN.a, n, k);
-            grid[n][k].M.p = functionsNewLayer.Get(PN.p, n, k);
-            grid[n][k].M.m = functionsNewLayer.Get(PN.m, n, k);
+            grid[n].sn.D.dynamic_m = functions.Get(PN.dynamic_m, n);
+            grid[n].sn.D.v = functions.Get(PN.v, n);
+            grid[n].sn.D.M = functions.Get(PN.M, n);
+            grid[n].sn.D.w = functions.Get(PN.w, n);
+
+            return grid;
+        }
+        private IGrid GetMixtureParametersOfNextLayer(IGrid grid, LimitedDouble n, IProjectileFunctions functions)
+        {
+            grid[n].sn.M.r = functions.Get(PN.r, n);
+            grid[n].sn.M.e = functions.Get(PN.e, n);
+            grid[n].sn.M.psi = functions.Get(PN.psi, n);
+            grid[n].sn.M.z = functions.Get(PN.z, n);
+            grid[n].sn.M.a = functions.Get(PN.a, n);
+            grid[n].sn.M.p = functions.Get(PN.p, n);
+            grid[n].sn.M.m = functions.Get(PN.m, n);
 
             return grid;
         }

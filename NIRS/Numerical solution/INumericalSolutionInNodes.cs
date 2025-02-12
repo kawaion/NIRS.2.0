@@ -10,6 +10,6 @@ namespace NIRS.Numerical_solution
 {
     interface INumericalSolutionInNodes
     {
-        IGrid Get(IGrid grid, LimitedDouble n, LimitedDouble k)
+        IGrid Get(IGrid grid, LimitedDouble n, LimitedDouble k);
     }
 }

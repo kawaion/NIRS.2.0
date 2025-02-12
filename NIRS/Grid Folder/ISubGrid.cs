@@ -5,10 +5,9 @@ namespace NIRS.Grid_Folder
     public interface ISubGrid
     {
         LimitedDouble N { get; set; }
-        IGridCell this[LimitedDouble i] { get; set; }        
+        IGridCell this[LimitedDouble i] { get; set; }
         LimitedDouble Count();
 
         IGridCellProjectile sn { get; set; }
-
     }
 }
