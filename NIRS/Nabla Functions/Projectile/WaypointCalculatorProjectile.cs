@@ -39,13 +39,13 @@ namespace NIRS.Nabla_Functions.Projectile
         }
         private double AverageWithS(PN mu, PN v, LimitedDouble n)
         {
-            ;
+            XGetter x = new XGetter(constP);
             // формула преобразуется в значение на n,k
             double V = gByPN.GetParamCell(v, n);
             if (V >= 0)
                 return V * gByPN.GetParamCell(mu, n - 0.5) * bs.S(g[n].sn.P.x);
             else
-                return V * gByPN.GetParamCell(mu, n - 0.5) * bs.SByIndex(k - 0.5);
+                return V * gByPN.GetParamCell(mu, n - 0.5) * bs.S(x[k]);
         }
 
     }

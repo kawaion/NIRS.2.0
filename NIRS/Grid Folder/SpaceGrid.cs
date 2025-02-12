@@ -48,11 +48,16 @@ namespace NIRS.Grid_Folder
             }
         }
 
-        public LimitedDouble Count()
+        public LimitedDouble LastIndex()
         {
-            int count = gridCells.Count;
-            var value = ConvertIndexToN(count);
+            int lastIndex = gridCells.Count-1;  // провертить в тесте выдается ли последний индекс
+            var value = ConvertIndexToN(lastIndex);
             return value;
+        }
+        public IGridCell Last()
+        {
+            int lastI = ConvertNToIndex(LastIndex());
+            return gridCells[lastI];
         }
 
         private List<IGridCell> AllocateMemorygridCellsForTheIndex(List<IGridCell> gridCells, int index)

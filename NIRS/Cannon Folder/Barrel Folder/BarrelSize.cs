@@ -6,7 +6,6 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
 {
     class BarrelSize : IBarrelSize
     {        
-        public double h { get; } // нужен для класса BarrelSizeByIndex
         private readonly IBarrel _barrel;
         FinderPointsBetweenCurrent _finderPointsBetweenCurrent;
         public BarrelSize(IBarrel barrel,IConstParameters constParameters)
@@ -15,7 +14,6 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
             _finderPointsBetweenCurrent = new FinderPointsBetweenCurrent(barrel.BendingPoints);
             Skn = GetSkn();
             Wkm = GetWkm();
-            h = constParameters.h;
         }
 
         public double Skn { get; }

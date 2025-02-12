@@ -55,7 +55,7 @@ namespace NIRS.Numerical_Method
             {
                 grid = GetNumericalSolutionAtNodeN(grid, n);
                 grid = GetNumericalSolutionInProjectile(grid, n);
-                grid = GetNumericalSolutionAtInaccessibleNodes(grid, n);
+                grid = GetInterpolateSolutionAtInaccessibleNodes(grid, n);
                 n += 0.5;
             }
             return grid;
@@ -105,6 +105,17 @@ namespace NIRS.Numerical_Method
             INumericalSolutionProjectile numericalSolutionProjectile = new NumericalSolutionProjectile(projectileFunctions);
 
             grid = numericalSolutionProjectile.Get(grid, n);
+
+            return grid;
+        }
+
+        private IGrid GetInterpolateSolutionAtInaccessibleNodes(IGrid grid, LimitedDouble n)
+        {
+            FunctionsBuilder functionsBuilder = new FunctionsBuilder();
+            var functionsNewLayer = functionsBuilder.FunctionsParametersOfTheNextLayerBuild(grid, _barrel, _constParameters, _powder);
+            INumericalSolutionInNodes numericalSolutionInNodes = new NumericalSolutionInNodes(functionsNewLayer);
+
+            grid = numericalSolutionInNodes.Get(grid, n, k);
 
             return grid;
         }

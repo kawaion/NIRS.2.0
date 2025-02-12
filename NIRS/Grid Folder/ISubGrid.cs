@@ -6,7 +6,7 @@ namespace NIRS.Grid_Folder
     {
         LimitedDouble N { get; set; }
         IGridCell this[LimitedDouble i] { get; set; }
-        LimitedDouble Count();
+        LimitedDouble LastIndex();
 
         IGridCellProjectile sn { get; set; }
     }

@@ -4,7 +4,6 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
 {
     interface IBarrelSize
     {
-        double h { get; }
         double Skn { get; }
         double Wkm { get; }
 

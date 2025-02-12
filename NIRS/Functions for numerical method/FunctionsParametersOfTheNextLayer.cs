@@ -22,6 +22,8 @@ namespace NIRS.Functions_for_numerical_method
         private readonly IHFunctions hf;
         private readonly IPowder powder;
 
+        private readonly XGetter x;
+
 
         public FunctionsParametersOfTheNextLayer(   IGrid grid, 
                                                     IWaypointCalculator waypointCalculator, 
@@ -36,6 +38,8 @@ namespace NIRS.Functions_for_numerical_method
             constP = constParameters;
             bs = barrelSize;
             powder = powderElement;
+
+            x = new XGetter(constP);
         }
 
         public double Get(PN pN, LimitedDouble n, LimitedDouble k)
@@ -65,7 +69,7 @@ namespace NIRS.Functions_for_numerical_method
             return g.dynamic_m(n - 0.5, k) - constP.tau *
                 (
                     wc.Nabla(PN.dynamic_m, PN.v).Cell(n - 0.5, k)
-                   + (g.dynamic_m(n, k - 0.5) * bs.SByIndex(k - 0.5) + g.dynamic_m(n, k + 0.5) * bs.SByIndex(k + 0.5)) / 2
+                   + (g.dynamic_m(n, k - 0.5) * bs.S(x[k - 0.5]) + g.dynamic_m(n, k + 0.5) * bs.S(x[k + 0.5])) / 2
                         * wc.dPStrokeDivdx().Cell(n, k)
                    - hf.H1(n, k)
                 );
@@ -82,7 +86,7 @@ namespace NIRS.Functions_for_numerical_method
             return g.M(n - 0.5, k) - constP.tau *
                 (
                     wc.Nabla(PN.M, PN.w).Cell(n - 0.5, k)
-                   + ((1 - g.m(n, k - 0.5)) * bs.SByIndex(k - 0.5) + (1 - g.m(n, k + 0.5)) * bs.SByIndex(k + 0.5)) / 2 
+                   + ((1 - g.m(n, k - 0.5)) * bs.S(x[k - 0.5]) + (1 - g.m(n, k + 0.5)) * bs.S(x[k + 0.5])) / 2 
                         * wc.dPStrokeDivdx().Cell(n, k)
                    - hf.H2(n, k)
                 );
@@ -92,8 +96,8 @@ namespace NIRS.Functions_for_numerical_method
             (n, k) = OffseterNK.Appoint(n, k).Offset(n + 0.5, k);
             return 2 * g.M(n + 0.5, k)
                     / (constP.delta * (
-                                      (1 - g.m(n, k - 0.5)) * bs.SByIndex(k - 0.5) 
-                                    + (1 - g.m(n, k + 0.5)) * bs.SByIndex(k + 0.5) 
+                                      (1 - g.m(n, k - 0.5)) * bs.S(x[k - 0.5]) 
+                                    + (1 - g.m(n, k + 0.5)) * bs.S(x[k + 0.5]) 
                                       )
                       );
         }     
@@ -143,14 +147,14 @@ namespace NIRS.Functions_for_numerical_method
             return g.a(n,k-0.5) - constP.tau *
                 (
                     wc.Nabla(PN.a, PN.S, PN.w).Cell(n + 0.5, k - 0.5) 
-                        / bs.SByIndex(k - 0.5)
+                        / bs.S(x[k - 0.5])
                 );
         }
         public double Get_p(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.Appoint(n, k).Offset(n + 1, k - 0.5);
             return constP.teta * g.e(n + 1, k - 0.5)
-                    / (g.m(n + 1, k - 0.5) * bs.SByIndex(k - 0.5) - constP.alpha * g.r(n + 1, k - 0.5));
+                    / (g.m(n + 1, k - 0.5) * bs.S(x[k - 0.5]) - constP.alpha * g.r(n + 1, k - 0.5));
         }
         public double Get_m(LimitedDouble n, LimitedDouble k)
         {

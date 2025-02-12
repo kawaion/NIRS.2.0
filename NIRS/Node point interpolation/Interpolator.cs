@@ -45,7 +45,7 @@ namespace NIRS.Node_point_interpolation
         }
         private LimitedDouble GetKLastNode(LimitedDouble n)
         {
-            return g[n].Count();
+            return g[n].LastIndex();
         }
     }
 }

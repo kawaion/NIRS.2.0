@@ -20,14 +20,17 @@ namespace NIRS.Nabla_Functions
         private readonly IGrid g;
         private readonly IConstParameters constP;
         private readonly IBarrelSize bs;
-        private readonly GetterValueByPN gByPN;
 
+        private readonly GetterValueByPN gByPN;
+        private readonly XGetter x;
         public WaypointCalculator(IGrid grid, IConstParameters constParameters, IBarrelSize barrelSize)
         {
             g = grid;
             constP = constParameters;
             bs = barrelSize;
+
             gByPN = new GetterValueByPN(grid);
+            x = new XGetter(constParameters);
         }
 
 
@@ -42,9 +45,9 @@ namespace NIRS.Nabla_Functions
             // формула преобразуется в значение на n,k
             double V = gByPN.GetParamCell(v, n, k);
             if (V >= 0)
-                return V * gByPN.GetParamCell(mu, n - 0.5, k - 0.5) * bs.SByIndex(k - 0.5);
+                return V * gByPN.GetParamCell(mu, n - 0.5, k - 0.5) * bs.S(x[k - 0.5]);
             else
-                return V * gByPN.GetParamCell(mu, n - 0.5, k + 0.5) * bs.SByIndex(k - 0.5);
+                return V * gByPN.GetParamCell(mu, n - 0.5, k + 0.5) * bs.S(x[k - 0.5]);
         }
 
 
