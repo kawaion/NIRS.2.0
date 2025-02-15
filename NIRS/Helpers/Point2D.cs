@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NIRS.Helpers
 {
-    class Point2D
+    public class Point2D
     {
         public Point2D(double x, double y)
         {

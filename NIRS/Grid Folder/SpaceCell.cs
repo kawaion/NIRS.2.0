@@ -1,4 +1,5 @@
-﻿using NIRS.Parameter_Type;
+﻿using NIRS.Interfaces;
+using NIRS.Parameter_Type;
 using System;
 using System.Collections.Generic;
 using System.Linq;

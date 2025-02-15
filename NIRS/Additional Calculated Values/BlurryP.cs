@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NIRS.Grid_Folder.Mediator;
+using NIRS.Interfaces;
 
 namespace NIRS.Additional_calculated_values
 {

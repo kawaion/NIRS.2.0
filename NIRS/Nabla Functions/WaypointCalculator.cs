@@ -12,6 +12,7 @@ using NIRS.Cannon_Folder.Barrel_Folder;
 using NIRS.Helpers;
 using NIRS.Grid_Folder.Mediator;
 using NIRS.Additional_calculated_values;
+using NIRS.Interfaces;
 
 namespace NIRS.Nabla_Functions
 {
@@ -23,14 +24,14 @@ namespace NIRS.Nabla_Functions
 
         private readonly GetterValueByPN gByPN;
         private readonly XGetter x;
-        public WaypointCalculator(IGrid grid, IConstParameters constParameters, IBarrelSize barrelSize)
+        public WaypointCalculator(IGrid grid, IBarrelSize barrelSize, IMainData mainData)
         {
             g = grid;
-            constP = constParameters;
+            constP = mainData.ConstParameters;
             bs = barrelSize;
 
             gByPN = new GetterValueByPN(grid);
-            x = new XGetter(constParameters);
+            x = new XGetter(mainData.ConstParameters);
         }
 
 

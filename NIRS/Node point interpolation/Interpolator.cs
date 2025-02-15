@@ -1,6 +1,7 @@
 ﻿using MyDouble;
 using NIRS.Data_Parameters.Input_Data_Parameters;
 using NIRS.Grid_Folder;
+using NIRS.Interfaces;
 using NIRS.Parameter_names;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,10 @@ namespace NIRS.Node_point_interpolation
         private readonly IGrid g;
         private readonly IConstParameters constP;
 
-        public Interpolator(IGrid grid, IConstParameters constParameters)
+        public Interpolator(IGrid grid, IMainData mainData)
         {
             g = grid;
-            constP = constParameters; 
+            constP = mainData.ConstParameters; 
         }
 
         public IGrid Interpolate(LimitedDouble n)

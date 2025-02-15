@@ -1,6 +1,7 @@
 ﻿using MyDouble;
 using NIRS.Functions_for_numerical_method;
 using NIRS.Grid_Folder;
+using NIRS.Interfaces;
 using NIRS.Parameter_names;
 using NIRS.Parameter_Type;
 

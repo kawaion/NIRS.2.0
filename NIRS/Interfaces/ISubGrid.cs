@@ -1,0 +1,12 @@
+﻿using MyDouble;
+
+namespace NIRS.Interfaces
+{
+    public interface ISubGrid
+    {
+        LimitedDouble N { get; set; }
+        IGridCell this[LimitedDouble i] { get; set; }
+        LimitedDouble LastIndex();
+        IGridCellProjectile sn { get; set; }
+    }
+}

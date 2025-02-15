@@ -5,7 +5,7 @@ using NIRS.Nabla_Functions;
 using NIRS.Parameter_names;
 using MyDouble;
 using System;
-
+using NIRS.Interfaces;
 
 namespace NIRS.Additional_calculated_values
 {

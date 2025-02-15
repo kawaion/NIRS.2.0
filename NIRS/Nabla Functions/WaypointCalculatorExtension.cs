@@ -1,4 +1,5 @@
-﻿using NIRS.Nabla_Functions.Close;
+﻿using NIRS.Interfaces;
+using NIRS.Nabla_Functions.Close;
 using NIRS.Parameter_names;
 using System;
 using System.Collections.Generic;

@@ -16,6 +16,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NIRS.Interfaces;
+using NIRS.Main_data;
+using NIRS.Projectile_Folder;
 
 namespace NIRS
 {
@@ -37,9 +40,10 @@ namespace NIRS
                                              newConstParameters.d0, 
                                              newConstParameters.L0, 
                                              newConstParameters.u1, 
-                                             newConstParameters.e1); 
-              
-            INumericalMethod numericalMethod = new SEL(barrel, powder, newInitialParameters, newConstParameters);
+                                             newConstParameters.e1);
+            IProjectile projectile = new Projectile(q, d);
+            IMainData mainData = new MainData(barrel, powder, constParameters, initialParameters, projectile);
+            INumericalMethod numericalMethod = new SEL(mainData);
             IGrid grid = numericalMethod.Calculate();
         }
     }

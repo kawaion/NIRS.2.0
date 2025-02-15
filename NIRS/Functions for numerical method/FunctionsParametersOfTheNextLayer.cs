@@ -10,6 +10,7 @@ using NIRS.Cannon_Folder.Barrel_Folder;
 using NIRS.H_Functions;
 using NIRS.Cannon_Folder.Powder_Folder;
 using NIRS.Additional_calculated_values;
+using NIRS.Interfaces;
 
 namespace NIRS.Functions_for_numerical_method
 {
@@ -28,18 +29,16 @@ namespace NIRS.Functions_for_numerical_method
         public FunctionsParametersOfTheNextLayer(   IGrid grid, 
                                                     IWaypointCalculator waypointCalculator, 
                                                     IHFunctions hFunctions,
-                                                    IConstParameters constParameters,
-                                                    IBarrelSize barrelSize, 
-                                                    IPowder powderElement)
+                                                    IMainData mainData)
         {
             g = grid;
             wc = waypointCalculator;
             hf = hFunctions;
-            constP = constParameters;
-            bs = barrelSize;
-            powder = powderElement;
+            constP = mainData.ConstParameters;
+            bs = mainData.BarrelSize;
+            powder = mainData.Powder;
 
-            x = new XGetter(constP);
+            x = new XGetter(mainData.ConstParameters);
         }
 
         public double Get(PN pN, LimitedDouble n, LimitedDouble k)

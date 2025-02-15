@@ -6,6 +6,7 @@ using NIRS.Parameter_Type;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NIRS.Interfaces;
 
 namespace NIRS.Grid_Folder
 {

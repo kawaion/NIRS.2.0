@@ -49,44 +49,45 @@
   <ItemGroup>
     <Compile Include="Additional calculated values\BlurryP.cs" />
     <Compile Include="Boundary Interfaces\IInputDataTransmitter.cs" />
-    <Compile Include="Cannon Folder\Barrel Folder\Barrel.cs" />
-    <Compile Include="Cannon Folder\Barrel Folder\BarrelInitializationInterface.cs">
+    <Compile Include="Barrel Folder\Barrel.cs" />
+    <Compile Include="Barrel Folder\BarrelInitializationInterface.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cannon Folder\Barrel Folder\BarrelInitializationInterface.Designer.cs">
+    <Compile Include="Barrel Folder\BarrelInitializationInterface.Designer.cs">
       <DependentUpon>BarrelInitializationInterface.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cannon Folder\Barrel Folder\BarrelSize.cs" />
-    <Compile Include="Cannon Folder\Barrel Folder\FinderPointsBetweenCurrent.cs" />
-    <Compile Include="Cannon Folder\Barrel Folder\IBarrel.cs" />
-    <Compile Include="Cannon Folder\Barrel Folder\IBarrelSize.cs" />
-    <Compile Include="Cannon Folder\Barrel Folder\ShifterCannonToZero.cs" />
-    <Compile Include="Cannon Folder\Barrel Folder\VBarrelParts.cs" />
-    <Compile Include="Cannon Folder\Cannon.cs" />
-    <Compile Include="Cannon Folder\Powder Folder\CombustionFunctions.cs" />
-    <Compile Include="Cannon Folder\Powder Folder\ICombustionFunctions.cs" />
-    <Compile Include="Cannon Folder\Powder Folder\IPowder.cs" />
-    <Compile Include="Cannon Folder\Powder Folder\Powder_12_7.cs" />
-    <Compile Include="Functions for numerical method\IParameterInterpolationFunctions.cs" />
+    <Compile Include="Barrel Folder\BarrelSize.cs" />
+    <Compile Include="Barrel Folder\FinderPointsBetweenCurrent.cs" />
+    <Compile Include="Interfaces\IBarrel.cs" />
+    <Compile Include="Interfaces\IBarrelSize.cs" />
+    <Compile Include="Barrel Folder\ShifterCannonToZero.cs" />
+    <Compile Include="Barrel Folder\VBarrelParts.cs" />
+    <Compile Include="Main data\MainData.cs" />
+    <Compile Include="Powder Folder\CombustionFunctions.cs" />
+    <Compile Include="Interfaces\ICombustionFunctions.cs" />
+    <Compile Include="Interfaces\IMainData.cs" />
+    <Compile Include="Interfaces\IPowder.cs" />
+    <Compile Include="Powder Folder\Powder_12_7.cs" />
+    <Compile Include="Interfaces\IParameterInterpolationFunctions.cs" />
     <Compile Include="Functions for numerical method\ParameterInterpolationFunctions.cs" />
-    <Compile Include="Grid Folder\IGridCellProjectile.cs" />
+    <Compile Include="Interfaces\IGridCellProjectile.cs" />
     <Compile Include="Helpers\KGetter.cs" />
     <Compile Include="Helpers\XGetter.cs" />
     <Compile Include="Nabla Functions\Projectile\IWaypointCalculatorProjectile.cs" />
     <Compile Include="Nabla Functions\Projectile\NablaNodeProjectile.cs" />
     <Compile Include="Nabla Functions\Projectile\WaypointCalculatorExtensionProjectile.cs" />
     <Compile Include="Nabla Functions\Projectile\WaypointCalculatorProjectile.cs" />
-    <Compile Include="Node point interpolation\IInterpolationFunction.cs" />
+    <Compile Include="Interfaces\IInterpolationFunction.cs" />
     <Compile Include="Node point interpolation\InterpolationFunction.cs" />
     <Compile Include="Node point interpolation\Interpolator.cs" />
     <Compile Include="Functions for numerical method\FunctionsBuilder.cs" />
-    <Compile Include="Numerical solution\INumericalSolutionProjectile.cs" />
-    <Compile Include="Numerical solution\INumericalSolutionInNodes.cs" />
+    <Compile Include="Interfaces\INumericalSolutionProjectile.cs" />
+    <Compile Include="Interfaces\INumericalSolutionInNodes.cs" />
     <Compile Include="Numerical solution\NumericalSolutionInNodes.cs" />
     <Compile Include="Numerical solution\NumericalSolutionProjectile.cs" />
-    <Compile Include="Projectile Folder\IProjectile.cs" />
+    <Compile Include="Interfaces\IProjectile.cs" />
     <Compile Include="Projectile Folder\Pos.cs" />
-    <Compile Include="Functions for numerical method\IProjectileFunctions.cs" />
+    <Compile Include="Interfaces\IProjectileFunctions.cs" />
     <Compile Include="Functions for numerical method\ProjectileFunctions.cs" />
     <Compile Include="Projectile Folder\Projectile.cs" />
     <Compile Include="Data Parameters\Input Data Parameters\ConstParametersCase1.cs" />
@@ -100,32 +101,32 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Data Parameters\Input Data Parameters\IConstParameters.cs" />
-    <Compile Include="Data Parameters\Input Data Parameters\IInitialParameters.cs" />
-    <Compile Include="Grid Folder\IGrid.cs" />
+    <Compile Include="Interfaces\IConstParameters.cs" />
+    <Compile Include="Interfaces\IInitialParameters.cs" />
+    <Compile Include="Interfaces\IGrid.cs" />
     <Compile Include="Grid Folder\GridBorderFiller.cs" />
-    <Compile Include="Grid Folder\IGridBorderFiller.cs" />
-    <Compile Include="Grid Folder\IGridCell.cs" />
+    <Compile Include="Interfaces\IGridBorderFiller.cs" />
+    <Compile Include="Interfaces\IGridCell.cs" />
     <Compile Include="Grid Folder\Mediator\GridMediator.cs" />
     <Compile Include="Grid Folder\SpaceCell.cs" />
     <Compile Include="Grid Folder\SpaceGrid.cs" />
-    <Compile Include="Grid Folder\ISubGrid.cs" />
+    <Compile Include="Interfaces\ISubGrid.cs" />
     <Compile Include="Grid Folder\TimeSpaceGrid.cs" />
     <Compile Include="H Functions\HFunctions.cs" />
-    <Compile Include="H Functions\IHFunctions.cs" />
+    <Compile Include="Interfaces\IHFunctions.cs" />
     <Compile Include="Helpers\EquationOfLineFromTwoPoints.cs" />
     <Compile Include="Helpers\OffseterNK.cs" />
     <Compile Include="Helpers\Point2D.cs" />
     <Compile Include="Additional calculated values\PseudoViscosityMechanism.cs" />
     <Compile Include="Memory allocator\ListMemoryAllocator.cs" />
-    <Compile Include="Nabla Functions\IWaypointCalculator.cs" />
+    <Compile Include="Interfaces\IWaypointCalculator.cs" />
     <Compile Include="Nabla Functions\WaypointCalculator.cs" />
     <Compile Include="Nabla Functions\NablaFunctionType.cs" />
     <Compile Include="Nabla Functions\NablaNode.cs" />
     <Compile Include="Nabla Functions\WaypointCalculatorExtension.cs" />
     <Compile Include="Functions for numerical method\FunctionsParametersOfTheNextLayer.cs" />
-    <Compile Include="Functions for numerical method\IFunctionsParametersOfTheNextLayer.cs" />
-    <Compile Include="Numerical Method\INumericalMethod.cs" />
+    <Compile Include="Interfaces\IFunctionsParametersOfTheNextLayer.cs" />
+    <Compile Include="Interfaces\INumericalMethod.cs" />
     <Compile Include="Parameter names\PN.cs" />
     <Compile Include="Parameter Type\DynamicCharacteristicsFlow.cs" />
     <Compile Include="Parameter Type\MixtureStateParameters.cs" />
@@ -137,7 +138,7 @@
     <Compile Include="Projectile Folder\ProjectileParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Numerical Method\SEL.cs" />
-    <EmbeddedResource Include="Cannon Folder\Barrel Folder\BarrelInitializationInterface.resx">
+    <EmbeddedResource Include="Barrel Folder\BarrelInitializationInterface.resx">
       <DependentUpon>BarrelInitializationInterface.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">

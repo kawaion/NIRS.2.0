@@ -9,40 +9,35 @@ using NIRS.Cannon_Folder.Powder_Folder;
 using NIRS.Functions_for_numerical_method;
 using NIRS.Projectile_Folder;
 using NIRS.Numerical_solution;
+using NIRS.Interfaces;
 
 namespace NIRS.Numerical_Method
 {
     class SEL : INumericalMethod
-    {
-        private readonly IBarrel _barrel;
-        private readonly IPowder _powder;
-        private readonly IInitialParameters _initialParameters;
-        private readonly IConstParameters _constParameters;
-
-        public SEL(IBarrel barrel, IPowder powder, IInitialParameters initialParameters, IConstParameters constParameters)
+    {       
+        private readonly IMainData _mainData;
+        public SEL(IMainData mainData)
         {
-            _barrel = barrel;
-            _powder = powder;
-            _initialParameters = initialParameters;
-            _constParameters = constParameters;
+            _mainData = mainData;
         }
         
         private readonly IOutputDataTransmitter outputDataTransmitter = new OutputDataTransmitter();
 
+
         public IGrid Calculate()
         {
-            IGrid grid = new TimeSpaceGrid(_constParameters.tau, _constParameters.h);
+            IGrid grid = new TimeSpaceGrid();
 
-            var gridWithFilledBorders = FillGridBoundaries(grid, _initialParameters, _constParameters);
+            var gridWithFilledBorders = FillGridBoundaries(grid);
             var numericalSolution = GetNumericalSolution(gridWithFilledBorders);
             return outputDataTransmitter.GetOutputData(numericalSolution);
         }
 
-        private IGrid FillGridBoundaries(IGrid grid,IInitialParameters initialParameters, IConstParameters constParameters)
+        private IGrid FillGridBoundaries(IGrid grid)
         {
             IGridBorderFiller gridBorderFiller = new GridBorderFiller();
 
-            var gridWithFilledBorders = gridBorderFiller.Fill(grid, initialParameters, constParameters);
+            var gridWithFilledBorders = gridBorderFiller.Fill(grid, _mainData);
             return gridWithFilledBorders;
         }
 
@@ -90,7 +85,7 @@ namespace NIRS.Numerical_Method
         private IGrid GetNumericalSolutionAtNodeNK(IGrid grid, LimitedDouble n, LimitedDouble k)
         {
             FunctionsBuilder functionsBuilder = new FunctionsBuilder();
-            var functionsNewLayer = functionsBuilder.FunctionsParametersOfTheNextLayerBuild(grid, _barrel, _constParameters, _powder);
+            var functionsNewLayer = functionsBuilder.FunctionsParametersOfTheNextLayerBuild(grid, _mainData);
             INumericalSolutionInNodes numericalSolutionInNodes = new NumericalSolutionInNodes(functionsNewLayer);
 
             grid = numericalSolutionInNodes.Get(grid, n, k);
@@ -100,8 +95,7 @@ namespace NIRS.Numerical_Method
         private IGrid GetNumericalSolutionInProjectile(IGrid grid, LimitedDouble n)
         {
             FunctionsBuilder functionsBuilder = new FunctionsBuilder();
-            IProjectile projectile = new Projectile(q);
-            var projectileFunctions = functionsBuilder.ProjectileFunctionsBuild(grid, projectile, _constParameters);
+            var projectileFunctions = functionsBuilder.ProjectileFunctionsBuild(grid, _mainData);
             INumericalSolutionProjectile numericalSolutionProjectile = new NumericalSolutionProjectile(projectileFunctions);
 
             grid = numericalSolutionProjectile.Get(grid, n);
@@ -112,10 +106,8 @@ namespace NIRS.Numerical_Method
         private IGrid GetInterpolateSolutionAtInaccessibleNodes(IGrid grid, LimitedDouble n)
         {
             FunctionsBuilder functionsBuilder = new FunctionsBuilder();
-            var functionsNewLayer = functionsBuilder.FunctionsParametersOfTheNextLayerBuild(grid, _barrel, _constParameters, _powder);
-            INumericalSolutionInNodes numericalSolutionInNodes = new NumericalSolutionInNodes(functionsNewLayer);
 
-            grid = numericalSolutionInNodes.Get(grid, n, k);
+            grid = 
 
             return grid;
         }

@@ -10,6 +10,7 @@ using NIRS.Grid_Folder;
 using NIRS.Grid_Folder.Mediator;
 using NIRS.Data_Parameters.Input_Data_Parameters;
 using NIRS.Helpers;
+using NIRS.Interfaces;
 
 namespace NIRS.H_Functions
 {
@@ -25,17 +26,16 @@ namespace NIRS.H_Functions
 
         public HFunctions(IGrid grid,
                           IBarrelSize barrelSize,
-                          IPowder powderElement,
                           ICombustionFunctions combustionFunctions,
-                          IConstParameters constParameters)
+                          IMainData mainData)
         {
             g = grid;
             bs = barrelSize;
-            powder = powderElement;
+            powder = mainData.Powder;
             cf = combustionFunctions;
-            constP = constParameters;
+            constP = mainData.ConstParameters;
 
-            x = new XGetter(constParameters);
+            x = new XGetter(mainData.ConstParameters);
         }
 
         public double H1(LimitedDouble n, LimitedDouble k)

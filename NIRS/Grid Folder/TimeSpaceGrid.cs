@@ -3,6 +3,7 @@ using MyDouble;
 using System.Collections.Generic;
 using NIRS.Memory_allocator;
 using System;
+using NIRS.Interfaces;
 
 namespace NIRS.Grid_Folder
 {

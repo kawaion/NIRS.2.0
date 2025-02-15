@@ -3,6 +3,7 @@ using NIRS.Cannon_Folder.Barrel_Folder;
 using NIRS.Data_Parameters.Input_Data_Parameters;
 using NIRS.Grid_Folder;
 using NIRS.Grid_Folder.Mediator;
+using NIRS.Interfaces;
 using NIRS.Parameter_names;
 using NIRS.Projectile_Folder;
 using System;
@@ -15,11 +16,11 @@ namespace NIRS.Functions_for_numerical_method
         private readonly IProjectile sn;
         private readonly IConstParameters constP;
 
-        public ProjectileFunctions(IGrid grid, IProjectile projectile, IConstParameters constParameters)
+        public ProjectileFunctions(IGrid grid, IMainData mainData)
         {
             g = grid;
-            sn = projectile;
-            constP = constParameters;
+            sn = mainData.Projectile;
+            constP = mainData.ConstParameters;
         }
         public double Get(PN pn, LimitedDouble n, Pos pos)
         {
