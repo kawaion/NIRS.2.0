@@ -58,13 +58,15 @@
     </Compile>
     <Compile Include="Barrel Folder\BarrelSize.cs" />
     <Compile Include="Barrel Folder\FinderPointsBetweenCurrent.cs" />
+    <Compile Include="Functions for numerical method\BoundaryFunctions.cs" />
     <Compile Include="Interfaces\IBarrel.cs" />
     <Compile Include="Interfaces\IBarrelSize.cs" />
     <Compile Include="Barrel Folder\ShifterCannonToZero.cs" />
     <Compile Include="Barrel Folder\VBarrelParts.cs" />
+    <Compile Include="Interfaces\IBoundaryFunctions.cs" />
     <Compile Include="Main data\MainData.cs" />
-    <Compile Include="Powder Folder\CombustionFunctions.cs" />
-    <Compile Include="Interfaces\ICombustionFunctions.cs" />
+    <Compile Include="Powder Folder\BurningPowdersSize_12_7.cs" />
+    <Compile Include="Interfaces\IBurningPowdersSize.cs" />
     <Compile Include="Interfaces\IMainData.cs" />
     <Compile Include="Interfaces\IPowder.cs" />
     <Compile Include="Powder Folder\Powder_12_7.cs" />

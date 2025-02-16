@@ -17,10 +17,8 @@ namespace NIRS.Functions_for_numerical_method
         }
         public IFunctionsParametersOfTheNextLayer FunctionsParametersOfTheNextLayerBuild(IGrid grid, IMainData mainData)
         {
-            IBarrelSize barrelSize = new BarrelSize(mainData.Barrel);
-            ICombustionFunctions combustionFunctions = new CombustionFunctions(mainData);
             IWaypointCalculator waypointCalculator = new WaypointCalculator(grid, barrelSize, mainData);
-            IHFunctions hFunctions = new HFunctions(grid, barrelSize, combustionFunctions, mainData);
+            IHFunctions hFunctions = new HFunctions(grid, mainData);
 
             IFunctionsParametersOfTheNextLayer functionsNewLayer = new FunctionsParametersOfTheNextLayer(
                 grid,

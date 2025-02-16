@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NIRS.Interfaces
 {
-    interface ICombustionFunctions
+    public interface IBurningPowdersSize
     {
         double Psi(double z);
         double z(double z);

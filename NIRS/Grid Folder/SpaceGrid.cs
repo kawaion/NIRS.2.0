@@ -27,22 +27,24 @@ namespace NIRS.Grid_Folder
             }
         }
 
-        
 
-        List<IGridCell> gridCells = new List<IGridCell>();
+        List<IGridCell> gridCellsMinus = new List<IGridCell>();
+        List<IGridCell> gridCellsPlus = new List<IGridCell>();
 
         public IGridCell this[LimitedDouble k]
         {
             get
             {
-                int index = ConvertNToIndex(k);
+                (var index, var gridCells) = ChooseIndexAndgridCells(k);
+
                 if (gridCells[index] != null)
                     return gridCells[index];
                 else throw new NullReferenceException();
             }
             set
             {
-                int index = ConvertNToIndex(k);
+                (var index, var gridCells) = ChooseIndexAndgridCells(k);
+
                 gridCells = AllocateMemorygridCellsForTheIndex(gridCells, index);
                 //value.
                 gridCells[index] = value;
@@ -51,14 +53,14 @@ namespace NIRS.Grid_Folder
 
         public LimitedDouble LastIndex()
         {
-            int lastIndex = gridCells.Count-1;  // провертить в тесте выдается ли последний индекс
+            int lastIndex = gridCellsPlus.Count-1;  // провертить в тесте выдается ли последний индекс
             var value = ConvertIndexToN(lastIndex);
             return value;
         }
         public IGridCell Last()
         {
             int lastI = ConvertNToIndex(LastIndex());
-            return gridCells[lastI];
+            return gridCellsPlus[lastI];
         }
 
         private List<IGridCell> AllocateMemorygridCellsForTheIndex(List<IGridCell> gridCells, int index)
@@ -74,6 +76,15 @@ namespace NIRS.Grid_Folder
 
             throw new Exception($"значение {n} {k} не подходит ни под один из типов");
         }
+        private int ConvertNToIndexMinus(LimitedDouble k)
+        {
+            if (n.IsHalfInt() && k.IsInt())
+                return (int)(-k.Value);
+            if (n.IsInt() && k.IsHalfInt())
+                return (int)(-k.Value - 0.5);
+
+            throw new Exception($"значение {n} {k} не подходит ни под один из типов");
+        }
         private LimitedDouble ConvertIndexToN(int value)
         {
             if (n.IsHalfInt())
@@ -82,6 +93,24 @@ namespace NIRS.Grid_Folder
                 return new LimitedDouble(value) + 0.5;
 
             throw new Exception();
+        }
+        private (int index, List<IGridCell> gridCells) ChooseIndexAndgridCells(LimitedDouble k)
+        {
+            int index;
+            List<IGridCell> gridCells;
+
+            if (k.Value < 0)
+            {
+                index = ConvertNToIndexMinus(n);
+                gridCells = gridCellsMinus;
+            }
+            else
+            {
+                index = ConvertNToIndex(n);
+                gridCells = gridCellsPlus;
+            }
+
+            return (index, gridCells);
         }
 
         //те же значения для снаряда

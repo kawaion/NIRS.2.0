@@ -19,20 +19,18 @@ namespace NIRS.H_Functions
         private readonly IGrid g;
         private readonly IBarrelSize bs;
         private readonly IPowder powder;
-        private readonly ICombustionFunctions cf;
+        private readonly IBurningPowdersSize bps;
         private readonly IConstParameters constP;
 
         private readonly XGetter x;
 
         public HFunctions(IGrid grid,
-                          IBarrelSize barrelSize,
-                          ICombustionFunctions combustionFunctions,
                           IMainData mainData)
         {
             g = grid;
-            bs = barrelSize;
+            bs = mainData.BarrelSize;
             powder = mainData.Powder;
-            cf = combustionFunctions;
+            bps = mainData.BurningPowdersSize;
             constP = mainData.ConstParameters;
 
             x = new XGetter(mainData.ConstParameters);
@@ -65,7 +63,7 @@ namespace NIRS.H_Functions
         public double H5(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.Appoint(n, k).Offset(n + 0.5, k - 0.5);
-            return cf.Uk(g.p(n, k - 0.5)) / constP.e1;
+            return bps.Uk(g.p(n, k - 0.5)) / constP.e1;
         }
 
         public double HPsi(LimitedDouble n, LimitedDouble k)
@@ -78,11 +76,11 @@ namespace NIRS.H_Functions
         {
             double diff_v_w = g.v(n - 0.5, k) - g.w(n - 0.5, k);
             return constP.lamda0 * (g.ro(n, k - 0.5) * diff_v_w * Math.Abs(diff_v_w)) / 2
-                   * g.a(n, k - 0.5) * (powder.S0 * cf.Sigma(g.z(n, k - 0.5), g.psi(n, k - 0.5))) / 4;
+                   * g.a(n, k - 0.5) * (powder.S0 * bps.Sigma(g.z(n, k - 0.5), g.psi(n, k - 0.5))) / 4;
         }
         private double G(LimitedDouble n, LimitedDouble k)
         {
-            return g.a(n,k - 0.5) * powder.S0 * cf.Sigma(g.z(n, k - 0.5), g.psi(n, k - 0.5)) * constP.delta * cf.Uk(g.p(n, k - 0.5));
+            return g.a(n,k - 0.5) * powder.S0 * bps.Sigma(g.z(n, k - 0.5), g.psi(n, k - 0.5)) * constP.delta * bps.Uk(g.p(n, k - 0.5));
         }
     }
 }

@@ -37,7 +37,7 @@ namespace NIRS.Numerical_Method
         {
             IGridBorderFiller gridBorderFiller = new GridBorderFiller();
 
-            var gridWithFilledBorders = gridBorderFiller.Fill(grid, _mainData);
+            var gridWithFilledBorders = gridBorderFiller.FillAtZeroTime(grid, _mainData);
             return gridWithFilledBorders;
         }
 

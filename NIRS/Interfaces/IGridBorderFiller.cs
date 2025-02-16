@@ -4,6 +4,6 @@ namespace NIRS.Interfaces
 {
     interface IGridBorderFiller
     {
-        IGrid Fill(IGrid grid, IMainData mainData);
+        IGrid FillAtZeroTime(IGrid grid);
     }
 }

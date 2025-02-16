@@ -54,7 +54,34 @@ namespace MyDouble
         public static LimitedDouble operator -(LimitedDouble myDouble, double otherValue)
         {
             return limitedDoubleArithmetic.Minus(myDouble, otherValue);
+        }      
+
+        public static bool operator !=(LimitedDouble myDouble1, LimitedDouble myDouble2)
+        {
+            return myDouble1.Value != myDouble2.Value;
         }
+        public static bool operator ==(LimitedDouble myDouble1, LimitedDouble myDouble2)
+        {
+            return myDouble1.Value == myDouble2.Value;
+        }
+        public static bool operator <(LimitedDouble myDouble1, LimitedDouble myDouble2)
+        {
+            return myDouble1.Value < myDouble2.Value;
+        }
+        public static bool operator >(LimitedDouble myDouble1, LimitedDouble myDouble2)
+        {
+            return myDouble1.Value > myDouble2.Value;
+        }
+        public static bool operator <=(LimitedDouble myDouble1, LimitedDouble myDouble2)
+        {
+            return myDouble1 < myDouble2 || myDouble1 == myDouble2;
+        }
+        public static bool operator >=(LimitedDouble myDouble1, LimitedDouble myDouble2)
+        {
+            return myDouble1 > myDouble2 || myDouble1 == myDouble2;
+        }
+
+
 
     }
     public enum DoubleType
