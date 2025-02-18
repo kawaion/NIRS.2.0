@@ -7,7 +7,6 @@ using MyDouble;
 using NIRS.Cannon_Folder.Barrel_Folder;
 using NIRS.Cannon_Folder.Powder_Folder;
 using NIRS.Grid_Folder;
-using NIRS.Grid_Folder.Mediator;
 using NIRS.Data_Parameters.Input_Data_Parameters;
 using NIRS.Helpers;
 using NIRS.Interfaces;
@@ -38,12 +37,12 @@ namespace NIRS.H_Functions
 
         public double H1(LimitedDouble n, LimitedDouble k)
         {
-            return -bs.S(x[k]) * tauW(n, k) + bs.S(x[k]) * G(n, k) * g.w(n - 0.5, k);
+            return -bs.S(x[k]) * tauW(n, k) + bs.S(x[k]) * G(n, k) * g[n - 0.5][k].w;
         }
 
         public double H2(LimitedDouble n, LimitedDouble k)
         {
-            return bs.S(x[k]) * tauW(n, k) - bs.S(x[k]) * G(n, k) * g.w(n - 0.5, k);
+            return bs.S(x[k]) * tauW(n, k) - bs.S(x[k]) * G(n, k) * g[n - 0.5][k].w;
         }
 
         public double H3(LimitedDouble n, LimitedDouble k)
@@ -55,7 +54,7 @@ namespace NIRS.H_Functions
         public double H4(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.Appoint(n, k).Offset(n + 0.5, k - 0.5);
-            double diff_v_w = g.v(n + 0.5, k) - g.w(n + 0.5, k);
+            double diff_v_w = g[n + 0.5][k].v - g[n + 0.5][k].w;
             return bs.S(x[k - 0.5]) * G(n, k) * (constP.Q + Math.Pow(diff_v_w, 2) / 2) 
                     + bs.S(x[k - 0.5]) * tauW(n + 1, k) * diff_v_w;
         }
@@ -63,7 +62,7 @@ namespace NIRS.H_Functions
         public double H5(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.Appoint(n, k).Offset(n + 0.5, k - 0.5);
-            return bps.Uk(g.p(n, k - 0.5)) / constP.e1;
+            return bps.Uk(g[n][k - 0.5].p) / constP.e1;
         }
 
         public double HPsi(LimitedDouble n, LimitedDouble k)
@@ -74,13 +73,13 @@ namespace NIRS.H_Functions
 
         private double tauW(LimitedDouble n, LimitedDouble k)
         {
-            double diff_v_w = g.v(n - 0.5, k) - g.w(n - 0.5, k);
-            return constP.lamda0 * (g.ro(n, k - 0.5) * diff_v_w * Math.Abs(diff_v_w)) / 2
-                   * g.a(n, k - 0.5) * (powder.S0 * bps.Sigma(g.z(n, k - 0.5), g.psi(n, k - 0.5))) / 4;
+            double diff_v_w = g[n - 0.5][k].v - g[n - 0.5][k].w;
+            return constP.lamda0 * (g[n][k - 0.5].ro * diff_v_w * Math.Abs(diff_v_w)) / 2
+                   * g[n][k - 0.5].a * (powder.S0 * bps.Sigma(g[n][k - 0.5].z, g[n][k - 0.5].psi)) / 4;
         }
         private double G(LimitedDouble n, LimitedDouble k)
         {
-            return g.a(n,k - 0.5) * powder.S0 * bps.Sigma(g.z(n, k - 0.5), g.psi(n, k - 0.5)) * constP.delta * bps.Uk(g.p(n, k - 0.5));
+            return g[n][k - 0.5].a * powder.S0 * bps.Sigma(g[n][k - 0.5].z, g[n][k - 0.5].psi) * constP.delta * bps.Uk(g[n][k - 0.5].p);
         }
     }
 }

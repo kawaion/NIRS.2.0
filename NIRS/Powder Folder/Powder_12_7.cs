@@ -8,14 +8,16 @@ namespace NIRS.Cannon_Folder.Powder_Folder
     {
         public double Omega { get; }
         public double Delta { get; }
+        public double DELTA { get; }
         public double D0 { get; }
         public double d0 { get; }
         public double L0 { get; }
         public double e1 { get; }
-        public Powder_12_7(double omega, double delta, double D0, double d0, double L0,  double e1, double u1)
+        public Powder_12_7(double omega, double delta, double DELTA, double D0, double d0, double L0,  double e1, double u1)
         {
             Omega = omega;
             Delta = delta;
+            this.Delta = DELTA;
             this.D0 = D0;
             this.d0 = d0;
             this.L0 = L0;

@@ -34,22 +34,22 @@ namespace NIRS.Numerical_solution
 
         private IGrid GetDynamicParametersOfNextLayer(IGrid grid, LimitedDouble n, IProjectileFunctions functions)
         {
-            grid[n].sn.D.dynamic_m = functions.Get(PN.dynamic_m, n);
-            grid[n].sn.D.v = functions.Get(PN.v, n);
-            grid[n].sn.D.M = functions.Get(PN.M, n);
-            grid[n].sn.D.w = functions.Get(PN.w, n);
+            grid[n].sn.dynamic_m = functions.Get(PN.dynamic_m, n);
+            grid[n].sn.v = functions.Get(PN.v, n);
+            grid[n].sn.M = functions.Get(PN.M, n);
+            grid[n].sn.w = functions.Get(PN.w, n);
 
             return grid;
         }
         private IGrid GetMixtureParametersOfNextLayer(IGrid grid, LimitedDouble n, IProjectileFunctions functions)
         {
-            grid[n].sn.M.r = functions.Get(PN.r, n);
-            grid[n].sn.M.e = functions.Get(PN.e, n);
-            grid[n].sn.M.psi = functions.Get(PN.psi, n);
-            grid[n].sn.M.z = functions.Get(PN.z, n);
-            grid[n].sn.M.a = functions.Get(PN.a, n);
-            grid[n].sn.M.p = functions.Get(PN.p, n);
-            grid[n].sn.M.m = functions.Get(PN.m, n);
+            grid[n].sn.r = functions.Get(PN.r, n);
+            grid[n].sn.e = functions.Get(PN.e, n);
+            grid[n].sn.psi = functions.Get(PN.psi, n);
+            grid[n].sn.z = functions.Get(PN.z, n);
+            grid[n].sn.a = functions.Get(PN.a, n);
+            grid[n].sn.p = functions.Get(PN.p, n);
+            grid[n].sn.m = functions.Get(PN.m, n);
 
             return grid;
         }

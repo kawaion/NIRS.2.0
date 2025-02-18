@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace NIRS.Interfaces
 {
-    public class IGridCellProjectile : IGridCell
+    public interface IGridCellProjectile : IGridCell
     {
-        public DynamicCharacteristicsFlow D { get; set; }
-        public MixtureStateParameters M { get; set; }
-        public ProjectileParameters P { get; set; }
+        double v_sn { get; set; }
+        double x { get; set; }
     }
 }

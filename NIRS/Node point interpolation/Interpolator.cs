@@ -34,7 +34,7 @@ namespace NIRS.Node_point_interpolation
         // сделать класс checker
         private double GetTheProjectileNodeCoordinate(LimitedDouble n)
         {
-            var x = g[n].sn.P.x;
+            var x = g[n].sn.x;
             var value = x / constP.h;
             return value;
         }

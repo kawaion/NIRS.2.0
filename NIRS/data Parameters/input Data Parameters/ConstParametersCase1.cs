@@ -27,5 +27,11 @@ namespace NIRS.Data_Parameters.Input_Data_Parameters
         public double Q => throw new System.NotImplementedException();
 
         public double e1 => throw new System.NotImplementedException();
+
+        public double u1 => throw new System.NotImplementedException();
+
+        public double omegaV => throw new System.NotImplementedException();
+
+        public double f => throw new System.NotImplementedException();
     }
 }

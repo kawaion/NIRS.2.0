@@ -109,7 +109,6 @@
     <Compile Include="Grid Folder\GridBorderFiller.cs" />
     <Compile Include="Interfaces\IGridBorderFiller.cs" />
     <Compile Include="Interfaces\IGridCell.cs" />
-    <Compile Include="Grid Folder\Mediator\GridMediator.cs" />
     <Compile Include="Grid Folder\SpaceCell.cs" />
     <Compile Include="Grid Folder\SpaceGrid.cs" />
     <Compile Include="Interfaces\ISubGrid.cs" />

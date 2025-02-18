@@ -28,22 +28,22 @@ namespace NIRS.Numerical_solution
 
         private IGrid GetDynamicParametersOfNextLayer(IGrid grid, LimitedDouble n, LimitedDouble k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
         {
-            grid[n][k].D.dynamic_m = functionsNewLayer.Get(PN.dynamic_m, n, k);
-            grid[n][k].D.v = functionsNewLayer.Get(PN.v, n, k);
-            grid[n][k].D.M = functionsNewLayer.Get(PN.M, n, k);
-            grid[n][k].D.w = functionsNewLayer.Get(PN.w, n, k);
+            grid[n][k].dynamic_m = functionsNewLayer.Get(PN.dynamic_m, n, k);
+            grid[n][k].v = functionsNewLayer.Get(PN.v, n, k);
+            grid[n][k].M = functionsNewLayer.Get(PN.M, n, k);
+            grid[n][k].w = functionsNewLayer.Get(PN.w, n, k);
 
             return grid;
         }
         private IGrid GetMixtureParametersOfNextLayer(IGrid grid, LimitedDouble n, LimitedDouble k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
         {
-            grid[n][k].M.r = functionsNewLayer.Get(PN.r, n, k);
-            grid[n][k].M.e = functionsNewLayer.Get(PN.e, n, k);
-            grid[n][k].M.psi = functionsNewLayer.Get(PN.psi, n, k);
-            grid[n][k].M.z = functionsNewLayer.Get(PN.z, n, k);
-            grid[n][k].M.a = functionsNewLayer.Get(PN.a, n, k);
-            grid[n][k].M.p = functionsNewLayer.Get(PN.p, n, k);
-            grid[n][k].M.m = functionsNewLayer.Get(PN.m, n, k);
+            grid[n][k].r = functionsNewLayer.Get(PN.r, n, k);
+            grid[n][k].e = functionsNewLayer.Get(PN.e, n, k);
+            grid[n][k].psi = functionsNewLayer.Get(PN.psi, n, k);
+            grid[n][k].z = functionsNewLayer.Get(PN.z, n, k);
+            grid[n][k].a = functionsNewLayer.Get(PN.a, n, k);
+            grid[n][k].p = functionsNewLayer.Get(PN.p, n, k);
+            grid[n][k].m = functionsNewLayer.Get(PN.m, n, k);
 
             return grid;
         }

@@ -9,7 +9,6 @@ namespace NIRS.Interfaces
         double teta { get; }
         double alpha { get; }
         double delta { get; }
-        double DELTA { get; }
         double D0 { get; }
         double d0 { get; }
         double L0 { get; }

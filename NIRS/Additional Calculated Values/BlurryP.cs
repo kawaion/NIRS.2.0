@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NIRS.Grid_Folder.Mediator;
 using NIRS.Interfaces;
 
 namespace NIRS.Additional_calculated_values
@@ -19,7 +18,7 @@ namespace NIRS.Additional_calculated_values
         {
             (n, k) = OffseterNK.Appoint(n, k).Offset(n, k + 0.5);
 
-            return g.p(n, k + 0.5) + PseudoViscosityMechanism.q(g, waypointCalculator, constP, n, k);
+            return g[n][k + 0.5].p + PseudoViscosityMechanism.q(g, waypointCalculator, constP, n, k);
         }
     }
 }

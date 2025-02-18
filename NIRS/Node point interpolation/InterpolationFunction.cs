@@ -1,7 +1,6 @@
 ﻿using MyDouble;
 using NIRS.Data_Parameters.Input_Data_Parameters;
 using NIRS.Grid_Folder;
-using NIRS.Grid_Folder.Mediator;
 using NIRS.Helpers;
 using NIRS.Interfaces;
 using NIRS.Parameter_names;

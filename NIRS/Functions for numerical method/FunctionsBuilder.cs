@@ -11,26 +11,33 @@ namespace NIRS.Functions_for_numerical_method
 {
     public class FunctionsBuilder
     {
-        public FunctionsBuilder()
-        {
+        private readonly IMainData _mainData;
 
-        }
-        public IFunctionsParametersOfTheNextLayer FunctionsParametersOfTheNextLayerBuild(IGrid grid, IMainData mainData)
+        public FunctionsBuilder(IMainData mainData)
         {
-            IWaypointCalculator waypointCalculator = new WaypointCalculator(grid, barrelSize, mainData);
-            IHFunctions hFunctions = new HFunctions(grid, mainData);
+            _mainData = mainData;
+        }
+        public IFunctionsParametersOfTheNextLayer FunctionsParametersOfTheNextLayerBuild(IGrid grid)
+        {
+            IWaypointCalculator waypointCalculator = new WaypointCalculator(grid, _mainData);
+            IHFunctions hFunctions = new HFunctions(grid, _mainData);
 
             IFunctionsParametersOfTheNextLayer functionsNewLayer = new FunctionsParametersOfTheNextLayer(
                 grid,
                 waypointCalculator,
                 hFunctions,
-                mainData);
+                _mainData);
             return functionsNewLayer;
         }
-        public IProjectileFunctions ProjectileFunctionsBuild(IGrid grid, IMainData mainData)
+        public IProjectileFunctions ProjectileFunctionsBuild(IGrid grid)
         {
-            IProjectileFunctions projectileFunctions = new ProjectileFunctions(grid, mainData);
+            IProjectileFunctions projectileFunctions = new ProjectileFunctions(grid, _mainData);
             return projectileFunctions;
+        }
+        public IBoundaryFunctions BoundaryFunctionsBuild()
+        {
+            IBoundaryFunctions boundaryFunctions = new BoundaryFunctions(_mainData);
+            return boundaryFunctions;
         }
     }
 }
