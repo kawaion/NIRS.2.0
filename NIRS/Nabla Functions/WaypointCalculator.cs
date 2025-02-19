@@ -12,6 +12,7 @@ using NIRS.Cannon_Folder.Barrel_Folder;
 using NIRS.Helpers;
 using NIRS.Additional_calculated_values;
 using NIRS.Interfaces;
+using NIRS.Nabla_Functions.Projectile;
 
 namespace NIRS.Nabla_Functions
 {
@@ -31,6 +32,8 @@ namespace NIRS.Nabla_Functions
 
             gByPN = new GetterValueByPN(grid);
             x = new XGetter(mainData.ConstParameters);
+
+            sn = new WaypointCalculatorProjectile(g, mainData);
         }
 
 
@@ -101,5 +104,8 @@ namespace NIRS.Nabla_Functions
         {
             return (g.PStroke(this, constP, n, k + 0.5) - g.PStroke(this, constP, n, k - 0.5)) / constP.h;
         }
+
+
+        public IWaypointCalculatorProjectile sn { get; set; }
     }
 }

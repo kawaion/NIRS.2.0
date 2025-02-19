@@ -20,33 +20,45 @@ namespace NIRS.Nabla_Functions.Projectile
         private readonly IBarrelSize bs;
         private readonly GetterValueByPN gByPN;
 
-        private readonly double XSn;
+        private readonly XGetter x
 
-        public WaypointCalculatorProjectile(IGrid grid, IConstParameters constParameters, IBarrelSize barrelSize, double xSn)
+        public WaypointCalculatorProjectile(IGrid grid, IMainData mainData)
         {
             g = grid;
-            constP = constParameters;
-            bs = barrelSize;
+            constP = mainData.ConstParameters;
+            bs = mainData.BarrelSize;
             gByPN = new GetterValueByPN(grid);
 
-            XSn = xSn;
+            x = new XGetter(mainData.ConstParameters);
         }
         public double Nabla(PN param1, PN param2, PN param3, LimitedDouble n)
         {
             LimitedDouble uselessValue = new LimitedDouble(0);
             (n, _) = OffseterNK.Appoint(n, uselessValue).Offset(n + 0.5, uselessValue);
 
-            return (AverageWithS(param1, param3, n + 0.5) - AverageWithS(param1, param3, n + 0.5)) / constP.h;
+            return (AverageProjectile(param1, param2, param3, n + 0.5) - AverageK(param1, param2, param3, n + 0.5)) 
+                   / constP.h;
         }
-        private double AverageWithS(PN mu, PN v, LimitedDouble n)
+        private double AverageProjectile(PN mu, PN S, PN v, LimitedDouble n)
         {
-            XGetter x = new XGetter(constP);
-            // формула преобразуется в значение на n,k
-            double V = gByPN.GetParamCell(v, n);
+            LimitedDouble uselessValue = new LimitedDouble(0);
+            (n, _) = OffseterNK.Appoint(n, uselessValue).Offset(n + 0.5, uselessValue);
+
+            return gByPN.GetParamCellSn(v, n + 0.5) * gByPN.GetParamCellSn(mu, n) * bs.S(g[n].sn.x);
+        }
+
+        private double AverageK(PN mu, PN S, PN v, LimitedDouble n)
+        {
+            LimitedDouble uselessValue = new LimitedDouble(0);
+            (n, _) = OffseterNK.Appoint(n, uselessValue).Offset(n + 0.5, uselessValue);
+
+            var K = g[n].LastIndex();
+
+            double V = gByPN.GetParamCell(v, n + 0.5, K);
             if (V >= 0)
-                return V * gByPN.GetParamCell(mu, n - 0.5) * bs.S(g[n].sn.P.x);
+                return V * gByPN.GetParamCell(mu, n, K - 0.5) * bs.S(x[K-0.5]);
             else
-                return V * gByPN.GetParamCell(mu, n - 0.5) * bs.S(x[k]);
+                return V * gByPN.GetParamCellSn(mu, n) * bs.S(g[n].sn.x);
         }
 
     }
