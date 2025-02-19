@@ -1,4 +1,5 @@
 ﻿using MyDouble;
+using NIRS.Nabla_Functions.Projectile;
 using NIRS.Parameter_names;
 
 namespace NIRS.Interfaces
@@ -9,5 +10,7 @@ namespace NIRS.Interfaces
         double Nabla(PN param1, PN param2, LimitedDouble n, LimitedDouble k);
         double Nabla(PN param, LimitedDouble n, LimitedDouble k);
         double dPStrokeDivdx(LimitedDouble n, LimitedDouble k);
+
+        IWaypointCalculatorProjectile sn { get; set; }
     }
 }

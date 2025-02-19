@@ -7,7 +7,7 @@ using MyDouble;
 
 namespace NIRS.Interfaces
 {
-    interface IHFunctions
+    public interface IHFunctions
     {
         double H1(LimitedDouble n, LimitedDouble k);
         double H2(LimitedDouble n, LimitedDouble k);
@@ -15,5 +15,7 @@ namespace NIRS.Interfaces
         double H4(LimitedDouble n, LimitedDouble k);
         double H5(LimitedDouble n, LimitedDouble k);
         double HPsi(LimitedDouble n, LimitedDouble k);
+
+        IHFunctionsProjectile sn { get; set; }
     }
 }

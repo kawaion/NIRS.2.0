@@ -23,6 +23,8 @@ namespace NIRS.H_Functions
 
         private readonly XGetter x;
 
+        public IHFunctionsProjectile sn { get; set; }
+
         public HFunctions(IGrid grid,
                           IMainData mainData)
         {
@@ -33,6 +35,8 @@ namespace NIRS.H_Functions
             constP = mainData.ConstParameters;
 
             x = new XGetter(mainData.ConstParameters);
+
+            sn = new HFunctionsProjectile(grid, mainData);
         }
 
         public double H1(LimitedDouble n, LimitedDouble k)

@@ -31,7 +31,14 @@ namespace NIRS.Functions_for_numerical_method
         }
         public IProjectileFunctions ProjectileFunctionsBuild(IGrid grid)
         {
-            IProjectileFunctions projectileFunctions = new ProjectileFunctions(grid, _mainData);
+            IWaypointCalculator waypointCalculator = new WaypointCalculator(grid, _mainData);
+            IHFunctions hFunctions = new HFunctions(grid, _mainData);
+
+            IProjectileFunctions projectileFunctions = new ProjectileFunctions(
+                grid,
+                waypointCalculator,
+                hFunctions,
+                _mainData);
             return projectileFunctions;
         }
         public IBoundaryFunctions BoundaryFunctionsBuild()

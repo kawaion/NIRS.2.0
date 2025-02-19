@@ -20,7 +20,7 @@ namespace NIRS.Nabla_Functions.Projectile
         private readonly IBarrelSize bs;
         private readonly GetterValueByPN gByPN;
 
-        private readonly XGetter x
+        private readonly XGetter x;
 
         public WaypointCalculatorProjectile(IGrid grid, IMainData mainData)
         {
@@ -33,24 +33,21 @@ namespace NIRS.Nabla_Functions.Projectile
         }
         public double Nabla(PN param1, PN param2, PN param3, LimitedDouble n)
         {
-            LimitedDouble uselessValue = new LimitedDouble(0);
-            (n, _) = OffseterNK.Appoint(n, uselessValue).Offset(n + 0.5, uselessValue);
+            n = OffseterN.Appoint(n).Offset(n + 0.5);
 
             return (AverageProjectile(param1, param2, param3, n + 0.5) - AverageK(param1, param2, param3, n + 0.5)) 
                    / constP.h;
         }
         private double AverageProjectile(PN mu, PN S, PN v, LimitedDouble n)
         {
-            LimitedDouble uselessValue = new LimitedDouble(0);
-            (n, _) = OffseterNK.Appoint(n, uselessValue).Offset(n + 0.5, uselessValue);
+            n = OffseterN.Appoint(n).Offset(n + 0.5);
 
             return gByPN.GetParamCellSn(v, n + 0.5) * gByPN.GetParamCellSn(mu, n) * bs.S(g[n].sn.x);
         }
 
         private double AverageK(PN mu, PN S, PN v, LimitedDouble n)
         {
-            LimitedDouble uselessValue = new LimitedDouble(0);
-            (n, _) = OffseterNK.Appoint(n, uselessValue).Offset(n + 0.5, uselessValue);
+            n = OffseterN.Appoint(n).Offset(n + 0.5);
 
             var K = g[n].LastIndex();
 

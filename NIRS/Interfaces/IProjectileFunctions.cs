@@ -6,7 +6,7 @@ namespace NIRS.Interfaces
     public interface IProjectileFunctions
     {
         double Get(PN pn,LimitedDouble n);
-        double Get_v(LimitedDouble n);
+        double Get_vSn(LimitedDouble n);
         double Get_x(LimitedDouble n);
         double Get_r(LimitedDouble n);
         double Get_z(LimitedDouble n);
