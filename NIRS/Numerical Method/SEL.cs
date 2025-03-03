@@ -106,8 +106,10 @@ namespace NIRS.Numerical_Method
         private IGrid GetInterpolateSolutionAtInaccessibleNodes(IGrid grid, LimitedDouble n)
         {
             FunctionsBuilder functionsBuilder = new FunctionsBuilder(_mainData);
+            var parameterInterpolationFunctions = functionsBuilder.ParameterInterpolationFunctionsBuild(grid);
+            INumericalSolutionInterpolation numericalSolutionInterpolation = new NumericalSolutionInterpolation(parameterInterpolationFunctions);
 
-            grid = 
+            grid = numericalSolutionInterpolation.Get(grid, n);
 
             return grid;
         }

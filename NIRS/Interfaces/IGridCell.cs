@@ -1,4 +1,5 @@
-﻿using NIRS.Parameter_Type;
+﻿using NIRS.Parameter_names;
+using NIRS.Parameter_Type;
 
 namespace NIRS.Interfaces
 {
@@ -18,5 +19,7 @@ namespace NIRS.Interfaces
         double m { get; set; }
         double p { get; set; }
         double ro { get; set; }
+
+        double this[PN pn] { get;set; }
     }
 }

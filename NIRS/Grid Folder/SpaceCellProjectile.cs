@@ -1,17 +1,18 @@
 ﻿using NIRS.Interfaces;
 using NIRS.Parameter_names;
-using NIRS.Parameter_Type;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace NIRS.Grid_Folder
 {
-    class SpaceCell : IGridCell
+    class SpaceCellProjectile : IGridCellProjectile
     {
+        public double vSn {get; set; }
+        public double x { get; set; }
+
         public double dynamic_m { get; set; }
         public double M { get; set; }
         public double v { get; set; }
@@ -39,5 +40,4 @@ namespace NIRS.Grid_Folder
             }
         }
     }
-
 }

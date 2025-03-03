@@ -22,7 +22,7 @@ namespace NIRS.Functions_for_numerical_method
         private readonly IWaypointCalculator wc;
         private readonly IHFunctions hf;
 
-        private readonly XGetter x;
+        private readonly Differencial d;
 
         public ProjectileFunctions(IGrid grid, 
                                    IWaypointCalculator waypointCalculator,           
@@ -38,15 +38,26 @@ namespace NIRS.Functions_for_numerical_method
             wc = waypointCalculator;
             hf = hFunctions;
 
-            XGetter x = new XGetter(mainData.ConstParameters);
-        }
-        public double Get(PN pn, LimitedDouble n, Pos pos)
-        {
+            d = new Differencial(grid, mainData.ConstParameters);
         }
 
         public double Get(PN pn, LimitedDouble n)
         {
-            throw new NotImplementedException();
+            switch(pn)
+            {
+                case PN.a: return Get_a(n);
+                case PN.e: return Get_e(n);
+                case PN.m: return Get_m(n);
+                case PN.p: return Get_p(n);
+                case PN.psi: return Get_psi(n);
+                case PN.r: return Get_r(n);
+                case PN.ro: return Get_ro(n);
+                case PN.v: return Get_vSn(n);
+                case PN.x: return Get_x(n);
+                case PN.z: return Get_z(n);
+            }
+
+            throw new Exception();
         }
 
         public double Get_a(LimitedDouble n)
@@ -58,7 +69,7 @@ namespace NIRS.Functions_for_numerical_method
 
             return g[n].sn.a * (bs.S(x_n) / bs.S(x_nPlus1)) *
                 (
-                    1 - constP.tau * dvdx(n + 0.5)
+                    1 - constP.tau * d.dvdx(n + 0.5)
                 );
         }
         public double Get_e(LimitedDouble n)
@@ -67,7 +78,7 @@ namespace NIRS.Functions_for_numerical_method
 
             return g[n].sn.e - constP.tau *
                 (
-                    g[n].sn.e * dvdx(n + 0.5)
+                    g[n].sn.e * d.dvdx(n + 0.5)
                     + g[n].sn.p * 
                     (wc.sn.Nabla(PN.m,PN.S,PN.v).Cell(n + 0.5) + wc.sn.Nabla(PN.One_minus_m, PN.S, PN.w).Cell(n + 0.5))
                     - hf.sn.H4(n + 0.5)
@@ -108,7 +119,7 @@ namespace NIRS.Functions_for_numerical_method
 
             return g[n].sn.r - constP.tau *
                 (
-                   g[n].sn.r * dvdx(n + 0.5) - hf.sn.H3(n + 0.5)
+                   g[n].sn.r * d.dvdx(n + 0.5) - hf.sn.H3(n + 0.5)
                 );
         }
 
@@ -155,12 +166,6 @@ namespace NIRS.Functions_for_numerical_method
 
             return g[n].sn.psi
                    + constP.tau * hf.sn.H5(n + 0.5);
-        }
-
-        private double dvdx(LimitedDouble n)
-        {
-            return (g[n].sn.vSn - g[n].Last().v) /
-                   (g[n].sn.x - x[g[n].LastIndex()]);
         }
     }
 }

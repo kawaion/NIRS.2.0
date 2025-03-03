@@ -46,5 +46,10 @@ namespace NIRS.Functions_for_numerical_method
             IBoundaryFunctions boundaryFunctions = new BoundaryFunctions(_mainData);
             return boundaryFunctions;
         }
+        public IParameterInterpolationFunctions ParameterInterpolationFunctionsBuild(IGrid grid)
+        {
+            IParameterInterpolationFunctions parameterInterpolationFunctions = new ParameterInterpolationFunctions(grid, _mainData);
+            return parameterInterpolationFunctions;
+        }
     }
 }

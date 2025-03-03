@@ -22,7 +22,6 @@ namespace NIRS.Nabla_Functions
         private readonly IConstParameters constP;
         private readonly IBarrelSize bs;
 
-        private readonly GetterValueByPN gByPN;
         private readonly XGetter x;
         public WaypointCalculator(IGrid grid, IMainData mainData)
         {
@@ -30,7 +29,6 @@ namespace NIRS.Nabla_Functions
             constP = mainData.ConstParameters;
             bs = mainData.BarrelSize;
 
-            gByPN = new GetterValueByPN(grid);
             x = new XGetter(mainData.ConstParameters);
 
             sn = new WaypointCalculatorProjectile(g, mainData);
@@ -46,11 +44,20 @@ namespace NIRS.Nabla_Functions
         private double AverageWithS(PN mu, PN v, LimitedDouble n, LimitedDouble k)
         {
             // формула преобразуется в значение на n,k
-            double V = gByPN.GetParamCell(v, n, k);
+            double V = g[n][k][v];
+
             if (V >= 0)
-                return V * gByPN.GetParamCell(mu, n - 0.5, k - 0.5) * bs.S(x[k - 0.5]);
+                return V * Get_m(n - 0.5,k - 0.5,mu) * bs.S(x[k - 0.5]);
             else
-                return V * gByPN.GetParamCell(mu, n - 0.5, k + 0.5) * bs.S(x[k - 0.5]);
+                return V * Get_m(n - 0.5, k + 0.5, mu) * bs.S(x[k - 0.5]);
+        }
+        private double Get_m(LimitedDouble n, LimitedDouble k, PN mu)
+        {
+            if (mu == PN.One_minus_m)
+                return 1 - g[n][k][mu];
+            else
+                return g[n][k][mu];
+
         }
 
 
@@ -75,20 +82,20 @@ namespace NIRS.Nabla_Functions
         private double DynamicAverage(PN mu, PN v, LimitedDouble n, LimitedDouble k)
         {
             // формула преобразуется в значение на n,k
-            double sum_v = gByPN.GetParamCell(v, n, k - 0.5) + gByPN.GetParamCell(v, n, k + 0.5);
+            double sum_v = g[n][k - 0.5][v] + g[n][k + 0.5][v];
             if (sum_v >= 0)
-                return sum_v / 2 * gByPN.GetParamCell(mu, n, k - 0.5);
+                return sum_v / 2 * g[n][k - 0.5][mu];
             else
-                return sum_v / 2 * gByPN.GetParamCell(mu, n, k + 0.5);
+                return sum_v / 2 * g[n][k + 0.5][mu];
         }
         private double MixtureAverage(PN fi, PN V, LimitedDouble n, LimitedDouble k)
         {
             // формула преобразуется в значение на n,k
-            double v = gByPN.GetParamCell(V, n, k);
+            double v = g[n][k][V];
             if (v >= 0)
-                return v * gByPN.GetParamCell(fi, n - 0.5, k - 0.5);
+                return v * g[n - 0.5][k - 0.5][fi];
             else
-                return v * gByPN.GetParamCell(fi, n - 0.5, k + 0.5);
+                return v * g[n - 0.5][k + 0.5][fi];
         }
 
 
@@ -96,7 +103,7 @@ namespace NIRS.Nabla_Functions
         {
             (n, k) = OffseterNK.Appoint(n, k).Offset(n + 0.5, k - 0.5);
 
-            return (gByPN.GetParamCell(v, n + 0.5, k) - gByPN.GetParamCell(v, n + 0.5, k - 1)) / constP.h;
+            return (g[n + 0.5][k][v] - g[n + 0.5][k - 1][v]) / constP.h;
         }
 
 

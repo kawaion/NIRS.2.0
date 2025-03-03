@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NIRS.Interfaces;
+using NIRS.Parameter_names;
 
 namespace NIRS.Grid_Folder
 {
@@ -26,7 +27,6 @@ namespace NIRS.Grid_Folder
                 else throw new Exception("значение уже задано");
             }
         }
-
 
         List<IGridCell> gridCellsMinus = new List<IGridCell>();
         List<IGridCell> gridCellsPlus = new List<IGridCell>();
@@ -57,11 +57,13 @@ namespace NIRS.Grid_Folder
             var value = ConvertIndexToN(lastIndex);
             return value;
         }
+
         public IGridCell Last()
         {
             int lastI = ConvertNToIndex(LastIndex());
             return gridCellsPlus[lastI];
         }
+
 
         private List<IGridCell> AllocateMemorygridCellsForTheIndex(List<IGridCell> gridCells, int index)
         {
@@ -113,7 +115,7 @@ namespace NIRS.Grid_Folder
             return (index, gridCells);
         }
 
-        //те же значения для снаряда
+
         public IGridCellProjectile sn { get; set; }
     }
 }

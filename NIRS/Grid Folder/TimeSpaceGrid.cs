@@ -63,5 +63,7 @@ namespace NIRS.Grid_Folder
         {
             return subGrid.AllocateUpTo(index);
         }
+
+        public double NULL { get; } = double.MinValue;
     }
 }

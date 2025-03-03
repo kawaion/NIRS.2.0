@@ -59,14 +59,18 @@
     <Compile Include="Barrel Folder\BarrelSize.cs" />
     <Compile Include="Barrel Folder\FinderPointsBetweenCurrent.cs" />
     <Compile Include="Functions for numerical method\BoundaryFunctions.cs" />
+    <Compile Include="Grid Folder\SpaceCellProjectile.cs" />
     <Compile Include="H Functions\HFunctionsProjectile.cs" />
+    <Compile Include="Helpers\Differencial.cs" />
     <Compile Include="Interfaces\IBarrel.cs" />
     <Compile Include="Interfaces\IBarrelSize.cs" />
     <Compile Include="Barrel Folder\ShifterCannonToZero.cs" />
     <Compile Include="Barrel Folder\VBarrelParts.cs" />
     <Compile Include="Interfaces\IBoundaryFunctions.cs" />
     <Compile Include="Interfaces\IHFunctionsProjectile.cs" />
+    <Compile Include="Interfaces\INumericalSolutionInterpolation.cs" />
     <Compile Include="Main data\MainData.cs" />
+    <Compile Include="Numerical solution\NumericalSolutionInterpolation.cs" />
     <Compile Include="Powder Folder\BurningPowdersSize_12_7.cs" />
     <Compile Include="Interfaces\IBurningPowdersSize.cs" />
     <Compile Include="Interfaces\IMainData.cs" />
@@ -136,7 +140,6 @@
     <Compile Include="Parameter Type\ParameterTypeGetter.cs" />
     <Compile Include="Parameter Type\PT.cs" />
     <Compile Include="Parameter Type\TypeFromParameterName.cs" />
-    <Compile Include="Parameter names\GetterValueByPN.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Projectile Folder\ProjectileParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -156,6 +159,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include=".editorconfig" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
