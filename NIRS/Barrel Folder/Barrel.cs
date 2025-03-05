@@ -12,6 +12,7 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
     {
         public List<Point2D> BendingPoints { get; }
         public Point2D EndChamberPoint { get; }
+        public IBarrelSize BarrelSize { get; }
 
 
         //сделать функции Clone
@@ -20,6 +21,10 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
             BendingPoints = bendingPoints;
             EndChamberPoint = endChamberPoint;
             (BendingPoints, EndChamberPoint) = ShifterCannonToZero.Shift(BendingPoints, EndChamberPoint);
+
+            BarrelSize = new BarrelSize(this);
         }
+
+
     }
 }

@@ -20,7 +20,15 @@ namespace MyDouble
             Type = type;
         }
 
-
+        public static LimitedDouble Floor(double value)
+        {
+            var doubleFloor = (int)value;
+            var MyDouble = new LimitedDouble(doubleFloor);
+            if (MyDouble + 0.5 <= value)
+                return MyDouble + 0.5;
+            else
+                return MyDouble;
+        }
 
 
         private static ILimitedDoubleArithmetic limitedDoubleArithmetic = new LimitedDoubleArithmetic();
@@ -79,6 +87,32 @@ namespace MyDouble
         public static bool operator >=(LimitedDouble myDouble1, LimitedDouble myDouble2)
         {
             return myDouble1 > myDouble2 || myDouble1 == myDouble2;
+        }
+
+
+        public static bool operator !=(LimitedDouble myDouble1, double otherValue)
+        {
+            return myDouble1.Value != otherValue;
+        }
+        public static bool operator ==(LimitedDouble myDouble1, double otherValue)
+        {
+            return myDouble1.Value == otherValue;
+        }
+        public static bool operator <(LimitedDouble myDouble1, double otherValue)
+        {
+            return myDouble1.Value < otherValue;
+        }
+        public static bool operator >(LimitedDouble myDouble1, double otherValue)
+        {
+            return myDouble1.Value > otherValue;
+        }
+        public static bool operator <=(LimitedDouble myDouble1, double otherValue)
+        {
+            return myDouble1 < otherValue || myDouble1 == otherValue;
+        }
+        public static bool operator >=(LimitedDouble myDouble1, double otherValue)
+        {
+            return myDouble1 > otherValue || myDouble1 == otherValue;
         }
 
 

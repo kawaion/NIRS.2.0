@@ -57,6 +57,17 @@ namespace NIRS.Grid_Folder
             var value = ConvertIndexToN(lastIndex);
             return value;
         }
+        public LimitedDouble LastIndex(PN pn)
+        {
+            var kLast = LastIndex();
+            IGrid g = new TimeSpaceGrid();
+
+            while (this[kLast][pn] == g.NULL)
+                kLast -= 1;
+
+            return kLast;
+        }
+
 
         public IGridCell Last()
         {

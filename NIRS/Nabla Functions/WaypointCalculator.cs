@@ -27,7 +27,7 @@ namespace NIRS.Nabla_Functions
         {
             g = grid;
             constP = mainData.ConstParameters;
-            bs = mainData.BarrelSize;
+            bs = mainData.Barrel.BarrelSize;
 
             x = new XGetter(mainData.ConstParameters);
 

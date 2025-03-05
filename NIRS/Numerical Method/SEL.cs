@@ -28,7 +28,6 @@ namespace NIRS.Numerical_Method
         {
             IGrid grid = new TimeSpaceGrid();
 
-            
             var gridBorderFiller = GetGridBorderFiller();
             var gridWithFilledBorders = gridBorderFiller.FillAtZeroTime(grid);
             var numericalSolution = GetNumericalSolution(gridWithFilledBorders, gridBorderFiller);

@@ -29,9 +29,9 @@ namespace NIRS.H_Functions
                           IMainData mainData)
         {
             g = grid;
-            bs = mainData.BarrelSize;
+            bs = mainData.Barrel.BarrelSize;
             powder = mainData.Powder;
-            bps = mainData.BurningPowdersSize;
+            bps = mainData.Powder.BurningPowdersSize;
             constP = mainData.ConstParameters;
 
             x = new XGetter(mainData.ConstParameters);

@@ -5,3 +5,9 @@ F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.GenerateResource.cache
 F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.CoreCompileInputs.cache
 F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.BarrelFolder.BarrelInitializationInterface.resources
 F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.Cannon_Folder.Barrel_Folder.BarrelInitializationInterface.resources
+G:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.AssemblyReference.cache
+G:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.Cannon_Folder.Barrel_Folder.BarrelInitializationInterface.resources
+G:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.Form1.resources
+G:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.Properties.Resources.resources
+G:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.GenerateResource.cache
+G:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.CoreCompileInputs.cache

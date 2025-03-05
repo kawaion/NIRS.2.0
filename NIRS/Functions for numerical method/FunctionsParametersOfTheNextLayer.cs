@@ -34,7 +34,7 @@ namespace NIRS.Functions_for_numerical_method
             wc = waypointCalculator;
             hf = hFunctions;
             constP = mainData.ConstParameters;
-            bs = mainData.BarrelSize;
+            bs = mainData.Barrel.BarrelSize;
             powder = mainData.Powder;
 
             x = new XGetter(mainData.ConstParameters);

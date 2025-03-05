@@ -31,7 +31,7 @@ namespace NIRS.Functions_for_numerical_method
         {
             g = grid;
             constP = mainData.ConstParameters;
-            bs = mainData.BarrelSize;
+            bs = mainData.Barrel.BarrelSize;
             powder = mainData.Powder;
             projectile = mainData.Projectile;
 

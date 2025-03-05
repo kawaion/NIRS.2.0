@@ -21,7 +21,7 @@ namespace NIRS.Functions_for_numerical_method
         {
             constP = mainData.ConstParameters;
             powder = mainData.Powder;
-            bs = mainData.BarrelSize;
+            bs = mainData.Barrel.BarrelSize;
 
             x = new XGetter(mainData.ConstParameters);
         }

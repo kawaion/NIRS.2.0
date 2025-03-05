@@ -20,9 +20,9 @@ namespace NIRS.H_Functions
         public HFunctionsProjectile(IGrid grid, IMainData mainData)
         {
             g = grid;
-            bs = mainData.BarrelSize;
+            bs = mainData.Barrel.BarrelSize;
             powder = mainData.Powder;
-            bps = mainData.BurningPowdersSize;
+            bps = mainData.Powder.BurningPowdersSize;
             constP = mainData.ConstParameters;
         }
 

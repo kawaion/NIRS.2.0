@@ -18,7 +18,6 @@ namespace NIRS.Nabla_Functions.Projectile
         private readonly IGrid g;
         private readonly IConstParameters constP;
         private readonly IBarrelSize bs;
-        private readonly GetterValueByPN gByPN;
 
         private readonly XGetter x;
 
@@ -26,8 +25,7 @@ namespace NIRS.Nabla_Functions.Projectile
         {
             g = grid;
             constP = mainData.ConstParameters;
-            bs = mainData.BarrelSize;
-            gByPN = new GetterValueByPN(grid);
+            bs = mainData.Barrel.BarrelSize;
 
             x = new XGetter(mainData.ConstParameters);
         }
@@ -42,7 +40,7 @@ namespace NIRS.Nabla_Functions.Projectile
         {
             n = OffseterN.Appoint(n).Offset(n + 0.5);
 
-            return gByPN.GetParamCellSn(v, n + 0.5) * gByPN.GetParamCellSn(mu, n) * bs.S(g[n].sn.x);
+            return g[n + 0.5].sn[v] * g[n].sn[mu] * bs.S(g[n].sn.x);
         }
 
         private double AverageK(PN mu, PN S, PN v, LimitedDouble n)
@@ -51,11 +49,11 @@ namespace NIRS.Nabla_Functions.Projectile
 
             var K = g[n].LastIndex();
 
-            double V = gByPN.GetParamCell(v, n + 0.5, K);
+            double V = g[n + 0.5][K][v];
             if (V >= 0)
-                return V * gByPN.GetParamCell(mu, n, K - 0.5) * bs.S(x[K-0.5]);
+                return V * g[n][K - 0.5][mu] * bs.S(x[K-0.5]);
             else
-                return V * gByPN.GetParamCellSn(mu, n) * bs.S(g[n].sn.x);
+                return V * g[n].sn[mu] * bs.S(g[n].sn.x);
         }
 
     }

@@ -13,18 +13,21 @@ namespace NIRS.Cannon_Folder.Powder_Folder
         public double d0 { get; }
         public double L0 { get; }
         public double e1 { get; }
-        public Powder_12_7(double omega, double delta, double DELTA, double D0, double d0, double L0,  double e1, double u1)
+        public IBurningPowdersSize BurningPowdersSize { get; }
+        public Powder_12_7(IConstParameters constParameters,double omega)
         {
             Omega = omega;
-            Delta = delta;
-            this.Delta = DELTA;
-            this.D0 = D0;
-            this.d0 = d0;
-            this.L0 = L0;
-            this.e1 = e1;            
-            U1 = u1;
+            Delta = constParameters.delta;
+            this.Delta = constParameters.DELTA;
+            this.D0 = constParameters.D0;
+            this.d0 = constParameters.d0;
+            this.L0 = constParameters.L0;
+            this.e1 = constParameters.e1;            
+            U1 = constParameters.u1;
 
             (S0, LAMDA0) = InitialiseS0LAMDA0(D0, d0, L0);
+
+            BurningPowdersSize = new BurningPowdersSize_12_7(this, constParameters);
         }
         public double S0 { get; }
         public double LAMDA0 { get; }

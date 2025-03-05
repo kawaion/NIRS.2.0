@@ -10,16 +10,16 @@ namespace NIRS.Cannon_Folder.Powder_Folder
 {
     class BurningPowdersSize_12_7 : IBurningPowdersSize
     {
-        private readonly IConstParameters _constP;
+        private readonly IConstParameters constP;
 
         private double kappa;
         private double lamda;
         private double mu;
         private double psiS;
 
-        public BurningPowdersSize_12_7(IMainData mainData)
+        public BurningPowdersSize_12_7(IPowder powder,IConstParameters constParameters)
         {
-            IPowder powder = mainData.Powder;
+            constP = constParameters;
             (kappa,lamda,mu)=InitialiseKappaLamdaMu(powder);
             psiS = InitialisePsiS(kappa, lamda, mu);
         }
@@ -49,7 +49,7 @@ namespace NIRS.Cannon_Folder.Powder_Folder
         }
         public double Uk(double p)
         {
-            return _constP.u1 * p;
+            return constP.u1 * p;
         }
 
         private static double PsiValidation(double psi)
@@ -78,8 +78,5 @@ namespace NIRS.Cannon_Folder.Powder_Folder
         {
             return kappa * (1 + lamda + mu);
         }
-
-
-
     }
 }
