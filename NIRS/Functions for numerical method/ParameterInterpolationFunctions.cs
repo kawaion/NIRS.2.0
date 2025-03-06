@@ -36,12 +36,11 @@ namespace NIRS.Functions_for_numerical_method
 
         public double InterpolateMixture(PN pn, LimitedDouble n, LimitedDouble k)
         {
-            (n, k) = OffseterNK.Appoint(n, k).Offset(n + 1, k + 0.5);
+            var kLast = g[n].LastIndex(pn);
 
-            return g[n + 1][k - 0.5][pn]
-                   + (g[n + 1].sn[pn] - g[n + 1][k - 0.5][pn]) /
-                     (g[n + 1].sn[PN.x] - x[k - 0.5])
-                   * step.Get(n+1,k,pn) * constP.h;
+            return g[n][kLast][pn]
+                   + d.dPNdx(n,pn)
+                   * step.Get(n,k,pn) * constP.h;
         }   
         
 
@@ -62,7 +61,7 @@ namespace NIRS.Functions_for_numerical_method
 
             return g[n + 0.5][k].v
                    + d.dvdx(n + 0.5)
-                   * step.Get(n + 0.5, k, PN.v) * constP.h;
+                   * step.Get(n + 0.5, k + 1, PN.v) * constP.h;
         }
         public double Interpolate_w(LimitedDouble n, LimitedDouble k)
         {
@@ -70,7 +69,7 @@ namespace NIRS.Functions_for_numerical_method
 
             return g[n + 0.5][k].w
                    + d.dwdx(n + 0.5)
-                   * step.Get(n + 0.5, k, PN.w) * constP.h;
+                   * step.Get(n + 0.5, k + 1, PN.w) * constP.h;
         }
         public double Interpolate_dynamic_m(LimitedDouble n, LimitedDouble k)
         {
@@ -98,29 +97,36 @@ namespace NIRS.Functions_for_numerical_method
             var opt = ChooseACalculationOptionFor_m_M(n, k);
             if (opt == Option.opt1)
             {
-                return g[n + 0.5][k + 1].w * //sigma *
+                return g[n + 0.5][k + 1].w * constP.delta *
                        ((1-g[n][k + 0.5].m) * bs.S(x[k+0.5]) + (1 - g[n][k + 1.5].m) * bs.S(x[k + 1.5]))
                        / 2;
             }
             if (opt == Option.opt2)
             {
-                return g[n + 0.5][k + 1].w * //sigma *
+                return g[n + 0.5][k + 1].w * constP.delta *
                        ((1 - g[n][k + 0.5].m) * bs.S(x[k + 0.5]) + (1 - g[n].sn.m) * bs.S(g[n].sn.x))
                        / 2;
             }
+            //if (opt == Option.opt3)
+            //{
+            //    return g[n + 0.5][k + 1].w * constP.delta *
+            //           ((1 - g[n][k + 0.5].m) * bs.S(x[k + 0.5]) + (1 - g[n].sn.m) * bs.S(g[n].sn.x))
+            //           / 2;
+            //}
             throw new Exception();
         }        
 
         private Option ChooseACalculationOptionFor_m_M(LimitedDouble n, LimitedDouble k)
         {
+            //if (k + 2 <= g[n + 0.5].sn.x / constP.h)
+            //    return Option.opt3;
+            //else
             if (k + 1.5 <= g[n].sn.x / constP.h)
                 return Option.opt1;
             else if (k + 1 <= g[n + 0.5].sn.x / constP.h)
                 return Option.opt2;
             throw new Exception();
         }
-
-
 
         enum Option
         {

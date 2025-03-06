@@ -21,13 +21,22 @@ namespace NIRS.Helpers
         }
         public double dvdx(LimitedDouble n)
         {
-            return (g[n].sn.vSn - g[n].Last().v) /
-                   (g[n].sn.x - x[g[n].LastIndex()]);
+            var kLast = g[n].LastIndex(PN.v);
+            return (g[n].sn.vSn - g[n][kLast].v) /
+                   (g[n].sn.x - x[kLast]);
         }
         public double dwdx(LimitedDouble n)
         {
-            return (g[n].sn.vSn - g[n].Last().w) /
-                   (g[n].sn.x - x[g[n].LastIndex()]);
+            var kLast = g[n].LastIndex(PN.v);
+            return (g[n].sn.vSn - g[n][kLast].w) /
+                   (g[n].sn.x - x[kLast]);
+        }
+
+        public double dPNdx(LimitedDouble n, PN pn)
+        {
+            var kLast = g[n].LastIndex(pn);
+            return (g[n].sn[pn] - g[n][kLast][pn]) /
+                   (g[n].sn.x - x[kLast]);
         }
 
 

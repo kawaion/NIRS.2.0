@@ -51,7 +51,7 @@ namespace NIRS.Grid_Folder
             }
         }
 
-        public LimitedDouble LastIndex()
+        private LimitedDouble LastIndex()
         {
             int lastIndex = gridCellsPlus.Count-1;  // провертить в тесте выдается ли последний индекс
             var value = ConvertIndexToN(lastIndex);
@@ -67,12 +67,10 @@ namespace NIRS.Grid_Folder
 
             return kLast;
         }
-
-
-        public IGridCell Last()
+        public double Last(PN pn)
         {
-            int lastI = ConvertNToIndex(LastIndex());
-            return gridCellsPlus[lastI];
+            int lastI = ConvertNToIndex(LastIndex(pn));
+            return gridCellsPlus[lastI][pn];
         }
 
 

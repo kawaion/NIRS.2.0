@@ -21,9 +21,14 @@ namespace NIRS.Helpers
         {
             var kLast = g[n].LastIndex(pn);
 
-            var distanceToPointK = k - kLast;
-            if (distanceToPointK < 0) throw new Exception();
-            else return (int)(distanceToPointK).Value;
+            var distance = k - kLast;
+            validation(distance);
+            return (int)(distance).Value;
+        }
+
+        private void validation(LimitedDouble distance)
+        {
+            if (distance < 0 || distance.Type == DoubleType.HalfInt) throw new Exception();
         }
     }
 }

@@ -7,9 +7,8 @@ namespace NIRS.Interfaces
     {
         LimitedDouble N { get; set; }
         IGridCell this[LimitedDouble i] { get; set; }
-        LimitedDouble LastIndex();
         LimitedDouble LastIndex(PN pn);
-        IGridCell Last();
+        double Last(PN pn);
         IGridCellProjectile sn { get; set; }
     }
 }

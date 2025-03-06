@@ -47,7 +47,7 @@ namespace NIRS.Nabla_Functions.Projectile
         {
             n = OffseterN.Appoint(n).Offset(n + 0.5);
 
-            var K = g[n].LastIndex();
+            var K = g[n].LastIndex(v);
 
             double V = g[n + 0.5][K][v];
             if (V >= 0)
