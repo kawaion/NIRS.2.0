@@ -99,6 +99,8 @@ namespace NIRS.Functions_for_numerical_method
                                       )
                       );
         }     
+
+
         public double Get_r(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.Appoint(n, k).Offset(n + 1, k - 0.5);

@@ -42,28 +42,33 @@ namespace NIRS.Numerical_Method
         }
         private IGrid GetNumericalSolution(IGrid grid, IGridBorderFiller gridBorderFiller)
         {
-            LimitedDouble n = new LimitedDouble(0);
+            LimitedDouble n = new LimitedDouble(-0.5);
 
-            while (!IsEndCondition())
+            while (!IsEndConditionNumericalSolution(grid,n))
             {
+                n += 0.5;
+
                 grid = gridBorderFiller.FillBarrelBorders(grid, n);
                 grid = GetNumericalSolutionAtNodeN(grid, n);
                 grid = GetNumericalSolutionInProjectile(grid, n);
                 grid = GetInterpolateSolutionAtInaccessibleNodes(grid, n);
-                n += 0.5;
             }
             return grid;
 
-            bool IsEndCondition()
-            {
 
-            }
+            
+        }
+        bool IsEndConditionNumericalSolution(IGrid grid, LimitedDouble n)
+        {
+            var x = grid[n].sn.x;
+            var lengthBarrel = _mainData.Barrel.Length;
+            return x >= lengthBarrel;
         }
         private IGrid GetNumericalSolutionAtNodeN(IGrid grid, LimitedDouble n)
         {
             LimitedDouble k = new LimitedDouble(0);
 
-            while (!IsEndCondition())
+            while (!IsEndConditionNumericalSolutionAtNodeN())
             {
                 if(ParameterTypeGetter.IsDynamic(n, k) || ParameterTypeGetter.IsMixture(n, k))
                 {
@@ -75,10 +80,11 @@ namespace NIRS.Numerical_Method
             }
             return grid;
 
-            bool IsEndCondition()
-            {
 
-            }
+        }
+        bool IsEndConditionNumericalSolutionAtNodeN()
+        {
+
         }
 
         private IGrid GetNumericalSolutionAtNodeNK(IGrid grid, LimitedDouble n, LimitedDouble k)
@@ -106,7 +112,7 @@ namespace NIRS.Numerical_Method
         {
             FunctionsBuilder functionsBuilder = new FunctionsBuilder(_mainData);
             var parameterInterpolationFunctions = functionsBuilder.ParameterInterpolationFunctionsBuild(grid);
-            INumericalSolutionInterpolation numericalSolutionInterpolation = new NumericalSolutionInterpolation(parameterInterpolationFunctions);
+            INumericalSolutionInterpolation numericalSolutionInterpolation = new NumericalSolutionInterpolation(parameterInterpolationFunctions,_mainData);
 
             grid = numericalSolutionInterpolation.Get(grid, n);
 

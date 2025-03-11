@@ -23,48 +23,42 @@ namespace NIRS.Numerical_solution
         public IGrid Get(IGrid g, LimitedDouble n)
         {
             List<PN> parameters;
-            if(n.Type == DoubleType.Int)
+            if (n.Type == DoubleType.Int)
             {
-                parameters = new List<PN>();
-                parameters.Add(PN.r);
-                parameters.Add(PN.z);
-                parameters.Add(PN.a);
-                parameters.Add(PN.m);
-                parameters.Add(PN.ro);
-                parameters.Add(PN.e);
-                parameters.Add(PN.p);
+                parameters = new List<PN> { PN.r, PN.z, PN.a, PN.m, PN.ro, PN.e, PN.p };
 
-            foreach(var pn in parameters)
-            {
-                while (isExistNonCalculatedNodes(g, n, pn))
+                foreach (var pn in parameters)
                 {
-                    var kLast = g[n].LastIndex(pn);
-                    g[n][kLast + 1][pn] = _functions.InterpolateMixture(pn, n, kLast + 1);
+                    while (isExistNonCalculatedNodes(g, n, pn))
+                    {
+                        var kLast = g[n].LastIndex(pn);
+                        g[n][kLast + 1][pn] = _functions.InterpolateMixture(pn, n, kLast + 1);
+                    }
                 }
             }
-            }
 
-
-            parameters = new List<PN>();
-            parameters.Add(PN.v);
-            parameters.Add(PN.w);
-            parameters.Add(PN.dynamic_m);
-            parameters.Add(PN.M);
-
-            foreach (var pn in parameters)
+            if (n.Type == DoubleType.HalfInt)
             {
-                while (isExistNonCalculatedNodes(g, n, pn))
+                parameters = new List<PN>() { PN.v, PN.w, PN.dynamic_m, PN.M };
+
+                foreach (var pn in parameters)
                 {
-                    var kLast = g[n].LastIndex(pn);
-                    g[n][kLast + 1][pn] = _functions.InterpolateMixture(pn, n, kLast + 1);
+                    while (isExistNonCalculatedNodes(g, n, pn))
+                    {
+                        var kLast = g[n].LastIndex(pn);
+                        g[n][kLast + 1][pn] = _functions.InterpolateDynamic(pn, n, kLast + 1);
+                    }
                 }
             }
+
+            return g;
+
         }
 
         private bool isExistNonCalculatedNodes(IGrid g, LimitedDouble n, PN pn)
         {
             var kLast = g[n].LastIndex(pn);
-            return g[n].sn.x - x[kLast] >= 1;
+            return g[n].sn.x >= x[kLast] + 1;
         }
     }
 }

@@ -88,6 +88,12 @@ namespace NIRS.Functions_for_numerical_method
                        (g[n][k + 0.5].r + g[n].sn.r)
                        / 2;
             }
+            //if (opt == Option.opt3)
+            //{
+            //    return g[n + 0.5][k + 2].v *
+            //           (g[n][k + 0.5].r + g[n].sn.r)
+            //           / 2;
+            //}
             throw new Exception();
         }
         public double Interpolate_M(LimitedDouble n, LimitedDouble k)
@@ -109,7 +115,7 @@ namespace NIRS.Functions_for_numerical_method
             }
             //if (opt == Option.opt3)
             //{
-            //    return g[n + 0.5][k + 1].w * constP.delta *
+            //    return g[n + 0.5][k + 2].w * constP.delta *
             //           ((1 - g[n][k + 0.5].m) * bs.S(x[k + 0.5]) + (1 - g[n].sn.m) * bs.S(g[n].sn.x))
             //           / 2;
             //}
@@ -120,11 +126,12 @@ namespace NIRS.Functions_for_numerical_method
         {
             //if (k + 2 <= g[n + 0.5].sn.x / constP.h)
             //    return Option.opt3;
-            //else
+            //else 
             if (k + 1.5 <= g[n].sn.x / constP.h)
                 return Option.opt1;
             else if (k + 1 <= g[n + 0.5].sn.x / constP.h)
                 return Option.opt2;
+
             throw new Exception();
         }
 

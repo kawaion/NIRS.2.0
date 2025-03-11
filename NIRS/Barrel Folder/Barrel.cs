@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 using NIRS.Helpers;
 using NIRS.Interfaces;
 
@@ -13,6 +14,7 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
         public List<Point2D> BendingPoints { get; }
         public Point2D EndChamberPoint { get; }
         public IBarrelSize BarrelSize { get; }
+        public double Length { get; }
 
 
         //сделать функции Clone
@@ -21,6 +23,7 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
             BendingPoints = bendingPoints;
             EndChamberPoint = endChamberPoint;
             (BendingPoints, EndChamberPoint) = ShifterCannonToZero.Shift(BendingPoints, EndChamberPoint);
+            Length = BendingPoints.Last().X;
 
             BarrelSize = new BarrelSize(this);
         }

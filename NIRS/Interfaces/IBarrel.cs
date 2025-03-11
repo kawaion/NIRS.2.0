@@ -11,6 +11,7 @@ namespace NIRS.Interfaces
     {
         List<Point2D> BendingPoints { get; }
         Point2D EndChamberPoint { get; }
+        double Length { get; }
         IBarrelSize BarrelSize { get; }
     }
 }
