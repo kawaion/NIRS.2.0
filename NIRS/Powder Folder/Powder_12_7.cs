@@ -14,11 +14,11 @@ namespace NIRS.Cannon_Folder.Powder_Folder
         public double L0 { get; }
         public double e1 { get; }
         public IBurningPowdersSize BurningPowdersSize { get; }
-        public Powder_12_7(IConstParameters constParameters,double omega)
+        public Powder_12_7(IConstParameters constParameters, IBarrelSize barrelSize, double omega)
         {
             Omega = omega;
             Delta = constParameters.delta;
-            this.Delta = constParameters.DELTA;
+            this.DELTA = omega/barrelSize.Wkm;
             this.D0 = constParameters.D0;
             this.d0 = constParameters.d0;
             this.L0 = constParameters.L0;

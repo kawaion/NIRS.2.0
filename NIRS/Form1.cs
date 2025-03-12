@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using NIRS.Interfaces;
 using NIRS.Main_data;
 using NIRS.Projectile_Folder;
+using NIRS.Helpers;
 
 namespace NIRS
 {
@@ -33,12 +34,26 @@ namespace NIRS
         private void button1_Click(object sender, EventArgs e)
         {
             IInitialParameters initialParameters = new InitialParametersCase1();
-            IConstParameters constParameters = new ConstParametersCase1();
+            IConstParameters constParameters = new ConstParametersCase1(0,0);
             (var newInitialParameters, var newConstParameters) = inputDataTransmitter.GetInputData(initialParameters, constParameters);
-            IBarrel barrel = new Barrel();
-            IPowder powder = new Powder_12_7(newConstParameters,omega);
-            IProjectile projectile = new Projectile(q, d);
-            IMainData mainData = new MainData(barrel, powder, newConstParameters, initialParameters, projectile);
+            List<Point2D> points = new List<Point2D>();
+            points.Add(new Point2D(0, 0.214));
+            points.Add(new Point2D(0.85, 0.214));
+            points.Add(new Point2D(0.96, 0.196));
+            points.Add(new Point2D(1.015, 0.164));
+            points.Add(new Point2D(1.045, 0.155));
+            points.Add(new Point2D(1.1225, 0.1524));
+            points.Add(new Point2D(6.322, 0.1524));
+
+            Point2D endChamber = new Point2D(1.1225, 0.1524);
+
+            double omega = 19;
+            double d = 0.1524;
+
+            IBarrel barrel = new Barrel(points,endChamber,Dimension.D);
+            IPowder powder = new Powder_12_7(newConstParameters, barrel.BarrelSize, omega);
+            IProjectile projectile = new Projectile(newConstParameters.q, d);
+            IMainData mainData = new MainData(barrel, powder, newConstParameters, newInitialParameters, projectile);
             INumericalMethod numericalMethod = new SEL(mainData);
             IGrid grid = numericalMethod.Calculate();
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,10 +19,15 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
 
 
         //сделать функции Clone
-        public Barrel(List<Point2D> bendingPoints, Point2D endChamberPoint)
+        public Barrel(List<Point2D> bendingPoints, Point2D endChamberPoint, Dimension dim)
         {
             BendingPoints = bendingPoints;
             EndChamberPoint = endChamberPoint;
+            if (dim == Dimension.D)
+            {
+                BendingPoints.ForEach(point => point.Y /= 2);
+                EndChamberPoint.Y /= 2;
+            }
             (BendingPoints, EndChamberPoint) = ShifterCannonToZero.Shift(BendingPoints, EndChamberPoint);
             Length = BendingPoints.Last().X;
 
@@ -29,5 +35,10 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
         }
 
 
+    }
+    enum Dimension
+    {
+        R,
+        D
     }
 }

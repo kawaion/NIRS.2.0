@@ -19,5 +19,6 @@ namespace NIRS.Interfaces
         double u1 { get; }
         double omegaV { get; }
         double f { get; }
+        double q { get; }
     }
 }

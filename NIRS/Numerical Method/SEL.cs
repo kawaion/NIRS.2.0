@@ -66,36 +66,43 @@ namespace NIRS.Numerical_Method
         }
         private IGrid GetNumericalSolutionAtNodeN(IGrid grid, LimitedDouble n)
         {
-            LimitedDouble k = new LimitedDouble(0);
+            LimitedDouble k = new LimitedDouble(-0.5);
 
-            while (!IsEndConditionNumericalSolutionAtNodeN())
+            bool isEnd = false;
+            while (!isEnd)
             {
+                k += 0.5;
                 if(ParameterTypeGetter.IsDynamic(n, k) || ParameterTypeGetter.IsMixture(n, k))
                 {
-                    grid = GetNumericalSolutionAtNodeNK(grid, n, k );
+                    (grid,isEnd) = GetNumericalSolutionAtNodeNK(grid, n, k );
                 }
-
-
-                k += 0.5;
             }
             return grid;
 
 
         }
-        bool IsEndConditionNumericalSolutionAtNodeN()
-        {
+        //bool IsEndConditionNumericalSolutionAtNodeN()
+        //{
 
-        }
+        //}
 
-        private IGrid GetNumericalSolutionAtNodeNK(IGrid grid, LimitedDouble n, LimitedDouble k)
+        private (IGrid grid,bool isEnd)  GetNumericalSolutionAtNodeNK(IGrid grid, LimitedDouble n, LimitedDouble k)
         {
+            bool isEnd = false;
             FunctionsBuilder functionsBuilder = new FunctionsBuilder(_mainData);
             var functionsNewLayer = functionsBuilder.FunctionsParametersOfTheNextLayerBuild(grid);
             INumericalSolutionInNodes numericalSolutionInNodes = new NumericalSolutionInNodes(functionsNewLayer);
-
-            grid = numericalSolutionInNodes.Get(grid, n, k);
-
-            return grid;
+            
+            try
+            {
+                grid = numericalSolutionInNodes.Get(grid, n, k);
+            }
+            catch
+            {
+                isEnd = true;
+            }
+            
+            return (grid,isEnd);
         }
         private IGrid GetNumericalSolutionInProjectile(IGrid grid, LimitedDouble n)
         {
