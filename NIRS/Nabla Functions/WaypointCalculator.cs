@@ -35,9 +35,9 @@ namespace NIRS.Nabla_Functions
         }
 
 
-        public double Nabla(PN param1, PN param2, PN param3, LimitedDouble n, LimitedDouble k)
+        public double Nabla(PN param1, PN param2, PN param3, LimitedDouble N, LimitedDouble K)
         {
-            (n, k) = OffseterNK.Appoint(n, k).Offset(n + 0.5, k - 0.5);
+            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 0.5);
 
             return (AverageWithS(param1, param3, n + 0.5, k) - AverageWithS(param1, param3, n + 0.5, k - 1)) / constP.h;
         }
@@ -61,23 +61,23 @@ namespace NIRS.Nabla_Functions
         }
 
 
-        public double Nabla(PN param1, PN v, LimitedDouble n, LimitedDouble k)
+        public double Nabla(PN param1, PN v, LimitedDouble N, LimitedDouble K)
         {
             if (param1.IsDynamic())
             {
-                (n, k) = OffseterNK.Appoint(n, k).Offset(n - 0.5, k);
+                (var n, var k) = OffseterNK.Appoint(N, K).Offset(N - 0.5, K);
 
                 return (DynamicAverage(param1, v, n - 0.5, k + 0.5) - DynamicAverage(param1, v, n - 0.5, k - 0.5)) / constP.h;
             }
                 
             if (param1.IsMixture())
             {
-                (n, k) = OffseterNK.Appoint(n, k).Offset(n + 0.5, k - 0.5);
+                (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 0.5);
 
                 return (MixtureAverage(param1, v, n + 0.5, k ) - MixtureAverage(param1, v, n + 0.5, k - 1)) / constP.h;
             }
                 
-            throw new Exception($"неизвестные параметры {param1} и {v} на слое {n} {k}");
+            throw new Exception($"неизвестные параметры {param1} и {v} на слое {N} {K}");
         }
         private double DynamicAverage(PN mu, PN v, LimitedDouble n, LimitedDouble k)
         {
@@ -99,9 +99,9 @@ namespace NIRS.Nabla_Functions
         }
 
 
-        public double Nabla(PN v, LimitedDouble n, LimitedDouble k)
+        public double Nabla(PN v, LimitedDouble N, LimitedDouble K)
         {
-            (n, k) = OffseterNK.Appoint(n, k).Offset(n + 0.5, k - 0.5);
+            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 0.5);
 
             return (g[n + 0.5][k][v] - g[n + 0.5][k - 1][v]) / constP.h;
         }

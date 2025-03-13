@@ -26,34 +26,34 @@ namespace NIRS.H_Functions
             constP = mainData.ConstParameters;
         }
 
-        public double H3(LimitedDouble n)
+        public double H3(LimitedDouble N)
         {
-            n = OffseterN.Appoint(n).Offset(n + 0.5);
+            var n = OffseterN.Appoint(N).Offset(N + 0.5);
 
             var x_n = g[n].sn.x;
 
             return bs.S(x_n) * G(n);
         }
 
-        public double H4(LimitedDouble n)
+        public double H4(LimitedDouble N)
         {
-            n = OffseterN.Appoint(n).Offset(n + 0.5);
+            var n = OffseterN.Appoint(N).Offset(N + 0.5);
 
             var x_n = g[n].sn.x;
 
             return bs.S(x_n) * G(n) * constP.Q;
         }
 
-        public double H5(LimitedDouble n)
+        public double H5(LimitedDouble N)
         {
-            n = OffseterN.Appoint(n).Offset(n + 0.5);
+            var n = OffseterN.Appoint(N).Offset(N + 0.5);
 
             return bps.Uk(g[n].sn.p) / constP.e1;
         }
 
-        public double HPsi(LimitedDouble n)
+        public double HPsi(LimitedDouble N)
         {
-            n = OffseterN.Appoint(n).Offset(n + 0.5);
+            var n = OffseterN.Appoint(N).Offset(N + 0.5);
 
             return (powder.S0 / powder.LAMDA0)
                    * bps.Sigma(g[n].sn.z, g[n].sn.psi)

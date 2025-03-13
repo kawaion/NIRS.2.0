@@ -14,9 +14,9 @@ namespace NIRS.Additional_calculated_values
 {
     public static class BlurryP
     {
-        public static double PStroke(this IGrid g,IWaypointCalculator waypointCalculator,IConstParameters constP, LimitedDouble n, LimitedDouble k)
+        public static double PStroke(this IGrid g,IWaypointCalculator waypointCalculator,IConstParameters constP, LimitedDouble N, LimitedDouble K)
         {
-            (n, k) = OffseterNK.Appoint(n, k).Offset(n, k + 0.5);
+            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N, K + 0.5);
 
             return g[n][k + 0.5].p + PseudoViscosityMechanism.q(g, waypointCalculator, constP, n, k);
         }

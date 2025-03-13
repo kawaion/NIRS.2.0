@@ -14,9 +14,9 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
         {
             _barrel = barrel;
             _finderPointsBetweenCurrent = new FinderPointsBetweenCurrent(barrel.BendingPoints);
+            VFromBottomBoreToBendingPoints = _barrel.BendingPoints.GetListOfBarrelVFromBottomToBendingPoint();            
             Skn = GetSkn();
             Wkm = GetWkm();
-            VFromBottomBoreToBendingPoints = _barrel.BendingPoints.GetListOfBarrelVFromBottomToBendingPoint();
         }
 
         public double Skn { get; }

@@ -19,3 +19,5 @@ G:\нирс\NIRS.2.0\NIRS\bin\Debug\MyDouble.pdb
 G:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.Up2Date
 G:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.exe
 G:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.pdb
+G:\нирс\NIRS.2.0\NIRS\bin\Debug\Microsoft.Bcl.HashCode.dll
+G:\нирс\NIRS.2.0\NIRS\bin\Debug\Microsoft.Bcl.HashCode.xml

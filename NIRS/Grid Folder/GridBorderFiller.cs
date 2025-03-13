@@ -20,7 +20,7 @@ namespace NIRS.Grid_Folder
             _boundaryFunctions = boundaryFunctions;
             b = mainData.Barrel;
 
-            KGetter K = new KGetter(mainData.ConstParameters);
+            k = new KGetter(mainData.ConstParameters);
         }
         public IGrid FillAtZeroTime(IGrid grid)
         {

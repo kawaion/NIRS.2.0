@@ -20,10 +20,10 @@ namespace NIRS.Numerical_solution
             _functions = projectileFunctions;
         }
 
-        public IGrid Get(IGrid grid, LimitedDouble n)
+        public IGrid Get(IGrid grid, LimitedDouble n, bool isBeltIntact)
         {
             if (n.Type == DoubleType.HalfInt)
-                grid = GetDynamicParametersOfNextLayer(grid, n,  _functions);
+                grid = GetDynamicParametersOfNextLayer(grid, n,  _functions, isBeltIntact);
 
             else if (n.Type == DoubleType.Int)
                 grid = GetMixtureParametersOfNextLayer(grid, n,  _functions);
@@ -32,10 +32,16 @@ namespace NIRS.Numerical_solution
         }
 
 
-        private IGrid GetDynamicParametersOfNextLayer(IGrid grid, LimitedDouble n, IProjectileFunctions functions)
+        private IGrid GetDynamicParametersOfNextLayer(IGrid grid, LimitedDouble n, IProjectileFunctions functions, bool isBeltIntact)
         {
+            if (isBeltIntact)
+                grid[n].sn.vSn = 0;
+            else
+                grid[n].sn.vSn = functions.Get(PN.v, n);
+
+            grid[n].sn.x = functions.Get(PN.x, n); 
+
             grid[n].sn.dynamic_m = functions.Get(PN.dynamic_m, n);
-            grid[n].sn.v = functions.Get(PN.v, n);
             grid[n].sn.M = functions.Get(PN.M, n);
             grid[n].sn.w = functions.Get(PN.w, n);
 
@@ -43,6 +49,8 @@ namespace NIRS.Numerical_solution
         }
         private IGrid GetMixtureParametersOfNextLayer(IGrid grid, LimitedDouble n, IProjectileFunctions functions)
         {
+            grid[n].sn.x = functions.Get(PN.x, n);
+
             grid[n].sn.r = functions.Get(PN.r, n);
             grid[n].sn.e = functions.Get(PN.e, n);
             grid[n].sn.psi = functions.Get(PN.psi, n);

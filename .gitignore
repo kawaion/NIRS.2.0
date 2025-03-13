@@ -1,0 +1,4 @@
+*.v2
+/.vs
+*.cache
+*.vsidx

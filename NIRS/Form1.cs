@@ -35,7 +35,7 @@ namespace NIRS
         {
             IInitialParameters initialParameters = new InitialParametersCase1();
             IConstParameters constParameters = new ConstParametersCase1(0,0);
-            (var newInitialParameters, var newConstParameters) = inputDataTransmitter.GetInputData(initialParameters, constParameters);
+            (var newInitialParameters, var newConstParameters) = (initialParameters, constParameters);//inputDataTransmitter.GetInputData(initialParameters, constParameters);
             List<Point2D> points = new List<Point2D>();
             points.Add(new Point2D(0, 0.214));
             points.Add(new Point2D(0.85, 0.214));

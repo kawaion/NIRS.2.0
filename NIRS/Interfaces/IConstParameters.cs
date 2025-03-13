@@ -20,5 +20,6 @@ namespace NIRS.Interfaces
         double omegaV { get; }
         double f { get; }
         double q { get; }
+        double forcingPressure { get; }
     }
 }

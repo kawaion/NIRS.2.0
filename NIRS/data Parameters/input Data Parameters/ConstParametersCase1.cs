@@ -32,5 +32,6 @@ namespace NIRS.Data_Parameters.Input_Data_Parameters
         public double omegaV => 0.1;
         public double f => 900000;
         public double q => 46;
+        public double forcingPressure => 30e6;
     }
 }

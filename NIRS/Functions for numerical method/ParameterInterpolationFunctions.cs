@@ -55,25 +55,25 @@ namespace NIRS.Functions_for_numerical_method
             }
             throw new Exception();
         }      
-        public double Interpolate_v(LimitedDouble n, LimitedDouble k)
+        public double Interpolate_v(LimitedDouble N, LimitedDouble K)
         {
-            (n, k) = OffseterNK.Appoint(n, k).Offset(n + 0.5, k + 1);
+            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K + 1);
 
             return g[n + 0.5][k].v
                    + d.dvdx(n + 0.5)
                    * step.Get(n + 0.5, k + 1, PN.v) * constP.h;
         }
-        public double Interpolate_w(LimitedDouble n, LimitedDouble k)
+        public double Interpolate_w(LimitedDouble N, LimitedDouble K)
         {
-            (n, k) = OffseterNK.Appoint(n, k).Offset(n + 0.5, k + 1);
+            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K + 1);
 
             return g[n + 0.5][k].w
                    + d.dwdx(n + 0.5)
                    * step.Get(n + 0.5, k + 1, PN.w) * constP.h;
         }
-        public double Interpolate_dynamic_m(LimitedDouble n, LimitedDouble k)
+        public double Interpolate_dynamic_m(LimitedDouble N, LimitedDouble K)
         {
-            (n, k) = OffseterNK.Appoint(n, k).Offset(n + 0.5, k + 1);
+            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K + 1);
 
             var opt = ChooseACalculationOptionFor_m_M(n, k);
             if(opt == Option.opt1)
@@ -96,9 +96,9 @@ namespace NIRS.Functions_for_numerical_method
             //}
             throw new Exception();
         }
-        public double Interpolate_M(LimitedDouble n, LimitedDouble k)
+        public double Interpolate_M(LimitedDouble N, LimitedDouble K)
         {
-            (n, k) = OffseterNK.Appoint(n, k).Offset(n + 0.5, k + 1);
+            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K + 1);
 
             var opt = ChooseACalculationOptionFor_m_M(n, k);
             if (opt == Option.opt1)

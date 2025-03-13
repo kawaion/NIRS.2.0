@@ -10,6 +10,6 @@ namespace NIRS.Interfaces
 {
     public interface INumericalSolutionProjectile
     {
-        IGrid Get(IGrid grid, LimitedDouble n);
+        IGrid Get(IGrid grid, LimitedDouble n, bool isBeltIntact);
     }
 }

@@ -49,23 +49,23 @@ namespace NIRS.H_Functions
             return bs.S(x[k]) * tauW(n, k) - bs.S(x[k]) * G(n, k) * g[n - 0.5][k].w;
         }
 
-        public double H3(LimitedDouble n, LimitedDouble k)
+        public double H3(LimitedDouble N, LimitedDouble K)
         {
-            (n, k) = OffseterNK.Appoint(n, k).Offset(n + 0.5, k - 0.5);
+            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 0.5);
             return bs.S(x[k - 0.5]) * G(n, k);
         }
 
-        public double H4(LimitedDouble n, LimitedDouble k)
+        public double H4(LimitedDouble N, LimitedDouble K)
         {
-            (n, k) = OffseterNK.Appoint(n, k).Offset(n + 0.5, k - 0.5);
+            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 0.5);
             double diff_v_w = g[n + 0.5][k].v - g[n + 0.5][k].w;
             return bs.S(x[k - 0.5]) * G(n, k) * (constP.Q + Math.Pow(diff_v_w, 2) / 2) 
                     + bs.S(x[k - 0.5]) * tauW(n + 1, k) * diff_v_w;
         }
 
-        public double H5(LimitedDouble n, LimitedDouble k)
+        public double H5(LimitedDouble N, LimitedDouble K)
         {
-            (n, k) = OffseterNK.Appoint(n, k).Offset(n + 0.5, k - 0.5);
+            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 0.5);
             return bps.Uk(g[n][k - 0.5].p) / constP.e1;
         }
 

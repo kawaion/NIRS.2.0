@@ -16,9 +16,12 @@ namespace NIRS.Numerical_Method
     class SEL : INumericalMethod
     {       
         private readonly IMainData _mainData;
+        private bool isBeltIntact = true;
+        private readonly double FORCING_PRESSURE; 
         public SEL(IMainData mainData)
         {
             _mainData = mainData;
+            FORCING_PRESSURE = mainData.ConstParameters.forcingPressure;
         }
         
         private readonly IOutputDataTransmitter outputDataTransmitter = new OutputDataTransmitter();
@@ -110,7 +113,10 @@ namespace NIRS.Numerical_Method
             var projectileFunctions = functionsBuilder.ProjectileFunctionsBuild(grid);
             INumericalSolutionProjectile numericalSolutionProjectile = new NumericalSolutionProjectile(projectileFunctions);
 
-            grid = numericalSolutionProjectile.Get(grid, n);
+            if(isBeltIntact == true)
+                if (grid[n].sn.p > FORCING_PRESSURE)
+
+            grid = numericalSolutionProjectile.Get(grid, n, isBeltIntact);
 
             return grid;
         }
