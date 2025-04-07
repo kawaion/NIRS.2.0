@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIRS.Cannon_Folder.Barrel_Folder
+namespace NIRS.Barrel_Folder
 {
     class FinderPointsBetweenCurrent
     {

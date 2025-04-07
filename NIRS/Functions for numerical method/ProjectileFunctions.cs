@@ -98,11 +98,15 @@ namespace NIRS.Functions_for_numerical_method
 
             var x_nPlus1 = g[n+1].sn.x;
 
-            return (constP.teta * g[n + 1].sn.e) /
+            var res = (constP.teta * g[n + 1].sn.e) /
                 (
                     g[n + 1].sn.m * bs.S(x_nPlus1)
                     - constP.alpha * g[n + 1].sn.r
                 );
+
+            if (Double.IsNaN(res))
+                return 0;
+            else return res;
         }
 
         public double Get_psi(LimitedDouble N)

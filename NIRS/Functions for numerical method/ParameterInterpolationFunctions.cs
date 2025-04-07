@@ -38,9 +38,10 @@ namespace NIRS.Functions_for_numerical_method
         {
             var kLast = g[n].LastIndex(pn);
 
-            return g[n][kLast][pn]
+            return (double)(
+                g[n][kLast][pn]
                    + d.dPNdx(n,pn)
-                   * step.Get(n,k,pn) * constP.h;
+                   * step.Get(n,k,pn) * constP.h );
         }   
         
 
@@ -59,17 +60,19 @@ namespace NIRS.Functions_for_numerical_method
         {
             (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K + 1);
 
-            return g[n + 0.5][k].v
+            return (double)(
+                g[n + 0.5][k].v
                    + d.dvdx(n + 0.5)
-                   * step.Get(n + 0.5, k + 1, PN.v) * constP.h;
+                   * step.Get(n + 0.5, k + 1, PN.v) * constP.h );
         }
         public double Interpolate_w(LimitedDouble N, LimitedDouble K)
         {
             (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K + 1);
 
-            return g[n + 0.5][k].w
+            return (double)(
+                g[n + 0.5][k].w
                    + d.dwdx(n + 0.5)
-                   * step.Get(n + 0.5, k + 1, PN.w) * constP.h;
+                   * step.Get(n + 0.5, k + 1, PN.w) * constP.h );
         }
         public double Interpolate_dynamic_m(LimitedDouble N, LimitedDouble K)
         {
@@ -78,15 +81,17 @@ namespace NIRS.Functions_for_numerical_method
             var opt = ChooseACalculationOptionFor_m_M(n, k);
             if(opt == Option.opt1)
             {
-                return g[n + 0.5][k + 1].v *
+                return (double)(
+                    g[n + 0.5][k + 1].v *
                        (g[n][k + 0.5].r + g[n][k + 1.5].r) 
-                       / 2;
+                       / 2 );
             }
             if (opt == Option.opt2)
             {
-                return g[n + 0.5][k + 1].v *
+                return (double)(
+                    g[n + 0.5][k + 1].v *
                        (g[n][k + 0.5].r + g[n].sn.r)
-                       / 2;
+                       / 2 );
             }
             //if (opt == Option.opt3)
             //{
@@ -103,9 +108,10 @@ namespace NIRS.Functions_for_numerical_method
             var opt = ChooseACalculationOptionFor_m_M(n, k);
             if (opt == Option.opt1)
             {
-                return g[n + 0.5][k + 1].w * constP.delta *
+                return (double)(
+                    g[n + 0.5][k + 1].w * constP.delta *
                        ((1-g[n][k + 0.5].m) * bs.S(x[k+0.5]) + (1 - g[n][k + 1.5].m) * bs.S(x[k + 1.5]))
-                       / 2;
+                       / 2 );
             }
             if (opt == Option.opt2)
             {

@@ -11,13 +11,14 @@ namespace MyDouble
             Value = value;
             Type = DoubleTypeIssuer.Get(value);
         }
-
-
-
         protected internal LimitedDouble(double value, DoubleType type)
         {
             Value = value;
             Type = type;
+        }
+        public LimitedDouble Copy()
+        {
+            return new LimitedDouble(Value, Type);
         }
 
         public static LimitedDouble Floor(double value)

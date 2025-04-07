@@ -9,11 +9,33 @@ using System.Threading.Tasks;
 
 namespace NIRS.Grid_Folder
 {
-    class SpaceCellProjectile : IGridCellProjectile
+    class SpaceCellWithK : IGridCellWithK
     {
-        public double? vSn {get; set; }
-        public double? x { get; set; }
-
+        private LimitedDouble K;
+        public LimitedDouble k
+        {
+            get
+            {
+                return K;
+            }
+            set
+            {
+                if (K == value)
+                    return;
+                else if (isNull)
+                {
+                    K = value;
+                    isNull = false;
+                }
+                else
+                    throw new Exception("нельзя задать новое значение k");
+            }
+        }
+        private bool isNull = true;
+        public SpaceCellWithK(LimitedDouble k)
+        {
+            this.k = k;
+        }
         public double? dynamic_m { get; set; }
         public double? M { get; set; }
         public double? v { get; set; }
@@ -29,7 +51,6 @@ namespace NIRS.Grid_Folder
         public double? ro { get; set; }
 
         public double? One_minus_m { get { return 1 - m; } }
-
         public double? this[PN pn]
         {
             get

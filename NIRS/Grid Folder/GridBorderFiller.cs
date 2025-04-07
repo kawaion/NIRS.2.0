@@ -5,6 +5,7 @@ using NIRS.Data_Parameters.Input_Data_Parameters;
 using NIRS.Helpers;
 using NIRS.Interfaces;
 using NIRS.Parameter_names;
+using System;
 
 namespace NIRS.Grid_Folder
 {
@@ -53,6 +54,7 @@ namespace NIRS.Grid_Folder
         {
             var xEndChamber = b.EndChamberPoint.X;
             var K = k[xEndChamber];
+            K = Math.Floor(K);
             return new LimitedDouble(K);
         }
 

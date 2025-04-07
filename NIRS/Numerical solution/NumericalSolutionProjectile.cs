@@ -41,9 +41,9 @@ namespace NIRS.Numerical_solution
 
             grid[n].sn.x = functions.Get(PN.x, n); 
 
-            grid[n].sn.dynamic_m = functions.Get(PN.dynamic_m, n);
-            grid[n].sn.M = functions.Get(PN.M, n);
-            grid[n].sn.w = functions.Get(PN.w, n);
+            //grid[n].sn.dynamic_m = functions.Get(PN.dynamic_m, n);
+            //grid[n].sn.M = functions.Get(PN.M, n);
+            //grid[n].sn.w = functions.Get(PN.w, n);
 
             return grid;
         }

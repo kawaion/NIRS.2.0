@@ -52,14 +52,11 @@ namespace NIRS.Numerical_Method
                 n += 0.5;
 
                 grid = gridBorderFiller.FillBarrelBorders(grid, n);
-                grid = GetNumericalSolutionAtNodeN(grid, n);
+                grid = GetNumericalSolutionAtNodesN(grid, n);
                 grid = GetNumericalSolutionInProjectile(grid, n);
                 grid = GetInterpolateSolutionAtInaccessibleNodes(grid, n);
             }
             return grid;
-
-
-            
         }
         bool IsEndConditionNumericalSolution(IGrid grid, LimitedDouble n)
         {
@@ -67,7 +64,7 @@ namespace NIRS.Numerical_Method
             var lengthBarrel = _mainData.Barrel.Length;
             return x >= lengthBarrel;
         }
-        private IGrid GetNumericalSolutionAtNodeN(IGrid grid, LimitedDouble n)
+        private IGrid GetNumericalSolutionAtNodesN(IGrid grid, LimitedDouble n)
         {
             LimitedDouble k = new LimitedDouble(-0.5);
 
@@ -81,8 +78,6 @@ namespace NIRS.Numerical_Method
                 }
             }
             return grid;
-
-
         }
         //bool IsEndConditionNumericalSolutionAtNodeN()
         //{
@@ -115,6 +110,7 @@ namespace NIRS.Numerical_Method
 
             if(isBeltIntact == true)
                 if (grid[n].sn.p > FORCING_PRESSURE)
+                    isBeltIntact = false;
 
             grid = numericalSolutionProjectile.Get(grid, n, isBeltIntact);
 

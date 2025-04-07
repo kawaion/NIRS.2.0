@@ -10,7 +10,7 @@ namespace NIRS.Interfaces
 {
     public interface IGridCellProjectile : IGridCell
     {
-        double vSn { get; set; }
-        double x { get; set; }
+        double? vSn { get; set; }
+        double? x { get; set; }
     }
 }

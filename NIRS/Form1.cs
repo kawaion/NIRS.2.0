@@ -6,7 +6,7 @@ using NIRS.Data_Parameters.Input_Data_Parameters;
 using NIRS.Numerical_Method;
 using NIRS.Data_Transmitters;
 using NIRS.Grid_Folder;
-using NIRS.Cannon_Folder.Barrel_Folder;
+using NIRS.Barrel_Folder;
 using NIRS.Cannon_Folder.Powder_Folder;
 
 using System.Collections.Generic;
@@ -34,7 +34,9 @@ namespace NIRS
         private void button1_Click(object sender, EventArgs e)
         {
             IInitialParameters initialParameters = new InitialParametersCase1();
-            IConstParameters constParameters = new ConstParametersCase1(0,0);
+            double h = 0.0025;
+            double tau = curantTau(h, 945);
+            IConstParameters constParameters = new ConstParametersCase1(tau, h);
             (var newInitialParameters, var newConstParameters) = (initialParameters, constParameters);//inputDataTransmitter.GetInputData(initialParameters, constParameters);
             List<Point2D> points = new List<Point2D>();
             points.Add(new Point2D(0, 0.214));
@@ -56,6 +58,11 @@ namespace NIRS
             IMainData mainData = new MainData(barrel, powder, newConstParameters, newInitialParameters, projectile);
             INumericalMethod numericalMethod = new SEL(mainData);
             IGrid grid = numericalMethod.Calculate();
+        }
+        private double curantTau(double h, double v)
+        {
+            double c = 340;
+            return h / (v + c);
         }
     }
 }

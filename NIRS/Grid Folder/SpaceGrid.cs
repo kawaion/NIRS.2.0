@@ -13,40 +13,54 @@ namespace NIRS.Grid_Folder
 {
     class SpaceGrid : ISubGrid
     {
-        private LimitedDouble n = null;
-        public LimitedDouble N
+        private LimitedDouble N;
+        public LimitedDouble n
         {
             get
             {
-                return n;
+                return N;
             }
             set
             {
-                if (n == null)
-                    n = value;
-                else throw new Exception("значение уже задано");
+                if (N == value)
+                    return;
+                else if (isNull)
+                {
+                    N = value;
+                    isNull = false;
+                }
+                else
+                    throw new Exception("нельзя задать новое значение n");
             }
         }
+        private bool isNull = true;
 
-        List<IGridCell> gridCellsMinus = new List<IGridCell>();
-        List<IGridCell> gridCellsPlus = new List<IGridCell>();
+        public SpaceGrid(LimitedDouble n)
+        {
+            this.n = n;
+        }
 
-        public IGridCell this[LimitedDouble k]
+        List<IGridCellWithK> gridCellsMinus = new List<IGridCellWithK>();
+        List<IGridCellWithK> gridCellsPlus = new List<IGridCellWithK>();
+
+        public IGridCellWithK this[LimitedDouble k]
         {
             get
             {
                 (var index, var gridCells) = ChooseIndexAndgridCells(k);
+                if(index == 449)
+                {
+                    int c = 0;
+                }
 
-                if (gridCells[index] != null)
-                    return gridCells[index];
-                else throw new NullReferenceException();
+                gridCells = AllocateMemorygridCellsForTheIndex(gridCells, index, k);
+                return gridCells[index];
             }
             set
             {
                 (var index, var gridCells) = ChooseIndexAndgridCells(k);
 
-                gridCells = AllocateMemorygridCellsForTheIndex(gridCells, index);
-                //value.
+                gridCells = AllocateMemorygridCellsForTheIndex(gridCells, index, k);
                 gridCells[index] = value;
             }
         }
@@ -62,39 +76,45 @@ namespace NIRS.Grid_Folder
             var kLast = LastIndex();
             IGrid g = new TimeSpaceGrid();
 
-            while (this[kLast][pn] == g.NULL)
+            while (this[kLast][pn] == null)
                 kLast -= 1;
 
             return kLast;
         }
         public double Last(PN pn)
         {
-            int lastI = ConvertNToIndex(LastIndex(pn));
-            return gridCellsPlus[lastI][pn];
+            int lastI = ConvertKToIndex(LastIndex(pn));
+            return (double)gridCellsPlus[lastI][pn];
         }
 
 
-        private List<IGridCell> AllocateMemorygridCellsForTheIndex(List<IGridCell> gridCells, int index)
+        //private List<IGridCell> AllocateMemorygridCellsForTheIndex(List<IGridCell> gridCells, int index)
+        //{
+        //    return gridCells.AllocateUpTo(index,new SpaceCell());
+        //}
+        private List<IGridCellWithK> AllocateMemorygridCellsForTheIndex(List<IGridCellWithK> gridCells, int index, LimitedDouble k)
         {
-            return gridCells.AllocateUpTo(index);
+            gridCells.AllocateUpTo(index, new SpaceCellWithK(Nulls.NullForK));
+            gridCells[index].k = k;
+            return gridCells;
         }
-        private int ConvertNToIndex(LimitedDouble k)
+        private int ConvertKToIndex(LimitedDouble k)
         {
             if (n.IsHalfInt() && k.IsInt())
                 return (int)k.Value;
             if (n.IsInt() && k.IsHalfInt())
                 return (int)(k.Value - 0.5);
 
-            throw new Exception($"значение {n} {k} не подходит ни под один из типов");
+            throw new Exception($"значение {n.Value} {k.Value} не подходит ни под один из типов");
         }
-        private int ConvertNToIndexMinus(LimitedDouble k)
+        private int ConvertKToIndexMinus(LimitedDouble k)
         {
             if (n.IsHalfInt() && k.IsInt())
                 return (int)(-k.Value);
             if (n.IsInt() && k.IsHalfInt())
                 return (int)(-k.Value - 0.5);
 
-            throw new Exception($"значение {n} {k} не подходит ни под один из типов");
+            throw new Exception($"значение {n.Value} {k.Value} не подходит ни под один из типов");
         }
         private LimitedDouble ConvertIndexToN(int value)
         {
@@ -105,19 +125,19 @@ namespace NIRS.Grid_Folder
 
             throw new Exception();
         }
-        private (int index, List<IGridCell> gridCells) ChooseIndexAndgridCells(LimitedDouble k)
+        private (int index, List<IGridCellWithK> gridCells) ChooseIndexAndgridCells(LimitedDouble k)
         {
             int index;
-            List<IGridCell> gridCells;
+            List<IGridCellWithK> gridCells;
 
             if (k.Value < 0)
             {
-                index = ConvertNToIndexMinus(n);
+                index = ConvertKToIndexMinus(k);
                 gridCells = gridCellsMinus;
             }
             else
             {
-                index = ConvertNToIndex(n);
+                index = ConvertKToIndex(k);
                 gridCells = gridCellsPlus;
             }
 
@@ -125,6 +145,6 @@ namespace NIRS.Grid_Folder
         }
 
 
-        public IGridCellProjectile sn { get; set; }
+        public IGridCellProjectile sn { get; set; } = new SpaceCellProjectile();
     }
 }

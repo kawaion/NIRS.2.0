@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace NIRS.Cannon_Folder.Barrel_Folder
+namespace NIRS.Barrel_Folder
 {
     static class VBarrelParts
     {

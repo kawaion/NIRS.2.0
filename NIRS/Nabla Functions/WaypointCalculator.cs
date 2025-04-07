@@ -16,7 +16,7 @@ using NIRS.Nabla_Functions.Projectile;
 
 namespace NIRS.Nabla_Functions
 {
-    class WaypointCalculator : IWaypointCalculator
+    public class WaypointCalculator : IWaypointCalculator
     {
         private readonly IGrid g;
         private readonly IConstParameters constP;
@@ -49,7 +49,7 @@ namespace NIRS.Nabla_Functions
             if (V >= 0)
                 return V * Get_m(n - 0.5,k - 0.5,mu) * bs.S(x[k - 0.5]);
             else
-                return V * Get_m(n - 0.5, k + 0.5, mu) * bs.S(x[k - 0.5]);
+                return V * Get_m(n - 0.5, k + 0.5, mu) * bs.S(x[k + 0.5]);
         }
         private double Get_m(LimitedDouble n, LimitedDouble k, PN mu)
         {

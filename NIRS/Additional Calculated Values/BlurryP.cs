@@ -18,7 +18,8 @@ namespace NIRS.Additional_calculated_values
         {
             (var n, var k) = OffseterNK.Appoint(N, K).Offset(N, K + 0.5);
 
-            return g[n][k + 0.5].p + PseudoViscosityMechanism.q(g, waypointCalculator, constP, n, k);
+            return (double)
+                (g[n][k + 0.5].p + PseudoViscosityMechanism.q(g, waypointCalculator, constP, n, k));
         }
     }
 }

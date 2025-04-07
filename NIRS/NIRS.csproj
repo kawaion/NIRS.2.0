@@ -62,7 +62,9 @@
     <Compile Include="Barrel Folder\BarrelSize.cs" />
     <Compile Include="Barrel Folder\FinderPointsBetweenCurrent.cs" />
     <Compile Include="Functions for numerical method\BoundaryFunctions.cs" />
+    <Compile Include="Grid Folder\Nulls.cs" />
     <Compile Include="Grid Folder\SpaceCellProjectile.cs" />
+    <Compile Include="Grid Folder\SpaceCellWithK.cs" />
     <Compile Include="H Functions\HFunctionsProjectile.cs" />
     <Compile Include="Helpers\Differencial.cs" />
     <Compile Include="Helpers\InterpolateStep.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="Barrel Folder\ShifterCannonToZero.cs" />
     <Compile Include="Barrel Folder\VBarrelParts.cs" />
     <Compile Include="Interfaces\IBoundaryFunctions.cs" />
+    <Compile Include="Interfaces\IGridCell.cs" />
     <Compile Include="Interfaces\IHFunctionsProjectile.cs" />
     <Compile Include="Interfaces\INumericalSolutionInterpolation.cs" />
     <Compile Include="Main data\MainData.cs" />
@@ -95,7 +98,6 @@
     <Compile Include="Numerical solution\NumericalSolutionInNodes.cs" />
     <Compile Include="Numerical solution\NumericalSolutionProjectile.cs" />
     <Compile Include="Interfaces\IProjectile.cs" />
-    <Compile Include="Projectile Folder\Pos.cs" />
     <Compile Include="Interfaces\IProjectileFunctions.cs" />
     <Compile Include="Functions for numerical method\ProjectileFunctions.cs" />
     <Compile Include="Projectile Folder\Projectile.cs" />
@@ -115,7 +117,7 @@
     <Compile Include="Interfaces\IGrid.cs" />
     <Compile Include="Grid Folder\GridBorderFiller.cs" />
     <Compile Include="Interfaces\IGridBorderFiller.cs" />
-    <Compile Include="Interfaces\IGridCell.cs" />
+    <Compile Include="Interfaces\IGridCellWithK.cs" />
     <Compile Include="Grid Folder\SpaceCell.cs" />
     <Compile Include="Grid Folder\SpaceGrid.cs" />
     <Compile Include="Interfaces\ISubGrid.cs" />

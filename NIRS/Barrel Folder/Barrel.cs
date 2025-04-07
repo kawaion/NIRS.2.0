@@ -8,9 +8,9 @@ using System.Xml.Schema;
 using NIRS.Helpers;
 using NIRS.Interfaces;
 
-namespace NIRS.Cannon_Folder.Barrel_Folder
+namespace NIRS.Barrel_Folder
 {
-    internal class Barrel : IBarrel
+    public class Barrel : IBarrel
     {
         public List<Point2D> BendingPoints { get; }
         public Point2D EndChamberPoint { get; }
@@ -36,7 +36,7 @@ namespace NIRS.Cannon_Folder.Barrel_Folder
 
 
     }
-    enum Dimension
+    public enum Dimension
     {
         R,
         D

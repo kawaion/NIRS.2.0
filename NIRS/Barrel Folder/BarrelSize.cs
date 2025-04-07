@@ -3,7 +3,7 @@ using System;
 using NIRS.Interfaces;
 using System.Collections.Generic;
 
-namespace NIRS.Cannon_Folder.Barrel_Folder
+namespace NIRS.Barrel_Folder
 {
     class BarrelSize : IBarrelSize
     {        
