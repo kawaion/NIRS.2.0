@@ -10,6 +10,7 @@ using NIRS.Functions_for_numerical_method;
 using NIRS.Projectile_Folder;
 using NIRS.Numerical_solution;
 using NIRS.Interfaces;
+using NIRS.Verifer;
 
 namespace NIRS.Numerical_Method
 {
@@ -51,10 +52,13 @@ namespace NIRS.Numerical_Method
             {
                 n += 0.5;
 
-                grid = gridBorderFiller.FillBarrelBorders(grid, n);
+                grid = gridBorderFiller.FillBarrelBorders(grid, n, isBeltIntact);
+                //grid = gridBorderFiller.FillCoordinateProjectileAtFixedBorder(grid, n, isBeltIntact);
                 grid = GetNumericalSolutionAtNodesN(grid, n);
+                grid = gridBorderFiller.FillLastNodeOfMixture(grid, n, isBeltIntact);
+                grid = gridBorderFiller.FillProjectileAtFixedBorder(grid, n, isBeltIntact);
                 grid = GetNumericalSolutionInProjectile(grid, n);
-                grid = GetInterpolateSolutionAtInaccessibleNodes(grid, n);
+                grid = GetInterpolateSolutionAtInaccessibleNodes(grid, n);   
             }
             return grid;
         }
@@ -90,12 +94,15 @@ namespace NIRS.Numerical_Method
             FunctionsBuilder functionsBuilder = new FunctionsBuilder(_mainData);
             var functionsNewLayer = functionsBuilder.FunctionsParametersOfTheNextLayerBuild(grid);
             INumericalSolutionInNodes numericalSolutionInNodes = new NumericalSolutionInNodes(functionsNewLayer);
-            
-            try
+
+            VerifierAbilityCalculateNode verifier = new VerifierAbilityCalculateNode(grid);
+            bool isPossible=verifier.Check(n, k);
+
+            if(isPossible)
             {
                 grid = numericalSolutionInNodes.Get(grid, n, k);
             }
-            catch
+            else
             {
                 isEnd = true;
             }
@@ -108,7 +115,7 @@ namespace NIRS.Numerical_Method
             var projectileFunctions = functionsBuilder.ProjectileFunctionsBuild(grid);
             INumericalSolutionProjectile numericalSolutionProjectile = new NumericalSolutionProjectile(projectileFunctions);
 
-            if(isBeltIntact == true)
+            if(isBeltIntact == true && n.Type == DoubleType.Int)
                 if (grid[n].sn.p > FORCING_PRESSURE)
                     isBeltIntact = false;
 

@@ -47,7 +47,7 @@ namespace NIRS.Nabla_Functions
             double V = g[n][k][v];
 
             if (V >= 0)
-                return V * Get_m(n - 0.5,k - 0.5,mu) * bs.S(x[k - 0.5]);
+                return V * Get_m(n - 0.5, k - 0.5, mu) * bs.S(x[k - 0.5]);
             else
                 return V * Get_m(n - 0.5, k + 0.5, mu) * bs.S(x[k + 0.5]);
         }
@@ -67,35 +67,65 @@ namespace NIRS.Nabla_Functions
             {
                 (var n, var k) = OffseterNK.Appoint(N, K).Offset(N - 0.5, K);
 
-                return (DynamicAverage(param1, v, n - 0.5, k + 0.5) - DynamicAverage(param1, v, n - 0.5, k - 0.5)) / constP.h;
+                return (DynamicAverage(param1, v, n - 0.5, k + 0.5, NablaType.plus) - DynamicAverage(param1, v, n - 0.5, k - 0.5, NablaType.minus)) / constP.h;
             }
-                
+
             if (param1.IsMixture())
             {
                 (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 0.5);
 
-                return (MixtureAverage(param1, v, n + 0.5, k ) - MixtureAverage(param1, v, n + 0.5, k - 1)) / constP.h;
+                return (MixtureAverage(param1, v, n + 0.5, k, NablaType.plus) - MixtureAverage(param1, v, n + 0.5, k - 1, NablaType.minus)) / constP.h;
             }
-                
+
             throw new Exception($"неизвестные параметры {param1} и {v} на слое {N} {K}");
         }
-        private double DynamicAverage(PN mu, PN v, LimitedDouble n, LimitedDouble k)
+        private double DynamicAverage(PN mu, PN v, LimitedDouble N, LimitedDouble K, NablaType type)
         {
-            // формула преобразуется в значение на n,k
-            double sum_v = g[n][k - 0.5][v] + g[n][k + 0.5][v];
-            if (sum_v >= 0)
-                return sum_v / 2 * g[n][k - 0.5][mu];
-            else
-                return sum_v / 2 * g[n][k + 0.5][mu];
+            if (type == NablaType.plus)
+            {
+                (var n, var k) = OffseterNK.Appoint(N, K).Offset(N - 0.5, K + 0.5);
+
+                double sum_v = g[n - 0.5][k][v] + g[n - 0.5][k + 1][v];
+                if (sum_v >= 0)
+                    return sum_v / 2 * g[n - 0.5][k][mu];
+                else
+                    return sum_v / 2 * g[n - 0.5][k + 1][mu];
+            }
+            if (type == NablaType.minus)
+            {
+                (var n, var k) = OffseterNK.Appoint(N, K).Offset(N - 0.5, K - 0.5);
+
+                double sum_v = g[n - 0.5][k - 1][v] + g[n - 0.5][k][v];
+                if (sum_v >= 0)
+                    return sum_v / 2 * g[n - 0.5][k - 1][mu];
+                else
+                    return sum_v / 2 * g[n - 0.5][k][mu];
+            }
+            throw new Exception();
         }
-        private double MixtureAverage(PN fi, PN V, LimitedDouble n, LimitedDouble k)
+        private double MixtureAverage(PN fi, PN V, LimitedDouble N, LimitedDouble K, NablaType type)
         {
-            // формула преобразуется в значение на n,k
-            double v = g[n][k][V];
-            if (v >= 0)
-                return v * g[n - 0.5][k - 0.5][fi];
-            else
-                return v * g[n - 0.5][k + 0.5][fi];
+            if (type == NablaType.plus)
+            {
+                (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K);
+
+                double v = g[n + 0.5][k][V];
+                if (v >= 0)
+                    return v * g[n][k - 0.5][fi];
+                else
+                    return v * g[n][k + 0.5][fi];
+            }
+            if (type == NablaType.minus)
+            {
+                (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 1);
+
+                double v = g[n + 0.5][k - 1][V];
+                if (v >= 0)
+                    return v * g[n][k - 1.5][fi];
+                else
+                    return v * g[n][k - 0.5][fi];
+            }
+            throw new Exception();
         }
 
 
@@ -112,7 +142,12 @@ namespace NIRS.Nabla_Functions
             return (g.PStroke(this, constP, n, k + 0.5) - g.PStroke(this, constP, n, k - 0.5)) / constP.h;
         }
 
-
+        enum NablaType
+        {
+            plus,
+            minus
+        }
         public IWaypointCalculatorProjectile sn { get; set; }
     }
+
 }

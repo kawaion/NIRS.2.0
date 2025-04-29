@@ -58,7 +58,8 @@ namespace NIRS.Numerical_solution
         private bool isExistNonCalculatedNodes(IGrid g, LimitedDouble n, PN pn)
         {
             var kLast = g[n].LastIndex(pn);
-            return g[n].sn.x >= x[kLast] + 1;
+            var xEmptyNode = x[kLast+1];
+            return g[n].sn.x >= xEmptyNode;
         }
     }
 }

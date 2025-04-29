@@ -85,7 +85,6 @@
     <Compile Include="Powder Folder\Powder_12_7.cs" />
     <Compile Include="Interfaces\IParameterInterpolationFunctions.cs" />
     <Compile Include="Functions for numerical method\ParameterInterpolationFunctions.cs" />
-    <Compile Include="Interfaces\IGridCellProjectile.cs" />
     <Compile Include="Helpers\KGetter.cs" />
     <Compile Include="Helpers\XGetter.cs" />
     <Compile Include="Interfaces\IWaypointCalculatorProjectile.cs" />
@@ -117,7 +116,6 @@
     <Compile Include="Interfaces\IGrid.cs" />
     <Compile Include="Grid Folder\GridBorderFiller.cs" />
     <Compile Include="Interfaces\IGridBorderFiller.cs" />
-    <Compile Include="Interfaces\IGridCellWithK.cs" />
     <Compile Include="Grid Folder\SpaceCell.cs" />
     <Compile Include="Grid Folder\SpaceGrid.cs" />
     <Compile Include="Interfaces\ISubGrid.cs" />
@@ -147,6 +145,7 @@
     <Compile Include="Projectile Folder\ProjectileParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Numerical Method\SEL.cs" />
+    <Compile Include="Verifer\VerifierAbilityCalculateNode.cs" />
     <EmbeddedResource Include="Barrel Folder\BarrelInitializationInterface.resx">
       <DependentUpon>BarrelInitializationInterface.cs</DependentUpon>
     </EmbeddedResource>

@@ -38,13 +38,14 @@ namespace NIRS.Numerical_solution
         private IGrid GetMixtureParametersOfNextLayer(IGrid grid, LimitedDouble n, LimitedDouble k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
         {
             grid[n][k].r = functionsNewLayer.Get(PN.r, n, k);
-            grid[n][k].e = functionsNewLayer.Get(PN.e, n, k);
+            grid[n][k].a = functionsNewLayer.Get(PN.a, n, k);
             grid[n][k].psi = functionsNewLayer.Get(PN.psi, n, k);
             grid[n][k].z = functionsNewLayer.Get(PN.z, n, k);
-            grid[n][k].a = functionsNewLayer.Get(PN.a, n, k);
+            grid[n][k].m = functionsNewLayer.Get(PN.m, n, k); // нужен a и psi
+            grid[n][k].ro = functionsNewLayer.Get(PN.ro, n, k); // может не занимать место в памяти, нужен r и m
+            grid[n][k].e = functionsNewLayer.Get(PN.e, n, k);// нужен z и psi
             grid[n][k].p = functionsNewLayer.Get(PN.p, n, k);
-            grid[n][k].m = functionsNewLayer.Get(PN.m, n, k);
-
+            
             return grid;
         }
     }

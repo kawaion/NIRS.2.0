@@ -6,6 +6,9 @@ namespace NIRS.Interfaces
     interface IGridBorderFiller
     {
         IGrid FillAtZeroTime(IGrid grid);
-        IGrid FillBarrelBorders(IGrid grid, LimitedDouble n);
+        IGrid FillBarrelBorders(IGrid grid, LimitedDouble n, bool isBeltIntact);
+        IGrid FillProjectileAtFixedBorder(IGrid grid, LimitedDouble n, bool isBeltIntact);
+        IGrid FillCoordinateProjectileAtFixedBorder(IGrid grid, LimitedDouble n, bool isBeltIntact);
+        IGrid FillLastNodeOfMixture(IGrid grid, LimitedDouble n, bool isBeltIntact);
     }
 }

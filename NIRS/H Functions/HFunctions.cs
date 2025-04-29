@@ -69,9 +69,10 @@ namespace NIRS.H_Functions
             return bps.Uk(g[n][k - 0.5].p) / constP.e1;
         }
 
-        public double HPsi(LimitedDouble n, LimitedDouble k)
+        public double HPsi(LimitedDouble N, LimitedDouble K)
         {
-            throw new NotImplementedException();
+            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 0.5);
+            return powder.S0 / powder.LAMDA0 * bps.Sigma(g[n][k - 0.5].z, g[n][k - 0.5].psi) * bps.Uk(g[n][k - 0.5].p);
         }
 
 

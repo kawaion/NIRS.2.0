@@ -25,6 +25,8 @@ namespace NIRS.Barrel_Folder
 
         public double R(double x)
         {
+            if (x < 0) return 0;
+
             (var p1, var p2) = FindBendingPointsBetweenPoint(x);
             var RWhereX = GetRWhereX(x, p1, p2);
             return RWhereX;

@@ -65,8 +65,8 @@ namespace NIRS.Functions_for_numerical_method
             {
                 case PN.p: return Get_p0(k);
                 case PN.ro: return Get_ro0(k);
-                case PN.eps: return Get_eps0(k);
                 case PN.z: return Get_z0(k);
+                case PN.psi: return Get_psi0(k);
                 case PN.m: return Get_m0(k);
                 case PN.a: return Get_a0(k);
                 case PN.r: return Get_r0(k);
@@ -146,6 +146,10 @@ namespace NIRS.Functions_for_numerical_method
                    constP.teta;
         }
         public double Get_z0(LimitedDouble k)
+        {
+            return 0;
+        }
+        public double Get_psi0(LimitedDouble k)
         {
             return 0;
         }

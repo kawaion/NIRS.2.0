@@ -22,36 +22,31 @@ namespace NIRS.Grid_Folder
             }
             set
             {
-                if (N == value)
-                    return;
-                else if (isNull)
+                if (isNull)
                 {
                     N = value;
                     isNull = false;
                 }
+                else if (N == value)
+                    return;
                 else
                     throw new Exception("нельзя задать новое значение n");
             }
         }
         private bool isNull = true;
 
-        public SpaceGrid(LimitedDouble n)
+        public SpaceGrid()
         {
-            this.n = n;
         }
 
-        List<IGridCellWithK> gridCellsMinus = new List<IGridCellWithK>();
-        List<IGridCellWithK> gridCellsPlus = new List<IGridCellWithK>();
+        List<SpaceCellWithK> gridCellsMinus = new List<SpaceCellWithK>();
+        List<SpaceCellWithK> gridCellsPlus = new List<SpaceCellWithK>();
 
-        public IGridCellWithK this[LimitedDouble k]
+        public SpaceCellWithK this[LimitedDouble k]
         {
             get
             {
                 (var index, var gridCells) = ChooseIndexAndgridCells(k);
-                if(index == 449)
-                {
-                    int c = 0;
-                }
 
                 gridCells = AllocateMemorygridCellsForTheIndex(gridCells, index, k);
                 return gridCells[index];
@@ -76,7 +71,7 @@ namespace NIRS.Grid_Folder
             var kLast = LastIndex();
             IGrid g = new TimeSpaceGrid();
 
-            while (this[kLast][pn] == null)
+            while (this[kLast].isNull(pn))
                 kLast -= 1;
 
             return kLast;
@@ -84,7 +79,7 @@ namespace NIRS.Grid_Folder
         public double Last(PN pn)
         {
             int lastI = ConvertKToIndex(LastIndex(pn));
-            return (double)gridCellsPlus[lastI][pn];
+            return gridCellsPlus[lastI][pn];
         }
 
 
@@ -92,11 +87,15 @@ namespace NIRS.Grid_Folder
         //{
         //    return gridCells.AllocateUpTo(index,new SpaceCell());
         //}
-        private List<IGridCellWithK> AllocateMemorygridCellsForTheIndex(List<IGridCellWithK> gridCells, int index, LimitedDouble k)
+        private List<SpaceCellWithK> AllocateMemorygridCellsForTheIndex(List<SpaceCellWithK> gridCells, int index, LimitedDouble k)
         {
-            gridCells.AllocateUpTo(index, new SpaceCellWithK(Nulls.NullForK));
+            gridCells.AllocateUpTo(index, GetNew);
             gridCells[index].k = k;
             return gridCells;
+        }
+        private SpaceCellWithK GetNew()
+        {
+            return new SpaceCellWithK();
         }
         private int ConvertKToIndex(LimitedDouble k)
         {
@@ -125,10 +124,10 @@ namespace NIRS.Grid_Folder
 
             throw new Exception();
         }
-        private (int index, List<IGridCellWithK> gridCells) ChooseIndexAndgridCells(LimitedDouble k)
+        private (int index, List<SpaceCellWithK> gridCells) ChooseIndexAndgridCells(LimitedDouble k)
         {
             int index;
-            List<IGridCellWithK> gridCells;
+            List<SpaceCellWithK> gridCells;
 
             if (k.Value < 0)
             {
@@ -145,6 +144,6 @@ namespace NIRS.Grid_Folder
         }
 
 
-        public IGridCellProjectile sn { get; set; } = new SpaceCellProjectile();
+        public SpaceCellProjectile sn { get; set; } = new SpaceCellProjectile();
     }
 }

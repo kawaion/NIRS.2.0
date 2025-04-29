@@ -1,4 +1,5 @@
 ﻿using MyDouble;
+using NIRS.Grid_Folder;
 using NIRS.Parameter_names;
 
 namespace NIRS.Interfaces
@@ -7,9 +8,9 @@ namespace NIRS.Interfaces
     {
         LimitedDouble n { get; set; }
 
-        IGridCellWithK this[LimitedDouble i] { get; set; }
+        SpaceCellWithK this[LimitedDouble i] { get; set; }
         LimitedDouble LastIndex(PN pn);
         double Last(PN pn);
-        IGridCellProjectile sn { get; set; }
+        SpaceCellProjectile sn { get; set; }
     }
 }

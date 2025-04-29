@@ -16,12 +16,13 @@ namespace NIRS.Memory_allocator
 
             return list;
         }
-        public static List<T> AllocateUpTo<T>(this List<T> list, int index, T zero) where T : class
+        public static List<T> AllocateUpTo<T>(this List<T> list, int index, GetNew<T> getNew) where T : class
         {
             while (list.Count <= index)
-                list.Add(zero);
+                list.Add(getNew());
 
             return list;
         }
     }
+    public delegate T GetNew<T>();
 }

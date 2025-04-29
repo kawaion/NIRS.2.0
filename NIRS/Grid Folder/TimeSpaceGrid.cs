@@ -59,9 +59,13 @@ namespace NIRS.Grid_Folder
         private LimitedDouble ConvertIntToLimitedDouble(int n) => new LimitedDouble(n / 2.0);
         private List<ISubGrid> AllocateMemorySubGridForTheIndex(List<ISubGrid> subGrid, int index, LimitedDouble n)
         {
-            subGrid.AllocateUpTo(index,new SpaceGrid(Nulls.NullForN));
+            subGrid.AllocateUpTo(index, GetNew);
             subGrid[index].n = n;
             return subGrid;
+        }
+        private SpaceGrid GetNew()
+        {
+            return new SpaceGrid();
         }
     }
 }
