@@ -13,27 +13,28 @@ namespace NIRS.Grid_Folder
 {
     class SpaceGrid : ISubGrid
     {
-        private LimitedDouble N;
+        private double N;
         public LimitedDouble n
         {
             get
             {
-                return N;
+                return new LimitedDouble(N);
             }
             set
             {
                 if (isNull)
                 {
-                    N = value;
+                    N = value.Value;
                     isNull = false;
                 }
-                else if (N == value)
+                else if (N == value.Value)
                     return;
                 else
                     throw new Exception("нельзя задать новое значение n");
             }
         }
         private bool isNull = true;
+        public bool GetIsNull() => isNull;
 
         public SpaceGrid()
         {
@@ -145,5 +146,24 @@ namespace NIRS.Grid_Folder
 
 
         public SpaceCellProjectile sn { get; set; } = new SpaceCellProjectile();
+
+
+        public LimitedDouble MinK
+        {
+            get
+            {
+                if (gridCellsMinus.Count > 0) return gridCellsMinus[gridCellsMinus.Count - 1].k;
+                else return gridCellsPlus[0].k;
+            }
+        }
+        public LimitedDouble MaxK(PN pn)
+        {
+            if (gridCellsPlus.Count > 0) return gridCellsPlus[gridCellsPlus.Count - 1].k;
+            else
+            {
+                if (gridCellsMinus[0].isNull(pn) == false) return gridCellsMinus[0].k;
+                else return gridCellsMinus[1].k;
+            }
+        }
     }
 }

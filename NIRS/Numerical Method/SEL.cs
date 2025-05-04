@@ -58,7 +58,7 @@ namespace NIRS.Numerical_Method
                 grid = gridBorderFiller.FillLastNodeOfMixture(grid, n, isBeltIntact);
                 grid = gridBorderFiller.FillProjectileAtFixedBorder(grid, n, isBeltIntact);
                 grid = GetNumericalSolutionInProjectile(grid, n);
-                grid = GetInterpolateSolutionAtInaccessibleNodes(grid, n);   
+                grid = GetInterpolateSolutionAtInaccessibleNodes(grid, n);
             }
             return grid;
         }
@@ -70,7 +70,7 @@ namespace NIRS.Numerical_Method
         }
         private IGrid GetNumericalSolutionAtNodesN(IGrid grid, LimitedDouble n)
         {
-            LimitedDouble k = new LimitedDouble(-0.5);
+            LimitedDouble k = new LimitedDouble(0);
 
             bool isEnd = false;
             while (!isEnd)

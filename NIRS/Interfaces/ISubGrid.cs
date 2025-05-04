@@ -12,5 +12,9 @@ namespace NIRS.Interfaces
         LimitedDouble LastIndex(PN pn);
         double Last(PN pn);
         SpaceCellProjectile sn { get; set; }
+        bool GetIsNull();
+
+        LimitedDouble MinK { get; }
+        LimitedDouble MaxK(PN pN);
     }
 }

@@ -3,7 +3,6 @@ F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.Form1.resources
 F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.Properties.Resources.resources
 F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.GenerateResource.cache
 F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.CoreCompileInputs.cache
-F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.BarrelFolder.BarrelInitializationInterface.resources
 F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.Cannon_Folder.Barrel_Folder.BarrelInitializationInterface.resources
 G:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.AssemblyReference.cache
 G:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.Cannon_Folder.Barrel_Folder.BarrelInitializationInterface.resources
@@ -37,3 +36,13 @@ D:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.CoreCompileInputs.cache
 D:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.CopyComplete
 D:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.exe
 D:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.pdb
+F:\нирс\NIRS.2.0\NIRS\bin\Debug\NIRS.exe.config
+F:\нирс\NIRS.2.0\NIRS\bin\Debug\NIRS.exe
+F:\нирс\NIRS.2.0\NIRS\bin\Debug\NIRS.pdb
+F:\нирс\NIRS.2.0\NIRS\bin\Debug\Microsoft.Bcl.HashCode.dll
+F:\нирс\NIRS.2.0\NIRS\bin\Debug\MyDouble.dll
+F:\нирс\NIRS.2.0\NIRS\bin\Debug\MyDouble.pdb
+F:\нирс\NIRS.2.0\NIRS\bin\Debug\Microsoft.Bcl.HashCode.xml
+F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.Up2Date
+F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.exe
+F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.pdb

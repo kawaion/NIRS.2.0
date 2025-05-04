@@ -46,6 +46,12 @@ namespace NIRS.H_Functions
 
         public double H2(LimitedDouble n, LimitedDouble k)
         {
+            var tmp1 = bs.S(x[k]);
+            var tmp2 = tauW(n, k);
+            var tmp3 = bs.S(x[k]);
+            var tmp4 = G(n, k);
+            var tmp5 = g[n - 0.5][k].w;
+
             return bs.S(x[k]) * tauW(n, k) - bs.S(x[k]) * G(n, k) * g[n - 0.5][k].w;
         }
 
@@ -84,7 +90,13 @@ namespace NIRS.H_Functions
         }
         private double G(LimitedDouble n, LimitedDouble k)
         {
-            return g[n][k - 0.5].a * powder.S0 * bps.Sigma(g[n][k - 0.5].z, g[n][k - 0.5].psi) * constP.delta * bps.Uk(g[n][k - 0.5].p);
+            var tmp1 = g[n][k - 0.5].a;
+            var tmp2 = powder.S0;
+            var tmp3 = bps.Sigma(g[n][k - 0.5].z, g[n][k - 0.5].psi);
+            var tmp4 = constP.PowderDelta;
+            var tmp5 = bps.Uk(g[n][k - 0.5].p);
+
+            return g[n][k - 0.5].a * powder.S0 * bps.Sigma(g[n][k - 0.5].z, g[n][k - 0.5].psi) * constP.PowderDelta * bps.Uk(g[n][k - 0.5].p);
         }
     }
 }

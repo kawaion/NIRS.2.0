@@ -64,14 +64,14 @@ namespace NIRS.Cannon_Folder.Powder_Folder
 
             double kappa = (Q + 2 * P) / Q * beta;
             double lamda = 2 * (3 - P) / (Q + 2 * P) * beta;
-            double mu = 6 * Math.Pow(beta, 2) / (Q + 2 * P);
+            double mu = - 6 * Math.Pow(beta, 2) / (Q + 2 * P);
             return (kappa, lamda, mu);
         }
         private (double P, double Q, double Beta) InitialisePQBeta(double D0, double d0, double L0, double e1)
         {
             double P = (D0 + 7 * d0) / L0;
             double Q = (Math.Pow(D0, 2) - 7 * Math.Pow(d0, 2)) / Math.Pow(L0, 2);
-            double beta = -2 * e1 / L0;
+            double beta = 2 * e1 / L0;
             return (P, Q, beta);
         }
         private double InitialisePsiS(double kappa, double lamda, double mu)

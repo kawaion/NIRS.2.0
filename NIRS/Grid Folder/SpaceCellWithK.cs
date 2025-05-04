@@ -11,21 +11,21 @@ namespace NIRS.Grid_Folder
 {
     public class SpaceCellWithK : SpaceCell
     {
-        private LimitedDouble K;
+        private double K;
         public LimitedDouble k
         {
             get
             {
-                return K;
+                return new LimitedDouble(K);
             }
             set
             {
                 if (isNullCell)
                 {
-                    K = value;
+                    K = value.Value;
                     isNullCell = false;
                 }
-                else if (K == value)
+                else if (K == value.Value)
                     return;
                 else
                     throw new Exception("нельзя задать новое значение k");

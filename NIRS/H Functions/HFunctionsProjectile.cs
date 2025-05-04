@@ -62,7 +62,7 @@ namespace NIRS.H_Functions
 
         private double G(LimitedDouble n)
         {
-            return g[n].sn.a * powder.S0 * bps.Sigma(g[n].sn.z, g[n].sn.psi) * constP.delta * bps.Uk(g[n].sn.p);
+            return g[n].sn.a * powder.S0 * bps.Sigma(g[n].sn.z, g[n].sn.psi) * constP.PowderDelta * bps.Uk(g[n].sn.p);
         }
     }
 }

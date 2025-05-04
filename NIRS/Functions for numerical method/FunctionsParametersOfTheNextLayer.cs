@@ -81,6 +81,16 @@ namespace NIRS.Functions_for_numerical_method
         public double Get_M(LimitedDouble N, LimitedDouble K)
         {
             (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K);
+
+            var tmp1 = g[n - 0.5][k].M;
+            var tmp2 = wc.Nabla(PN.M, PN.w).Cell(n - 0.5, k);
+            var tmp3 = (1 - g[n][k - 0.5].m) * bs.S(x[k - 0.5]);
+            var tmp4 = (1 - g[n][k + 0.5].m) * bs.S(x[k + 0.5]);
+            var tmp5 = ((1 - g[n][k - 0.5].m) * bs.S(x[k - 0.5]) + (1 - g[n][k + 0.5].m) * bs.S(x[k + 0.5])) / 2
+                        * wc.dPStrokeDivdx().Cell(n, k);
+            var tmp6 = wc.dPStrokeDivdx().Cell(n, k);
+            var tmp7 = hf.H2(n, k);
+
             return g[n - 0.5][k].M - constP.tau *
                 (
                     wc.Nabla(PN.M, PN.w).Cell(n - 0.5, k)
@@ -92,8 +102,11 @@ namespace NIRS.Functions_for_numerical_method
         public double Get_w(LimitedDouble N, LimitedDouble K)
         {
             (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K);
+
+            var tmp1 = bs.S(x[k - 0.5]);
+
             return 2 * g[n + 0.5][k].M
-                    / (constP.delta * (
+                    / (constP.PowderDelta * (
                                       (1 - g[n][k - 0.5].m) * bs.S(x[k - 0.5]) 
                                     + (1 - g[n][k + 0.5].m) * bs.S(x[k + 0.5]) 
                                       )
@@ -125,22 +138,38 @@ namespace NIRS.Functions_for_numerical_method
         public double Get_psi(LimitedDouble N, LimitedDouble K)
         {
             (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 1, K - 0.5);
-            return g[n][k - 0.5].psi - constP.tau *
+            var psi = g[n][k - 0.5].psi - constP.tau *
                 (
                     wc.Nabla(PN.psi, PN.w).Cell(n + 0.5, k - 0.5)
                    - g[n][k - 0.5].psi * wc.Nabla(PN.w).Cell(n + 0.5, k - 0.5)
                    - hf.HPsi(n + 0.5, k - 0.5)
                 );
+            psi = PowderValidation(psi);
+            return psi;
+        }
+        private static double PowderValidation(double value) // метод скопирован
+        {
+            if (value > 1)
+                value = 1;
+            return value;
         }
         public double Get_z(LimitedDouble N, LimitedDouble K)
         {
             (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 1, K - 0.5);
-            return g[n][k - 0.5].z - constP.tau *
+
+            var tmp1 = g[n][k - 0.5].z;
+            var tmp3 = wc.Nabla(PN.z, PN.w).Cell(n + 0.5, k - 0.5);
+            var tmp5 = wc.Nabla(PN.w).Cell(n + 0.5, k - 0.5);
+            var tmp6 = hf.H5(n + 0.5, k - 0.5);
+            var z = g[n][k - 0.5].z - constP.tau *
                 (
                     wc.Nabla(PN.z, PN.w).Cell(n + 0.5, k - 0.5)
                    - g[n][k - 0.5].z * wc.Nabla(PN.w).Cell(n + 0.5, k - 0.5)
                    - hf.H5(n + 0.5, k - 0.5)
                 );
+
+            z = PowderValidation(z);
+            return z;
         }   
         public double Get_a(LimitedDouble N, LimitedDouble K)
         {

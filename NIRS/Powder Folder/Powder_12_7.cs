@@ -17,7 +17,7 @@ namespace NIRS.Cannon_Folder.Powder_Folder
         public Powder_12_7(IConstParameters constParameters, IBarrelSize barrelSize, double omega)
         {
             Omega = omega;
-            Delta = constParameters.delta;
+            Delta = constParameters.PowderDelta;
             this.DELTA = omega/barrelSize.Wkm;
             this.D0 = constParameters.D0;
             this.d0 = constParameters.d0;

@@ -103,13 +103,13 @@ namespace NIRS.Functions_for_numerical_method
             var opt = ChooseACalculationOptionFor_m_M(n, k);
             if (opt == Option.opt1)
             {
-                return g[n + 0.5][k + 1].w * constP.delta *
+                return g[n + 0.5][k + 1].w * constP.PowderDelta *
                        ((1-g[n][k + 0.5].m) * bs.S(x[k+0.5]) + (1 - g[n][k + 1.5].m) * bs.S(x[k + 1.5]))
                        / 2;
             }
             if (opt == Option.opt2)
             {
-                return g[n + 0.5][k + 1].w * constP.delta *
+                return g[n + 0.5][k + 1].w * constP.PowderDelta *
                        ((1 - g[n][k + 0.5].m) * bs.S(x[k + 0.5]) + (1 - g[n].sn.m) * bs.S(g[n].sn.x))
                        / 2;
             }

@@ -8,6 +8,7 @@ using NIRS.Parameter_names;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace NIRS.Grid_Folder
 {
@@ -108,7 +109,7 @@ namespace NIRS.Grid_Folder
                 grid[n][minus0dot5].e = 0;
             }
 
-                return grid;
+            return grid;
         }
         public IGrid FillProjectileAtFixedBorder(IGrid grid, LimitedDouble n, bool isBeltIntact)
         {
@@ -151,14 +152,18 @@ namespace NIRS.Grid_Folder
                 var K = GetK()-0.5;
                 var KMinus1 = K - 1;
                 var KPlus1 = K + 1;
-                var parameters = new List<PN> {PN.r, PN.z, PN.a, PN.m, PN.ro, PN.e, PN.p, PN.psi};
-                foreach(var pn in parameters)
+                var tmp = k[b.EndChamberPoint.X];
+                if (KPlus1 <= k[b.EndChamberPoint.X])
                 {
-                    var p1 = new Point2D(KMinus1.Value, grid[n][KMinus1][pn]);
-                    var p2 = new Point2D(K.Value, grid[n][K][pn]);
-                    EquationOfLineFromTwoPoints equation = new EquationOfLineFromTwoPoints(p1, p2);
-                    grid[n][KPlus1][pn] = equation.GetY(KPlus1.Value);
-                }
+                    var parameters = new List<PN> { PN.r, PN.z, PN.a, PN.m, PN.ro, PN.e, PN.p, PN.psi };
+                    foreach (var pn in parameters)
+                    {
+                        var p1 = new Point2D(KMinus1.Value, grid[n][KMinus1][pn]);
+                        var p2 = new Point2D(K.Value, grid[n][K][pn]);
+                        EquationOfLineFromTwoPoints equation = new EquationOfLineFromTwoPoints(p1, p2);
+                        grid[n][KPlus1][pn] = equation.GetY(KPlus1.Value);
+                    }
+                }                   
             }
             return grid;     
         }

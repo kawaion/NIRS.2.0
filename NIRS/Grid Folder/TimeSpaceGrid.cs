@@ -67,5 +67,26 @@ namespace NIRS.Grid_Folder
         {
             return new SpaceGrid();
         }
+
+        public LimitedDouble MinN
+        {
+            get
+            {
+                if (subGridMinus.Count > 0) return subGridMinus[subGridMinus.Count - 1].n;
+                else return subGridPlus[0].n;
+            }
+        }
+        public LimitedDouble MaxN
+        {
+            get
+            {
+                if (subGridPlus.Count > 0) return subGridPlus[subGridPlus.Count - 1].n;
+                else 
+                {
+                    if (subGridMinus[0].GetIsNull() == false) return subGridMinus[0].n; 
+                    else return subGridMinus[1].n;
+                }   
+            }
+        }
     }
 }
