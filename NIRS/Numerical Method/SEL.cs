@@ -11,6 +11,7 @@ using NIRS.Projectile_Folder;
 using NIRS.Numerical_solution;
 using NIRS.Interfaces;
 using NIRS.Verifer;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace NIRS.Numerical_Method
 {
@@ -26,11 +27,15 @@ namespace NIRS.Numerical_Method
         }
         
         private readonly IOutputDataTransmitter outputDataTransmitter = new OutputDataTransmitter();
-
+        FunctionsBuilder functionsBuilder;
 
         public IGrid Calculate()
         {
             IGrid grid = new TimeSpaceGrid();
+
+            functionsBuilder = new FunctionsBuilder(_mainData);
+            functionsBuilder.Build(grid);
+            CreateNumericalSolutions(grid, functionsBuilder);
 
             var gridBorderFiller = GetGridBorderFiller();
             var gridWithFilledBorders = gridBorderFiller.FillAtZeroTime(grid);
@@ -46,7 +51,7 @@ namespace NIRS.Numerical_Method
         }
         private IGrid GetNumericalSolution(IGrid grid, IGridBorderFiller gridBorderFiller)
         {
-            LimitedDouble n = new LimitedDouble(-0.5);
+            LimitedDouble n = new LimitedDouble(0);
 
             while (!IsEndConditionNumericalSolution(grid,n))
             {
@@ -83,19 +88,15 @@ namespace NIRS.Numerical_Method
             }
             return grid;
         }
-        //bool IsEndConditionNumericalSolutionAtNodeN()
-        //{
+        INumericalSolutionInNodes numericalSolutionInNodes;
+        INumericalSolutionProjectile numericalSolutionProjectile;
+        INumericalSolutionInterpolation numericalSolutionInterpolation;
 
-        //}
-
+        VerifierAbilityCalculateNode verifier;
         private (IGrid grid,bool isEnd)  GetNumericalSolutionAtNodeNK(IGrid grid, LimitedDouble n, LimitedDouble k)
         {
             bool isEnd = false;
-            FunctionsBuilder functionsBuilder = new FunctionsBuilder(_mainData);
-            var functionsNewLayer = functionsBuilder.FunctionsParametersOfTheNextLayerBuild(grid);
-            INumericalSolutionInNodes numericalSolutionInNodes = new NumericalSolutionInNodes(functionsNewLayer);
 
-            VerifierAbilityCalculateNode verifier = new VerifierAbilityCalculateNode(grid);
             bool isPossible=verifier.Check(n, k);
 
             if(isPossible)
@@ -111,10 +112,6 @@ namespace NIRS.Numerical_Method
         }
         private IGrid GetNumericalSolutionInProjectile(IGrid grid, LimitedDouble n)
         {
-            FunctionsBuilder functionsBuilder = new FunctionsBuilder(_mainData);
-            var projectileFunctions = functionsBuilder.ProjectileFunctionsBuild(grid);
-            INumericalSolutionProjectile numericalSolutionProjectile = new NumericalSolutionProjectile(projectileFunctions);
-
             if(isBeltIntact == true && n.Type == DoubleType.Int)
                 if (grid[n].sn.p > FORCING_PRESSURE)
                     isBeltIntact = false;
@@ -126,13 +123,23 @@ namespace NIRS.Numerical_Method
 
         private IGrid GetInterpolateSolutionAtInaccessibleNodes(IGrid grid, LimitedDouble n)
         {
-            FunctionsBuilder functionsBuilder = new FunctionsBuilder(_mainData);
-            var parameterInterpolationFunctions = functionsBuilder.ParameterInterpolationFunctionsBuild(grid);
-            INumericalSolutionInterpolation numericalSolutionInterpolation = new NumericalSolutionInterpolation(parameterInterpolationFunctions,_mainData);
-
             grid = numericalSolutionInterpolation.Get(grid, n);
 
             return grid;
+        }
+
+
+        private void CreateNumericalSolutions(IGrid grid,FunctionsBuilder functionsBuilder)
+        {
+            var functionsNewLayer = functionsBuilder.FunctionsParametersOfTheNextLayerUpdate(grid);
+            var projectileFunctions = functionsBuilder.ProjectileFunctionsUpdate(grid);
+            var parameterInterpolationFunctions = functionsBuilder.ParameterInterpolationFunctionsUpdate(grid);
+
+            numericalSolutionInNodes = new NumericalSolutionInNodes(functionsNewLayer);
+            numericalSolutionProjectile = new NumericalSolutionProjectile(projectileFunctions); ;
+            numericalSolutionInterpolation = new NumericalSolutionInterpolation(parameterInterpolationFunctions, _mainData);
+
+            verifier = new VerifierAbilityCalculateNode(grid, _mainData);
         }
     }
 }

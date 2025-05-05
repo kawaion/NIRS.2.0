@@ -170,5 +170,9 @@ namespace NIRS.Functions_for_numerical_method
         {
             return Get_ro0(k) * Get_m0(k) * bs.S(x[k]) * Get_eps0(k);
         }
+
+        public void Update()
+        {
+        }
     }
 }

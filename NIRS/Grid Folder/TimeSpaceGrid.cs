@@ -4,13 +4,16 @@ using System.Collections.Generic;
 using NIRS.Memory_allocator;
 using System;
 using NIRS.Interfaces;
+using NIRS.RAM_folder;
 
 namespace NIRS.Grid_Folder
 {
     public class TimeSpaceGrid : IGrid
     {
+        RAM<double, ISubGrid> ram;
         public TimeSpaceGrid()
         {
+            ram = new RAM<double, ISubGrid>(4);
         }
 
 
@@ -21,9 +24,13 @@ namespace NIRS.Grid_Folder
         {
             get
             {
+                if (ram.isContains(n.Value))
+                    return ram.Get(n.Value);
+
                 (var index, var subGrid) = ChooseIndexAndSubGrid(n);
 
                 subGrid = AllocateMemorySubGridForTheIndex(subGrid, index, n);
+                ram.Add(n.Value, subGrid[index]);
                 return subGrid[index];
             }
             set

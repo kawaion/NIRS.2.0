@@ -13,7 +13,7 @@ namespace NIRS.Functions_for_numerical_method
 {
     public class ProjectileFunctions : IProjectileFunctions
     {
-        private readonly IGrid g;
+        private IGrid g;
         private readonly IConstParameters constP;
         private readonly IBarrelSize bs;
         private readonly IPowder powder;
@@ -104,9 +104,7 @@ namespace NIRS.Functions_for_numerical_method
                     - constP.alpha * g[n + 1].sn.r
                 );
 
-            if (Double.IsNaN(res))
-                return 0;
-            else return res;
+            return res;
         }
 
         public double Get_psi(LimitedDouble N)
@@ -141,10 +139,10 @@ namespace NIRS.Functions_for_numerical_method
         {
             var n = OffseterN.Appoint(N).Offset(N + 0.5);
 
-            var x_nPlus1 = g[n + 1].sn.x;
+            var x_n = g[n].sn.x;
 
             return g[n - 0.5].sn.vSn + (constP.tau / projectile.q)
-                                    * (g[n].sn.p * bs.S(x_nPlus1));
+                                    * (g[n].sn.p * bs.S(x_n));
                   
         }
 
@@ -154,7 +152,7 @@ namespace NIRS.Functions_for_numerical_method
             {
                 var n = OffseterN.Appoint(N).Offset(N + 0.5);
 
-                return g[n - 0.5].sn.x + constP.tau * (g[n - 0.5].sn.vSn * g[n + 0.5].sn.vSn) / 2;
+                return g[n - 0.5].sn.x + constP.tau * (g[n - 0.5].sn.vSn + g[n + 0.5].sn.vSn) / 2;
             }
             else
             {
@@ -170,6 +168,13 @@ namespace NIRS.Functions_for_numerical_method
 
             return g[n].sn.psi
                    + constP.tau * hf.sn.H5(n + 0.5);
+        }
+
+        public void Update(IGrid grid)
+        {
+            g = grid;
+            wc.Update(grid);
+            hf.Update(grid);
         }
     }
 }

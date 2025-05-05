@@ -1,6 +1,7 @@
 ﻿using MyDouble;
 using NIRS.Nabla_Functions.Projectile;
 using NIRS.Parameter_names;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace NIRS.Interfaces
 {
@@ -12,5 +13,7 @@ namespace NIRS.Interfaces
         double dPStrokeDivdx(LimitedDouble n, LimitedDouble k);
 
         IWaypointCalculatorProjectile sn { get; set; }
+
+        void Update(IGrid grid);
     }
 }

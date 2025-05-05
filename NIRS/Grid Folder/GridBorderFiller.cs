@@ -54,6 +54,7 @@ namespace NIRS.Grid_Folder
                 grid[zero][k - 0.5].e = _boundaryFunctions.GetMixture_n0(PN.e, k - 0.5);
             }
             grid[zero].sn.x = b.EndChamberPoint.X;
+            grid[minus0Dot5].sn.x = b.EndChamberPoint.X;
 
             return grid;
         }

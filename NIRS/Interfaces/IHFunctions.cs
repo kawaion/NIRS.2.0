@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.DataVisualization.Charting;
 using MyDouble;
 
 namespace NIRS.Interfaces
@@ -17,5 +18,7 @@ namespace NIRS.Interfaces
         double HPsi(LimitedDouble n, LimitedDouble k);
 
         IHFunctionsProjectile sn { get; set; }
+
+        void Update(IGrid grid);
     }
 }

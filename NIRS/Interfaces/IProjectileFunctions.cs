@@ -1,5 +1,8 @@
 ﻿using MyDouble;
+using NIRS.H_Functions;
+using NIRS.Nabla_Functions;
 using NIRS.Parameter_names;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace NIRS.Interfaces
 {
@@ -16,5 +19,7 @@ namespace NIRS.Interfaces
         double Get_ro(LimitedDouble n);
         double Get_e(LimitedDouble n);
         double Get_p(LimitedDouble n);
+
+        void Update(IGrid grid);
     }
 }

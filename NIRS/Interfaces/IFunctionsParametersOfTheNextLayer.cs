@@ -19,5 +19,7 @@ namespace NIRS.Interfaces
         double Get_m(LimitedDouble n, LimitedDouble k);
         double Get_p(LimitedDouble n, LimitedDouble k);
         double Get_ro(LimitedDouble n, LimitedDouble k);
+
+        void Update(IGrid grid);
     }
 }

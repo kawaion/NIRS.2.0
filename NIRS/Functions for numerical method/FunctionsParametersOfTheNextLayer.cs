@@ -15,11 +15,11 @@ namespace NIRS.Functions_for_numerical_method
 {
     class FunctionsParametersOfTheNextLayer : IFunctionsParametersOfTheNextLayer
     {
-        private readonly IGrid g;
+        private IGrid g;
         private readonly IConstParameters constP;
-        private readonly IWaypointCalculator wc;
+        private IWaypointCalculator wc;
         private readonly IBarrelSize bs;
-        private readonly IHFunctions hf;
+        private IHFunctions hf;
         private readonly IPowder powder;
 
         private readonly XGetter x;
@@ -65,42 +65,30 @@ namespace NIRS.Functions_for_numerical_method
         {
             (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K);
 
-            var tmp1 = wc.Nabla(PN.dynamic_m, PN.v).Cell(n - 0.5, k);
-            var tmp2 = wc.dPStrokeDivdx().Cell(n, k);
-            var tmp3 = hf.H1(n, k);
+            var g_n = g[n];
 
-
-            var tmp = g[n - 0.5][k].dynamic_m - constP.tau *
+            return g[n - 0.5][k].dynamic_m - constP.tau *
                 (
                     wc.Nabla(PN.dynamic_m, PN.v).Cell(n - 0.5, k)
-                   + (g[n][k - 0.5].m * bs.S(x[k - 0.5]) + g[n][k + 0.5].m * bs.S(x[k + 0.5])) / 2
+                   + (g_n[k - 0.5].m * bs.S(x[k - 0.5]) + g_n[k + 0.5].m * bs.S(x[k + 0.5])) / 2
                         * wc.dPStrokeDivdx().Cell(n, k)
                    - hf.H1(n, k)
                 );
-            if (double.IsNaN(tmp))
-            {
-                int c = 0;
-            }
-            return tmp;
         }
         public double Get_v(LimitedDouble N, LimitedDouble K)
         {
             (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K);
+
+            var g_n = g[n];
+
             return 2 * g[n + 0.5][k].dynamic_m
-                    / (g[n][k - 0.5].r + g[n][k + 0.5].r);
+                    / (g_n[k - 0.5].r + g_n[k + 0.5].r);
         }        
         public double Get_M(LimitedDouble N, LimitedDouble K)
         {
             (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K);
 
-            var tmp1 = g[n - 0.5][k].M;
-            var tmp2 = wc.Nabla(PN.M, PN.w).Cell(n - 0.5, k);
-            var tmp3 = (1 - g[n][k - 0.5].m) * bs.S(x[k - 0.5]);
-            var tmp4 = (1 - g[n][k + 0.5].m) * bs.S(x[k + 0.5]);
-            var tmp5 = ((1 - g[n][k - 0.5].m) * bs.S(x[k - 0.5]) + (1 - g[n][k + 0.5].m) * bs.S(x[k + 0.5])) / 2
-                        * wc.dPStrokeDivdx().Cell(n, k);
-            var tmp6 = wc.dPStrokeDivdx().Cell(n, k);
-            var tmp7 = hf.H2(n, k);
+            var g_n = g[n];
 
             return g[n - 0.5][k].M - constP.tau *
                 (
@@ -137,33 +125,7 @@ namespace NIRS.Functions_for_numerical_method
         }        
         public double Get_e(LimitedDouble N, LimitedDouble K)
         {
-            if(N.Value == 1 && K.Value == 0.5)
-            {
-                int c = 0;
-            }
-
             (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 1, K - 0.5);
-
-            var tmp1 = wc.Nabla(PN.e, PN.v).Cell(n + 0.5, k - 0.5);
-            var tmp2 = g[n][k - 0.5].p + q(n + 0.5, k - 0.5);
-            var tmp3 = q(n + 0.5, k - 0.5);
-            var tmp4 = wc.Nabla(PN.m, PN.S, PN.v).Cell(n + 0.5, k - 0.5);
-            var tmp5 = wc.Nabla(PN.One_minus_m, PN.S, PN.w).Cell(n + 0.5, k - 0.5);
-            var tmp6 = hf.H4(n + 0.5, k - 0.5);
-
-            var tmp7 = (
-                    wc.Nabla(PN.e, PN.v).Cell(n + 0.5, k - 0.5)
-                   + (g[n][k - 0.5].p + q(n + 0.5, k - 0.5))
-                        * (wc.Nabla(PN.m, PN.S, PN.v).Cell(n + 0.5, k - 0.5) + wc.Nabla(PN.One_minus_m, PN.S, PN.w).Cell(n + 0.5, k - 0.5))
-                   - hf.H4(n + 0.5, k - 0.5)
-                );
-
-            var tmp8 = -constP.tau * (
-        wc.Nabla(PN.e, PN.v).Cell(n + 0.5, k - 0.5)
-       + (g[n][k - 0.5].p + q(n + 0.5, k - 0.5))
-            * (wc.Nabla(PN.m, PN.S, PN.v).Cell(n + 0.5, k - 0.5) + wc.Nabla(PN.One_minus_m, PN.S, PN.w).Cell(n + 0.5, k - 0.5))
-       - hf.H4(n + 0.5, k - 0.5)
-    );
 
             return g[n][k - 0.5].e - constP.tau *
                 (
@@ -195,10 +157,6 @@ namespace NIRS.Functions_for_numerical_method
         {
             (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 1, K - 0.5);
 
-            var tmp1 = g[n][k - 0.5].z;
-            var tmp3 = wc.Nabla(PN.z, PN.w).Cell(n + 0.5, k - 0.5);
-            var tmp5 = wc.Nabla(PN.w).Cell(n + 0.5, k - 0.5);
-            var tmp6 = hf.H5(n + 0.5, k - 0.5);
             var z = g[n][k - 0.5].z - constP.tau *
                 (
                     wc.Nabla(PN.z, PN.w).Cell(n + 0.5, k - 0.5)
@@ -248,6 +206,13 @@ namespace NIRS.Functions_for_numerical_method
         private double q(LimitedDouble n, LimitedDouble k)
         {
             return PseudoViscosityMechanism.q(g, wc, constP, n, k);
+        }
+
+        public void Update(IGrid grid)
+        {
+            g = grid;
+            wc.Update(grid);
+            hf.Update(grid);
         }
     }
 }

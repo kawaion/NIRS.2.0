@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NIRS.Interfaces;
 using NIRS.Parameter_names;
+using NIRS.RAM_folder;
 
 namespace NIRS.Grid_Folder
 {
@@ -36,8 +37,10 @@ namespace NIRS.Grid_Folder
         private bool isNull = true;
         public bool GetIsNull() => isNull;
 
+        RAM<double, SpaceCellWithK> ram;
         public SpaceGrid()
         {
+            ram = new RAM<double, SpaceCellWithK>(4);
         }
 
         List<SpaceCellWithK> gridCellsMinus = new List<SpaceCellWithK>();
@@ -47,9 +50,13 @@ namespace NIRS.Grid_Folder
         {
             get
             {
+                if (ram.isContains(k.Value))
+                    return ram.Get(k.Value);
+
                 (var index, var gridCells) = ChooseIndexAndgridCells(k);
 
                 gridCells = AllocateMemorygridCellsForTheIndex(gridCells, index, k);
+                ram.Add(k.Value, gridCells[index]);
                 return gridCells[index];
             }
             set

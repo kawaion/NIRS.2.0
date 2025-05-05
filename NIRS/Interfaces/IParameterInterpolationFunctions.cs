@@ -12,5 +12,6 @@ namespace NIRS.Interfaces
     {
         double InterpolateMixture(PN pn, LimitedDouble n, LimitedDouble k);
         double InterpolateDynamic(PN pn, LimitedDouble n, LimitedDouble k);
+        void Update(IGrid grid);
     }
 }

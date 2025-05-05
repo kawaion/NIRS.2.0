@@ -15,7 +15,7 @@ namespace NIRS.Functions_for_numerical_method
 {
     public class ParameterInterpolationFunctions : IParameterInterpolationFunctions
     {
-        private readonly IGrid g;
+        private IGrid g;
         private readonly IConstParameters constP;
         private readonly IBarrelSize bs;
         private readonly XGetter x;
@@ -133,6 +133,11 @@ namespace NIRS.Functions_for_numerical_method
                 return Option.opt2;
 
             throw new Exception();
+        }
+
+        public void Update(IGrid grid)
+        {
+            g = grid;
         }
 
         enum Option
