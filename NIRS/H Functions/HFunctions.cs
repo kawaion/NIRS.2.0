@@ -41,6 +41,10 @@ namespace NIRS.H_Functions
 
         public double H1(LimitedDouble n, LimitedDouble k)
         {
+            var tmp1 = bs.S(x[k]);
+            var tmp2 = tauW(n, k);
+            var tmp3 = G(n, k);
+
             return -bs.S(x[k]) * tauW(n, k) + bs.S(x[k]) * G(n, k) * g[n - 0.5][k].w;
         }
 

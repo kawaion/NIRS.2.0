@@ -139,7 +139,16 @@ namespace NIRS.Nabla_Functions
 
         public double dPStrokeDivdx(LimitedDouble n, LimitedDouble k)
         {
-            return (g.PStroke(this, constP, n, k + 0.5) - g.PStroke(this, constP, n, k - 0.5)) / constP.h;
+            var tmp1 = g.PStroke(this, constP, n, k + 0.5);
+            var tmp2 = g.PStroke(this, constP, n, k - 0.5);
+
+            var tmpres = (g.PStroke(this, constP, n, k + 0.5) - g.PStroke(this, constP, n, k - 0.5)) / constP.h;
+            //return (g.PStroke(this, constP, n, k + 0.5) - g.PStroke(this, constP, n, k - 0.5)) / constP.h;
+            if (double.IsInfinity(tmpres))
+            {
+                int c = 0;
+            }
+            return tmpres;
         }
 
         enum NablaType

@@ -39,7 +39,7 @@ namespace NIRS
         {
             IInitialParameters initialParameters = new InitialParametersCase1();
             double h = 0.0126875; //0.0025;
-            double tau = 3.171875; //curantTau(h, 945);
+            double tau = 3.171875e-6; //curantTau(h, 945);
             IConstParameters constParameters = new ConstParametersCase1(tau, h);
             (var newInitialParameters, var newConstParameters) = (initialParameters, constParameters);//inputDataTransmitter.GetInputData(initialParameters, constParameters);
             List<Point2D> points = new List<Point2D>();
