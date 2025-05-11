@@ -23,6 +23,20 @@ namespace NIRS.Memory_allocator
 
             return list;
         }
+        public static List<(double n, List<(double k, double layer)> layer)> AllocateUpTo(this List<(double n, List<(double k, double layer)> layer)> list, int index, GetNew<(double n, List<(double k, double layer)> layer)> getNew)
+        {
+            while (list.Count <= index)
+                list.Add(getNew());
+
+            return list;
+        }
+        public static List<(double k, double cell)> AllocateUpTo(this List<(double k, double cell)> list, int index, GetNew<(double k, double cell)> getNew)
+        {
+            while (list.Count <= index)
+                list.Add(getNew());
+
+            return list;
+        }
     }
     public delegate T GetNew<T>();
 }

@@ -12,6 +12,10 @@ using NIRS.Numerical_solution;
 using NIRS.Interfaces;
 using NIRS.Verifer;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Threading;
+using System.Net.Http.Headers;
+using System.Diagnostics;
+using NIRS.Parameter_names;
 
 namespace NIRS.Numerical_Method
 {
@@ -52,39 +56,54 @@ namespace NIRS.Numerical_Method
         private IGrid GetNumericalSolution(IGrid grid, IGridBorderFiller gridBorderFiller)
         {
             LimitedDouble n = new LimitedDouble(0);
-
+            Stopwatch stopwatch = new Stopwatch();
             while (!IsEndConditionNumericalSolution(grid,n))
             {
                 n += 0.5;
+                stopwatch.Start();
 
                 grid = gridBorderFiller.FillBarrelBorders(grid, n, isBeltIntact);
+                var tmp1 = stopwatch.Elapsed;
+                stopwatch.Restart();
                 //grid = gridBorderFiller.FillCoordinateProjectileAtFixedBorder(grid, n, isBeltIntact);
                 grid = GetNumericalSolutionAtNodesN(grid, n);
+                var tmp2 = stopwatch.Elapsed;
+                stopwatch.Restart();
                 grid = gridBorderFiller.FillLastNodeOfMixture(grid, n, isBeltIntact);
+                var tmp3 = stopwatch.Elapsed;
+                stopwatch.Restart();
                 grid = gridBorderFiller.FillProjectileAtFixedBorder(grid, n, isBeltIntact);
+                var tmp4 = stopwatch.Elapsed;
+                stopwatch.Restart();
                 grid = GetNumericalSolutionInProjectile(grid, n);
+                var tmp5 = stopwatch.Elapsed;
+                stopwatch.Restart();
                 grid = GetInterpolateSolutionAtInaccessibleNodes(grid, n);
+                var tmp6 = stopwatch.Elapsed;
+                stopwatch.Restart();
+                stopwatch.Reset();
             }
             return grid;
         }
         bool IsEndConditionNumericalSolution(IGrid grid, LimitedDouble n)
         {
-            var x = grid[n].sn.x;
+            var x = grid.GetSn(PN.x, n);
             var lengthBarrel = _mainData.Barrel.Length;
             return x >= lengthBarrel;
         }
         private IGrid GetNumericalSolutionAtNodesN(IGrid grid, LimitedDouble n)
         {
-            LimitedDouble k = new LimitedDouble(0);
+            LimitedDouble k;
+            if (n.IsInt())
+                k = new LimitedDouble(-0.5);
+            else
+                k = new LimitedDouble(0);
 
-            bool isEnd = false;
+                bool isEnd = false;
             while (!isEnd)
             {
-                k += 0.5;
-                if(ParameterTypeGetter.IsDynamic(n, k) || ParameterTypeGetter.IsMixture(n, k))
-                {
-                    (grid,isEnd) = GetNumericalSolutionAtNodeNK(grid, n, k );
-                }
+                k += 1;
+                (grid,isEnd) = GetNumericalSolutionAtNodeNK(grid, n, k );
             }
             return grid;
         }
@@ -95,9 +114,12 @@ namespace NIRS.Numerical_Method
         VerifierAbilityCalculateNode verifier;
         private (IGrid grid,bool isEnd)  GetNumericalSolutionAtNodeNK(IGrid grid, LimitedDouble n, LimitedDouble k)
         {
+            Stopwatch stopwatch = new Stopwatch();
             bool isEnd = false;
-
+            stopwatch.Start();
             bool isPossible=verifier.Check(n, k);
+            var tmp = stopwatch.Elapsed;
+            stopwatch.Reset();
 
             if(isPossible)
             {
@@ -113,7 +135,7 @@ namespace NIRS.Numerical_Method
         private IGrid GetNumericalSolutionInProjectile(IGrid grid, LimitedDouble n)
         {
             if(isBeltIntact == true && n.Type == DoubleType.Int)
-                if (grid[n].sn.p > FORCING_PRESSURE)
+                if (grid.GetSn(PN.p, n) > FORCING_PRESSURE)
                     isBeltIntact = false;
 
             grid = numericalSolutionProjectile.Get(grid, n, isBeltIntact);

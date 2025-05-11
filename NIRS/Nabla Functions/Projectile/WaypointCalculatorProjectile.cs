@@ -31,29 +31,29 @@ namespace NIRS.Nabla_Functions.Projectile
         }
         public double Nabla(PN param1, PN param2, PN param3, LimitedDouble N)
         {
-            var n = OffseterN.Appoint(N).Offset(N + 0.5);
+            var n = OffseterN.AppointAndOffset(N, + 0.5);
 
             return (AverageProjectile(param1, param2, param3, n + 0.5) - AverageK(param1, param2, param3, n + 0.5)) 
                    / constP.h;
         }
         private double AverageProjectile(PN mu, PN S, PN v, LimitedDouble N)
         {
-            var n = OffseterN.Appoint(N).Offset(N + 0.5);
+            var n = OffseterN.AppointAndOffset(N, + 0.5);
 
-            return g[n + 0.5].sn[v] * g[n].sn[mu] * bs.S(g[n].sn.x);
+            return g.GetSn(v, n + 0.5) * g.GetSn(mu, n) * bs.S(g.GetSn(PN.x, n));
         }
 
         private double AverageK(PN mu, PN S, PN v, LimitedDouble N)
         {
-            var n = OffseterN.Appoint(N).Offset(N + 0.5);
+            var n = OffseterN.AppointAndOffset(N, + 0.5);
 
-            var K = g[n + 0.5].LastIndex(v);
+            var K = g.LastIndex(v, n + 0.5);
 
-            double V = g[n + 0.5][K][v];
+            double V = g[v, n + 0.5, K];
             if (V >= 0)
-                return V * g[n][K - 0.5][mu] * bs.S(x[K-0.5]);
+                return V * g[mu, n, K - 0.5] * bs.S(x[K-0.5]);
             else
-                return V * g[n].sn[mu] * bs.S(g[n].sn.x);
+                return V * g.GetSn(mu, n) * bs.S(g.GetSn(PN.x, n));
         }
 
     }

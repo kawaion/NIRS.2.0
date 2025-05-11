@@ -76,26 +76,26 @@ namespace NIRS
             double c = 340;
             return h / (v + c);
         }
-        private void DrawGrid(IGrid grid)
-        {
-            PN pn = PN.z;
-            for (LimitedDouble i = grid.MinN+1;i<=grid.MaxN; i+=1)
-                for(LimitedDouble j = grid[i].MinK; j <= grid[i].MaxK(pn); j += 1)
-                {
-                    chart1.BeginInvoke(new Action(()=>chart1.Series[0].Points.AddXY(j.Value, i.Value)));
-                }
-            var maxN = grid.MaxN;
-            if(maxN == 7.5)
-            {
+        //private void DrawGrid(IGrid grid)
+        //{
+        //    PN pn = PN.z;
+        //    for (LimitedDouble i = grid.MinN+1;i<=grid.MaxN; i+=1)
+        //        for(LimitedDouble j = grid[i].MinK; j <= grid[i].MaxK(pn); j += 1)
+        //        {
+        //            chart1.BeginInvoke(new Action(()=>chart1.Series[0].Points.AddXY(j.Value, i.Value)));
+        //        }
+        //    var maxN = grid.MaxN;
+        //    if(maxN == 7.5)
+        //    {
 
-            }
-            for (LimitedDouble j = grid[maxN].MinK; j <= grid[maxN].MaxK(pn); j += 1)
-            {
-                chart2.BeginInvoke(new Action(() => chart2.Series[0].Points.AddXY(j.Value, grid[maxN][j][pn])));
-                //chart2.Series[0].Points.AddXY(j.Value, grid[maxN][j][pn]);
-            }
+        //    }
+        //    for (LimitedDouble j = grid[maxN].MinK; j <= grid[maxN].MaxK(pn); j += 1)
+        //    {
+        //        chart2.BeginInvoke(new Action(() => chart2.Series[0].Points.AddXY(j.Value, grid[maxN][j][pn])));
+        //        //chart2.Series[0].Points.AddXY(j.Value, grid[maxN][j][pn]);
+        //    }
 
-        }
+        //}
     }
     delegate void Draw(IGrid grid); 
 }

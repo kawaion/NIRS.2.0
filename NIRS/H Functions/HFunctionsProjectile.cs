@@ -1,6 +1,7 @@
 ﻿using MyDouble;
 using NIRS.Helpers;
 using NIRS.Interfaces;
+using NIRS.Parameter_names;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,41 +29,41 @@ namespace NIRS.H_Functions
 
         public double H3(LimitedDouble N)
         {
-            var n = OffseterN.Appoint(N).Offset(N + 0.5);
+            var n = OffseterN.AppointAndOffset(N, + 0.5);
 
-            var x_n = g[n].sn.x;
+            var x_n = g.GetSn(PN.x, n);
 
             return bs.S(x_n) * G(n);
         }
 
         public double H4(LimitedDouble N)
         {
-            var n = OffseterN.Appoint(N).Offset(N + 0.5);
+            var n = OffseterN.AppointAndOffset(N, + 0.5);
 
-            var x_n = g[n].sn.x;
+            var x_n = g.GetSn(PN.x, n);
 
             return bs.S(x_n) * G(n) * constP.Q;
         }
 
         public double H5(LimitedDouble N)
         {
-            var n = OffseterN.Appoint(N).Offset(N + 0.5);
+            var n = OffseterN.AppointAndOffset(N, + 0.5);
 
-            return bps.Uk(g[n].sn.p) / constP.e1;
+            return bps.Uk(g.GetSn(PN.p, n)) / constP.e1;
         }
 
         public double HPsi(LimitedDouble N)
         {
-            var n = OffseterN.Appoint(N).Offset(N + 0.5);
+            var n = OffseterN.AppointAndOffset(N, + 0.5);
 
             return (powder.S0 / powder.LAMDA0)
-                   * bps.Sigma(g[n].sn.z, g[n].sn.psi)
-                   * bps.Uk(g[n].sn.p);
+                   * bps.Sigma(g.GetSn(PN.z, n), g.GetSn(PN.psi, n))
+                   * bps.Uk(g.GetSn(PN.p, n));
         }
 
         private double G(LimitedDouble n)
         {
-            return g[n].sn.a * powder.S0 * bps.Sigma(g[n].sn.z, g[n].sn.psi) * constP.PowderDelta * bps.Uk(g[n].sn.p);
+            return g.GetSn(PN.a, n) * powder.S0 * bps.Sigma(g.GetSn(PN.z, n), g.GetSn(PN.psi, n)) * constP.PowderDelta * bps.Uk(g.GetSn(PN.p, n));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace NIRS.Verifer
         }
         public bool Check(LimitedDouble n, LimitedDouble k)
         {
-            return k <= _k[g[n - 1].sn.x-1];
+            return k+1 <= _k[g.GetSn(PN.x, n - 1)];
         }
         //public bool Check(LimitedDouble n, LimitedDouble k)
         //{

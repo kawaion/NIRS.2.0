@@ -1,4 +1,5 @@
 ﻿using MyDouble;
+using System.Xml.Linq;
 
 namespace NIRS.Helpers
 {
@@ -7,17 +8,36 @@ namespace NIRS.Helpers
     /// </summary>
     static class OffseterNK
     {
-        public static (LimitedDouble n, LimitedDouble k) Offset(this OffsetNodeNK<LimitedDouble> node, LimitedDouble newN, LimitedDouble newK)
+        //public static (LimitedDouble n, LimitedDouble k) Offset(this OffsetNodeNK node, LimitedDouble newN, LimitedDouble newK)
+        //{
+        //    return (node.N + node.N - newN, node.K + node.K - newK);
+        //}
+        //public static (double n, double k) Offset(this OffsetNodeNK<double> node, double newN, double newK) 
+        //{
+        //    return (node.N + node.N - newN, node.K + node.K - newK);
+        //}
+        //public static OffsetNodeNK<T> Appoint<T>(T n, T k)
+        //{
+        //    return new OffsetNodeNK<T>(n, k);
+        //}
+        //public static OffsetNodeNK Appoint(LimitedDouble n, LimitedDouble k)
+        //{
+        //    return new OffsetNodeNK(n, k);
+        //}
+        public static (LimitedDouble n, LimitedDouble k) AppointAndOffset(LimitedDouble n, double offsetN, LimitedDouble k, double offsetK)
         {
-            return (node.N + node.N - newN, node.K + node.K - newK);
-        }
-        public static (double n, double k) Offset(this OffsetNodeNK<double> node, double newN, double newK) 
-        {
-            return (node.N + node.N - newN, node.K + node.K - newK);
-        }
-        public static OffsetNodeNK<T> Appoint<T>(T n, T k)
-        {
-            return new OffsetNodeNK<T>(n, k);
+            LimitedDouble newN;
+            LimitedDouble newK;
+            if (offsetN == 0)
+                newN = n;
+            else
+                newN = n - offsetN;
+
+            if (offsetK == 0)
+                newK = k;
+            else
+                newK = k - offsetK;
+            return (newN, newK);
         }
     }
     class OffsetNodeNK<T>
@@ -30,22 +50,41 @@ namespace NIRS.Helpers
             K = k;
         }
     }
+    class OffsetNodeNK
+    {
+        public LimitedDouble N { get; }
+        public LimitedDouble K { get; }
+        public OffsetNodeNK(LimitedDouble n, LimitedDouble k)
+        {
+            N = n;
+            K = k;
+        }
+    }
 
 
     static class OffseterN
     {
-        public static LimitedDouble Offset(this OffsetNodeN<LimitedDouble> node, LimitedDouble newN)
+        public static LimitedDouble AppointAndOffset(LimitedDouble n, double offsetN)
         {
-            return (node.N + node.N - newN);
+            LimitedDouble newN;
+            if (offsetN == 0)
+                newN = n;
+            else
+                newN = n - offsetN;
+            return newN;
         }
-        public static double Offset(this OffsetNodeN<double> node, double newN)
-        {
-            return (node.N + node.N - newN);
-        }
-        public static OffsetNodeN<T> Appoint<T>(T n)
-        {
-            return new OffsetNodeN<T>(n);
-        }
+        //public static LimitedDouble Offset(this OffsetNodeN<LimitedDouble> node, LimitedDouble newN)
+        //{
+        //    return (node.N + node.N - newN);
+        //}
+        //public static double Offset(this OffsetNodeN<double> node, double newN)
+        //{
+        //    return (node.N + node.N - newN);
+        //}
+        //public static OffsetNodeN<T> Appoint<T>(T n)
+        //{
+        //    return new OffsetNodeN<T>(n);
+        //}
     }
     class OffsetNodeN<T>
     {

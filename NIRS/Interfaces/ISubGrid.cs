@@ -14,7 +14,7 @@ namespace NIRS.Interfaces
         SpaceCellProjectile sn { get; set; }
         bool GetIsNull();
 
-        LimitedDouble MinK { get; }
-        LimitedDouble MaxK(PN pN);
+        //LimitedDouble MinK { get; }
+        //LimitedDouble MaxK(PN pN);
     }
 }

@@ -78,6 +78,7 @@
     <Compile Include="Interfaces\INumericalSolutionInterpolation.cs" />
     <Compile Include="Main data\MainData.cs" />
     <Compile Include="Numerical solution\NumericalSolutionInterpolation.cs" />
+    <Compile Include="Parameter names\PN.cs" />
     <Compile Include="Powder Folder\BurningPowdersSize_12_7.cs" />
     <Compile Include="Interfaces\IBurningPowdersSize.cs" />
     <Compile Include="Interfaces\IMainData.cs" />
@@ -135,7 +136,6 @@
     <Compile Include="Functions for numerical method\FunctionsParametersOfTheNextLayer.cs" />
     <Compile Include="Interfaces\IFunctionsParametersOfTheNextLayer.cs" />
     <Compile Include="Interfaces\INumericalMethod.cs" />
-    <Compile Include="Parameter names\PN.cs" />
     <Compile Include="Parameter Type\DynamicCharacteristicsFlow.cs" />
     <Compile Include="Parameter Type\MixtureStateParameters.cs" />
     <Compile Include="Parameter Type\ParameterTypeGetter.cs" />

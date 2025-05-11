@@ -36,9 +36,9 @@ namespace NIRS.Functions_for_numerical_method
 
         public double InterpolateMixture(PN pn, LimitedDouble n, LimitedDouble k)
         {
-            var kLast = g[n].LastIndex(pn);
+            var kLast = g.LastIndex(pn, n);
 
-            return g[n][kLast][pn]
+            return g[pn,n,kLast]
                    + d.dPNdx(n,pn)
                    * step.Get(n,k,pn) * constP.h;
         }   
@@ -57,35 +57,35 @@ namespace NIRS.Functions_for_numerical_method
         }      
         public double Interpolate_v(LimitedDouble N, LimitedDouble K)
         {
-            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K + 1);
+            (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, + 1);
 
-            return g[n + 0.5][k].v
+            return g[PN.v, n + 0.5, k]
                    + d.dvdx(n + 0.5)
                    * step.Get(n + 0.5, k + 1, PN.v) * constP.h;
         }
         public double Interpolate_w(LimitedDouble N, LimitedDouble K)
         {
-            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K + 1);
+            (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, + 1);
 
-            return g[n + 0.5][k].w
+            return g[PN.w, n + 0.5, k]
                    + d.dwdx(n + 0.5)
                    * step.Get(n + 0.5, k + 1, PN.w) * constP.h;
         }
         public double Interpolate_dynamic_m(LimitedDouble N, LimitedDouble K)
         {
-            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K + 1);
+            (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, + 1);
 
             var opt = ChooseACalculationOptionFor_m_M(n, k);
             if(opt == Option.opt1)
             {
-                return g[n + 0.5][k + 1].v *
-                       (g[n][k + 0.5].r + g[n][k + 1.5].r) 
+                return g[PN.v, n + 0.5, k + 1] *
+                       (g[PN.r, n, k + 0.5] + g[PN.r, n, k + 1.5]) 
                        / 2;
             }
             if (opt == Option.opt2)
             {
-                return g[n + 0.5][k + 1].v *
-                       (g[n][k + 0.5].r + g[n].sn.r)
+                return g[PN.v, n + 0.5, k + 1] *
+                       (g[PN.r, n, k + 0.5] + g.GetSn(PN.r, n))
                        / 2;
             }
             //if (opt == Option.opt3)
@@ -98,19 +98,19 @@ namespace NIRS.Functions_for_numerical_method
         }
         public double Interpolate_M(LimitedDouble N, LimitedDouble K)
         {
-            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K + 1);
+            (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, + 1);
 
             var opt = ChooseACalculationOptionFor_m_M(n, k);
             if (opt == Option.opt1)
             {
-                return g[n + 0.5][k + 1].w * constP.PowderDelta *
-                       ((1-g[n][k + 0.5].m) * bs.S(x[k+0.5]) + (1 - g[n][k + 1.5].m) * bs.S(x[k + 1.5]))
+                return g[PN.w, n + 0.5, k + 1] * constP.PowderDelta *
+                       ((1-g[PN.m, n, k + 0.5]) * bs.S(x[k+0.5]) + (1 - g[PN.m, n, k + 1.5]) * bs.S(x[k + 1.5]))
                        / 2;
             }
             if (opt == Option.opt2)
             {
-                return g[n + 0.5][k + 1].w * constP.PowderDelta *
-                       ((1 - g[n][k + 0.5].m) * bs.S(x[k + 0.5]) + (1 - g[n].sn.m) * bs.S(g[n].sn.x))
+                return g[PN.w, n + 0.5, k + 1] * constP.PowderDelta *
+                       ((1 - g[PN.m, n, k + 0.5]) * bs.S(x[k + 0.5]) + (1 - g.GetSn(PN.m, n)) * bs.S(g.GetSn(PN.x, n)))
                        / 2;
             }
             //if (opt == Option.opt3)
@@ -127,9 +127,9 @@ namespace NIRS.Functions_for_numerical_method
             //if (k + 2 <= g[n + 0.5].sn.x / constP.h)
             //    return Option.opt3;
             //else 
-            if (k + 1.5 <= g[n].sn.x / constP.h)
+            if (k + 1.5 <= g.GetSn(PN.x, n) / constP.h)
                 return Option.opt1;
-            else if (k + 1 <= g[n + 0.5].sn.x / constP.h)
+            else if (k + 1 <= g.GetSn(PN.x, n + 0.5) / constP.h)
                 return Option.opt2;
 
             throw new Exception();

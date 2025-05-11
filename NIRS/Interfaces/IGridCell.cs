@@ -26,6 +26,6 @@ namespace NIRS.Interfaces
 
         double this[PN pn] { get; set; }
 
-        bool isNull(PN pn);
+        //bool isNull(PN pn);
     }
 }

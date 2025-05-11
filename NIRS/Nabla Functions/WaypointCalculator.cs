@@ -13,6 +13,7 @@ using NIRS.Helpers;
 using NIRS.Additional_calculated_values;
 using NIRS.Interfaces;
 using NIRS.Nabla_Functions.Projectile;
+using System.Diagnostics;
 
 namespace NIRS.Nabla_Functions
 {
@@ -23,6 +24,7 @@ namespace NIRS.Nabla_Functions
         private readonly IBarrelSize bs;
 
         private readonly XGetter x;
+
         public WaypointCalculator(IGrid grid, IMainData mainData)
         {
             g = grid;
@@ -37,14 +39,14 @@ namespace NIRS.Nabla_Functions
 
         public double Nabla(PN param1, PN param2, PN param3, LimitedDouble N, LimitedDouble K)
         {
-            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 0.5);
+            (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
 
             return (AverageWithS(param1, param3, n + 0.5, k) - AverageWithS(param1, param3, n + 0.5, k - 1)) / constP.h;
         }
         private double AverageWithS(PN mu, PN v, LimitedDouble n, LimitedDouble k)
         {
             // формула преобразуется в значение на n,k
-            double V = g[n][k][v];
+            double V = g[v, n, k];
 
             if (V >= 0)
                 return V * Get_m(n - 0.5, k - 0.5, mu) * bs.S(x[k - 0.5]);
@@ -54,9 +56,9 @@ namespace NIRS.Nabla_Functions
         private double Get_m(LimitedDouble n, LimitedDouble k, PN mu)
         {
             if (mu == PN.One_minus_m)
-                return 1 - g[n][k][mu];
+                return 1 - g[mu, n, k];
             else
-                return g[n][k][mu];
+                return g[mu, n, k];
 
         }
 
@@ -65,16 +67,23 @@ namespace NIRS.Nabla_Functions
         {
             if (param1.IsDynamic())
             {
-                (var n, var k) = OffseterNK.Appoint(N, K).Offset(N - 0.5, K);
+                (var n, var k) = OffseterNK.AppointAndOffset(N, -0.5, K, 0);
 
                 return (DynamicAverage(param1, v, n - 0.5, k + 0.5, NablaType.plus) - DynamicAverage(param1, v, n - 0.5, k - 0.5, NablaType.minus)) / constP.h;
             }
 
             if (param1.IsMixture())
             {
-                (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 0.5);
-
-                return (MixtureAverage(param1, v, n + 0.5, k, NablaType.plus) - MixtureAverage(param1, v, n + 0.5, k - 1, NablaType.minus)) / constP.h;
+                (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
+                Stopwatch sw = Stopwatch.StartNew();
+                sw.Start();
+                MixtureAverage(param1, v, n + 0.5, k, NablaType.plus);
+                var tmp1 = sw.Elapsed;
+                sw.Restart();
+                MixtureAverage(param1, v, n + 0.5, k - 1, NablaType.minus);
+                var tmp2 = sw.Elapsed;
+                sw.Restart();
+                return (MixtureAverage(param1, v, n + 0.5, k , NablaType.plus) - MixtureAverage(param1, v, n + 0.5, k - 1, NablaType.minus)) / constP.h;
             }
 
             throw new Exception($"неизвестные параметры {param1} и {v} на слое {N} {K}");
@@ -83,47 +92,63 @@ namespace NIRS.Nabla_Functions
         {
             if (type == NablaType.plus)
             {
-                (var n, var k) = OffseterNK.Appoint(N, K).Offset(N - 0.5, K + 0.5);
+                (var n, var k) = OffseterNK.AppointAndOffset(N, - 0.5, K, + 0.5);
 
-                double sum_v = g[n - 0.5][k][v] + g[n - 0.5][k + 1][v];
+                double sum_v = g[v, n - 0.5, k] + g[v, n - 0.5, k + 1];
                 if (sum_v >= 0)
-                    return sum_v / 2 * g[n - 0.5][k][mu];
+                    return sum_v / 2 * g[mu, n - 0.5, k];
                 else
-                    return sum_v / 2 * g[n - 0.5][k + 1][mu];
+                    return sum_v / 2 * g[mu, n - 0.5, k + 1];
             }
             if (type == NablaType.minus)
             {
-                (var n, var k) = OffseterNK.Appoint(N, K).Offset(N - 0.5, K - 0.5);
+                (var n, var k) = OffseterNK.AppointAndOffset(N, - 0.5, K, - 0.5);
 
-                double sum_v = g[n - 0.5][k - 1][v] + g[n - 0.5][k][v];
+                double sum_v = g[v, n - 0.5, k - 1] + g[v, n - 0.5, k];
                 if (sum_v >= 0)
-                    return sum_v / 2 * g[n - 0.5][k - 1][mu];
+                    return sum_v / 2 * g[mu, n - 0.5, k - 1];
                 else
-                    return sum_v / 2 * g[n - 0.5][k][mu];
+                    return sum_v / 2 * g[mu, n - 0.5, k];
             }
             throw new Exception();
         }
         private double MixtureAverage(PN fi, PN V, LimitedDouble N, LimitedDouble K, NablaType type)
-        {
+        {   Stopwatch sw = Stopwatch.StartNew();
+            sw.Start();
             if (type == NablaType.plus)
             {
-                (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K);
+                (var n, var k) = (N - 0.5, K);//OffseterNK.AppointAndOffset(N, + 0.5, K, 0);
+                
+                 var tmp1 = sw.Elapsed;
+                sw.Restart();               
+                
 
-                double v = g[n + 0.5][k][V];
+                double v = g[V, n + 0.5, k];
+
                 if (v >= 0)
-                    return v * g[n][k - 0.5][fi];
+                {
+                    if (v == 0) return 0;
+                    return v * g[fi, n, k - 0.5];
+                }
+                    
                 else
-                    return v * g[n][k + 0.5][fi];
+                    return v * g[fi, n, k + 0.5];                
+
             }
             if (type == NablaType.minus)
             {
-                (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 1);
+                (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 1);
 
-                double v = g[n + 0.5][k - 1][V];
+                double v = g[V, n + 0.5, k - 1];
+                var tmp1 = sw.Elapsed;
+                sw.Restart();
                 if (v >= 0)
-                    return v * g[n][k - 1.5][fi];
+                {
+                    if (v == 0) return 0;
+                    return v * g[fi, n, k - 1.5];
+                } 
                 else
-                    return v * g[n][k - 0.5][fi];
+                    return v * g[fi, n, k - 0.5];
             }
             throw new Exception();
         }
@@ -131,9 +156,9 @@ namespace NIRS.Nabla_Functions
 
         public double Nabla(PN v, LimitedDouble N, LimitedDouble K)
         {
-            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 0.5);
+            (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
 
-            return (g[n + 0.5][k][v] - g[n + 0.5][k - 1][v]) / constP.h;
+            return (g[v, n + 0.5, k] - g[v, n + 0.5, k - 1]) / constP.h;
         }
 
 

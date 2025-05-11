@@ -37,24 +37,25 @@ namespace NIRS.Grid_Folder
             var zero = new LimitedDouble(0);
             for (var k = new LimitedDouble(-1); k <= K; k += 1)
             {
-                grid[minus0Dot5][k].dynamic_m = _boundaryFunctions.GetDynamic_nMinus0Dot5(PN.dynamic_m, k);
-                grid[minus0Dot5][k].M = _boundaryFunctions.GetDynamic_nMinus0Dot5(PN.M, k);
-                grid[minus0Dot5][k].v = _boundaryFunctions.GetDynamic_nMinus0Dot5(PN.v, k);
-                grid[minus0Dot5][k].w = _boundaryFunctions.GetDynamic_nMinus0Dot5(PN.w, k);
+                grid[PN.dynamic_m, minus0Dot5, k] = _boundaryFunctions.GetDynamic_nMinus0Dot5(PN.dynamic_m, k);
+                grid[PN.M, minus0Dot5, k] = _boundaryFunctions.GetDynamic_nMinus0Dot5(PN.M, k);
+                grid[PN.v, minus0Dot5, k] = _boundaryFunctions.GetDynamic_nMinus0Dot5(PN.v, k);
+                grid[PN.w, minus0Dot5, k] = _boundaryFunctions.GetDynamic_nMinus0Dot5(PN.w, k);
             }
             for (var k = new LimitedDouble(0); k <= K; k += 1)
             {
-                grid[zero][k - 0.5].p = _boundaryFunctions.GetMixture_n0(PN.p, k - 0.5);
-                grid[zero][k - 0.5].ro = _boundaryFunctions.GetMixture_n0(PN.ro, k - 0.5);
-                grid[zero][k - 0.5].z = _boundaryFunctions.GetMixture_n0(PN.z, k - 0.5);
-                grid[zero][k - 0.5].psi = _boundaryFunctions.GetMixture_n0(PN.psi, k - 0.5);
-                grid[zero][k - 0.5].m = _boundaryFunctions.GetMixture_n0(PN.m, k - 0.5);
-                grid[zero][k - 0.5].a = _boundaryFunctions.GetMixture_n0(PN.a, k - 0.5);
-                grid[zero][k - 0.5].r = _boundaryFunctions.GetMixture_n0(PN.r, k - 0.5);
-                grid[zero][k - 0.5].e = _boundaryFunctions.GetMixture_n0(PN.e, k - 0.5);
+                grid[PN.p, zero, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.p, k - 0.5);
+                grid[PN.ro, zero, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.ro, k - 0.5);
+                grid[PN.z, zero, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.z, k - 0.5);
+                grid[PN.psi, zero, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.psi, k - 0.5);
+                grid[PN.m, zero, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.m, k - 0.5);
+                grid[PN.a, zero, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.a, k - 0.5);
+                grid[PN.r, zero, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.r, k - 0.5);
+                grid[PN.e, zero, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.e, k - 0.5);
             }
-            grid[zero].sn.x = b.EndChamberPoint.X;
-            grid[minus0Dot5].sn.x = b.EndChamberPoint.X;
+            grid.SetSn(PN.x, zero,      b.EndChamberPoint.X);
+            grid.SetSn(PN.x, minus0Dot5,    b.EndChamberPoint.X);
+            grid.SetSn(PN.vSn, minus0Dot5,    0);
 
             return grid;
         }
@@ -76,38 +77,38 @@ namespace NIRS.Grid_Folder
                 var minus1 = new LimitedDouble(-1);
 
 
-                grid[n][zero].dynamic_m = _boundaryFunctions.GetDynamic_k0(PN.dynamic_m, n);
-                grid[n][zero].M = _boundaryFunctions.GetDynamic_k0(PN.M, n);
-                grid[n][zero].v = _boundaryFunctions.GetDynamic_k0(PN.v, n);
-                grid[n][zero].w = _boundaryFunctions.GetDynamic_k0(PN.w, n);
+                grid[PN.dynamic_m, n, zero] = _boundaryFunctions.GetDynamic_k0(PN.dynamic_m, n);
+                grid[PN.M, n, zero] = _boundaryFunctions.GetDynamic_k0(PN.M, n);
+                grid[PN.v, n, zero] = _boundaryFunctions.GetDynamic_k0(PN.v, n);
+                grid[PN.w, n, zero] = _boundaryFunctions.GetDynamic_k0(PN.w, n);
 
-                grid[n][minus1].dynamic_m = _boundaryFunctions.GetDynamic_k0(PN.dynamic_m, n);
-                grid[n][minus1].M = _boundaryFunctions.GetDynamic_k0(PN.M, n);
-                grid[n][minus1].v = _boundaryFunctions.GetDynamic_k0(PN.v, n);
-                grid[n][minus1].w = _boundaryFunctions.GetDynamic_k0(PN.w, n);
+                grid[PN.dynamic_m, n, minus1] = _boundaryFunctions.GetDynamic_k0(PN.dynamic_m, n);
+                grid[PN.M, n, minus1] = _boundaryFunctions.GetDynamic_k0(PN.M, n);
+                grid[PN.v, n, minus1] = _boundaryFunctions.GetDynamic_k0(PN.v, n);
+                grid[PN.w, n, minus1] = _boundaryFunctions.GetDynamic_k0(PN.w, n);
 
                 if (isBeltIntact)
                 {
                     var K = GetK();
 
-                    grid[n][K].dynamic_m = _boundaryFunctions.GetDynamic_K(PN.dynamic_m, n);
-                    grid[n][K].M = _boundaryFunctions.GetDynamic_K(PN.M, n);
-                    grid[n][K].v = _boundaryFunctions.GetDynamic_K(PN.v, n);
-                    grid[n][K].w = _boundaryFunctions.GetDynamic_K(PN.w, n);
+                    grid[PN.dynamic_m, n, K] = _boundaryFunctions.GetDynamic_K(PN.dynamic_m, n);
+                    grid[PN.M, n, K] = _boundaryFunctions.GetDynamic_K(PN.M, n);
+                    grid[PN.v, n, K] = _boundaryFunctions.GetDynamic_K(PN.v, n);
+                    grid[PN.w, n, K] = _boundaryFunctions.GetDynamic_K(PN.w, n);
                 }
             }
             if (n.IsInt())
             {
                 var minus0dot5 = new LimitedDouble(-0.5);
 
-                grid[n][minus0dot5].p = 0;
-                grid[n][minus0dot5].ro = 0;
-                grid[n][minus0dot5].z = 0;
-                grid[n][minus0dot5].psi = 0;
-                grid[n][minus0dot5].m = 0;
-                grid[n][minus0dot5].a = 0;
-                grid[n][minus0dot5].r = 0;
-                grid[n][minus0dot5].e = 0;
+                grid[PN.p, n, minus0dot5] = 0;
+                grid[PN.ro, n, minus0dot5] = 0;
+                grid[PN.z, n, minus0dot5] = 0;
+                grid[PN.psi, n, minus0dot5] = 0;
+                grid[PN.m, n, minus0dot5] = 0;
+                grid[PN.a, n, minus0dot5] = 0;
+                grid[PN.r, n, minus0dot5] = 0;
+                grid[PN.e, n, minus0dot5] = 0;
             }
 
             return grid;
@@ -119,21 +120,21 @@ namespace NIRS.Grid_Folder
                 var K = GetK();
                 if (n.IsHalfInt())
                 {
-                    grid[n].sn.dynamic_m = grid[n][K].dynamic_m;
-                    grid[n].sn.M = grid[n][K].M;
-                    grid[n].sn.v = 0;
-                    grid[n].sn.w = grid[n][K].w;
+                    grid.SetSn(PN.dynamic_m,n,      grid[PN.dynamic_m, n, K]);
+                    grid.SetSn(PN.M, n,     grid[PN.M, n, K]);
+                    grid.SetSn(PN.v, n,     0);
+                    grid.SetSn(PN.w, n,     grid[PN.w, n, K]);
                 }
                 if (n.IsInt())
                 {
-                    grid[n].sn.p = grid[n][K - 0.5].p;
-                    grid[n].sn.ro = grid[n][K - 0.5].ro;
-                    grid[n].sn.z = grid[n][K - 0.5].z;
-                    grid[n].sn.psi = grid[n][K - 0.5].psi;
-                    grid[n].sn.a = grid[n][K - 0.5].a;
-                    grid[n].sn.m = grid[n][K - 0.5].m;
-                    grid[n].sn.e = grid[n][K - 0.5].e;
-                    grid[n].sn.r = grid[n].sn.ro * grid[n].sn.m * bs.S(x[K - 0.5]);
+                    grid.SetSn(PN.p, n,    grid[PN.p, n, K - 0.5]);
+                    grid.SetSn(PN.ro, n,    grid[PN.ro, n, K - 0.5]);
+                    grid.SetSn(PN.z, n,     grid[PN.z, n, K - 0.5]);
+                    grid.SetSn(PN.psi, n,   grid[PN.psi, n, K - 0.5]);
+                    grid.SetSn(PN.a, n,     grid[PN.a, n, K - 0.5]);
+                    grid.SetSn(PN.m, n,     grid[PN.m, n, K - 0.5]);
+                    grid.SetSn(PN.e, n,     grid[PN.e, n, K - 0.5]);
+                    grid.SetSn(PN.r, n,     grid.GetSn(PN.ro, n) * grid.GetSn(PN.m, n) * bs.S(x[K - 0.5]));
                 }
             }
             return grid;
@@ -142,7 +143,7 @@ namespace NIRS.Grid_Folder
         {
             if (isBeltIntact)
             {
-                grid[n].sn.x = b.EndChamberPoint.X;
+                grid.SetSn(PN.x, n,     b.EndChamberPoint.X);
             }
             return grid;
         }
@@ -150,7 +151,7 @@ namespace NIRS.Grid_Folder
         {
             if (isBeltIntact && n.IsInt())
             {
-                var K = GetK()-0.5;
+                var K = GetK()-1.5;
                 var KMinus1 = K - 1;
                 var KPlus1 = K + 1;
                 var tmp = k[b.EndChamberPoint.X];
@@ -159,10 +160,10 @@ namespace NIRS.Grid_Folder
                     var parameters = new List<PN> { PN.r, PN.z, PN.a, PN.m, PN.ro, PN.e, PN.p, PN.psi };
                     foreach (var pn in parameters)
                     {
-                        var p1 = new Point2D(KMinus1.Value, grid[n][KMinus1][pn]);
-                        var p2 = new Point2D(K.Value, grid[n][K][pn]);
+                        var p1 = new Point2D(KMinus1.Value, grid[pn, n, KMinus1]);
+                        var p2 = new Point2D(K.Value, grid[pn, n, K]);
                         EquationOfLineFromTwoPoints equation = new EquationOfLineFromTwoPoints(p1, p2);
-                        grid[n][KPlus1][pn] = equation.GetY(KPlus1.Value);
+                        grid[pn, n, KPlus1] = equation.GetY(KPlus1.Value);
                     }
                 }                   
             }

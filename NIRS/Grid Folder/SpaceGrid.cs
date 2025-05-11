@@ -77,10 +77,9 @@ namespace NIRS.Grid_Folder
         public LimitedDouble LastIndex(PN pn)
         {
             var kLast = LastIndex();
-            IGrid g = new TimeSpaceGrid();
 
-            while (this[kLast].isNull(pn))
-                kLast -= 1;
+            //while (this[kLast].isNull(pn))
+            //    kLast -= 1;
 
             return kLast;
         }
@@ -155,22 +154,23 @@ namespace NIRS.Grid_Folder
         public SpaceCellProjectile sn { get; set; } = new SpaceCellProjectile();
 
 
-        public LimitedDouble MinK
-        {
-            get
-            {
-                if (gridCellsMinus.Count > 0) return gridCellsMinus[gridCellsMinus.Count - 1].k;
-                else return gridCellsPlus[0].k;
-            }
-        }
-        public LimitedDouble MaxK(PN pn)
-        {
-            if (gridCellsPlus.Count > 0) return gridCellsPlus[gridCellsPlus.Count - 1].k;
-            else
-            {
-                if (gridCellsMinus[0].isNull(pn) == false) return gridCellsMinus[0].k;
-                else return gridCellsMinus[1].k;
-            }
-        }
+        //public LimitedDouble MinK
+        //{
+        //    get
+        //    {
+        //        if (gridCellsMinus.Count > 0) return gridCellsMinus[gridCellsMinus.Count - 1].k;
+        //        else return gridCellsPlus[0].k;
+        //    }
+        //}
+        //public LimitedDouble MaxK(PN pn)
+        //{
+        //    if (gridCellsPlus.Count > 0) return gridCellsPlus[gridCellsPlus.Count - 1].k;
+        //    else
+        //    {
+        //        //if (gridCellsMinus[0].isNull(pn) == false) return gridCellsMinus[0].k;
+        //        //else return gridCellsMinus[1].k;
+        //        return gridCellsMinus[0].k;
+        //    }
+        //}
     }
 }

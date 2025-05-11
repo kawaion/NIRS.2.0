@@ -10,6 +10,7 @@ using NIRS.Grid_Folder;
 using NIRS.Data_Parameters.Input_Data_Parameters;
 using NIRS.Helpers;
 using NIRS.Interfaces;
+using NIRS.Parameter_names;
 
 namespace NIRS.H_Functions
 {
@@ -41,50 +42,50 @@ namespace NIRS.H_Functions
 
         public double H1(LimitedDouble n, LimitedDouble k)
         {
-            return -bs.S(x[k]) * tauW(n, k) + bs.S(x[k]) * G(n, k) * g[n - 0.5][k].w;
+            return -bs.S(x[k]) * tauW(n, k) + bs.S(x[k]) * G(n, k) * g[PN.w, n - 0.5, k];
         }
 
         public double H2(LimitedDouble n, LimitedDouble k)
         {
-            return bs.S(x[k]) * tauW(n, k) - bs.S(x[k]) * G(n, k) * g[n - 0.5][k].w;
+            return bs.S(x[k]) * tauW(n, k) - bs.S(x[k]) * G(n, k) * g[PN.w, n - 0.5, k];
         }
 
         public double H3(LimitedDouble N, LimitedDouble K)
         {
-            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 0.5);
+            (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
             return bs.S(x[k - 0.5]) * G(n, k);
         }
 
         public double H4(LimitedDouble N, LimitedDouble K)
         {
-            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 0.5);
-            double diff_v_w = g[n + 0.5][k].v - g[n + 0.5][k].w;
+            (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
+            double diff_v_w = g[PN.v, n + 0.5, k] - g[PN.w, n + 0.5, k];
             return bs.S(x[k - 0.5]) * G(n, k) * (constP.Q + Math.Pow(diff_v_w, 2) / 2) 
                     + bs.S(x[k - 0.5]) * tauW(n + 1, k) * diff_v_w;
         }
 
         public double H5(LimitedDouble N, LimitedDouble K)
         {
-            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 0.5);
-            return bps.Uk(g[n][k - 0.5].p) / constP.e1;
+            (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
+            return bps.Uk(g[PN.p, n, k - 0.5]) / constP.e1;
         }
 
         public double HPsi(LimitedDouble N, LimitedDouble K)
         {
-            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 0.5);
-            return powder.S0 / powder.LAMDA0 * bps.Sigma(g[n][k - 0.5].z, g[n][k - 0.5].psi) * bps.Uk(g[n][k - 0.5].p);
+            (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
+            return powder.S0 / powder.LAMDA0 * bps.Sigma(g[PN.z, n, k - 0.5], g[PN.psi, n, k - 0.5]) * bps.Uk(g[PN.p, n, k - 0.5]);
         }
 
 
         private double tauW(LimitedDouble n, LimitedDouble k)
         {
-            double diff_v_w = g[n - 0.5][k].v - g[n - 0.5][k].w;
-            return constP.lamda0 * (g[n][k - 0.5].ro * diff_v_w * Math.Abs(diff_v_w)) / 2
-                   * g[n][k - 0.5].a * (powder.S0 * bps.Sigma(g[n][k - 0.5].z, g[n][k - 0.5].psi)) / 4;
+            double diff_v_w = g[PN.v, n - 0.5, k] - g[PN.w, n - 0.5, k];
+            return constP.lamda0 * (g[PN.ro, n, k - 0.5] * diff_v_w * Math.Abs(diff_v_w)) / 2
+                   * g[PN.a, n, k - 0.5] * (powder.S0 * bps.Sigma(g[PN.z, n, k - 0.5], g[PN.psi, n, k - 0.5])) / 4;
         }
         private double G(LimitedDouble n, LimitedDouble k)
         {
-            return g[n][k - 0.5].a * powder.S0 * bps.Sigma(g[n][k - 0.5].z, g[n][k - 0.5].psi) * constP.PowderDelta * bps.Uk(g[n][k - 0.5].p);
+            return g[PN.a, n, k - 0.5] * powder.S0 * bps.Sigma(g[PN.z, n, k - 0.5], g[PN.psi, n, k - 0.5]) * constP.PowderDelta * bps.Uk(g[PN.p, n, k - 0.5]);
         }
 
         public void Update(IGrid grid)

@@ -13,12 +13,12 @@ namespace NIRS.Additional_calculated_values
     {
         public static double q(IGrid g, IWaypointCalculator wc, IConstParameters constP, LimitedDouble N, LimitedDouble K)
         {
-            (var n, var k) = OffseterNK.Appoint(N, K).Offset(N + 0.5, K - 0.5);
+            (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
 
             double NablaV = wc.Nabla(PN.v, n + 0.5, k - 0.5);
             if (NablaV < 0)
             {
-                return Math.Pow(constP.mu0, 2) * Math.Pow(constP.h, 2) * g[n + 1][k - 0.5].ro * Math.Pow(NablaV, 2);
+                return Math.Pow(constP.mu0, 2) * Math.Pow(constP.h, 2) * g[PN.ro, n + 1, k - 0.5] * Math.Pow(NablaV, 2);
             }
             else
                 return 0;

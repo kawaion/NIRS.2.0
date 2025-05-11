@@ -11,7 +11,7 @@ namespace NIRS.Parameter_names
     /// </summary>
     public enum PN
     {
-        dynamic_m,
+        dynamic_m = 0,
         M,
         v,
         w,
@@ -21,11 +21,12 @@ namespace NIRS.Parameter_names
         psi,
         z,
         a,
-        m,
         p,
         ro,
-        S,
+        m,
+        x,
+        vSn,
         One_minus_m,
-        x
+        S,
     }
 }

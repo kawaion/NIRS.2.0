@@ -4,6 +4,7 @@ using NIRS.Grid_Folder;
 using NIRS.Interfaces;
 using NIRS.Parameter_names;
 using NIRS.Parameter_Type;
+using System.Diagnostics;
 using System.Windows.Forms.VisualStyles;
 
 namespace NIRS.Numerical_solution
@@ -29,24 +30,53 @@ namespace NIRS.Numerical_solution
 
         private IGrid GetDynamicParametersOfNextLayer(IGrid grid, LimitedDouble n, LimitedDouble k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
         {
-            grid[n][k].dynamic_m = functionsNewLayer.Get(PN.dynamic_m, n, k);
-            grid[n][k].v = functionsNewLayer.Get(PN.v, n, k);
-            grid[n][k].M = functionsNewLayer.Get(PN.M, n, k);
-            grid[n][k].w = functionsNewLayer.Get(PN.w, n, k);
-
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            grid[PN.dynamic_m, n, k] = functionsNewLayer.Get_dynamic_m(n, k);
+            var tmp1 = stopwatch.Elapsed;
+            stopwatch.Restart();
+            grid[PN.v, n, k] = functionsNewLayer.Get_v(n, k);
+            var tmp2 = stopwatch.Elapsed;
+            stopwatch.Restart();
+            grid[PN.M, n, k] = functionsNewLayer.Get_M(n, k);
+            var tmp3 = stopwatch.Elapsed;
+            stopwatch.Restart();
+            grid[PN.w, n, k] = functionsNewLayer.Get_w(n, k);
+            var tmp4 = stopwatch.Elapsed;
+            stopwatch.Restart();
+            stopwatch.Reset();
             return grid;
         }
         private IGrid GetMixtureParametersOfNextLayer(IGrid grid, LimitedDouble n, LimitedDouble k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
         {
-            grid[n][k].r = functionsNewLayer.Get(PN.r, n, k);
-            grid[n][k].a = functionsNewLayer.Get(PN.a, n, k); 
-            grid[n][k].psi = functionsNewLayer.Get(PN.psi, n, k);
-            grid[n][k].z = functionsNewLayer.Get(PN.z, n, k);
-            grid[n][k].m = functionsNewLayer.Get(PN.m, n, k); // нужен a и psi
-            grid[n][k].ro = functionsNewLayer.Get(PN.ro, n, k); // может не занимать место в памяти, нужен r и m
-            grid[n][k].e = functionsNewLayer.Get(PN.e, n, k);// нужен z и psi
-            grid[n][k].p = functionsNewLayer.Get(PN.p, n, k);
-
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            
+            grid[PN.r, n, k] = functionsNewLayer.Get_r(n, k);
+            var tmp1 = stopwatch.Elapsed;
+            stopwatch.Restart();
+            grid[PN.a, n, k] = functionsNewLayer.Get_a(n, k);
+            var tmp2 = stopwatch.Elapsed;
+            stopwatch.Restart();
+            grid[PN.psi, n, k] = functionsNewLayer.Get_psi(n, k);
+            var tmp3 = stopwatch.Elapsed;
+            stopwatch.Restart();
+            grid[PN.z, n, k] = functionsNewLayer.Get_z(n, k);
+            var tmp4 = stopwatch.Elapsed;
+            stopwatch.Restart();
+            grid[PN.m, n, k] = functionsNewLayer.Get_m(n, k); // нужен a и psi
+            var tmp5 = stopwatch.Elapsed;
+            stopwatch.Restart();
+            grid[PN.ro, n, k] = functionsNewLayer.Get_ro(n, k); // может не занимать место в памяти, нужен r и m
+            var tmp6 = stopwatch.Elapsed;
+            stopwatch.Restart();
+            grid[PN.e, n, k] = functionsNewLayer.Get_e(n, k);// нужен z и psi
+            var tmp7 = stopwatch.Elapsed;
+            stopwatch.Restart();
+            grid[PN.p, n, k] = functionsNewLayer.Get_p(n, k);
+            var tmp8 = stopwatch.Elapsed;
+            stopwatch.Restart();
+            stopwatch.Reset();
             return grid;
         }
     }
