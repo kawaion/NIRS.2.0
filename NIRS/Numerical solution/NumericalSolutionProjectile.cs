@@ -1,6 +1,7 @@
 ﻿using MyDouble;
 using NIRS.Functions_for_numerical_method;
 using NIRS.Grid_Folder;
+using NIRS.Helpers;
 using NIRS.Interfaces;
 using NIRS.Parameter_names;
 using System;
@@ -20,21 +21,24 @@ namespace NIRS.Numerical_solution
             _functions = projectileFunctions;
         }
 
-        public IGrid Get(IGrid grid, LimitedDouble n, bool isBeltIntact)
+        public IGrid Get(IGrid grid, double n, bool isBeltIntact)
         {
-            if (n.Type == DoubleType.HalfInt)
+            if (n.IsHalfInt())
                 grid = GetDynamicParametersOfNextLayer(grid, n,  _functions, isBeltIntact);
 
-            else if (n.Type == DoubleType.Int)
+            grid.SetSn(PN.x, n,     _functions.Get(PN.x, n));
+
+            if (n.IsInt())
                 grid = GetMixtureParametersOfNextLayer(grid, n,  _functions, isBeltIntact);
+                
             
-            grid.SetSn(PN.x, n,     _functions.Get(PN.x, n)); 
+             
 
             return grid;
         }
 
 
-        private IGrid GetDynamicParametersOfNextLayer(IGrid grid, LimitedDouble n, IProjectileFunctions functions, bool isBeltIntact)
+        private IGrid GetDynamicParametersOfNextLayer(IGrid grid, double n, IProjectileFunctions functions, bool isBeltIntact)
         {
             if (isBeltIntact)
                 grid.SetSn(PN.vSn, n,   0);
@@ -46,7 +50,7 @@ namespace NIRS.Numerical_solution
 
             return grid;
         }
-        private IGrid GetMixtureParametersOfNextLayer(IGrid grid, LimitedDouble n, IProjectileFunctions functions, bool isBeltIntact)
+        private IGrid GetMixtureParametersOfNextLayer(IGrid grid, double n, IProjectileFunctions functions, bool isBeltIntact)
         {
             if (!isBeltIntact)
             {
@@ -55,8 +59,9 @@ namespace NIRS.Numerical_solution
                 grid.SetSn(PN.psi, n,   functions.Get(PN.psi, n));
                 grid.SetSn(PN.z, n,     functions.Get(PN.z, n));
                 grid.SetSn(PN.a, n,     functions.Get(PN.a, n));
-                grid.SetSn(PN.p, n,     functions.Get(PN.p, n));
                 grid.SetSn(PN.m, n,     functions.Get(PN.m, n));
+                grid.SetSn(PN.p, n,     functions.Get(PN.p, n));
+                grid.SetSn(PN.ro, n,    functions.Get(PN.ro, n));
             }
 
             return grid;

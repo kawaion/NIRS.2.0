@@ -34,7 +34,7 @@ namespace NIRS.Functions_for_numerical_method
         }
 
 
-        public double InterpolateMixture(PN pn, LimitedDouble n, LimitedDouble k)
+        public double InterpolateMixture(PN pn, double n, double k)
         {
             var kLast = g.LastIndex(pn, n);
 
@@ -44,7 +44,7 @@ namespace NIRS.Functions_for_numerical_method
         }   
         
 
-        public double InterpolateDynamic(PN pn, LimitedDouble n, LimitedDouble k)
+        public double InterpolateDynamic(PN pn, double n, double k)
         {
             switch (pn)
             {
@@ -55,7 +55,7 @@ namespace NIRS.Functions_for_numerical_method
             }
             throw new Exception();
         }      
-        public double Interpolate_v(LimitedDouble N, LimitedDouble K)
+        public double Interpolate_v(double N, double K)
         {
             (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, + 1);
 
@@ -63,7 +63,7 @@ namespace NIRS.Functions_for_numerical_method
                    + d.dvdx(n + 0.5)
                    * step.Get(n + 0.5, k + 1, PN.v) * constP.h;
         }
-        public double Interpolate_w(LimitedDouble N, LimitedDouble K)
+        public double Interpolate_w(double N, double K)
         {
             (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, + 1);
 
@@ -71,7 +71,7 @@ namespace NIRS.Functions_for_numerical_method
                    + d.dwdx(n + 0.5)
                    * step.Get(n + 0.5, k + 1, PN.w) * constP.h;
         }
-        public double Interpolate_dynamic_m(LimitedDouble N, LimitedDouble K)
+        public double Interpolate_dynamic_m(double N, double K)
         {
             (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, + 1);
 
@@ -96,7 +96,7 @@ namespace NIRS.Functions_for_numerical_method
             //}
             throw new Exception();
         }
-        public double Interpolate_M(LimitedDouble N, LimitedDouble K)
+        public double Interpolate_M(double N, double K)
         {
             (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, + 1);
 
@@ -122,7 +122,7 @@ namespace NIRS.Functions_for_numerical_method
             throw new Exception();
         }        
 
-        private Option ChooseACalculationOptionFor_m_M(LimitedDouble n, LimitedDouble k)
+        private Option ChooseACalculationOptionFor_m_M(double n, double k)
         {
             //if (k + 2 <= g[n + 0.5].sn.x / constP.h)
             //    return Option.opt3;

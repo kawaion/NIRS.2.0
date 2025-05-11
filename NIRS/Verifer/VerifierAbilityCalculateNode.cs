@@ -19,7 +19,7 @@ namespace NIRS.Verifer
             g = grid;
             _k = new KGetter(mainData.ConstParameters);
         }
-        public bool Check(LimitedDouble n, LimitedDouble k)
+        public bool Check(double n, double k)
         {
             return k+1 <= _k[g.GetSn(PN.x, n - 1)];
         }

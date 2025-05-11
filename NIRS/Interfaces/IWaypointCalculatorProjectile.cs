@@ -10,6 +10,6 @@ namespace NIRS.Nabla_Functions.Projectile
 {
     public interface IWaypointCalculatorProjectile
     {
-        double Nabla(PN param1, PN param2, PN param3, LimitedDouble n);
+        double Nabla(PN param1, PN param2, PN param3, double n);
     }
 }

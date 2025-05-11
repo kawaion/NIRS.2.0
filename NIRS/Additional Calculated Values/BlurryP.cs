@@ -15,7 +15,7 @@ namespace NIRS.Additional_calculated_values
 {
     public static class BlurryP
     {
-        public static double PStroke(this IGrid g,IWaypointCalculator waypointCalculator,IConstParameters constP, LimitedDouble N, LimitedDouble K)
+        public static double PStroke(this IGrid g,IWaypointCalculator waypointCalculator,IConstParameters constP, double N, double K)
         {
             (var n, var k) = OffseterNK.AppointAndOffset(N, 0, K, + 0.5);
 

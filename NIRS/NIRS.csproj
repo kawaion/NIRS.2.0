@@ -67,6 +67,7 @@
     <Compile Include="Grid Folder\SpaceCellWithK.cs" />
     <Compile Include="H Functions\HFunctionsProjectile.cs" />
     <Compile Include="Helpers\Differencial.cs" />
+    <Compile Include="Helpers\DoubleTypeIssuer.cs" />
     <Compile Include="Helpers\InterpolateStep.cs" />
     <Compile Include="Interfaces\IBarrel.cs" />
     <Compile Include="Interfaces\IBarrelSize.cs" />

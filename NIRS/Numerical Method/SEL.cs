@@ -16,6 +16,7 @@ using System.Threading;
 using System.Net.Http.Headers;
 using System.Diagnostics;
 using NIRS.Parameter_names;
+using NIRS.Helpers;
 
 namespace NIRS.Numerical_Method
 {
@@ -55,49 +56,35 @@ namespace NIRS.Numerical_Method
         }
         private IGrid GetNumericalSolution(IGrid grid, IGridBorderFiller gridBorderFiller)
         {
-            LimitedDouble n = new LimitedDouble(0);
-            Stopwatch stopwatch = new Stopwatch();
+            double n = 0;
             while (!IsEndConditionNumericalSolution(grid,n))
             {
                 n += 0.5;
-                stopwatch.Start();
+
 
                 grid = gridBorderFiller.FillBarrelBorders(grid, n, isBeltIntact);
-                var tmp1 = stopwatch.Elapsed;
-                stopwatch.Restart();
                 //grid = gridBorderFiller.FillCoordinateProjectileAtFixedBorder(grid, n, isBeltIntact);
                 grid = GetNumericalSolutionAtNodesN(grid, n);
-                var tmp2 = stopwatch.Elapsed;
-                stopwatch.Restart();
                 grid = gridBorderFiller.FillLastNodeOfMixture(grid, n, isBeltIntact);
-                var tmp3 = stopwatch.Elapsed;
-                stopwatch.Restart();
                 grid = gridBorderFiller.FillProjectileAtFixedBorder(grid, n, isBeltIntact);
-                var tmp4 = stopwatch.Elapsed;
-                stopwatch.Restart();
                 grid = GetNumericalSolutionInProjectile(grid, n);
-                var tmp5 = stopwatch.Elapsed;
-                stopwatch.Restart();
                 grid = GetInterpolateSolutionAtInaccessibleNodes(grid, n);
-                var tmp6 = stopwatch.Elapsed;
-                stopwatch.Restart();
-                stopwatch.Reset();
             }
             return grid;
         }
-        bool IsEndConditionNumericalSolution(IGrid grid, LimitedDouble n)
+        bool IsEndConditionNumericalSolution(IGrid grid, double n)
         {
             var x = grid.GetSn(PN.x, n);
             var lengthBarrel = _mainData.Barrel.Length;
             return x >= lengthBarrel;
         }
-        private IGrid GetNumericalSolutionAtNodesN(IGrid grid, LimitedDouble n)
+        private IGrid GetNumericalSolutionAtNodesN(IGrid grid, double n)
         {
-            LimitedDouble k;
+            double k;
             if (n.IsInt())
-                k = new LimitedDouble(-0.5);
+                k = -0.5;
             else
-                k = new LimitedDouble(0);
+                k = 0;
 
                 bool isEnd = false;
             while (!isEnd)
@@ -112,14 +99,10 @@ namespace NIRS.Numerical_Method
         INumericalSolutionInterpolation numericalSolutionInterpolation;
 
         VerifierAbilityCalculateNode verifier;
-        private (IGrid grid,bool isEnd)  GetNumericalSolutionAtNodeNK(IGrid grid, LimitedDouble n, LimitedDouble k)
+        private (IGrid grid,bool isEnd)  GetNumericalSolutionAtNodeNK(IGrid grid, double n, double k)
         {
-            Stopwatch stopwatch = new Stopwatch();
             bool isEnd = false;
-            stopwatch.Start();
             bool isPossible=verifier.Check(n, k);
-            var tmp = stopwatch.Elapsed;
-            stopwatch.Reset();
 
             if(isPossible)
             {
@@ -132,9 +115,9 @@ namespace NIRS.Numerical_Method
             
             return (grid,isEnd);
         }
-        private IGrid GetNumericalSolutionInProjectile(IGrid grid, LimitedDouble n)
+        private IGrid GetNumericalSolutionInProjectile(IGrid grid, double n)
         {
-            if(isBeltIntact == true && n.Type == DoubleType.Int)
+            if(isBeltIntact == true && n.IsInt())
                 if (grid.GetSn(PN.p, n) > FORCING_PRESSURE)
                     isBeltIntact = false;
 
@@ -143,7 +126,7 @@ namespace NIRS.Numerical_Method
             return grid;
         }
 
-        private IGrid GetInterpolateSolutionAtInaccessibleNodes(IGrid grid, LimitedDouble n)
+        private IGrid GetInterpolateSolutionAtInaccessibleNodes(IGrid grid, double n)
         {
             grid = numericalSolutionInterpolation.Get(grid, n);
 
@@ -158,7 +141,7 @@ namespace NIRS.Numerical_Method
             var parameterInterpolationFunctions = functionsBuilder.ParameterInterpolationFunctionsUpdate(grid);
 
             numericalSolutionInNodes = new NumericalSolutionInNodes(functionsNewLayer);
-            numericalSolutionProjectile = new NumericalSolutionProjectile(projectileFunctions); ;
+            numericalSolutionProjectile = new NumericalSolutionProjectile(projectileFunctions);
             numericalSolutionInterpolation = new NumericalSolutionInterpolation(parameterInterpolationFunctions, _mainData);
 
             verifier = new VerifierAbilityCalculateNode(grid, _mainData);

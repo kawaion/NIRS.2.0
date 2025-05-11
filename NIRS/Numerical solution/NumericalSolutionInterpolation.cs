@@ -20,10 +20,10 @@ namespace NIRS.Numerical_solution
             _functions = parameterInterpolationFunctions;
             x = new XGetter(mainData.ConstParameters);
         }
-        public IGrid Get(IGrid g, LimitedDouble n)
+        public IGrid Get(IGrid g, double n)
         {
             List<PN> parameters;
-            if (n.Type == DoubleType.Int)
+            if (n.IsInt())
             {
                 parameters = new List<PN> { PN.r, PN.z, PN.a, PN.m, PN.ro, PN.e, PN.p };
 
@@ -37,7 +37,7 @@ namespace NIRS.Numerical_solution
                 }
             }
 
-            if (n.Type == DoubleType.HalfInt)
+            if (n.IsHalfInt())
             {
                 parameters = new List<PN>() { PN.v, PN.w, PN.dynamic_m, PN.M };
 
@@ -55,7 +55,7 @@ namespace NIRS.Numerical_solution
 
         }
 
-        private bool isExistNonCalculatedNodes(IGrid g, LimitedDouble n, PN pn)
+        private bool isExistNonCalculatedNodes(IGrid g, double n, PN pn)
         {
             var kLast = g.LastIndex(pn, n);
             var xEmptyNode = x[kLast+1];

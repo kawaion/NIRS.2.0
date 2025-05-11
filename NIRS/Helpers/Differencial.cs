@@ -19,20 +19,20 @@ namespace NIRS.Helpers
             g = grid;
             x = new XGetter(constParameters);
         }
-        public double dvdx(LimitedDouble n)
+        public double dvdx(double n)
         {
             var kLast = g.LastIndex(PN.v, n);
             return (g.GetSn(PN.vSn, n) - g[PN.v, n, kLast]) /
                    (g.GetSn(PN.x, n) - x[kLast]);
         }
-        public double dwdx(LimitedDouble n)
+        public double dwdx(double n)
         {
-            var kLast = g.LastIndex(PN.v, n);
+            var kLast = g.LastIndex(PN.w, n);
             return (g.GetSn(PN.vSn, n) - g[PN.w, n, kLast]) /
                    (g.GetSn(PN.x, n) - x[kLast]);
         }
 
-        public double dPNdx(LimitedDouble n, PN pn)
+        public double dPNdx(double n, PN pn)
         {
             var kLast = g.LastIndex(pn, n);
             return (g.GetSn(pn, n) - g[pn, n, kLast]) /

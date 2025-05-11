@@ -22,7 +22,7 @@ namespace NIRS.Nabla_Functions.Projectile
         private NablaFunctionType _type;
         private readonly IWaypointCalculatorProjectile _nabla;
 
-        public double Cell(LimitedDouble n)
+        public double Cell(double n)
         {
             switch (_type)
             {

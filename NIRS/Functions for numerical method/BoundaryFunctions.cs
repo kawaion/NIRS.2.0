@@ -26,7 +26,7 @@ namespace NIRS.Functions_for_numerical_method
             x = new XGetter(mainData.ConstParameters);
         }
 
-        public double GetDynamic_k0(PN pn, LimitedDouble n)
+        public double GetDynamic_k0(PN pn, double n)
         {
             switch (pn)
             {
@@ -37,7 +37,7 @@ namespace NIRS.Functions_for_numerical_method
             }
             throw new Exception();
         }
-        public double GetDynamic_nMinus0Dot5(PN pn, LimitedDouble n)
+        public double GetDynamic_nMinus0Dot5(PN pn, double n)
         {
             switch (pn)
             {
@@ -48,7 +48,7 @@ namespace NIRS.Functions_for_numerical_method
             }
             throw new Exception();
         }
-        public double GetDynamic_K(PN pn, LimitedDouble n)
+        public double GetDynamic_K(PN pn, double n)
         {
             switch (pn)
             {
@@ -59,7 +59,7 @@ namespace NIRS.Functions_for_numerical_method
             }
             throw new Exception();
         }
-        public double GetMixture_n0(PN pn, LimitedDouble k)
+        public double GetMixture_n0(PN pn, double k)
         {
             switch (pn)
             {
@@ -75,98 +75,98 @@ namespace NIRS.Functions_for_numerical_method
             throw new Exception();
         }
 
-        public double Get_dynamic_m0(LimitedDouble n)
+        public double Get_dynamic_m0(double n)
         {
             return 0;
         }
-        public double Get_M0(LimitedDouble n)
+        public double Get_M0(double n)
         {
             return 0;
         }
-        public double Get_v0(LimitedDouble n)
+        public double Get_v0(double n)
         {
             return 0;
         }
-        public double Get_w0(LimitedDouble n)
-        {
-            return 0;
-        }
-
-        public double Get_dynamic_mMinus0Dot5(LimitedDouble k)
-        {
-            return 0;
-        }
-        public double Get_MMinus0Dot5(LimitedDouble k)
-        {
-            return 0;
-        }
-        public double Get_vMinus0Dot5(LimitedDouble k)
-        {
-            return 0;
-        }
-        public double Get_wMinus0Dot5(LimitedDouble k)
+        public double Get_w0(double n)
         {
             return 0;
         }
 
-        public double Get_dynamic_mK(LimitedDouble n)
+        public double Get_dynamic_mMinus0Dot5(double k)
         {
             return 0;
         }
-        public double Get_MK(LimitedDouble n)
+        public double Get_MMinus0Dot5(double k)
         {
             return 0;
         }
-        public double Get_vK(LimitedDouble n)
+        public double Get_vMinus0Dot5(double k)
         {
             return 0;
         }
-        public double Get_wK(LimitedDouble n)
+        public double Get_wMinus0Dot5(double k)
         {
             return 0;
         }
 
-        public double Get_p0(LimitedDouble k)
+        public double Get_dynamic_mK(double n)
+        {
+            return 0;
+        }
+        public double Get_MK(double n)
+        {
+            return 0;
+        }   
+        public double Get_vK(double n)
+        {
+            return 0;
+        }
+        public double Get_wK(double n)
+        {
+            return 0;
+        }
+
+        public double Get_p0(double k)
         {
             return (0.3 * constP.omegaV * constP.f) /
                    (bs.Wkm - powder.Omega / powder.Delta - constP.alpha * constP.omegaV);
         }
         private double pV()
         {
-            return Get_p0(new LimitedDouble(0));
+            return Get_p0(0);
         }
-        public double Get_ro0(LimitedDouble k)
+        public double Get_ro0(double k)
         {
             return pV() /
                    (constP.alpha * pV() + constP.f);
         }
-        public double Get_eps0(LimitedDouble k)
+        public double Get_eps0(double k)
         {
             return constP.f /
                    constP.teta;
         }
-        public double Get_z0(LimitedDouble k)
+        public double Get_z0(double k)
         {
             return 0;
         }
-        public double Get_psi0(LimitedDouble k)
+        public double Get_psi0(double k)
         {
             return 0;
         }
-        public double Get_m0(LimitedDouble k)
+        public double Get_m0(double k)
         {
             return 1 - powder.DELTA / powder.Delta;
         }
-        public double Get_a0(LimitedDouble k)
+        public double Get_a0(double k)
         {
             return powder.Omega/
                   (powder.LAMDA0 * powder.Delta * bs.Wkm);
         }
-        public double Get_r0(LimitedDouble k)
+        public double Get_r0(double k)
         {
             return Get_ro0(k) * Get_m0(k) * bs.S(x[k]);
         }
-        public double Get_e0(LimitedDouble k)
+        public double Get_e0(double k)
         {
             return Get_ro0(k) * Get_m0(k) * bs.S(x[k]) * Get_eps0(k);
         }

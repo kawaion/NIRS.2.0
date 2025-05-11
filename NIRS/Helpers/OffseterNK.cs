@@ -39,6 +39,21 @@ namespace NIRS.Helpers
                 newK = k - offsetK;
             return (newN, newK);
         }
+        public static (double n, double k) AppointAndOffset(double n, double offsetN, double k, double offsetK)
+        {
+            double newN;
+            double newK;
+            if (offsetN == 0)
+                newN = n;
+            else
+                newN = n - offsetN;
+
+            if (offsetK == 0)
+                newK = k;
+            else
+                newK = k - offsetK;
+            return (newN, newK);
+        }
     }
     class OffsetNodeNK<T>
     {
@@ -67,6 +82,15 @@ namespace NIRS.Helpers
         public static LimitedDouble AppointAndOffset(LimitedDouble n, double offsetN)
         {
             LimitedDouble newN;
+            if (offsetN == 0)
+                newN = n;
+            else
+                newN = n - offsetN;
+            return newN;
+        }
+        public static double AppointAndOffset(double n, double offsetN)
+        {
+            double newN;
             if (offsetN == 0)
                 newN = n;
             else

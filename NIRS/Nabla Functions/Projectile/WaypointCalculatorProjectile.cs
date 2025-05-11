@@ -29,21 +29,21 @@ namespace NIRS.Nabla_Functions.Projectile
 
             x = new XGetter(mainData.ConstParameters);
         }
-        public double Nabla(PN param1, PN param2, PN param3, LimitedDouble N)
+        public double Nabla(PN param1, PN param2, PN param3, double N)
         {
             var n = OffseterN.AppointAndOffset(N, + 0.5);
 
-            return (AverageProjectile(param1, param2, param3, n + 0.5) - AverageK(param1, param2, param3, n + 0.5)) 
+            return (AverageProjectile(param1, param2, PN.vSn, n + 0.5) - AverageK(param1, param2, param3, n + 0.5)) 
                    / constP.h;
         }
-        private double AverageProjectile(PN mu, PN S, PN v, LimitedDouble N)
+        private double AverageProjectile(PN mu, PN S, PN v, double N)
         {
             var n = OffseterN.AppointAndOffset(N, + 0.5);
 
             return g.GetSn(v, n + 0.5) * g.GetSn(mu, n) * bs.S(g.GetSn(PN.x, n));
         }
 
-        private double AverageK(PN mu, PN S, PN v, LimitedDouble N)
+        private double AverageK(PN mu, PN S, PN v, double N)
         {
             var n = OffseterN.AppointAndOffset(N, + 0.5);
 

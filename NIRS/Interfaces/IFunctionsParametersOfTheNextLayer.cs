@@ -5,20 +5,20 @@ namespace NIRS.Interfaces
 {
     public interface IFunctionsParametersOfTheNextLayer
     {
-        double Get(PN pN, LimitedDouble n, LimitedDouble k);
+        double Get(PN pN, double n, double k);
 
-        double Get_dynamic_m(LimitedDouble n, LimitedDouble k);
-        double Get_v(LimitedDouble n, LimitedDouble k);
-        double Get_M(LimitedDouble n, LimitedDouble k);
-        double Get_w(LimitedDouble n, LimitedDouble k);
-        double Get_r(LimitedDouble n, LimitedDouble k);
-        double Get_e(LimitedDouble n, LimitedDouble k);
-        double Get_psi(LimitedDouble n, LimitedDouble k);
-        double Get_z(LimitedDouble n, LimitedDouble k);
-        double Get_a(LimitedDouble n, LimitedDouble k);
-        double Get_m(LimitedDouble n, LimitedDouble k);
-        double Get_p(LimitedDouble n, LimitedDouble k);
-        double Get_ro(LimitedDouble n, LimitedDouble k);
+        double Get_dynamic_m(double n, double k);
+        double Get_v(double n, double k);
+        double Get_M(double n, double k);
+        double Get_w(double n, double k);
+        double Get_r(double n, double k);
+        double Get_e(double n, double k);
+        double Get_psi(double n, double k);
+        double Get_z(double n, double k);
+        double Get_a(double n, double k);
+        double Get_m(double n, double k);
+        double Get_p(double n, double k);
+        double Get_ro(double n, double k);
 
         void Update(IGrid grid);
     }
