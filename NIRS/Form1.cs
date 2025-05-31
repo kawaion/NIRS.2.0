@@ -33,6 +33,8 @@ namespace NIRS
         public Form1()
         {
             InitializeComponent();
+            chart1.ChartAreas[0].AxisX.Minimum = 0;
+            chart2.ChartAreas[0].AxisY.Interval = 100000000;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -69,12 +71,76 @@ namespace NIRS
             //IGrid grid = task.Result;//numericalMethod.Calculate();
 
             INumericalMethod numericalMethod = new SEL(mainData);
-            IGrid grid = numericalMethod.Calculate();
+            grid = numericalMethod.Calculate();
+            hScrollBar1.Minimum = 0;
+            hScrollBar1.Maximum = (int)grid.LastIndexN(PN.m);
+            var tmp = grid.GetSn(PN.vSn, grid.LastIndexN(PN.v));
+            var maxN = grid.LastIndexN(PN.p);
+            for(double n = 0;n<maxN; n++)
+            {
+                chart2.Series[0].Points.AddXY(n * tau, grid[PN.p, n, 0.5]);
+            }
+        }
+        IGrid grid;
+        private void ShowLayer(double n,List<PN> pns)
+        {
+            for (int j = 0; j < pns.Count; j++)
+                chart1.Series[j].Points.Clear();
+            var last = grid.LastIndexK(pns[0], n);
+            for (double i = 0; i <= last; i++)
+                for(int j = 0;j<pns.Count;j++)
+                    chart1.Series[j].Points.AddXY(i, grid[pns[j],n,i]);
         }
         private double curantTau(double h, double v)
         {
             double c = 340;
             return h / (v + c);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var h = GetStep();
+            textBox1.Text = (Convert.ToDouble(textBox1.Text) - h).ToString();
+            Visualise();
+        }
+
+        private double GetStep()
+        {
+            if (radioButton1.Checked) return 1;
+            else if (radioButton2.Checked) return 10;
+            else if (radioButton3.Checked) return 100;
+            throw new Exception();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var h = GetStep();
+            textBox1.Text = (Convert.ToDouble(textBox1.Text) + h).ToString();
+            Visualise();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Visualise();
+        }
+
+        private void Visualise()
+        {
+            var pns = new List<PN>() { PN.psi};
+            var n = Convert.ToDouble(textBox1.Text);
+            if (n > grid.LastIndexN(pns[0])-1)
+            {
+                n = grid.LastIndexN(pns[0])-1;
+                textBox1.Text = n.ToString();
+            }
+            ShowLayer(n, pns);
+        }
+
+        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            var n = hScrollBar1.Value;
+            textBox1.Text = Convert.ToString(n);
+            Visualise();
         }
         //private void DrawGrid(IGrid grid)
         //{

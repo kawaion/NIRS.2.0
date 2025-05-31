@@ -111,10 +111,18 @@ namespace NIRS.Functions_for_numerical_method
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
 
-            return g.GetSn(PN.psi, n)
+            var psi = g.GetSn(PN.psi, n)
                    + constP.tau * hf.sn.HPsi(n + 0.5);
-        }
 
+            psi = PowderValidation(psi);
+            return psi;
+        }
+        private static double PowderValidation(double value) // метод скопирован
+        {
+            if (value > 1)
+                value = 1;
+            return value;
+        }
         public double Get_r(double N)
         {
             var n = OffseterN.AppointAndOffset(N, + 1);

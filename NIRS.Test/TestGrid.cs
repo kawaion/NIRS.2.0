@@ -8,7 +8,7 @@ namespace NIRS.Test
 {
     class TestGrid
     {
-        TimeSpaceGrid grid = new TimeSpaceGrid();
+        TimeSpaceGridTest grid = new TimeSpaceGridTest();
         
         //public IGrid GetGrid()
         //{

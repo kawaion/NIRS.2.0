@@ -16,7 +16,7 @@ namespace NIRS.Helpers
         /// </summary>
         /// <param name="k"></param>
         /// <returns></returns>
-        public double this[LimitedDouble k] => k.Value * h;
+        //public double this[LimitedDouble k] => k.Value * h;
         public double this[double k] => k * h;
     }
 }

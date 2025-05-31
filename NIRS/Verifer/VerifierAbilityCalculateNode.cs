@@ -13,15 +13,15 @@ namespace NIRS.Verifer
     class VerifierAbilityCalculateNode
     {
         private IGrid g;
-        private KGetter _k;
+        private XGetter _x;
         public VerifierAbilityCalculateNode(IGrid grid, IMainData mainData)
         {
             g = grid;
-            _k = new KGetter(mainData.ConstParameters);
+            _x = new XGetter(mainData.ConstParameters);
         }
         public bool Check(double n, double k)
         {
-            return k+1 <= _k[g.GetSn(PN.x, n - 1)];
+            return _x[k+1] <= g.GetSn(PN.x, n - 1);
         }
         //public bool Check(LimitedDouble n, LimitedDouble k)
         //{

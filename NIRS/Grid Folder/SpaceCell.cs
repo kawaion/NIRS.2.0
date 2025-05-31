@@ -71,7 +71,7 @@ namespace NIRS.Grid_Folder
         {
             get
             {
-                if(ram.isContains(pn))
+                if (ram.isContains(pn))
                     return ram.Get(pn);
 
                 switch (pn)

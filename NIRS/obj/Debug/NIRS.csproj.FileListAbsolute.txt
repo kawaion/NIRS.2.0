@@ -33,7 +33,6 @@ D:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.Form1.resources
 D:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.Properties.Resources.resources
 D:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.GenerateResource.cache
 D:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.CoreCompileInputs.cache
-D:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.CopyComplete
 D:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.exe
 D:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.pdb
 F:\нирс\NIRS.2.0\NIRS\bin\Debug\NIRS.exe.config
@@ -46,3 +45,4 @@ F:\нирс\NIRS.2.0\NIRS\bin\Debug\Microsoft.Bcl.HashCode.xml
 F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.Up2Date
 F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.exe
 F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.pdb
+D:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.CopyComplete

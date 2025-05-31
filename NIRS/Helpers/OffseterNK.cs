@@ -1,4 +1,5 @@
 ﻿using MyDouble;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 
 namespace NIRS.Helpers
@@ -24,35 +25,26 @@ namespace NIRS.Helpers
         //{
         //    return new OffsetNodeNK(n, k);
         //}
-        public static (LimitedDouble n, LimitedDouble k) AppointAndOffset(LimitedDouble n, double offsetN, LimitedDouble k, double offsetK)
-        {
-            LimitedDouble newN;
-            LimitedDouble newK;
-            if (offsetN == 0)
-                newN = n;
-            else
-                newN = n - offsetN;
+        //public static (LimitedDouble n, LimitedDouble k) AppointAndOffset(LimitedDouble n, double offsetN, LimitedDouble k, double offsetK)
+        //{
+        //    LimitedDouble newN;
+        //    LimitedDouble newK;
+        //    if (offsetN == 0)
+        //        newN = n;
+        //    else
+        //        newN = n - offsetN;
 
-            if (offsetK == 0)
-                newK = k;
-            else
-                newK = k - offsetK;
-            return (newN, newK);
-        }
+        //    if (offsetK == 0)
+        //        newK = k;
+        //    else
+        //        newK = k - offsetK;
+        //    return (newN, newK);
+        //}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static (double n, double k) AppointAndOffset(double n, double offsetN, double k, double offsetK)
         {
-            double newN;
-            double newK;
-            if (offsetN == 0)
-                newN = n;
-            else
-                newN = n - offsetN;
-
-            if (offsetK == 0)
-                newK = k;
-            else
-                newK = k - offsetK;
-            return (newN, newK);
+            return (offsetN == 0 ? n : n - offsetN,
+                    offsetK == 0 ? k : k - offsetK);
         }
     }
     class OffsetNodeNK<T>
@@ -88,14 +80,10 @@ namespace NIRS.Helpers
                 newN = n - offsetN;
             return newN;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double AppointAndOffset(double n, double offsetN)
         {
-            double newN;
-            if (offsetN == 0)
-                newN = n;
-            else
-                newN = n - offsetN;
-            return newN;
+            return offsetN == 0 ? n : n - offsetN;
         }
         //public static LimitedDouble Offset(this OffsetNodeN<LimitedDouble> node, LimitedDouble newN)
         //{

@@ -17,6 +17,8 @@ using System.Net.Http.Headers;
 using System.Diagnostics;
 using NIRS.Parameter_names;
 using NIRS.Helpers;
+using System.Runtime.InteropServices.ComTypes;
+using System;
 
 namespace NIRS.Numerical_Method
 {
@@ -24,11 +26,14 @@ namespace NIRS.Numerical_Method
     {       
         private readonly IMainData _mainData;
         private bool isBeltIntact = true;
-        private readonly double FORCING_PRESSURE; 
+        private readonly double FORCING_PRESSURE;
+
+        private KGetter k;
         public SEL(IMainData mainData)
         {
             _mainData = mainData;
             FORCING_PRESSURE = mainData.ConstParameters.forcingPressure;
+            k = new KGetter(mainData.ConstParameters);
         }
         
         private readonly IOutputDataTransmitter outputDataTransmitter = new OutputDataTransmitter();
@@ -36,15 +41,18 @@ namespace NIRS.Numerical_Method
 
         public IGrid Calculate()
         {
-            IGrid grid = new TimeSpaceGrid();
+            IGrid grid = new TimeSpaceGridTest();
 
             functionsBuilder = new FunctionsBuilder(_mainData);
             functionsBuilder.Build(grid);
             CreateNumericalSolutions(grid, functionsBuilder);
 
+            var xEndChamber = _mainData.Barrel.EndChamberPoint.X;
+            var KSn = k[xEndChamber];
+
             var gridBorderFiller = GetGridBorderFiller();
-            var gridWithFilledBorders = gridBorderFiller.FillAtZeroTime(grid);
-            var numericalSolution = GetNumericalSolution(gridWithFilledBorders, gridBorderFiller);
+            var gridWithFilledBorders = gridBorderFiller.FillAtZeroTime(grid, KSn);
+            var numericalSolution = GetNumericalSolution(gridWithFilledBorders, gridBorderFiller, KSn);
             return outputDataTransmitter.GetOutputData(numericalSolution);
         }
 
@@ -54,23 +62,29 @@ namespace NIRS.Numerical_Method
             var boundaryFunctions = functionsBuilder.BoundaryFunctionsBuild();
             return new GridBorderFiller(boundaryFunctions, _mainData);
         }
-        private IGrid GetNumericalSolution(IGrid grid, IGridBorderFiller gridBorderFiller)
+        private IGrid GetNumericalSolution(IGrid grid, IGridBorderFiller gridBorderFiller, double KSn)
         {
+            var KDynamicLast = GetKDynamicLast(KSn);
             double n = 0;
-            while (!IsEndConditionNumericalSolution(grid,n))
+            while (!IsEndConditionNumericalSolution(grid,n))// && n!=2363)
             {
                 n += 0.5;
 
-
-                grid = gridBorderFiller.FillBarrelBorders(grid, n, isBeltIntact);
-                //grid = gridBorderFiller.FillCoordinateProjectileAtFixedBorder(grid, n, isBeltIntact);
+                grid = gridBorderFiller.FillBarrelBorders(grid, n, isBeltIntact, KDynamicLast);
                 grid = GetNumericalSolutionAtNodesN(grid, n);
                 grid = gridBorderFiller.FillLastNodeOfMixture(grid, n, isBeltIntact);
-                grid = gridBorderFiller.FillProjectileAtFixedBorder(grid, n, isBeltIntact);
-                grid = GetNumericalSolutionInProjectile(grid, n);
-                grid = GetInterpolateSolutionAtInaccessibleNodes(grid, n);
+                grid = GetNumericalSolutionInProjectile(grid, n, gridBorderFiller);
+                grid = GetInterpolateSolutionAtInaccessibleNodes(grid, n); 
+                AttemptRipOffBelt(grid, n);         
             }
             return grid;
+        }
+        private double GetKDynamicLast(double Ksn)
+        {
+            var lastIntNode = (int)Math.Floor(Ksn);
+            if (Ksn > lastIntNode + 0.5)
+                return lastIntNode + 0.5;
+            else return lastIntNode - 0.5;
         }
         bool IsEndConditionNumericalSolution(IGrid grid, double n)
         {
@@ -115,15 +129,25 @@ namespace NIRS.Numerical_Method
             
             return (grid,isEnd);
         }
-        private IGrid GetNumericalSolutionInProjectile(IGrid grid, double n)
+        private IGrid GetNumericalSolutionInProjectile(IGrid grid, double n,IGridBorderFiller gridBorderFiller)
         {
-            if(isBeltIntact == true && n.IsInt())
-                if (grid.GetSn(PN.p, n) > FORCING_PRESSURE)
-                    isBeltIntact = false;
-
+            if (isBeltIntact == true)
+            {
+                grid = gridBorderFiller.FillProjectileAtFixedBorder(grid, n);
+            }
             grid = numericalSolutionProjectile.Get(grid, n, isBeltIntact);
 
             return grid;
+        }
+        private void AttemptRipOffBelt(IGrid grid, double n)
+        {
+            if(isBeltIntact == true && n.IsInt())
+            {
+                var K = grid.LastIndexK(PN.p, n);
+                if (grid[PN.p,n,K] > FORCING_PRESSURE)
+                    isBeltIntact = false;
+            }
+
         }
 
         private IGrid GetInterpolateSolutionAtInaccessibleNodes(IGrid grid, double n)

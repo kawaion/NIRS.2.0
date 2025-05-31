@@ -5,6 +5,7 @@ using NIRS.Helpers;
 using NIRS.Interfaces;
 using NIRS.Parameter_names;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace NIRS.Functions_for_numerical_method
 
         public double InterpolateMixture(PN pn, double n, double k)
         {
-            var kLast = g.LastIndex(pn, n);
+            var kLast = g.LastIndexK(pn, n);
 
             return g[pn,n,kLast]
                    + d.dPNdx(n,pn)
@@ -65,11 +66,16 @@ namespace NIRS.Functions_for_numerical_method
         }
         public double Interpolate_w(double N, double K)
         {
+            if (N == 2377.5 && K == 220)
+            {
+                int с = 0;
+            }
             (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, + 1);
 
-            return g[PN.w, n + 0.5, k]
+            var tmp = g[PN.w, n + 0.5, k]
                    + d.dwdx(n + 0.5)
                    * step.Get(n + 0.5, k + 1, PN.w) * constP.h;
+            return tmp;
         }
         public double Interpolate_dynamic_m(double N, double K)
         {

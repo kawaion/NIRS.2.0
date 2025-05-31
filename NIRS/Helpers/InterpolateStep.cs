@@ -19,7 +19,7 @@ namespace NIRS.Helpers
         }
         public int Get(double n, double k, PN pn)
         {
-            var kLast = g.LastIndex(pn, n);
+            var kLast = g.LastIndexK(pn, n);
 
             var distance = k - kLast;
             validation(distance);

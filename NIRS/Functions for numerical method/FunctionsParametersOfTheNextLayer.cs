@@ -12,6 +12,7 @@ using NIRS.Additional_calculated_values;
 using NIRS.Interfaces;
 using System.Diagnostics;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 
 namespace NIRS.Functions_for_numerical_method
 {
@@ -97,20 +98,36 @@ namespace NIRS.Functions_for_numerical_method
                         * wc.dPStrokeDivdx(n, k)
                    - hf.H2(n, k)
                 );
-        }         
+        }
+        //double max_m = 1-1e-3;
         public double Get_w(double n, double k)
         {
+            //if(n==2377.5 && k == 220)
+            //{
+            //    int с = 0;
+            //}
             (n, k) = OffseterNK.AppointAndOffset(n, 0.5, k, 0);
 
-            if (g[PN.m, n, k - 0.5] == 1 && g[PN.m, n, k + 0.5] == 1)
-                return 0;
+            var g_m_n_kMinus05 = g[PN.m, n, k - 0.5];
+            var g_m_n_kPlus05 = g[PN.m, n, k + 0.5];
 
-            return 2 * g[PN.M, n + 0.5, k]
+            //if (g_m_n_kMinus05 >= max_m && g_m_n_kPlus05 >= max_m)
+            //    return 0;
+
+            var tmp = 2 * g[PN.M, n + 0.5, k]
                    / (constP.PowderDelta * (
-                                     (1 - g[PN.m, n, k - 0.5]) * bs.S(x[k - 0.5])
-                                   + (1 - g[PN.m, n, k + 0.5]) * bs.S(x[k + 0.5])
+                                     (1.02 - g_m_n_kMinus05) * bs.S(x[k - 0.5])
+                                   + (1.02 - g_m_n_kPlus05) * bs.S(x[k + 0.5])
                                            )
                      );
+            if (tmp == 0)
+            {
+                var tmp1 = g[PN.M, n + 0.5, k];
+                var tmp2 = g[PN.m, n, k - 0.5];
+                var tmp3 = bs.S(x[k - 0.5]);
+                var tmp4 = g[PN.m, n, k + 0.5];
+            }
+            return tmp;
         }     
 
 
@@ -144,7 +161,16 @@ namespace NIRS.Functions_for_numerical_method
                    - g[PN.psi, n, k - 0.5] * wc.Nabla(PN.w, n + 0.5, k - 0.5)
                    - hf.HPsi(n + 0.5, k - 0.5)
                 );
+            if (double.IsNaN(psi))
+            {
+                int c = 0;
+                var tmpn = n;
+                var tmp1 = wc.Nabla(PN.psi, PN.w, n + 0.5, k - 0.5);
+                var tmp2 = wc.Nabla(PN.w, n + 0.5, k - 0.5);
+                var tmp3 = hf.HPsi(n + 0.5, k - 0.5);
+            }
             psi = PowderValidation(psi);
+
             return psi;
         }
         private static double PowderValidation(double value) // метод скопирован
@@ -163,8 +189,14 @@ namespace NIRS.Functions_for_numerical_method
                    - g[PN.z, n, k - 0.5] * wc.Nabla(PN.w, n + 0.5, k - 0.5)
                    - hf.H5(n + 0.5, k - 0.5)
                 );
-
-            z = PowderValidation(z);
+            if (z > 3)
+            {
+                int c = 0;
+                var zlast = g[PN.z, n, k - 0.5];
+                var tmp1 = wc.Nabla(PN.z, PN.w, n + 0.5, k - 0.5);
+                var tmp2 = wc.Nabla(PN.w, n + 0.5, k - 0.5);
+                var tmp3 = hf.H5(n + 0.5, k - 0.5);
+            }
             return z;
         }   
         public double Get_a(double n, double k)

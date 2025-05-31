@@ -25,13 +25,13 @@ namespace NIRS.Numerical_solution
             List<PN> parameters;
             if (n.IsInt())
             {
-                parameters = new List<PN> { PN.r, PN.z, PN.a, PN.m, PN.ro, PN.e, PN.p };
+                parameters = new List<PN> { PN.r, PN.z, PN.psi, PN.a, PN.m, PN.ro, PN.e, PN.p };
 
                 foreach (var pn in parameters)
                 {
                     while (isExistNonCalculatedNodes(g, n, pn))
                     {
-                        var kLast = g.LastIndex(pn, n);
+                        var kLast = g.LastIndexK(pn, n);
                         g[pn, n, kLast + 1] = _functions.InterpolateMixture(pn, n, kLast + 1);
                     }
                 }
@@ -45,7 +45,7 @@ namespace NIRS.Numerical_solution
                 {
                     while (isExistNonCalculatedNodes(g, n, pn))
                     {
-                        var kLast = g.LastIndex(pn, n);
+                        var kLast = g.LastIndexK(pn, n);
                         g[pn, n, kLast + 1] = _functions.InterpolateDynamic(pn, n, kLast + 1);
                     }
                 }
@@ -54,10 +54,9 @@ namespace NIRS.Numerical_solution
             return g;
 
         }
-
         private bool isExistNonCalculatedNodes(IGrid g, double n, PN pn)
         {
-            var kLast = g.LastIndex(pn, n);
+            var kLast = g.LastIndexK(pn, n);
             var xEmptyNode = x[kLast+1];
             return g.GetSn(PN.x, n) >= xEmptyNode;
         }

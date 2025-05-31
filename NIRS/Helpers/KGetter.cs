@@ -15,12 +15,7 @@ namespace NIRS.Helpers
         public double this[double x] 
         {
             get {
-                var res = x / h;
-                var res2 = Math.Round(res);
-                if (Math.Abs(res2 - res) < eps)
-                    return res2;
-                else
-                    return res;
+                return x / h;
                 } 
         }
     }
