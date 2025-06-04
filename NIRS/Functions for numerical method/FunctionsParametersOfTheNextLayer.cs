@@ -161,14 +161,14 @@ namespace NIRS.Functions_for_numerical_method
                    - g[PN.psi, n, k - 0.5] * wc.Nabla(PN.w, n + 0.5, k - 0.5)
                    - hf.HPsi(n + 0.5, k - 0.5)
                 );
-            if (double.IsNaN(psi))
-            {
-                int c = 0;
-                var tmpn = n;
-                var tmp1 = wc.Nabla(PN.psi, PN.w, n + 0.5, k - 0.5);
-                var tmp2 = wc.Nabla(PN.w, n + 0.5, k - 0.5);
-                var tmp3 = hf.HPsi(n + 0.5, k - 0.5);
-            }
+            //if (double.IsNaN(psi))
+            //{
+            //    int c = 0;
+            //    var tmpn = n;
+            //    var tmp1 = wc.Nabla(PN.psi, PN.w, n + 0.5, k - 0.5);
+            //    var tmp2 = wc.Nabla(PN.w, n + 0.5, k - 0.5);
+            //    var tmp3 = hf.HPsi(n + 0.5, k - 0.5);
+            //}
             psi = PowderValidation(psi);
 
             return psi;
@@ -189,14 +189,14 @@ namespace NIRS.Functions_for_numerical_method
                    - g[PN.z, n, k - 0.5] * wc.Nabla(PN.w, n + 0.5, k - 0.5)
                    - hf.H5(n + 0.5, k - 0.5)
                 );
-            if (z > 3)
-            {
-                int c = 0;
-                var zlast = g[PN.z, n, k - 0.5];
-                var tmp1 = wc.Nabla(PN.z, PN.w, n + 0.5, k - 0.5);
-                var tmp2 = wc.Nabla(PN.w, n + 0.5, k - 0.5);
-                var tmp3 = hf.H5(n + 0.5, k - 0.5);
-            }
+            //if (z > 3)
+            //{
+            //    int c = 0;
+            //    var zlast = g[PN.z, n, k - 0.5];
+            //    var tmp1 = wc.Nabla(PN.z, PN.w, n + 0.5, k - 0.5);
+            //    var tmp2 = wc.Nabla(PN.w, n + 0.5, k - 0.5);
+            //    var tmp3 = hf.H5(n + 0.5, k - 0.5);
+            //}
             return z;
         }   
         public double Get_a(double n, double k)

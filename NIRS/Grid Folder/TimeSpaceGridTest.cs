@@ -17,7 +17,7 @@ namespace NIRS.Grid_Folder
         RAM<(PN, double), List<(double k, double value)>> ram;
         public TimeSpaceGridTest()
         {
-            ram = new RAM<(PN, double), List<(double k, double value)>>(20);
+            ram = new RAM<(PN, double), List<(double k, double value)>>(100);
             ramSn = new RAM<(PN, double), double>(15);
             InicialiseData();
             InicialiseDataSn();

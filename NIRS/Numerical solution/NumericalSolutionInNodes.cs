@@ -31,18 +31,11 @@ namespace NIRS.Numerical_solution
 
         private IGrid GetDynamicParametersOfNextLayer(IGrid grid, double n, double k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
         {
-            if (n == 2378 && k == 221)
-            {
-                int с = 0;
-            }
-            Parallel.Invoke(
-            () => grid[PN.dynamic_m, n, k] = _functions.Get_dynamic_m(n, k),
-            () => grid[PN.M, n, k] = _functions.Get_M(n, k)
-            );
-            Parallel.Invoke(
-            () => grid[PN.v, n, k] = _functions.Get_v(n, k),
-            () => grid[PN.w, n, k] = _functions.Get_w(n, k)
-            );
+
+            grid[PN.dynamic_m, n, k] = _functions.Get_dynamic_m(n, k);
+            grid[PN.M, n, k] = _functions.Get_M(n, k);
+            grid[PN.v, n, k] = _functions.Get_v(n, k);
+            grid[PN.w, n, k] = _functions.Get_w(n, k);
                 
 
             return grid;
@@ -53,12 +46,11 @@ namespace NIRS.Numerical_solution
             //{
             //    int c = 0;
             //}
-            Parallel.Invoke(
-            () => grid[PN.r, n, k] = functionsNewLayer.Get_r(n, k),
-            () => grid[PN.a, n, k] = functionsNewLayer.Get_a(n, k),
-            () => grid[PN.psi, n, k] = functionsNewLayer.Get_psi(n, k),
-            () => grid[PN.z, n, k] = functionsNewLayer.Get_z(n, k)
-            );
+
+            grid[PN.r, n, k] = functionsNewLayer.Get_r(n, k);
+            grid[PN.a, n, k] = functionsNewLayer.Get_a(n, k);
+            grid[PN.psi, n, k] = functionsNewLayer.Get_psi(n, k);
+            grid[PN.z, n, k] = functionsNewLayer.Get_z(n, k);
             grid[PN.m, n, k] = functionsNewLayer.Get_m(n, k); // нужен a и psi
             grid[PN.ro, n, k] = functionsNewLayer.Get_ro(n, k); // может не занимать место в памяти, нужен r и m
             grid[PN.e, n, k] = functionsNewLayer.Get_e(n, k);// нужен z и psi

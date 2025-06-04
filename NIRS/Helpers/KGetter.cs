@@ -7,7 +7,6 @@ namespace NIRS.Helpers
     public class KGetter
     {
         double h;
-        double eps = 0.00001;
         public KGetter(IConstParameters constParameters)
         {
             h = constParameters.h;

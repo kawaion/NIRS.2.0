@@ -101,7 +101,7 @@ namespace NIRS
         {
             var h = GetStep();
             textBox1.Text = (Convert.ToDouble(textBox1.Text) - h).ToString();
-            Visualise();
+            //Visualise();
         }
 
         private double GetStep()
@@ -116,17 +116,17 @@ namespace NIRS
         {
             var h = GetStep();
             textBox1.Text = (Convert.ToDouble(textBox1.Text) + h).ToString();
-            Visualise();
+            //Visualise();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Visualise();
+            //Visualise();
         }
 
-        private void Visualise()
+        private void Visualise(PN pn)
         {
-            var pns = new List<PN>() { PN.psi};
+            var pns = new List<PN>() {pn};
             var n = Convert.ToDouble(textBox1.Text);
             if (n > grid.LastIndexN(pns[0])-1)
             {
@@ -140,7 +140,18 @@ namespace NIRS
         {
             var n = hScrollBar1.Value;
             textBox1.Text = Convert.ToString(n);
-            Visualise();
+            var pn = GetPNFromComboBox();
+            Visualise(pn);
+        }
+        private PN GetPNFromComboBox()
+        {
+            var pn = comboBox1.Text;
+            switch (pn)
+            {
+                case "p":return PN.p;
+                case "psi": return PN.psi;
+                default: throw new Exception();
+            }
         }
         //private void DrawGrid(IGrid grid)
         //{

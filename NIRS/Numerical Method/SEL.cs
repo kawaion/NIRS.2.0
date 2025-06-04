@@ -27,13 +27,15 @@ namespace NIRS.Numerical_Method
         private readonly IMainData _mainData;
         private bool isBeltIntact = true;
         private readonly double FORCING_PRESSURE;
+        private readonly double lengthBarrel;
 
-        private KGetter k;
+        private KGetter _k;
         public SEL(IMainData mainData)
         {
             _mainData = mainData;
             FORCING_PRESSURE = mainData.ConstParameters.forcingPressure;
-            k = new KGetter(mainData.ConstParameters);
+            _k = new KGetter(mainData.ConstParameters);
+            lengthBarrel = _mainData.Barrel.Length;
         }
         
         private readonly IOutputDataTransmitter outputDataTransmitter = new OutputDataTransmitter();
@@ -41,14 +43,14 @@ namespace NIRS.Numerical_Method
 
         public IGrid Calculate()
         {
-            IGrid grid = new TimeSpaceGridTest();
+            IGrid grid = new TimeSpaceGrid();
 
             functionsBuilder = new FunctionsBuilder(_mainData);
             functionsBuilder.Build(grid);
             CreateNumericalSolutions(grid, functionsBuilder);
 
             var xEndChamber = _mainData.Barrel.EndChamberPoint.X;
-            var KSn = k[xEndChamber];
+            var KSn = _k[xEndChamber];
 
             var gridBorderFiller = GetGridBorderFiller();
             var gridWithFilledBorders = gridBorderFiller.FillAtZeroTime(grid, KSn);
@@ -89,7 +91,6 @@ namespace NIRS.Numerical_Method
         bool IsEndConditionNumericalSolution(IGrid grid, double n)
         {
             var x = grid.GetSn(PN.x, n);
-            var lengthBarrel = _mainData.Barrel.Length;
             return x >= lengthBarrel;
         }
         private IGrid GetNumericalSolutionAtNodesN(IGrid grid, double n)
@@ -100,11 +101,11 @@ namespace NIRS.Numerical_Method
             else
                 k = 0;
 
-                bool isEnd = false;
-            while (!isEnd)
+            var snKPrevious = _k[grid.GetSn(PN.x, n - 1)];
+            while (k + 2 <= snKPrevious)
             {
                 k += 1;
-                (grid,isEnd) = GetNumericalSolutionAtNodeNK(grid, n, k );
+                grid = GetNumericalSolutionAtNodeNK(grid, n, k );
             }
             return grid;
         }
@@ -113,21 +114,13 @@ namespace NIRS.Numerical_Method
         INumericalSolutionInterpolation numericalSolutionInterpolation;
 
         VerifierAbilityCalculateNode verifier;
-        private (IGrid grid,bool isEnd)  GetNumericalSolutionAtNodeNK(IGrid grid, double n, double k)
+        private IGrid GetNumericalSolutionAtNodeNK(IGrid grid, double n, double k)
         {
-            bool isEnd = false;
-            bool isPossible=verifier.Check(n, k);
+            //bool isPossible=verifier.Check(n, k);
 
-            if(isPossible)
-            {
-                grid = numericalSolutionInNodes.Get(grid, n, k);
-            }
-            else
-            {
-                isEnd = true;
-            }
-            
-            return (grid,isEnd);
+            grid = numericalSolutionInNodes.Get(grid, n, k);
+
+            return grid;
         }
         private IGrid GetNumericalSolutionInProjectile(IGrid grid, double n,IGridBorderFiller gridBorderFiller)
         {

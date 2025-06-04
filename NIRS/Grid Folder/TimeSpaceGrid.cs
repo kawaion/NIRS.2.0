@@ -3,17 +3,18 @@ using NIRS.Interfaces;
 using NIRS.Parameter_names;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NIRS.Grid_Folder
 {
     public class TimeSpaceGrid : IGrid
     {
-        private const int InitialCapacity = 4; // Начальный размер массива
-        private const float GrowthFactor = 2f; // Множитель роста
+        private const int InitialCapacity = 1024; // Начальный размер массива
+        private const double GrowthFactor = 2; // Множитель роста
 
         private double[,,] data; // [paramIndex, nIndex, kIndex]
-        private int[,] currentKSize; // [paramIndex, nIndex]
-        private int[] currentNSize;  // [paramIndex]
+        private double[,] currentKSize; // [paramIndex, nIndex]
+        private double[] currentNSize;  // [paramIndex]
 
         const int countParams = 13;
         const int maximumnNegativeN = 1;
@@ -21,11 +22,15 @@ namespace NIRS.Grid_Folder
 
         public TimeSpaceGrid()
         {
-            data = new double[countParams, InitialCapacity, InitialCapacity];
-            currentNSize = new int[countParams];
-            currentKSize = new int[countParams, InitialCapacity];
+            InitializeData();
+            InitializeDataSn();
         }
-
+        private void InitializeData()
+        {
+            data = new double[countParams, InitialCapacity, InitialCapacity];
+            currentNSize = new double[countParams];
+            currentKSize = new double[countParams, InitialCapacity];
+        }
         public double this[PN pn, double n, double k]
         {
             get
@@ -49,12 +54,15 @@ namespace NIRS.Grid_Folder
                 EnsureCapacity(paramIndex, nIndex, kIndex);
                 data[paramIndex, nIndex, kIndex] = Validation(value);
 
+                // Обновляем currentNSize
+                if (nIndex > currentNSize[paramIndex])
+                    currentNSize[paramIndex] = n;
+
                 // Обновляем currentKSize
                 if (kIndex > currentKSize[paramIndex, nIndex])
-                    currentKSize[paramIndex, nIndex] = kIndex;
+                    currentKSize[paramIndex, nIndex] = k;
             }
         }
-
         private void EnsureCapacity(int paramIndex, int nIndex, int kIndex)
         {
             // Проверяем необходимость расширения по n
@@ -70,10 +78,6 @@ namespace NIRS.Grid_Folder
                 var newKSize = CalculateNewSize(data.GetLength(2), kIndex);
                 ResizeArray(paramIndex, data.GetLength(1), newKSize);
             }
-
-            // Обновляем currentNSize
-            if (nIndex > currentNSize[paramIndex])
-                currentNSize[paramIndex] = nIndex;
         }
 
         private int CalculateNewSize(int currentSize, int requiredIndex)
@@ -89,7 +93,7 @@ namespace NIRS.Grid_Folder
         private void ResizeArray(int paramIndex, int newNSize, int newKSize)
         {
             var newData = new double[data.GetLength(0), newNSize, newKSize];
-            var newCurrentKSize = new int[countParams, newNSize];
+            var newCurrentKSize = new double[countParams, newNSize];
 
             // Копируем данные
             for (int p = 0; p < data.GetLength(0); p++)
@@ -116,29 +120,25 @@ namespace NIRS.Grid_Folder
 
         private int ConvertToNIndex(double n)
         {
-            if (n.IsInt()) return (int)(n + maximumnNegativeN);
-            if (n.IsHalfInt()) return (int)(n - 0.5 + maximumnNegativeN);
-            throw new Exception($"Invalid n value: {n}");
+            return (int)(n + maximumnNegativeN);
         }
 
         private int ConvertToKIndex(double k)
         {
-            if (k.IsInt()) return (int)(k + maximumnNegativeK);
-            if (k.IsHalfInt()) return (int)(k - 0.5 + maximumnNegativeK);
-            throw new Exception($"Invalid k value: {k}");
+            return (int)(k + maximumnNegativeK);
         }
 
         public double LastIndexK(PN pn, double n)
         {
             var paramIndex = (int)pn;
             var nIndex = ConvertToNIndex(n);
-            return currentKSize[paramIndex, nIndex] - maximumnNegativeK;
+            return currentKSize[paramIndex, nIndex];
         }
 
         public double LastIndexN(PN pn)
         {
             var paramIndex = (int)pn;
-            return currentNSize[paramIndex] - maximumnNegativeN;
+            return currentNSize[paramIndex];
         }
 
 
@@ -146,57 +146,69 @@ namespace NIRS.Grid_Folder
 
 
         const int countParamsSn = 15;
-        List<(double n, double value)>[] dataSn = new List<(double n, double value)>[countParamsSn]; // количество переменных
+        private double[,] dataSn; // [paramIndex, nIndex]
+        private double[] currentNSizeSn; // Текущий размер для каждого параметра
 
-        RAM<(PN, double), double> ramSn;
-
-        private const int number_x = (int)PN.x;
-        private const int number_vSn = (int)PN.vSn;
+        private void InitializeDataSn()
+        {
+            dataSn = new double[countParamsSn, InitialCapacity];
+            currentNSizeSn = new double[countParamsSn];
+        }
 
         public double GetSn(PN pn, double n)
         {
-            if (ramSn.isContains((pn, n)))
-                return ramSn.Get((pn, n));//память
-
-            var nIndex = ConvertToNIndexSn(n);
             if (pn == PN.One_minus_m)
-                return 1 - dataSn[(int)PN.m][nIndex].value;
-            else
-            {
-                var value = dataSn[(int)pn][nIndex].value;
+                return 1 - GetSn(PN.m, n);
 
-                ramSn.Add((pn, n), value);//память
-
-                return value;
-            }
+            var paramIndex = (int)pn;
+            var nIndex = ConvertToNIndexSn(n);
+            return dataSn[paramIndex, nIndex];
         }
+
         public void SetSn(PN pn, double n, double value)
         {
+            var paramIndex = (int)pn;
             var nIndex = ConvertToNIndexSn(n);
-            var layersSn = dataSn[(int)pn];
-            layersSn = AllocateMemorySnForTheIndex(layersSn, nIndex, n);
-            var cellSn = layersSn[nIndex];
-            cellSn.value = value;
-
-            layersSn[nIndex] = cellSn;
+            EnsureCapacitySn(paramIndex, nIndex);
+            dataSn[paramIndex, nIndex] = Validation(value);
+            currentNSizeSn[paramIndex] = n;
         }
-        private List<(double n, double value)> AllocateMemorySnForTheIndex(List<(double n, double value)> layers, int index, double n)
+        private void EnsureCapacitySn(int paramIndex, int nIndex)
         {
-            layers.AllocateUpTo(index, GetNewNSn);
-            var layerNSn = layers[index];
-            layerNSn.n = n;
-
-            layers[index] = layerNSn;
-            return layers;
+            // Проверяем необходимость расширения по n
+            if (nIndex >= dataSn.GetLength(1))
+            {
+                var newNSize = CalculateNewSize(dataSn.GetLength(1), nIndex);
+                ResizeSnArrays(newNSize);
+            }
         }
-        double newValue = 0;
-        private (double n, double value) GetNewNSn()
+
+        private void ResizeSnArrays(int newSize)
         {
-            return (newN, newValue);
+            // Создаем новые массивы
+            var newDataSn = new double[dataSn.GetLength(0), newSize];
+
+            // Копируем данные
+            for (int p = 0; p < dataSn.GetLength(0); p++)
+            {
+                Array.Copy(dataSn,
+                         p * dataSn.GetLength(1),
+                         newDataSn,
+                         p * newSize,
+                         Math.Min(dataSn.GetLength(1), newSize));
+            }
+
+            // Обновляем ссылки
+            dataSn = newDataSn;
         }
         private int ConvertToNIndexSn(double n)
         {
             return (int)((n + maximumnNegativeN) * 2);
+        }
+        public double LastIndexNSn(PN pn)
+        {
+            var paramIndex = (int)pn;
+            return currentNSizeSn[paramIndex];
         }
     }
 }
