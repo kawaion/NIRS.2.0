@@ -9,10 +9,11 @@ namespace NIRS.Grid_Folder
 {
     public class TimeSpaceGrid : IGrid
     {
-        private const int InitialCapacity = 1024; // Начальный размер массива
+        private const int InitialCapacity = 256; // Начальный размер массива
         private const double GrowthFactor = 2; // Множитель роста
 
         private double[,,] data; // [paramIndex, nIndex, kIndex]
+        //private DynamicBlock3DArray<double> data;
         private double[,] currentKSize; // [paramIndex, nIndex]
         private double[] currentNSize;  // [paramIndex]
 
@@ -27,6 +28,7 @@ namespace NIRS.Grid_Folder
         }
         private void InitializeData()
         {
+            //data = new DynamicBlock3DArray<double>(countParams, 512, 512);
             data = new double[countParams, InitialCapacity, InitialCapacity];
             currentNSize = new double[countParams];
             currentKSize = new double[countParams, InitialCapacity];
@@ -42,7 +44,6 @@ namespace NIRS.Grid_Folder
                 var nIndex = ConvertToNIndex(n);
                 var kIndex = ConvertToKIndex(k);
 
-                EnsureCapacity(paramIndex, nIndex, kIndex);
                 return data[paramIndex, nIndex, kIndex];
             }
             set
@@ -50,6 +51,8 @@ namespace NIRS.Grid_Folder
                 var paramIndex = (int)pn;
                 var nIndex = ConvertToNIndex(n);
                 var kIndex = ConvertToKIndex(k);
+                
+                EnsureKSizeCapacity(paramIndex, nIndex);
 
                 EnsureCapacity(paramIndex, nIndex, kIndex);
                 data[paramIndex, nIndex, kIndex] = Validation(value);
@@ -61,6 +64,29 @@ namespace NIRS.Grid_Folder
                 // Обновляем currentKSize
                 if (kIndex > currentKSize[paramIndex, nIndex])
                     currentKSize[paramIndex, nIndex] = k;
+                    
+            }
+        }
+        private void EnsureKSizeCapacity(int paramIndex, int nIndex)
+        {
+            if (nIndex >= currentKSize.GetLength(1))
+            {
+                int newSize = (int)(currentKSize.GetLength(1) * GrowthFactor);
+                if (newSize <= nIndex)
+                    newSize = nIndex + 1;
+
+                var newCurrentKSize = new double[countParams, newSize];
+
+                // Копируем существующие данные
+                for (int p = 0; p < countParams; p++)
+                {
+                    for (int n = 0; n < currentKSize.GetLength(1); n++)
+                    {
+                        newCurrentKSize[p, n] = currentKSize[p, n];
+                    }
+                }
+
+                currentKSize = newCurrentKSize;
             }
         }
         private void EnsureCapacity(int paramIndex, int nIndex, int kIndex)
@@ -114,6 +140,22 @@ namespace NIRS.Grid_Folder
             data = newData;
             currentKSize = newCurrentKSize;
         }
+        //private void ResizeArray(int paramIndex, int newNSize, int newKSize)
+        //{
+        //    var newCurrentKSize = new double[countParams, newNSize];
+
+        //    // Копируем данные
+        //    for (int p = 0; p < countParams; p++)
+        //    {
+        //        for (int n = 0; n < data.GetLength(1); n++)
+        //        {
+        //            if (n < currentKSize.GetLength(1))
+        //                newCurrentKSize[p, n] = currentKSize[p, n];
+        //        }
+        //    }
+
+        //    currentKSize = newCurrentKSize;
+        //}
 
         // Остальные методы остаются без изменений
         private double Validation(double value) => Math.Abs(value) < 1e-6 ? 0 : value;

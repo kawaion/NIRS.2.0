@@ -219,6 +219,11 @@ namespace NIRS.Grid_Folder
             return (int)((n + maximumnNegativeN)*2);
         }
 
+        public double LastIndexNSn(PN pn)
+        {
+            throw new NotImplementedException();
+        }
+
         //RAM<double, ISubGrid> ram;
         //public TimeSpaceGrid()
         //{

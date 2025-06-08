@@ -61,11 +61,15 @@
     </Compile>
     <Compile Include="Barrel Folder\BarrelSize.cs" />
     <Compile Include="Barrel Folder\FinderPointsBetweenCurrent.cs" />
+    <Compile Include="For chart\ChartPlaceholder.cs" />
+    <Compile Include="For chart\DataForChart.cs" />
+    <Compile Include="For chart\ResultExtractor.cs" />
     <Compile Include="Functions for numerical method\BoundaryFunctions.cs" />
     <Compile Include="Grid Folder\Nulls.cs" />
     <Compile Include="Grid Folder\SpaceCellProjectile.cs" />
     <Compile Include="Grid Folder\SpaceCellWithK.cs" />
     <Compile Include="Grid Folder\TimeSpaceGrid.cs" />
+    <Compile Include="Grid Folder\DynamicBlock3DArray.cs" />
     <Compile Include="H Functions\HFunctionsProjectile.cs" />
     <Compile Include="Helpers\Differencial.cs" />
     <Compile Include="Helpers\DoubleTypeIssuer.cs" />

@@ -4,6 +4,9 @@ namespace NIRS.Interfaces
 {
     public interface IConstParameters
     {
+        double cp { get; }
+        double cv { get; }
+
         double tau { get; }
         double h { get; }
         double teta { get; }

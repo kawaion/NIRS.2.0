@@ -9,8 +9,8 @@ namespace NIRS.Data_Parameters.Input_Data_Parameters
         private double Tau;
         private double H;
 
-        private double cp =1838.8;
-        private double cv =1497.4;
+        public double cp => 1838.8;
+        public double cv => 1497.4;
         public ConstParametersCase1(double tau,double h)
         {
             Tau = tau;

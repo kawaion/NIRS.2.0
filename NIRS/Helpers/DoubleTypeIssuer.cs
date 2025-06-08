@@ -11,11 +11,15 @@ namespace NIRS.Helpers
     static class DoubleTypeIssuer
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsInt(this double value) => !value.IsHalfInt();
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsHalfInt(this double x)
+        public static bool IsInt(this double value) 
         {
-            return Math.Abs(x - Math.Round(x)) == 0.5;
+            return Math.Abs(value - Math.Round(value)) == 0;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsHalfInt(this double value)
+        {
+            return Math.Abs(value - Math.Round(value)) == 0.5;
         }
         //public static bool IsHalfIntbyte(double value)
         //{

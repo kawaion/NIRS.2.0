@@ -24,6 +24,7 @@ using MyDouble;
 using NIRS.Parameter_names;
 using System.Net.NetworkInformation;
 using System.Threading;
+using NIRS.For_chart;
 
 namespace NIRS
 {
@@ -34,7 +35,7 @@ namespace NIRS
         {
             InitializeComponent();
             chart1.ChartAreas[0].AxisX.Minimum = 0;
-            chart2.ChartAreas[0].AxisY.Interval = 100000000;
+            //chart2.ChartAreas[0].AxisY.Interval = 100000000;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -76,10 +77,15 @@ namespace NIRS
             hScrollBar1.Maximum = (int)grid.LastIndexN(PN.m);
             var tmp = grid.GetSn(PN.vSn, grid.LastIndexN(PN.v));
             var maxN = grid.LastIndexN(PN.p);
-            for(double n = 0;n<maxN; n++)
-            {
-                chart2.Series[0].Points.AddXY(n * tau, grid[PN.p, n, 0.5]);
-            }
+            ChartPlaceholder chartPlaceholder = new ChartPlaceholder(chart2);
+            ResultExtractor resultExtractor = new ResultExtractor(grid);
+            var dataT = resultExtractor.GetT(PN.p, mainData);
+            var dataPkn = resultExtractor.GetPKn();
+            var dataPSn = resultExtractor.GetPSn();
+            chartPlaceholder.Add(dataT, dataPkn);
+            chartPlaceholder.SetIntervalY(100);
+            chartPlaceholder.Add(dataT, dataPSn);
+            chart2 = chartPlaceholder.GetChart;
         }
         IGrid grid;
         private void ShowLayer(double n,List<PN> pns)
