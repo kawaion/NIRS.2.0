@@ -45,4 +45,4 @@ F:\нирс\NIRS.2.0\NIRS\bin\Debug\Microsoft.Bcl.HashCode.xml
 F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.Up2Date
 F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.exe
 F:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.pdb
-D:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.CopyComplete
+D:\нирс\NIRS.2.0\NIRS\obj\Debug\NIRS.csproj.Up2Date

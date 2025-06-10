@@ -10,7 +10,6 @@ namespace NIRS.For_chart
     class ChartPlaceholder
     {
         Chart _chart;
-        int series;
 
         private double? intervalY = null;
         private double? intervalYLeft = null;
@@ -18,57 +17,75 @@ namespace NIRS.For_chart
         public ChartPlaceholder(Chart chart)
         {
             _chart = chart;
-            series = 0;
+            _chart.Series.Clear();
+            _chart.ChartAreas[0].AxisX.Minimum = 0;
+            _chart.ChartAreas[0].AxisY.Minimum = 0;
+            _chart.ChartAreas[0].AxisY2.Minimum = 0;
+        }        
+        public void SetIntervalCount(int value)
+        {
+            _chart.ChartAreas[0].AxisY.Interval = (_chart.ChartAreas[0].AxisY.Maximum - _chart.ChartAreas[0].AxisY.Minimum) / value;
+            _chart.ChartAreas[0].AxisY2.Interval = (_chart.ChartAreas[0].AxisY2.Maximum - _chart.ChartAreas[0].AxisY2.Minimum) / value;
+        }
+        public void SetIntervalX(double value)
+        {
+            _chart.ChartAreas[0].AxisX.Interval = value;
         }
 
         public void SetIntervalY(double value)
         {
-            intervalY = value;
+            _chart.ChartAreas[0].AxisY.Interval = value;
         }
         public void SetIntervalYLeft(double value)
         {
-            intervalYLeft = value;
+            _chart.ChartAreas[0].AxisY2.Interval = value;
+        }
+        public void SetMaxX(double value)
+        {
+            _chart.ChartAreas[0].AxisX.Maximum = value;
+        }
+        public void SetMaxY(double value)
+        {
+            _chart.ChartAreas[0].AxisY.Maximum = value;
+        }
+        public void SetMaxYLeft(double value)
+        {
+            _chart.ChartAreas[0].AxisY2.Maximum = value;
         }
         public void SubAdd(DataForChart X, DataForChart Y)
         {
-            if (_chart.Series.Count < series + 1)
-            {
-                _chart.Series.Add(new Series());
-                _chart.Series[series].ChartType = SeriesChartType.Line;
-            }
-
+            AddNewSeries();
 
             var massiveX = X.Massive;
             var massiveY = Y.Massive;
             CheckSizeMatching(massiveX, massiveY);
 
             for (int i = 0; i < massiveX.Count; i++)
-                _chart.Series[series].Points.AddXY(massiveX[i], massiveY[i]);
+                _chart.Series.Last().Points.AddXY(massiveX[i], massiveY[i]);
 
-            _chart.Series[series].Name = Y.LineName;
-            if (series == 0)
+            _chart.Series.Last().Name = Y.LineName;
+            if (_chart.Series.Count == 1)
             {
                 _chart.ChartAreas[0].AxisX.Title = X.Title;
-                if (intervalX != null)
-                    _chart.ChartAreas[0].AxisX.Interval = intervalX.Value;
             }
+        }
 
-            series++;
+        private void AddNewSeries()
+        {
+            _chart.Series.Add(new Series());
+            _chart.Series.Last().ChartType = SeriesChartType.Line;
         }
 
         public void Add(DataForChart X, DataForChart Y)
         {
             SubAdd(X, Y);
             _chart.ChartAreas[0].AxisY.Title = Y.Title;
-            if (intervalY != null)
-                _chart.ChartAreas[0].AxisY.Interval = intervalY.Value;
         }
         public void AddLeft(DataForChart X, DataForChart Y)
         {
             SubAdd(X, Y);
             _chart.ChartAreas[0].AxisY2.Title = Y.Title;
-            if (intervalYLeft != null)
-                _chart.ChartAreas[0].AxisY2.Interval = intervalY.Value;
+            _chart.Series.Last().YAxisType = AxisType.Secondary;
         }
         public Chart GetChart => _chart;
         private void CheckSizeMatching(List<double> X, List<double> Y)

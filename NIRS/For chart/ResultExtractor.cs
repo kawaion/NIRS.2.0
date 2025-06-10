@@ -44,6 +44,18 @@ namespace NIRS.For_chart
             string lineName = "Psn";
             return new DataForChart(massive, title, lineName);
         }
+        public DataForChart GetP(double n)
+        {
+            List<double> massive = new List<double>();
+            double lastK = _grid.LastIndexK(PN.p, n);
+            double firstK = GetFirstNode(lastK);
+
+            for (double k = firstK; k <= lastK; k++)
+                massive.Add(_grid[PN.p, n, k] * 1e-6);
+            string title = "давление, МПа";
+            string lineName = "P";
+            return new DataForChart(massive, title, lineName);
+        }
         public DataForChart GetVSn()
         {
             List<double> massive = new List<double>();
@@ -64,7 +76,7 @@ namespace NIRS.For_chart
             double firstN = GetFirstNode(lastN);
 
             for (double n = firstN; n <= lastN; n++)
-                massive.Add(n * tau);
+                massive.Add(n * tau * 1e3);
             string title = "время, t";
             string lineName = "t";
             return new DataForChart(massive, title, lineName);

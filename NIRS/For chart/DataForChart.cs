@@ -18,13 +18,5 @@ namespace NIRS.For_chart
             Title = title;
             LineName = lineName;
         }
-        public void SetInterval(double value)
-        {
-            interval = value;
-        }
-        public double GetInterval()
-        {
-            return interval.Value;
-        }
     }
 }
