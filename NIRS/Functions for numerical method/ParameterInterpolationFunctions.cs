@@ -110,13 +110,13 @@ namespace NIRS.Functions_for_numerical_method
             if (opt == Option.opt1)
             {
                 return g[PN.w, n + 0.5, k + 1] * constP.PowderDelta *
-                       ((1-g[PN.m, n, k + 0.5]) * bs.S(x[k+0.5]) + (1 - g[PN.m, n, k + 1.5]) * bs.S(x[k + 1.5]))
+                       (g[PN.One_minus_m, n, k + 0.5] * bs.S(x[k+0.5]) + g[PN.One_minus_m, n, k + 1.5] * bs.S(x[k + 1.5]))
                        / 2;
             }
             if (opt == Option.opt2)
             {
                 return g[PN.w, n + 0.5, k + 1] * constP.PowderDelta *
-                       ((1 - g[PN.m, n, k + 0.5]) * bs.S(x[k + 0.5]) + (1 - g.GetSn(PN.m, n)) * bs.S(g.GetSn(PN.x, n)))
+                       (g[PN.One_minus_m, n, k + 0.5] * bs.S(x[k + 0.5]) + (g.GetSn(PN.One_minus_m, n)) * bs.S(g.GetSn(PN.x, n)))
                        / 2;
             }
             //if (opt == Option.opt3)

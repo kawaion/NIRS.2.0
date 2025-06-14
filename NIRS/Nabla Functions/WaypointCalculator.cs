@@ -55,11 +55,7 @@ namespace NIRS.Nabla_Functions
         }
         private double Get_m(double n, double k, PN mu)
         {
-            if (mu == PN.One_minus_m)
-                return 1 - g[mu, n, k];
-            else
-                return g[mu, n, k];
-
+             return g[mu, n, k];
         }
 
 
@@ -150,7 +146,13 @@ namespace NIRS.Nabla_Functions
 
         public double dPStrokeDivdx(double n, double k)
         {
-            return (g.PStroke(this, constP, n, k + 0.5) - g.PStroke(this, constP, n, k - 0.5)) / constP.h;
+            var res = (g.PStroke(this, constP, n, k + 0.5) - g.PStroke(this, constP, n, k - 0.5)) / constP.h;
+            if (double.IsNaN(res))
+            {
+                var tmp1 = g.PStroke(this, constP, n, k + 0.5);
+                var tmp2 = g.PStroke(this, constP, n, k - 0.5);
+            }
+            return res;
         }
 
         public void Update(IGrid grid)

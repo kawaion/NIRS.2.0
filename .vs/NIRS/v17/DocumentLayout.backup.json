@@ -3,15 +3,50 @@
   "WorkspaceRootPath": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\h functions\\hfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\h functions\\hfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|g:\\\u043D\u0438\u0440\u0441\\nirs.2.0\\nirs\\bpmn folder\\bpmn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\bpmn folder\\bpmn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|g:\\\u043D\u0438\u0440\u0441\\nirs.2.0\\nirs\\functions for numerical method\\functionsparametersofthenextlayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\functions for numerical method\\functionsparametersofthenextlayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\numerical solution\\numericalsolutioninnodes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\numerical solution\\numericalsolutioninnodes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\numerical method\\sel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\numerical method\\sel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|NIRS||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\grid folder\\gridborderfiller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\grid folder\\gridborderfiller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\grid folder\\timespacegridtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\grid folder\\timespacegridtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\for chart\\resultextractor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\for chart\\resultextractor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|g:\\\u043D\u0438\u0440\u0441\\nirs.2.0\\nirs\\for chart\\chartplaceholder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\for chart\\chartplaceholder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\for chart\\chartplaceholder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -19,20 +54,8 @@
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\for chart\\dataforchart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\functions for numerical method\\functionsparametersofthenextlayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\functions for numerical method\\functionsparametersofthenextlayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\grid folder\\timespacegridtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\grid folder\\timespacegridtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\helpers\\offseternk.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -55,10 +78,6 @@
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\powder folder\\powder_12_7.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\numerical solution\\numericalsolutioninnodes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\numerical solution\\numericalsolutioninnodes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\helpers\\doubletypeissuer.cs||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\helpers\\doubletypeissuer.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
@@ -67,19 +86,8 @@
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\grid folder\\dynamicblock3darray.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\numerical method\\sel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\numerical method\\sel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\grid folder\\gridborderfiller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\grid folder\\gridborderfiller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\parameter names\\pn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\parameter names\\pn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|NIRS||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\functions for numerical method\\parameterinterpolationfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -92,10 +100,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\interfaces\\igridborderfiller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\interfaces\\igridborderfiller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\h functions\\hfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\h functions\\hfunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\nirs\\functions for numerical method\\projectilefunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -153,60 +157,137 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "OffseterNK.cs",
-              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Helpers\\OffseterNK.cs",
-              "RelativeDocumentMoniker": "NIRS\\Helpers\\OffseterNK.cs",
-              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Helpers\\OffseterNK.cs",
-              "RelativeToolTip": "NIRS\\Helpers\\OffseterNK.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAAAYAAAAAAAAAA==",
+              "DocumentIndex": 10,
+              "Title": "ResultExtractor.cs",
+              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\For chart\\ResultExtractor.cs",
+              "RelativeDocumentMoniker": "NIRS\\For chart\\ResultExtractor.cs",
+              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\For chart\\ResultExtractor.cs",
+              "RelativeToolTip": "NIRS\\For chart\\ResultExtractor.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAASwDUAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-28T19:14:43.826Z"
+              "WhenOpened": "2025-06-08T11:14:59.143Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "FunctionsParametersOfTheNextLayer.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Functions for numerical method\\FunctionsParametersOfTheNextLayer.cs",
               "RelativeDocumentMoniker": "NIRS\\Functions for numerical method\\FunctionsParametersOfTheNextLayer.cs",
               "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Functions for numerical method\\FunctionsParametersOfTheNextLayer.cs",
               "RelativeToolTip": "NIRS\\Functions for numerical method\\FunctionsParametersOfTheNextLayer.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAYwMYAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAADgAAAAAAAAAAAAAwEkAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-11T15:36:37.512Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
-              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Form1.cs",
-              "RelativeDocumentMoniker": "NIRS\\Form1.cs",
-              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]*",
-              "RelativeToolTip": "NIRS\\Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]*",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T10:55:06.609Z",
-              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Form1.cs",
-              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Form1.cs",
-              "RelativeDocumentMoniker": "NIRS\\Form1.cs",
-              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Form1.cs*",
-              "RelativeToolTip": "NIRS\\Form1.cs*",
-              "ViewState": "AgIAALkAAAAAAAAAAAAswMoAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T10:55:08.343Z",
+              "WhenOpened": "2025-05-11T15:36:37.512Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
+              "Title": "HFunctions.cs",
+              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\H Functions\\HFunctions.cs",
+              "RelativeDocumentMoniker": "NIRS\\H Functions\\HFunctions.cs",
+              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\H Functions\\HFunctions.cs*",
+              "RelativeToolTip": "NIRS\\H Functions\\HFunctions.cs*",
+              "ViewState": "AgIAAF0AAAAAAAAAAIAwwHcAAABSAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-18T11:37:13.878Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "DataForChart.cs",
+              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\For chart\\DataForChart.cs",
+              "RelativeDocumentMoniker": "NIRS\\For chart\\DataForChart.cs",
+              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\For chart\\DataForChart.cs",
+              "RelativeToolTip": "NIRS\\For chart\\DataForChart.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T11:14:07.391Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BPMN.cs",
+              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\BPMN folder\\BPMN.cs",
+              "RelativeDocumentMoniker": "NIRS\\BPMN folder\\BPMN.cs",
+              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\BPMN folder\\BPMN.cs",
+              "RelativeToolTip": "NIRS\\BPMN folder\\BPMN.cs",
+              "ViewState": "AgIAAIYAAAAAAAAAAAAuwJcAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-14T14:33:58.551Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "TimeSpaceGrid.cs",
+              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Grid Folder\\TimeSpaceGrid.cs",
+              "RelativeDocumentMoniker": "NIRS\\Grid Folder\\TimeSpaceGrid.cs",
+              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Grid Folder\\TimeSpaceGrid.cs",
+              "RelativeToolTip": "NIRS\\Grid Folder\\TimeSpaceGrid.cs",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAIwBUAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-31T07:36:49.826Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Form1.Designer.cs",
+              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Form1.Designer.cs",
+              "RelativeDocumentMoniker": "NIRS\\Form1.Designer.cs",
+              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Form1.Designer.cs",
+              "RelativeToolTip": "NIRS\\Form1.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-08T12:14:05.388Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SEL.cs",
+              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Numerical Method\\SEL.cs",
+              "RelativeDocumentMoniker": "NIRS\\Numerical Method\\SEL.cs",
+              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Numerical Method\\SEL.cs",
+              "RelativeToolTip": "NIRS\\Numerical Method\\SEL.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAAwEoAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T19:53:49.921Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "NumericalSolutionInNodes.cs",
+              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Numerical solution\\NumericalSolutionInNodes.cs",
+              "RelativeDocumentMoniker": "NIRS\\Numerical solution\\NumericalSolutionInNodes.cs",
+              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Numerical solution\\NumericalSolutionInNodes.cs",
+              "RelativeToolTip": "NIRS\\Numerical solution\\NumericalSolutionInNodes.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAuwCIAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T20:05:34.853Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "GridBorderFiller.cs",
+              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Grid Folder\\GridBorderFiller.cs",
+              "RelativeDocumentMoniker": "NIRS\\Grid Folder\\GridBorderFiller.cs",
+              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Grid Folder\\GridBorderFiller.cs",
+              "RelativeToolTip": "NIRS\\Grid Folder\\GridBorderFiller.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAAwEQAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T20:05:23.413Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "TimeSpaceGridTest.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Grid Folder\\TimeSpaceGridTest.cs",
               "RelativeDocumentMoniker": "NIRS\\Grid Folder\\TimeSpaceGridTest.cs",
@@ -218,7 +299,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 11,
               "Title": "ChartPlaceholder.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\For chart\\ChartPlaceholder.cs",
               "RelativeDocumentMoniker": "NIRS\\For chart\\ChartPlaceholder.cs",
@@ -226,63 +307,46 @@
               "RelativeToolTip": "NIRS\\For chart\\ChartPlaceholder.cs",
               "ViewState": "AgIAAE0AAAAAAAAAAAAIwFoAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T11:17:27.03Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-08T11:17:27.03Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Form1.Designer.cs",
-              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Form1.Designer.cs",
-              "RelativeDocumentMoniker": "NIRS\\Form1.Designer.cs",
-              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Form1.Designer.cs",
-              "RelativeToolTip": "NIRS\\Form1.Designer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAIAAAAAAAAAA==",
+              "DocumentIndex": 14,
+              "Title": "OffseterNK.cs",
+              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Helpers\\OffseterNK.cs",
+              "RelativeDocumentMoniker": "NIRS\\Helpers\\OffseterNK.cs",
+              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Helpers\\OffseterNK.cs",
+              "RelativeToolTip": "NIRS\\Helpers\\OffseterNK.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T12:14:05.388Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-28T19:14:43.826Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DataForChart.cs",
-              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\For chart\\DataForChart.cs",
-              "RelativeDocumentMoniker": "NIRS\\For chart\\DataForChart.cs",
-              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\For chart\\DataForChart.cs",
-              "RelativeToolTip": "NIRS\\For chart\\DataForChart.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAIAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Form1.cs",
+              "RelativeDocumentMoniker": "NIRS\\Form1.cs",
+              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Form1.cs",
+              "RelativeToolTip": "NIRS\\Form1.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAQwD0AAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T11:14:07.391Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T10:55:08.343Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ResultExtractor.cs",
-              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\For chart\\ResultExtractor.cs",
-              "RelativeDocumentMoniker": "NIRS\\For chart\\ResultExtractor.cs",
-              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\For chart\\ResultExtractor.cs",
-              "RelativeToolTip": "NIRS\\For chart\\ResultExtractor.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAASwDUAAAA2AAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Form1.cs",
+              "RelativeDocumentMoniker": "NIRS\\Form1.cs",
+              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "RelativeToolTip": "NIRS\\Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-08T11:14:59.143Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T10:55:06.609Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "TimeSpaceGrid.cs",
-              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Grid Folder\\TimeSpaceGrid.cs",
-              "RelativeDocumentMoniker": "NIRS\\Grid Folder\\TimeSpaceGrid.cs",
-              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Grid Folder\\TimeSpaceGrid.cs",
-              "RelativeToolTip": "NIRS\\Grid Folder\\TimeSpaceGrid.cs",
-              "ViewState": "AgIAAFYAAAAAAAAAAAAIwBUAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T07:36:49.826Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 16,
               "Title": "ConstParametersCase1.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\data Parameters\\input Data Parameters\\ConstParametersCase1.cs",
               "RelativeDocumentMoniker": "NIRS\\data Parameters\\input Data Parameters\\ConstParametersCase1.cs",
@@ -294,7 +358,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 17,
               "Title": "IConstParameters.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Interfaces\\IConstParameters.cs",
               "RelativeDocumentMoniker": "NIRS\\Interfaces\\IConstParameters.cs",
@@ -306,7 +370,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 18,
               "Title": "Powder_12_7.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Powder Folder\\Powder_12_7.cs",
               "RelativeDocumentMoniker": "NIRS\\Powder Folder\\Powder_12_7.cs",
@@ -318,19 +382,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "NumericalSolutionInNodes.cs",
-              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Numerical solution\\NumericalSolutionInNodes.cs",
-              "RelativeDocumentMoniker": "NIRS\\Numerical solution\\NumericalSolutionInNodes.cs",
-              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Numerical solution\\NumericalSolutionInNodes.cs",
-              "RelativeToolTip": "NIRS\\Numerical solution\\NumericalSolutionInNodes.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAwDMAAABBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-11T20:05:34.853Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 5,
               "Title": "NIRS",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\NIRS.csproj",
               "RelativeDocumentMoniker": "NIRS\\NIRS.csproj",
@@ -341,7 +393,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 19,
               "Title": "DoubleTypeIssuer.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Helpers\\DoubleTypeIssuer.cs",
               "RelativeDocumentMoniker": "NIRS\\Helpers\\DoubleTypeIssuer.cs",
@@ -353,7 +405,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 22,
               "Title": "ParameterInterpolationFunctions.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Functions for numerical method\\ParameterInterpolationFunctions.cs",
               "RelativeDocumentMoniker": "NIRS\\Functions for numerical method\\ParameterInterpolationFunctions.cs",
@@ -365,31 +417,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "SEL.cs",
-              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Numerical Method\\SEL.cs",
-              "RelativeDocumentMoniker": "NIRS\\Numerical Method\\SEL.cs",
-              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Numerical Method\\SEL.cs",
-              "RelativeToolTip": "NIRS\\Numerical Method\\SEL.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAQwC0AAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-11T19:53:49.921Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "GridBorderFiller.cs",
-              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Grid Folder\\GridBorderFiller.cs",
-              "RelativeDocumentMoniker": "NIRS\\Grid Folder\\GridBorderFiller.cs",
-              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Grid Folder\\GridBorderFiller.cs",
-              "RelativeToolTip": "NIRS\\Grid Folder\\GridBorderFiller.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAkwDIAAAAQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-11T20:05:23.413Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 20,
               "Title": "DynamicBlock3DArray.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Grid Folder\\DynamicBlock3DArray.cs",
               "RelativeDocumentMoniker": "NIRS\\Grid Folder\\DynamicBlock3DArray.cs",
@@ -401,7 +429,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 21,
               "Title": "PN.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Parameter names\\PN.cs",
               "RelativeDocumentMoniker": "NIRS\\Parameter names\\PN.cs",
@@ -413,7 +441,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 23,
               "Title": "KGetter.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Helpers\\KGetter.cs",
               "RelativeDocumentMoniker": "NIRS\\Helpers\\KGetter.cs",
@@ -425,7 +453,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 24,
               "Title": "IGridBorderFiller.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Interfaces\\IGridBorderFiller.cs",
               "RelativeDocumentMoniker": "NIRS\\Interfaces\\IGridBorderFiller.cs",
@@ -437,7 +465,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "ProjectileFunctions.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Functions for numerical method\\ProjectileFunctions.cs",
               "RelativeDocumentMoniker": "NIRS\\Functions for numerical method\\ProjectileFunctions.cs",
@@ -445,23 +473,12 @@
               "RelativeToolTip": "NIRS\\Functions for numerical method\\ProjectileFunctions.cs",
               "ViewState": "AgIAAF0AAAAAAAAAAAAkwG8AAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-11T15:47:50.099Z"
+              "WhenOpened": "2025-05-11T15:47:50.099Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "HFunctions.cs",
-              "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\H Functions\\HFunctions.cs",
-              "RelativeDocumentMoniker": "NIRS\\H Functions\\HFunctions.cs",
-              "ToolTip": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\H Functions\\HFunctions.cs",
-              "RelativeToolTip": "NIRS\\H Functions\\HFunctions.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAcwEoAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T11:37:13.878Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "WaypointCalculator.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Nabla Functions\\WaypointCalculator.cs",
               "RelativeDocumentMoniker": "NIRS\\Nabla Functions\\WaypointCalculator.cs",
@@ -469,11 +486,12 @@
               "RelativeToolTip": "NIRS\\Nabla Functions\\WaypointCalculator.cs",
               "ViewState": "AgIAAGcAAAAAAAAAAAAswEEAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-11T19:58:19.976Z"
+              "WhenOpened": "2025-05-11T19:58:19.976Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "HFunctionsProjectile.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\H Functions\\HFunctionsProjectile.cs",
               "RelativeDocumentMoniker": "NIRS\\H Functions\\HFunctionsProjectile.cs",
@@ -481,11 +499,12 @@
               "RelativeToolTip": "NIRS\\H Functions\\HFunctionsProjectile.cs",
               "ViewState": "AgIAACsAAAAAAAAAAAAAwEEAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T08:02:48.228Z"
+              "WhenOpened": "2025-05-29T08:02:48.228Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "SpaceCell.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Grid Folder\\SpaceCell.cs",
               "RelativeDocumentMoniker": "NIRS\\Grid Folder\\SpaceCell.cs",
@@ -497,7 +516,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "IGrid.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Interfaces\\IGrid.cs",
               "RelativeDocumentMoniker": "NIRS\\Interfaces\\IGrid.cs",
@@ -509,7 +528,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "XGetter.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Helpers\\XGetter.cs",
               "RelativeDocumentMoniker": "NIRS\\Helpers\\XGetter.cs",
@@ -521,7 +540,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "VerifierAbilityCalculateNode.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Verifer\\VerifierAbilityCalculateNode.cs",
               "RelativeDocumentMoniker": "NIRS\\Verifer\\VerifierAbilityCalculateNode.cs",
@@ -533,7 +552,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "NumericalSolutionInterpolation.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Numerical solution\\NumericalSolutionInterpolation.cs",
               "RelativeDocumentMoniker": "NIRS\\Numerical solution\\NumericalSolutionInterpolation.cs",
@@ -545,7 +564,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "NablaNodeProjectile.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Nabla Functions\\Projectile\\NablaNodeProjectile.cs",
               "RelativeDocumentMoniker": "NIRS\\Nabla Functions\\Projectile\\NablaNodeProjectile.cs",
@@ -557,7 +576,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "WaypointCalculatorProjectile.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Nabla Functions\\Projectile\\WaypointCalculatorProjectile.cs",
               "RelativeDocumentMoniker": "NIRS\\Nabla Functions\\Projectile\\WaypointCalculatorProjectile.cs",
@@ -569,7 +588,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "Differencial.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Helpers\\Differencial.cs",
               "RelativeDocumentMoniker": "NIRS\\Helpers\\Differencial.cs",
@@ -577,11 +596,12 @@
               "RelativeToolTip": "NIRS\\Helpers\\Differencial.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAkwCUAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-11T16:22:26.911Z"
+              "WhenOpened": "2025-05-11T16:22:26.911Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "NumericalSolutionProjectile.cs",
               "DocumentMoniker": "G:\\\u043D\u0438\u0440\u0441\\NIRS.2.0\\NIRS\\Numerical solution\\NumericalSolutionProjectile.cs",
               "RelativeDocumentMoniker": "NIRS\\Numerical solution\\NumericalSolutionProjectile.cs",

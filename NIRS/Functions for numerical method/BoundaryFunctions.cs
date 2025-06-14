@@ -74,56 +74,56 @@ namespace NIRS.Functions_for_numerical_method
             }
             throw new Exception();
         }
-
+        double zero = 1e-5;
         public double Get_dynamic_m0(double n)
         {
-            return 0;
+            return zero;
         }
         public double Get_M0(double n)
         {
-            return 0;
+            return zero;
         }
         public double Get_v0(double n)
         {
-            return 0;
+            return zero;
         }
         public double Get_w0(double n)
         {
-            return 0;
+            return zero;
         }
 
         public double Get_dynamic_mMinus0Dot5(double k)
         {
-            return 0;
+            return zero;
         }
         public double Get_MMinus0Dot5(double k)
         {
-            return 0;
+            return zero;
         }
         public double Get_vMinus0Dot5(double k)
         {
-            return 0;
+            return zero;
         }
         public double Get_wMinus0Dot5(double k)
         {
-            return 0;
+            return zero;
         }
 
         public double Get_dynamic_mK(double n)
         {
-            return 0;
+            return zero;
         }
         public double Get_MK(double n)
         {
-            return 0;
+            return zero;
         }   
         public double Get_vK(double n)
         {
-            return 0;
+            return zero;
         }
         public double Get_wK(double n)
         {
-            return 0;
+            return zero;
         }
 
         public double Get_p0(double k)
@@ -147,11 +147,11 @@ namespace NIRS.Functions_for_numerical_method
         }
         public double Get_z0(double k)
         {
-            return 0;
+            return zero;
         }
         public double Get_psi0(double k)
         {
-            return 0;
+            return zero;
         }
         public double Get_m0(double k)
         {

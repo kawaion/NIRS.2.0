@@ -31,6 +31,7 @@ namespace NIRS.Cannon_Folder.Powder_Folder
         }
         public double Sigma(double z, double psi)
         {
+            var tmp = z;
             if (z < 1)
                 return 1.0 + 2.0 * lamda * z + 3.0 * mu * Math.Pow(z, 2);
 
@@ -40,6 +41,11 @@ namespace NIRS.Cannon_Folder.Powder_Folder
                                                 (1.0 - psi) / (1.0 - psiS) 
                                              ) 
                                    );
+            else
+            {
+                var tmppsi = psi; 
+                var tmpz = z; 
+            }
 
             throw new ArgumentException();
         }

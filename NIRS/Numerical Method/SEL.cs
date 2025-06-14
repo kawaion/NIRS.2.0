@@ -43,7 +43,7 @@ namespace NIRS.Numerical_Method
 
         public IGrid Calculate()
         {
-            IGrid grid = new TimeSpaceGrid();
+            IGrid grid = new TimeSpaceGridTest();
 
             functionsBuilder = new FunctionsBuilder(_mainData);
             functionsBuilder.Build(grid);
@@ -73,8 +73,8 @@ namespace NIRS.Numerical_Method
                 n += 0.5;
 
                 grid = gridBorderFiller.FillBarrelBorders(grid, n, isBeltIntact, KDynamicLast);
-                grid = GetNumericalSolutionAtNodesN(grid, n);
-                grid = gridBorderFiller.FillLastNodeOfMixture(grid, n, isBeltIntact);
+                var grid1 = GetNumericalSolutionAtNodesN(grid, n);
+                grid = gridBorderFiller.FillLastNodeOfMixture(grid1, n, isBeltIntact);
                 grid = GetNumericalSolutionInProjectile(grid, n, gridBorderFiller);
                 grid = GetInterpolateSolutionAtInaccessibleNodes(grid, n); 
                 AttemptRipOffBelt(grid, n);         

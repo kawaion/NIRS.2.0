@@ -35,6 +35,10 @@ namespace NIRS
         public Form1()
         {
             InitializeComponent();
+
+            //ConfigureDataGridView();
+
+
             chart1.ChartAreas[0].AxisX.Minimum = 0;
             //chart2.ChartAreas[0].AxisY.Interval = 100000000;
         }
@@ -42,8 +46,8 @@ namespace NIRS
         private void button1_Click(object sender, EventArgs e)
         {
             IInitialParameters initialParameters = new InitialParametersCase1();
-            double h = 0.0126875; //0.0025;
-            double tau = 3.171875e-6; //curantTau(h, 945);
+            double h = 1.015/80; //0.0025;
+            double tau = 1.015/(80*(2500+1500)); //curantTau(h, 945);
             IConstParameters constParameters = new ConstParametersCase1(tau, h);
             (var newInitialParameters, var newConstParameters) = (initialParameters, constParameters);//inputDataTransmitter.GetInputData(initialParameters, constParameters);
             List<Point2D> points = new List<Point2D>();
@@ -55,7 +59,7 @@ namespace NIRS
             //points.Add(new Point2D(1.1225, 0.1524));
             //points.Add(new Point2D(6.322, 0.1524));
             points.Add(new Point2D(1.015, 0.1524));
-            points.Add(new Point2D(6.322+1.015, 0.1524));
+            points.Add(new Point2D(6.322 + 1.015, 0.1524));
 
             //Point2D endChamber = new Point2D(1.1225, 0.1524);
             Point2D endChamber = new Point2D(1.015, 0.1524);
@@ -63,7 +67,7 @@ namespace NIRS
             double omega = 19;
             double d = 0.1524;
 
-            IBarrel barrel = new Barrel(points,endChamber,Dimension.D);
+            IBarrel barrel = new Barrel(points, endChamber, Dimension.D);
             IPowder powder = new Powder_12_7(newConstParameters, barrel.BarrelSize, omega);
             IProjectile projectile = new Projectile(newConstParameters.q, d);
             mainData = new MainData(barrel, powder, newConstParameters, newInitialParameters, projectile);
@@ -79,7 +83,7 @@ namespace NIRS
             var tmp = grid.GetSn(PN.vSn, grid.LastIndexN(PN.v));
             var maxN = grid.LastIndexN(PN.p);
             nForMaxP = FindNPMax();
-            
+
             //ResultExtractor resultExtractor = new ResultExtractor(grid);
             //var dataT = resultExtractor.GetT(PN.p, mainData);
             //var dataPkn = resultExtractor.GetPKn();
@@ -112,19 +116,19 @@ namespace NIRS
                 //{
                 //    int c = 0;
                 //}
-                    
+
             }
             return nForMaxP;
         }
         IGrid grid;
-        private void ShowLayer(double n,List<PN> pns)
+        private void ShowLayer(double n, List<PN> pns)
         {
             for (int j = 0; j < pns.Count; j++)
                 chart1.Series[j].Points.Clear();
             var last = grid.LastIndexK(pns[0], n);
             for (double i = 0; i <= last; i++)
-                for(int j = 0;j<pns.Count;j++)
-                    chart1.Series[j].Points.AddXY(i, grid[pns[j],n,i]);
+                for (int j = 0; j < pns.Count; j++)
+                    chart1.Series[j].Points.AddXY(i, grid[pns[j], n, i]);
         }
         private double curantTau(double h, double v)
         {
@@ -161,11 +165,11 @@ namespace NIRS
 
         private void Visualise(PN pn)
         {
-            var pns = new List<PN>() {pn};
+            var pns = new List<PN>() { pn };
             var n = Convert.ToDouble(textBox1.Text);
-            if (n > grid.LastIndexN(pns[0])-1)
+            if (n > grid.LastIndexN(pns[0]) - 1)
             {
-                n = grid.LastIndexN(pns[0])-1;
+                n = grid.LastIndexN(pns[0]) - 1;
                 textBox1.Text = n.ToString();
             }
             ShowLayer(n, pns);
@@ -183,7 +187,7 @@ namespace NIRS
             var pn = comboBox1.Text;
             switch (pn)
             {
-                case "p":return PN.p;
+                case "p": return PN.p;
                 case "psi": return PN.psi;
                 default: throw new Exception();
             }
@@ -194,8 +198,8 @@ namespace NIRS
             chartForDraw = chart3;
             switch (comboBox2.Text[0])
             {
-                case '1': Draw1();break;
-                case '2': Draw2();break;
+                case '1': Draw1(); break;
+                case '2': Draw2(); break;
                 case '3': Draw3(); break;
                 case '4': Draw4(); break;
                 case '5': Draw5(); break;
@@ -203,7 +207,7 @@ namespace NIRS
                 case '7': Draw7(); break;
             }
         }
-        
+
         private void Draw1()
         {
             ResultExtractor resultExtractor = new ResultExtractor(grid);
@@ -238,7 +242,7 @@ namespace NIRS
             chartPlaceholder.SetIntervalCount(4);
 
             chartForDraw = chartPlaceholder.GetChart;
-        }        
+        }
         private void Draw3()
         {
             double n = grid.LastIndexN(PN.ro);
@@ -270,9 +274,9 @@ namespace NIRS
             chartPlaceholder.AddLeft(dataXForV, dataVtw);
             chartPlaceholder.AddLeft(dataXForV, dataWgas);
             chartPlaceholder.SetIntervalX(0.25);
-            chartPlaceholder.SetMaxY(500);
-            chartPlaceholder.SetMaxYLeft(500);
-            chartPlaceholder.SetIntervalCount(5);
+            //chartPlaceholder.SetMaxY(500);
+            //chartPlaceholder.SetMaxYLeft(500);
+            //chartPlaceholder.SetIntervalCount(5);
 
             chartForDraw = chartPlaceholder.GetChart;
         }
@@ -290,15 +294,15 @@ namespace NIRS
             chartPlaceholder.AddLeft(dataXForV, dataVtw);
             chartPlaceholder.AddLeft(dataXForV, dataWgas);
             chartPlaceholder.SetIntervalX(0.25);
-            chartPlaceholder.SetMaxY(500);
-            chartPlaceholder.SetMaxYLeft(500);
-            chartPlaceholder.SetIntervalCount(5);
+            //chartPlaceholder.SetMaxY(500);
+            //chartPlaceholder.SetMaxYLeft(1000);
+            //chartPlaceholder.SetIntervalCount(5);
 
             chartForDraw = chartPlaceholder.GetChart;
         }
         private void Draw6()
         {
-            double n = nForMaxP;
+            double n = grid.LastIndexN(PN.a); //nForMaxP;
             ResultExtractor resultExtractor = new ResultExtractor(grid);
             var dataX = resultExtractor.GetX(PN.a, n, mainData);
             var dataA = resultExtractor.GetA(n, mainData);
@@ -327,6 +331,244 @@ namespace NIRS
 
             chartForDraw = chartPlaceholder.GetChart;
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            List<double> result = new List<double>();
+            IInitialParameters initialParameters = new InitialParametersCase1();
+            double hFinal = 0.0126875; //0.0025;
+            double tauFinal = 3.171875e-6; //curantTau(h, 945);
+            for (int i = 3; i >= 0; i--)
+            {
+                double h = hFinal * Math.Pow(2, i);
+                double tau = tauFinal * Math.Pow(2, i);
+                IConstParameters constParameters = new ConstParametersCase1(tau, h);
+                (var newInitialParameters, var newConstParameters) = (initialParameters, constParameters);//inputDataTransmitter.GetInputData(initialParameters, constParameters);
+                List<Point2D> points = new List<Point2D>();
+                points.Add(new Point2D(0, 0.214));
+                points.Add(new Point2D(0.85, 0.214));
+                points.Add(new Point2D(0.96, 0.196));
+                //points.Add(new Point2D(1.015, 0.164));
+                //points.Add(new Point2D(1.045, 0.155));
+                //points.Add(new Point2D(1.1225, 0.1524));
+                //points.Add(new Point2D(6.322, 0.1524));
+                points.Add(new Point2D(1.015, 0.1524));
+                points.Add(new Point2D(6.322 + 1.015, 0.1524));
+
+                //Point2D endChamber = new Point2D(1.1225, 0.1524);
+                Point2D endChamber = new Point2D(1.015, 0.1524);
+
+                double omega = 19;
+                double d = 0.1524;
+
+                IBarrel barrel = new Barrel(points, endChamber, Dimension.D);
+                IPowder powder = new Powder_12_7(newConstParameters, barrel.BarrelSize, omega);
+                IProjectile projectile = new Projectile(newConstParameters.q, d);
+                mainData = new MainData(barrel, powder, newConstParameters, newInitialParameters, projectile);
+                //INumericalMethod numericalMethod = new SEL(mainData,DrawGrid);
+                //Task<IGrid> task = new Task<IGrid>(()=>numericalMethod.Calculate());
+                //task.Start();
+                //IGrid grid = task.Result;//numericalMethod.Calculate();
+
+                INumericalMethod numericalMethod = new SEL(mainData);
+                grid = numericalMethod.Calculate();
+                var lastN = grid.LastIndexNSn(PN.vSn);
+                result.Add(grid.GetSn(PN.vSn, lastN));
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+        //// Константы для настройки внешнего вида
+        //private const int MIN_COLUMN_WIDTH = 80; // Минимальная ширина столбца
+        //private const int ROW_HEIGHT = 25;       // Высота строки
+        //private const int MAX_VISIBLE_ROWS = 30; // Максимальное количество строк перед включением прокрутки
+        //private const int MAX_VISIBLE_COLS = 15; // Максимальное количество столбцов перед включением прокрутки
+        ////private void ConfigureDataGridView()
+        ////{
+        ////    // Базовая конфигурация DataGridView
+        ////    dataGridView1.AutoGenerateColumns = false;
+        ////    dataGridView1.AllowUserToAddRows = false;
+        ////    dataGridView1.AllowUserToDeleteRows = false;
+        ////    dataGridView1.ReadOnly = true;
+        ////    dataGridView1.RowHeadersVisible = true;
+        ////    dataGridView1.ColumnHeadersVisible = true;
+        ////    dataGridView1.ScrollBars = ScrollBars.Both;
+        ////    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None; // Полностью ручное управление
+        ////    dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+        ////}
+        //public void DisplayMatrix(double[,] matrix)
+        //{
+        //    if (matrix == null) return;
+
+        //    dataGridView1.SuspendLayout();
+        //    try
+        //    {
+        //        ClearDataGridView();
+
+        //        int rowCount = matrix.GetLength(0);
+        //        int colCount = matrix.GetLength(1);
+
+        //        // 1. Создаем столбцы с фиксированной шириной
+        //        CreateColumns(colCount);
+
+        //        // 2. Находим диапазон значений для цветовой схемы
+        //        CalculateValueRange(matrix, out double min, out double max);
+
+        //        // 3. Заполняем данными
+        //        PopulateData(matrix, rowCount, colCount, min, max);
+
+        //        // 4. Настраиваем размеры
+        //        AdjustGridSizes(rowCount, colCount);
+        //    }
+        //    finally
+        //    {
+        //        dataGridView1.ResumeLayout();
+        //    }
+        //}
+
+        //private void ClearDataGridView()
+        //{
+        //    dataGridView1.Columns.Clear();
+        //    dataGridView1.Rows.Clear();
+        //}
+
+        //private void ConfigureDataGridView()
+        //{
+        //    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+        //    dataGridView1.AllowUserToAddRows = false;
+        //    dataGridView1.AllowUserToDeleteRows = false;
+        //    dataGridView1.ReadOnly = true;
+        //}
+
+        //private void CreateColumns(int colCount)
+        //{
+        //    dataGridView1.Columns.Clear();
+
+        //    for (int j = 0; j < colCount; j++)
+        //    {
+        //        dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+        //        {
+        //            Name = $"Column_{j}",
+        //            HeaderText = $"Col {j}",
+        //            Width = MIN_COLUMN_WIDTH,
+        //            FillWeight = 100,
+        //            DefaultCellStyle = new DataGridViewCellStyle
+        //            {
+        //                Alignment = DataGridViewContentAlignment.MiddleCenter,
+        //                Format = "F2",
+        //                BackColor = Color.White
+        //            }
+        //        });
+        //    }
+        //}
+
+        //private void CalculateValueRange(double[,] matrix, out double min, out double max)
+        //{
+        //    min = double.MaxValue;
+        //    max = double.MinValue;
+
+        //    foreach (double value in matrix)
+        //    {
+        //        if (value < min) min = value;
+        //        if (value > max) max = value;
+        //    }
+
+        //    if (min == max) // Если все значения одинаковые
+        //    {
+        //        min = max - 1; // Чтобы избежать деления на ноль
+        //    }
+        //}
+
+        //private void PopulateData(double[,] matrix, int rowCount, int colCount, double min, double max)
+        //{
+        //    for (int i = 0; i < rowCount; i++)
+        //    {
+        //        dataGridView1.Rows.Add();
+        //        dataGridView1.Rows[i].HeaderCell.Value = $"Row {i}";
+
+        //        for (int j = 0; j < colCount; j++)
+        //        {
+        //            var cell = dataGridView1.Rows[i].Cells[j];
+        //            cell.Value = matrix[i, j];
+        //            cell.Style.BackColor = GetValueColor(matrix[i, j], min, max);
+        //        }
+        //    }
+        //}
+
+        //private Color GetValueColor(double value, double min, double max)
+        //{
+        //    double normalized = (value - min) / (max - min);
+        //    normalized = Math.Max(0, Math.Min(1, normalized));
+
+        //    // Градиент от синего (мин) к красному (макс)
+        //    int red = (int)(255 * normalized);
+        //    int blue = (int)(255 * (1 - normalized));
+        //    int green = 0;
+
+        //    return Color.FromArgb(red, green, blue);
+        //}
+
+        //private void AdjustGridSizes(int rowCount, int colCount)
+        //{
+        //    // Настраиваем ширину столбцов
+        //    int availableWidth = dataGridView1.ClientSize.Width - dataGridView1.RowHeadersWidth;
+        //    int columnWidth = CalculateColumnWidth(availableWidth, colCount);
+
+        //    foreach (DataGridViewColumn column in dataGridView1.Columns)
+        //    {
+        //        column.Width = columnWidth;
+        //    }
+
+        //    // Настраиваем высоту строк
+        //    foreach (DataGridViewRow row in dataGridView1.Rows)
+        //    {
+        //        row.Height = ROW_HEIGHT;
+        //    }
+        //}
+
+        //private int CalculateColumnWidth(int availableWidth, int colCount)
+        //{
+        //    int calculatedWidth = availableWidth / colCount;
+
+        //    // Если столбцы слишком узкие, включаем горизонтальную прокрутку
+        //    if (calculatedWidth < MIN_COLUMN_WIDTH)
+        //    {
+        //        return MIN_COLUMN_WIDTH;
+        //    }
+
+        //    // Если столбцов немного, можно сделать их шире
+        //    if (colCount <= 5)
+        //    {
+        //        return Math.Max(MIN_COLUMN_WIDTH, availableWidth / colCount);
+        //    }
+
+        //    return calculatedWidth;
+        //}
+
+        //protected override void OnResize(EventArgs e)
+        //{
+        //    base.OnResize(e);
+        //    if (dataGridView1.Columns.Count > 0)
+        //    {
+        //        AdjustGridSizes(dataGridView1.Rows.Count, dataGridView1.Columns.Count);
+        //    }
+        //}
+
+
+        //private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    int pnNumber = comboBox3.SelectedIndex;
+        //    var data = grid.GetFullData(pnNumber);
+        //    DisplayMatrix(data);
+        //}
     }
-    delegate void Draw(IGrid grid); 
+    delegate void Draw(IGrid grid);
 }

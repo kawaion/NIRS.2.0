@@ -20,6 +20,10 @@ namespace NIRS.For_chart
             _chart.Series.Clear();
             _chart.ChartAreas[0].AxisX.Minimum = 0;
             _chart.ChartAreas[0].AxisY.Minimum = 0;
+            _chart.ChartAreas[0].AxisX.Maximum = double.NaN;
+            _chart.ChartAreas[0].AxisY.Maximum = double.NaN;
+            _chart.ChartAreas[0].AxisY2.Maximum = double.NaN;
+            _chart.ChartAreas[0].AxisX.Interval = double.NaN;
             _chart.ChartAreas[0].AxisY2.Minimum = 0;
         }        
         public void SetIntervalCount(int value)

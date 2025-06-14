@@ -12,7 +12,7 @@ namespace NIRS.Grid_Folder
         private const int InitialCapacity = 256; // Начальный размер массива
         private const double GrowthFactor = 2; // Множитель роста
 
-        private double[,,] data; // [paramIndex, nIndex, kIndex]
+        public double[,,] data; // [paramIndex, nIndex, kIndex]
         //private DynamicBlock3DArray<double> data;
         private double[,] currentKSize; // [paramIndex, nIndex]
         private double[] currentNSize;  // [paramIndex]
@@ -26,6 +26,16 @@ namespace NIRS.Grid_Folder
             InitializeData();
             InitializeDataSn();
         }
+        public double[,] GetFullData(int pn)
+        {
+            double[,] datapn = new double[data.GetLength(1),data.GetLength(2)];
+            for (int i = 0; i < data.GetLength(1); i++)
+                for(int j = 0; j < data.GetLength(2); j++)
+                {
+                    datapn[i,j] = data[pn,i,j];
+                }
+            return datapn;
+        }
         private void InitializeData()
         {
             //data = new DynamicBlock3DArray<double>(countParams, 512, 512);
@@ -38,7 +48,7 @@ namespace NIRS.Grid_Folder
             get
             {
                 if (pn == PN.One_minus_m)
-                    return 1 - this[PN.m, n, k];
+                    return 1.02 - this[PN.m, n, k];
 
                 var paramIndex = (int)pn;
                 var nIndex = ConvertToNIndex(n);
@@ -48,6 +58,14 @@ namespace NIRS.Grid_Folder
             }
             set
             {
+                if (double.IsNaN(value))
+                {
+                    int с = 0;
+                }
+                if (double.IsInfinity(value))
+                {
+                    int с = 0;
+                }
                 var paramIndex = (int)pn;
                 var nIndex = ConvertToNIndex(n);
                 var kIndex = ConvertToKIndex(k);
@@ -158,7 +176,7 @@ namespace NIRS.Grid_Folder
         //}
 
         // Остальные методы остаются без изменений
-        private double Validation(double value) => Math.Abs(value) < 1e-6 ? 0 : value;
+        private double Validation(double value) => value;//Math.Abs(value) < 1e-6 ? 0 : value;
 
         private int ConvertToNIndex(double n)
         {
@@ -200,7 +218,7 @@ namespace NIRS.Grid_Folder
         public double GetSn(PN pn, double n)
         {
             if (pn == PN.One_minus_m)
-                return 1 - GetSn(PN.m, n);
+                return 1.02 - GetSn(PN.m, n);
 
             var paramIndex = (int)pn;
             var nIndex = ConvertToNIndexSn(n);
@@ -209,6 +227,14 @@ namespace NIRS.Grid_Folder
 
         public void SetSn(PN pn, double n, double value)
         {
+            if (double.IsNaN(value))
+            {
+                int с = 0;
+            }
+            if (double.IsInfinity(value))
+            {
+                int с = 0;
+            }
             var paramIndex = (int)pn;
             var nIndex = ConvertToNIndexSn(n);
             EnsureCapacitySn(paramIndex, nIndex);

@@ -55,9 +55,9 @@ namespace NIRS.Numerical_solution
             if (!isBeltIntact)
             {
                 grid.SetSn(PN.r, n,     functions.Get(PN.r, n));
-                grid.SetSn(PN.e, n,     functions.Get(PN.e, n));
-                grid.SetSn(PN.psi, n,   functions.Get(PN.psi, n));
+                grid.SetSn(PN.e, n,     functions.Get(PN.e, n));                
                 grid.SetSn(PN.z, n,     functions.Get(PN.z, n));
+                grid.SetSn(PN.psi, n,   functions.Get(PN.psi, n));
                 grid.SetSn(PN.a, n,     functions.Get(PN.a, n));
                 grid.SetSn(PN.m, n,     functions.Get(PN.m, n));
                 grid.SetSn(PN.p, n,     functions.Get(PN.p, n));

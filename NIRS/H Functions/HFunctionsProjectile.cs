@@ -56,9 +56,19 @@ namespace NIRS.H_Functions
         {
             var n = OffseterN.AppointAndOffset(N, + 0.5);
 
-            return (powder.S0 / powder.LAMDA0)
+            var hpsi =  (powder.S0 / powder.LAMDA0)
                    * bps.Sigma(g.GetSn(PN.z, n), g.GetSn(PN.psi, n))
                    * bps.Uk(g.GetSn(PN.p, n));
+            if (double.IsNaN(hpsi))
+            {
+                int c = 0;
+                var tmpn = n;
+                var tmp1 = bps.Sigma(g.GetSn(PN.z, n), g.GetSn(PN.psi, n));
+                var tmp11 = g.GetSn(PN.p, n);
+                var tmp12 = g.GetSn(PN.p, n-1);
+                var tmp2 = bps.Uk(g.GetSn(PN.p, n));
+            }
+            return hpsi;
         }
 
         private double G(double n)

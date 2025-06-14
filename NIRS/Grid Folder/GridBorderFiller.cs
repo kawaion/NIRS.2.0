@@ -144,13 +144,15 @@ namespace NIRS.Grid_Folder
         {
             if (isBeltIntact && n.IsInt())
             {
-                var K = grid.LastIndexK(PN.r, n);
-                var KMinus1 = K - 1;
-                var KPlus1 = K + 1;
+
 
                 var parameters = new List<PN> { PN.r, PN.z, PN.a, PN.m, PN.ro, PN.e, PN.p, PN.psi };
                 foreach (var pn in parameters)
-                {
+                {                
+                    var K = grid.LastIndexK(pn, n);
+                    var KMinus1 = K - 1;
+                    var KPlus1 = K + 1;
+
                     var p1 = new Point2D(KMinus1, grid[pn, n, KMinus1]);
                     var p2 = new Point2D(K, grid[pn, n, K]);
                     EquationOfLineFromTwoPoints equation = new EquationOfLineFromTwoPoints(p1, p2);

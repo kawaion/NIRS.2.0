@@ -103,16 +103,38 @@ namespace NIRS.Functions_for_numerical_method
                     g.GetSn(PN.m, n + 1) * bs.S(x_nPlus1)
                     - constP.alpha * g.GetSn(PN.r, n + 1)
                 );
+            if (double.IsNaN(res))
+            {
+                var tmp1 = bs.S(x_nPlus1);
+                var tmp2 = g.GetSn(PN.r, n + 1);
+                var tmp3 = g.GetSn(PN.e, n + 1);
+            }
 
-            return res;
+                return res;
         }
 
         public double Get_psi(double N)
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
 
-            var psi = g.GetSn(PN.psi, n)
+            double psi;
+
+            var z = g.GetSn(PN.z, n + 1);
+
+            if(z>=1)
+                psi = g.GetSn(PN.psi, n)
                    + constP.tau * hf.sn.HPsi(n + 0.5);
+            else
+            {
+                psi = powder.BurningPowdersSize.Psi(z);
+            }
+            if (double.IsNaN(psi))
+            {
+                int c = 0;
+                var tmpn = n;
+                var tmp1 = hf.sn.HPsi(n + 0.5);
+                var tmp2 = g.GetSn(PN.psi, n);
+            }
 
             psi = PowderValidation(psi);
             return psi;
@@ -127,10 +149,18 @@ namespace NIRS.Functions_for_numerical_method
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
 
-            return g.GetSn(PN.r, n) - constP.tau *
+            var res = g.GetSn(PN.r, n) - constP.tau *
                 (
                    g.GetSn(PN.r, n) * d.dvdx(n + 0.5) - hf.sn.H3(n + 0.5)
                 );
+
+            if (double.IsNaN(res))
+            {
+                var tmp1 = g.GetSn(PN.r, n);
+                var tmp2 = d.dvdx(n + 0.5);
+                var tmp3 = hf.sn.H3(n + 0.5);
+            }
+            return res;
         }
 
         public double Get_ro(double N)
@@ -148,6 +178,10 @@ namespace NIRS.Functions_for_numerical_method
             var n = OffseterN.AppointAndOffset(N, + 0.5);
 
             var x_n = g.GetSn(PN.x, n);
+            var tmp = bs.S(x_n);
+
+            var tmp2 = g.GetSn(PN.vSn, n - 0.5) + (constP.tau / projectile.q)
+                                    * (g.GetSn(PN.p, n) * bs.S(x_n));
 
             return g.GetSn(PN.vSn, n - 0.5) + (constP.tau / projectile.q)
                                     * (g.GetSn(PN.p, n) * bs.S(x_n));

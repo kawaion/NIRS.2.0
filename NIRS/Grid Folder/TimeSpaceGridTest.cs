@@ -9,9 +9,12 @@ using NIRS.Parameter_names;
 using System.Linq;
 using System.Reflection;
 using NIRS.Helpers;
+using System.Diagnostics;
+using System.Text;
 
 namespace NIRS.Grid_Folder
 {
+    [DebuggerDisplay("TimeSpaceGridTest: Params={countParams}, MaxNegN={maximumnNegativeN}, MaxNegK={maximumnNegativeK}")]
     public class TimeSpaceGridTest : IGrid
     {
         RAM<(PN, double), List<(double k, double value)>> ram;
@@ -67,7 +70,7 @@ namespace NIRS.Grid_Folder
 
                 var nIndex = ConvertToNIndex(n);
                 if(pn == PN.One_minus_m)
-                    return 1 - data[(int)PN.m][nIndex].layer [kIndex].value;
+                    return 1.02 - data[(int)PN.m][nIndex].layer [kIndex].value;
                 else
                 {
                     var cells = data[(int)pn][nIndex].layer;
@@ -180,7 +183,7 @@ namespace NIRS.Grid_Folder
 
             var nIndex = ConvertToNIndexSn(n);
             if (pn == PN.One_minus_m)
-                return 1 - dataSn[(int)PN.m][nIndex].value;
+                return 1.02 - dataSn[(int)PN.m][nIndex].value;
             else
             {
                 var value = dataSn[(int)pn][nIndex].value;
@@ -220,6 +223,117 @@ namespace NIRS.Grid_Folder
         }
 
         public double LastIndexNSn(PN pn)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+
+        public override string ToString()
+        {
+            return $"TimeSpaceGridTest: Params={countParams}, LastN={GetLastNValue()}, LastK={GetLastKValue()}";
+        }
+
+        // Метод для получения последнего значения N
+        private string GetLastNValue()
+        {
+            try
+            {
+                var lastNValues = string.Join(", ", data.Select(d => d?.LastOrDefault().n.ToString() ?? "null"));
+                return lastNValues;
+            }
+            catch
+            {
+                return "error";
+            }
+        }
+
+        // Метод для получения последнего значения K
+        private string GetLastKValue()
+        {
+            try
+            {
+                var lastKValues = string.Join(", ", data.Select(d =>
+                    d?.LastOrDefault().layer?.LastOrDefault().k.ToString() ?? "null"));
+                return lastKValues;
+            }
+            catch
+            {
+                return "error";
+            }
+        }
+
+        // Добавим метод для вывода данных в читаемом формате
+        public string GetDebugInfo()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("TimeSpaceGridTest Debug Info:");
+            sb.AppendLine($"Parameters count: {countParams}");
+            sb.AppendLine($"Sn Parameters count: {countParamsSn}");
+
+            // Выводим информацию по основным данным
+            sb.AppendLine("\nMain Data (n, k layers):");
+            for (int i = 0; i < countParams; i++)
+            {
+                var paramName = ((PN)i).ToString();
+                var layers = data[i];
+                sb.AppendLine($"{paramName}: {layers?.Count ?? 0} layers");
+
+                if (layers != null && layers.Count > 0)
+                {
+                    sb.AppendLine($"  Last n: {layers.Last().n}, " +
+                                  $"K values: {layers.Last().layer?.Count ?? 0}");
+                }
+            }
+
+            // Выводим информацию по Sn данным
+            sb.AppendLine("\nSn Data:");
+            for (int i = 0; i < countParamsSn; i++)
+            {
+                var paramName = ((PN)i).ToString();
+                var values = dataSn[i];
+                sb.AppendLine($"{paramName}: {values?.Count ?? 0} values");
+
+                if (values != null && values.Count > 0)
+                {
+                    sb.AppendLine($"  Last n: {values.Last().n}, " +
+                                $"Value: {values.Last().value}");
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        // Добавим метод для получения значения параметра в виде строки
+        public string GetValueString(PN pn, double n, double k)
+        {
+            try
+            {
+                return $"{pn}[{n},{k}] = {this[pn, n, k]}";
+            }
+            catch (Exception ex)
+            {
+                return $"{pn}[{n},{k}] error: {ex.Message}";
+            }
+        }
+
+        // Добавим метод для получения Sn значения в виде строки
+        public string GetSnValueString(PN pn, double n)
+        {
+            try
+            {
+                return $"{pn}Sn[{n}] = {GetSn(pn, n)}";
+            }
+            catch (Exception ex)
+            {
+                return $"{pn}Sn[{n}] error: {ex.Message}";
+            }
+        }
+
+        public double[,] GetFullData(int pn)
         {
             throw new NotImplementedException();
         }
