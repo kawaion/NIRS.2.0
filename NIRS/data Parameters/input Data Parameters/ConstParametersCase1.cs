@@ -1,5 +1,6 @@
 ﻿
 
+using NIRS.Helpers;
 using NIRS.Interfaces;
 
 namespace NIRS.Data_Parameters.Input_Data_Parameters
@@ -8,14 +9,18 @@ namespace NIRS.Data_Parameters.Input_Data_Parameters
     {
         private double Tau;
         private double H;
+        private int CountDivideChamber;
 
         public double cp => 1838.8;
         public double cv => 1497.4;
-        public ConstParametersCase1(double tau,double h)
+        public ConstParametersCase1(double tau, int countDivideChamber, Point2D chamber)
         {
             Tau = tau;
-            H = h;
+            H = chamber.X/countDivideChamber;
+            CountDivideChamber = countDivideChamber;
         }
+        public int countDivideChamber { get { return CountDivideChamber; } }
+
         public double tau { get {return Tau; } }
         public double h { get { return H; } }
         public double teta => cp / cv - 1;

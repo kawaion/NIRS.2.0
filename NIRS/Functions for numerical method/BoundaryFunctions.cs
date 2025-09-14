@@ -64,10 +64,10 @@ namespace NIRS.Functions_for_numerical_method
             switch (pn)
             {
                 case PN.p: return Get_p0(k);
-                case PN.ro: return Get_ro0(k);
+                case PN.rho: return Get_ro0();
                 case PN.z: return Get_z0(k);
                 case PN.psi: return Get_psi0(k);
-                case PN.m: return Get_m0(k);
+                case PN.m: return Get_m0();
                 case PN.a: return Get_a0(k);
                 case PN.r: return Get_r0(k);
                 case PN.e: return Get_e0(k);
@@ -135,12 +135,12 @@ namespace NIRS.Functions_for_numerical_method
         {
             return Get_p0(0);
         }
-        public double Get_ro0(double k)
+        public double Get_ro0()
         {
             return pV() /
                    (constP.alpha * pV() + constP.f);
         }
-        public double Get_eps0(double k)
+        public double Get_eps0()
         {
             return constP.f /
                    constP.teta;
@@ -153,22 +153,22 @@ namespace NIRS.Functions_for_numerical_method
         {
             return zero;
         }
-        public double Get_m0(double k)
+        public double Get_m0()
         {
             return 1 - powder.DELTA / powder.Delta;
         }
         public double Get_a0(double k)
         {
             return powder.Omega/
-                  (powder.LAMDA0 * powder.Delta * bs.Wkm);
+                  (powder.LAMBDA0 * powder.Delta * bs.Wkm);
         }
         public double Get_r0(double k)
         {
-            return Get_ro0(k) * Get_m0(k) * bs.S(x[k]);
+            return Get_ro0() * Get_m0() * bs.S(x[k]);
         }
         public double Get_e0(double k)
         {
-            return Get_ro0(k) * Get_m0(k) * bs.S(x[k]) * Get_eps0(k);
+            return Get_ro0() * Get_m0() * bs.S(x[k]) * Get_eps0();
         }
 
         public void Update()

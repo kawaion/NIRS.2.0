@@ -43,70 +43,96 @@ namespace NIRS.H_Functions
 
         public double H1(double n, double k)
         {
-            double S_k = bs.S(x[k]);
+            double x_k = x[k];
+
+            double S_k = bs.S(x_k);
             double tau_w_n_k = tauW(n, k);
             double G_n_k = G(n, k);
             double w_nM05_k = g[PN.w, n - 0.5, k];
 
-            var res = BPMN.H1_n_k(S_k, tau_w_n_k,
-                                  G_n_k, w_nM05_k);
+            var res = MainFunctions.H1_n_k(S_k, tau_w_n_k, G_n_k, w_nM05_k);
             return res;
         }
 
         public double H2(double n, double k)
         {
-            return bs.S(x[k]) * tauW(n, k) - bs.S(x[k]) * G(n, k) * g[PN.w, n - 0.5, k];
+            double x_k = x[k];
+
+            double S_k = bs.S(x_k);
+            double tau_w_n_k = tauW(n, k);
+            double G_n_k = G(n, k);
+            double w_nM05_k = g[PN.w, n - 0.5, k];
+
+            var res = MainFunctions.H2_n_k(S_k, tau_w_n_k, G_n_k, w_nM05_k);
+            return res;
         }
 
         public double H3(double N, double K)
         {
             (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
-            return bs.S(x[k - 0.5]) * G(n, k);
+
+            double x_kM05 = x[k - 0.5];
+
+            double S_kM05 = bs.S(x_kM05);
+            double G_n_k = G(n, k);
+
+            var res = MainFunctions.H3_nP05_kM05(S_kM05, G_n_k);
+            return res;
         }
 
         public double H4(double N, double K)
         {
             (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
-            double diff_v_w = g[PN.v, n + 0.5, k] - g[PN.w, n + 0.5, k];
-            var res = bs.S(x[k - 0.5]) * G(n, k) * (constP.Q + Math.Pow(diff_v_w, 2) / 2) 
-                    + bs.S(x[k - 0.5]) * tauW(n + 1, k) * diff_v_w;
-            if (double.IsInfinity(res))
-            {
-                var tmp1 = diff_v_w;
-                var tmp2 = bs.S(x[k - 0.5]);
-                var tmp3 = G(n, k);
-                var tmp4 = constP.Q + Math.Pow(diff_v_w, 2);
-                var tmp5 = bs.S(x[k - 0.5]);
-                var tmp6 = tauW(n + 1, k);
-            }
+
+            double x_kM05 = x[k - 0.5];
+
+            double S_kM05 = bs.S(x_kM05);
+            double G_n_k = G(n, k);
+            double v_nP05_k = g[PN.v, n + 0.5, k];
+            double w_nP05_k = g[PN.w, n + 0.5, k];
+            double tau_w_nP1_k = tauW(n + 1, k);
+            double Q = constP.Q;
+
+            var res = MainFunctions.H4_nP05_kM05(S_kM05, G_n_k, v_nP05_k, w_nP05_k, tau_w_nP1_k, Q);
             return res;
         }
 
         public double H5(double N, double K)
         {
             (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
-            return bps.Uk(g[PN.p, n, k - 0.5]) / constP.e1;
+
+            double uk_p_n_kM05 = bps.Uk(g[PN.p, n, k - 0.5]);
+            double e1 = constP.e1;
+
+            var res = MainFunctions.H5_nP05_kM05(uk_p_n_kM05, e1);
+            return res;
         }
 
         public double HPsi(double N, double K)
         {
             (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
-            return powder.S0 / powder.LAMDA0 * bps.Sigma(g[PN.z, n, k - 0.5], g[PN.psi, n, k - 0.5]) * bps.Uk(g[PN.p, n, k - 0.5]);
+
+            double S0 = powder.S0;
+            double LAMBDA0 = powder.LAMBDA0;
+            double sigma_psi_n_kM05 = bps.Sigma(g[PN.z, n, k - 0.5], g[PN.psi, n, k - 0.5]);
+            double uk_p_n_kM05 = bps.Uk(g[PN.p, n, k - 0.5]);
+
+            var res = MainFunctions.HPsi_nP05_kM05(S0, LAMBDA0, sigma_psi_n_kM05, uk_p_n_kM05);
+            return res;
         }
 
 
         private double tauW(double n, double k)
         {
-            double diff_v_w = g[PN.v, n - 0.5, k] - g[PN.w, n - 0.5, k];
-            var res = constP.lamda0 * (g[PN.ro, n, k - 0.5] * diff_v_w * Math.Abs(diff_v_w)) / 2
-                   * g[PN.a, n, k - 0.5] * (powder.S0 * bps.Sigma(g[PN.z, n, k - 0.5], g[PN.psi, n, k - 0.5])) / 4;
-            if (double.IsInfinity(res))
-            {
-                var tmp1 = diff_v_w;
-                var tmp2 = bps.Sigma(g[PN.z, n, k - 0.5], g[PN.psi, n, k - 0.5]);
-                var tmp3 = constP.lamda0 * (g[PN.ro, n, k - 0.5] * diff_v_w * Math.Abs(diff_v_w));
-                var tmp4 = g[PN.a, n, k - 0.5] * (powder.S0 * bps.Sigma(g[PN.z, n, k - 0.5], g[PN.psi, n, k - 0.5]));
-            }
+            double rho_n_kM05 = g[PN.rho, n, k - 0.5];
+            double v_nM05_k = g[PN.v, n - 0.5, k];
+            double w_nM05_k = g[PN.w, n - 0.5, k];
+            double a_n_kM05 = g[PN.a, n, k - 0.5];
+            double sigma_z_n_kM05 = bps.Sigma(g[PN.z, n, k - 0.5], g[PN.psi, n, k - 0.5]);
+            double lambda0 = constP.lamda0;
+            double S0 = powder.S0;
+
+            var res = MainFunctions.tau_w_n_k(rho_n_kM05, v_nM05_k, w_nM05_k, a_n_kM05, sigma_z_n_kM05, lambda0, S0);
             return res;
         }
         private double G(double n, double k)
@@ -117,7 +143,7 @@ namespace NIRS.H_Functions
             double delta = constP.PowderDelta;
             double uk_p_n_kM05 = bps.Uk(g[PN.p, n, k - 0.5]);
 
-            var res = BPMN.G_n_k(a_n_kM05, S0, sigma_z_n_kM0, delta, uk_p_n_kM05);
+            var res = MainFunctions.G_n_k(a_n_kM05, S0, sigma_z_n_kM0, delta, uk_p_n_kM05);
             return res;
         }
 

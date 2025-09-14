@@ -4,6 +4,7 @@ using NIRS.Parameter_names;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MyDouble;
 
 namespace NIRS.Grid_Folder
 {
@@ -43,7 +44,7 @@ namespace NIRS.Grid_Folder
             currentNSize = new double[countParams];
             currentKSize = new double[countParams, InitialCapacity];
         }
-        public double this[PN pn, double n, double k]
+        public double this[PN pn, LimitedDouble n, LimitedDouble k]
         {
             get
             {
@@ -58,14 +59,14 @@ namespace NIRS.Grid_Folder
             }
             set
             {
-                if (double.IsNaN(value))
-                {
-                    int с = 0;
-                }
-                if (double.IsInfinity(value))
-                {
-                    int с = 0;
-                }
+                //if (double.IsNaN(value))
+                //{
+                //    int с = 0;
+                //}
+                //if (double.IsInfinity(value))
+                //{
+                //    int с = 0;
+                //}
                 var paramIndex = (int)pn;
                 var nIndex = ConvertToNIndex(n);
                 var kIndex = ConvertToKIndex(k);
@@ -77,11 +78,11 @@ namespace NIRS.Grid_Folder
 
                 // Обновляем currentNSize
                 if (nIndex > currentNSize[paramIndex])
-                    currentNSize[paramIndex] = n;
+                    currentNSize[paramIndex] = n.Double();
 
                 // Обновляем currentKSize
                 if (kIndex > currentKSize[paramIndex, nIndex])
-                    currentKSize[paramIndex, nIndex] = k;
+                    currentKSize[paramIndex, nIndex] = k.Double();
                     
             }
         }
@@ -178,17 +179,17 @@ namespace NIRS.Grid_Folder
         // Остальные методы остаются без изменений
         private double Validation(double value) => value;//Math.Abs(value) < 1e-6 ? 0 : value;
 
-        private int ConvertToNIndex(double n)
+        private int ConvertToNIndex(LimitedDouble n)
         {
-            return (int)(n + maximumnNegativeN);
+            return (n.Int() + maximumnNegativeN);
         }
 
-        private int ConvertToKIndex(double k)
+        private int ConvertToKIndex(LimitedDouble k)
         {
-            return (int)(k + maximumnNegativeK);
+            return (k.Int() + maximumnNegativeK);
         }
 
-        public double LastIndexK(PN pn, double n)
+        public double LastIndexK(PN pn, LimitedDouble n)
         {
             var paramIndex = (int)pn;
             var nIndex = ConvertToNIndex(n);

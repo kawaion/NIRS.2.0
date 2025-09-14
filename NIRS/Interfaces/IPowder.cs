@@ -13,7 +13,7 @@ namespace NIRS.Interfaces
         double e1 { get; }
 
         double S0 { get; }
-        double LAMDA0 { get; }
+        double LAMBDA0 { get; }
         double U1 { get; }
 
         IBurningPowdersSize BurningPowdersSize { get;}

@@ -5,8 +5,8 @@ namespace NIRS.Interfaces
 {
     public interface IGrid
     {
-        double this[PN pn, double n, double k] { get;set; }
-        double LastIndexK(PN pn, double n);
+        double this[PN pn, LimitedDouble n, LimitedDouble k] { get;set; }
+        double LastIndexK(PN pn, LimitedDouble n);
         double LastIndexN(PN pn);
 
         double GetSn(PN pn, double n);

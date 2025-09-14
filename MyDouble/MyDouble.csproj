@@ -41,12 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConvenientTypeChecker.cs" />
-    <Compile Include="DoubleTypeIssuer.cs" />
-    <Compile Include="ILimitedDoubleArithmetic.cs" />
+    <Compile Include="ConverterOfCertainDouble.cs" />
+    <Compile Include="FractionalArithmetic.cs" />
+    <Compile Include="HalfValueTransformer.cs" />
     <Compile Include="LimitedDouble.cs" />
     <Compile Include="LimitedDoubleArithmetic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="СonverterNumberToFlag .cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

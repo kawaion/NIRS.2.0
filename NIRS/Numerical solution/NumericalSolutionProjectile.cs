@@ -61,7 +61,7 @@ namespace NIRS.Numerical_solution
                 grid.SetSn(PN.a, n,     functions.Get(PN.a, n));
                 grid.SetSn(PN.m, n,     functions.Get(PN.m, n));
                 grid.SetSn(PN.p, n,     functions.Get(PN.p, n));
-                grid.SetSn(PN.ro, n,    functions.Get(PN.ro, n));
+                grid.SetSn(PN.rho, n,    functions.Get(PN.rho, n));
             }
 
             return grid;

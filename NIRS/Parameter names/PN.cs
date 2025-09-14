@@ -22,7 +22,7 @@ namespace NIRS.Parameter_names
         z,
         a,
         p,
-        ro,
+        rho,
         m,
         x,
         vSn,

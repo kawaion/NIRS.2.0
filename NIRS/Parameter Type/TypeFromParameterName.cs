@@ -26,7 +26,7 @@ namespace NIRS.Parameter_Type
                 case PN.a:
                 case PN.m:
                 case PN.p:
-                case PN.ro:
+                case PN.rho:
                     return PT.Mixture;
                 default: throw new Exception("неизвестный параметр");
             }

@@ -49,10 +49,10 @@ namespace NIRS.Numerical_solution
 
             grid[PN.r, n, k] = functionsNewLayer.Get_r(n, k);
             grid[PN.a, n, k] = functionsNewLayer.Get_a(n, k);
-            grid[PN.psi, n, k] = functionsNewLayer.Get_psi(n, k);
             grid[PN.z, n, k] = functionsNewLayer.Get_z(n, k);
+            grid[PN.psi, n, k] = functionsNewLayer.Get_psi(n, k);
             grid[PN.m, n, k] = functionsNewLayer.Get_m(n, k); // нужен a и psi
-            grid[PN.ro, n, k] = functionsNewLayer.Get_ro(n, k); // может не занимать место в памяти, нужен r и m
+            grid[PN.rho, n, k] = functionsNewLayer.Get_rho(n, k); // может не занимать место в памяти, нужен r и m
             grid[PN.e, n, k] = functionsNewLayer.Get_e(n, k);// нужен z и psi
             grid[PN.p, n, k] = functionsNewLayer.Get_p(n, k);
             return grid;

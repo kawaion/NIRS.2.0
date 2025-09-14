@@ -61,7 +61,8 @@
     </Compile>
     <Compile Include="Barrel Folder\BarrelSize.cs" />
     <Compile Include="Barrel Folder\FinderPointsBetweenCurrent.cs" />
-    <Compile Include="BPMN folder\BPMN.cs" />
+    <Compile Include="BPMN folder\MainFunctions.cs" />
+    <Compile Include="BPMN folder\Validation.cs" />
     <Compile Include="For chart\ChartPlaceholder.cs" />
     <Compile Include="For chart\DataForChart.cs" />
     <Compile Include="For chart\ResultExtractor.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Main data\MainData.cs" />
     <Compile Include="Numerical solution\NumericalSolutionInterpolation.cs" />
     <Compile Include="Parameter names\PN.cs" />
+    <Compile Include="Parameter names\VectorPN.cs" />
     <Compile Include="Powder Folder\BurningPowdersSize_12_7.cs" />
     <Compile Include="Interfaces\IBurningPowdersSize.cs" />
     <Compile Include="Interfaces\IMainData.cs" />

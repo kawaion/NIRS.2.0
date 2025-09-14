@@ -48,8 +48,8 @@ namespace NIRS
             IInitialParameters initialParameters = new InitialParametersCase1();
             double h = 1.015/80; //0.0025;
             double tau = 1.015/(80*(2500+1500)); //curantTau(h, 945);
-            IConstParameters constParameters = new ConstParametersCase1(tau, h);
-            (var newInitialParameters, var newConstParameters) = (initialParameters, constParameters);//inputDataTransmitter.GetInputData(initialParameters, constParameters);
+            
+            ;//inputDataTransmitter.GetInputData(initialParameters, constParameters);
             List<Point2D> points = new List<Point2D>();
             points.Add(new Point2D(0, 0.214));
             points.Add(new Point2D(0.85, 0.214));
@@ -63,6 +63,9 @@ namespace NIRS
 
             //Point2D endChamber = new Point2D(1.1225, 0.1524);
             Point2D endChamber = new Point2D(1.015, 0.1524);
+
+            IConstParameters constParameters = new ConstParametersCase1(tau, 80, endChamber);
+            (var newInitialParameters, var newConstParameters) = (initialParameters, constParameters);
 
             double omega = 19;
             double d = 0.1524;
@@ -230,7 +233,7 @@ namespace NIRS
         private void Draw2()
         {
             ResultExtractor resultExtractor = new ResultExtractor(grid);
-            var dataX = resultExtractor.GetX(PN.ro, nForMaxP, mainData);
+            var dataX = resultExtractor.GetX(PN.rho, nForMaxP, mainData);
             var dataRo = resultExtractor.GetRo(nForMaxP);
             var dataTemperature = resultExtractor.GetTemperature(nForMaxP, mainData);
             ChartPlaceholder chartPlaceholder = new ChartPlaceholder(chartForDraw);
@@ -245,9 +248,9 @@ namespace NIRS
         }
         private void Draw3()
         {
-            double n = grid.LastIndexN(PN.ro);
+            double n = grid.LastIndexN(PN.rho);
             ResultExtractor resultExtractor = new ResultExtractor(grid);
-            var dataX = resultExtractor.GetX(PN.ro, n, mainData);
+            var dataX = resultExtractor.GetX(PN.rho, n, mainData);
             var dataRo = resultExtractor.GetRo(n);
             var dataTemperature = resultExtractor.GetTemperature(n, mainData);
             ChartPlaceholder chartPlaceholder = new ChartPlaceholder(chartForDraw);
@@ -342,8 +345,7 @@ namespace NIRS
             {
                 double h = hFinal * Math.Pow(2, i);
                 double tau = tauFinal * Math.Pow(2, i);
-                IConstParameters constParameters = new ConstParametersCase1(tau, h);
-                (var newInitialParameters, var newConstParameters) = (initialParameters, constParameters);//inputDataTransmitter.GetInputData(initialParameters, constParameters);
+//inputDataTransmitter.GetInputData(initialParameters, constParameters);
                 List<Point2D> points = new List<Point2D>();
                 points.Add(new Point2D(0, 0.214));
                 points.Add(new Point2D(0.85, 0.214));
@@ -357,6 +359,9 @@ namespace NIRS
 
                 //Point2D endChamber = new Point2D(1.1225, 0.1524);
                 Point2D endChamber = new Point2D(1.015, 0.1524);
+
+                IConstParameters constParameters = new ConstParametersCase1(tau, 80, endChamber);
+                (var newInitialParameters, var newConstParameters) = (initialParameters, constParameters);
 
                 double omega = 19;
                 double d = 0.1524;

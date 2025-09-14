@@ -25,10 +25,10 @@ namespace NIRS.Grid_Folder
             {
                 if (isNull)
                 {
-                    N = value.Value;
+                    N = value.Integer;
                     isNull = false;
                 }
-                else if (N == value.Value)
+                else if (N == value.Integer)
                     return;
                 else
                     throw new Exception("нельзя задать новое значение n");
@@ -50,13 +50,13 @@ namespace NIRS.Grid_Folder
         {
             get
             {
-                if (ram.isContains(k.Value))
-                    return ram.Get(k.Value);
+                if (ram.isContains(k.Integer))
+                    return ram.Get(k.Integer);
 
                 (var index, var gridCells) = ChooseIndexAndgridCells(k);
 
                 gridCells = AllocateMemorygridCellsForTheIndex(gridCells, index, k);
-                ram.Add(k.Value, gridCells[index]);
+                ram.Add(k.Integer, gridCells[index]);
                 return gridCells[index];
             }
             set
@@ -107,20 +107,20 @@ namespace NIRS.Grid_Folder
         private int ConvertKToIndex(LimitedDouble k)
         {
             if (n.IsHalfInt() && k.IsInt())
-                return (int)k.Value;
+                return (int)k.Integer;
             if (n.IsInt() && k.IsHalfInt())
-                return (int)(k.Value - 0.5);
+                return (int)(k.Integer - 0.5);
 
-            throw new Exception($"значение {n.Value} {k.Value} не подходит ни под один из типов");
+            throw new Exception($"значение {n.Integer} {k.Integer} не подходит ни под один из типов");
         }
         private int ConvertKToIndexMinus(LimitedDouble k)
         {
             if (n.IsHalfInt() && k.IsInt())
-                return (int)(-k.Value);
+                return (int)(-k.Integer);
             if (n.IsInt() && k.IsHalfInt())
-                return (int)(-k.Value - 0.5);
+                return (int)(-k.Integer - 0.5);
 
-            throw new Exception($"значение {n.Value} {k.Value} не подходит ни под один из типов");
+            throw new Exception($"значение {n.Integer} {k.Integer} не подходит ни под один из типов");
         }
         private LimitedDouble ConvertIndexToN(int value)
         {
@@ -136,7 +136,7 @@ namespace NIRS.Grid_Folder
             int index;
             List<SpaceCellWithK> gridCells;
 
-            if (k.Value < 0)
+            if (k.Integer < 0)
             {
                 index = ConvertKToIndexMinus(k);
                 gridCells = gridCellsMinus;

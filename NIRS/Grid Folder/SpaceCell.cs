@@ -87,7 +87,7 @@ namespace NIRS.Grid_Folder
                     case PN.p: ram.Add(pn, p); return p;
                     case PN.psi: ram.Add(pn, psi); return psi;
                     case PN.r: ram.Add(pn, r); return r;
-                    case PN.ro: ram.Add(pn, ro); return ro;
+                    case PN.rho: ram.Add(pn, ro); return ro;
                     case PN.z: ram.Add(pn, z); return z;
                 }
                 throw new Exception();
@@ -108,7 +108,7 @@ namespace NIRS.Grid_Folder
                     case PN.p: p = value; break;
                     case PN.psi: psi = value; break;
                     case PN.r: r = value; break;
-                    case PN.ro: ro = value; break;
+                    case PN.rho: ro = value; break;
                     case PN.z: z = value; break;
                 }
                 //GetType().GetProperty(pn.ToString()).SetValue(this, value);

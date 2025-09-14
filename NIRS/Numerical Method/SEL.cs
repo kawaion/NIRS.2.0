@@ -19,6 +19,7 @@ using NIRS.Parameter_names;
 using NIRS.Helpers;
 using System.Runtime.InteropServices.ComTypes;
 using System;
+using System.Collections.Generic;
 
 namespace NIRS.Numerical_Method
 {
@@ -28,6 +29,8 @@ namespace NIRS.Numerical_Method
         private bool isBeltIntact = true;
         private readonly double FORCING_PRESSURE;
         private readonly double lengthBarrel;
+        private IConstParameters constP;
+        private int kChamber;
 
         private KGetter _k;
         public SEL(IMainData mainData)
@@ -36,6 +39,8 @@ namespace NIRS.Numerical_Method
             FORCING_PRESSURE = mainData.ConstParameters.forcingPressure;
             _k = new KGetter(mainData.ConstParameters);
             lengthBarrel = _mainData.Barrel.Length;
+            constP = mainData.ConstParameters;
+            kChamber = constP.countDivideChamber;
         }
         
         private readonly IOutputDataTransmitter outputDataTransmitter = new OutputDataTransmitter();
@@ -47,15 +52,15 @@ namespace NIRS.Numerical_Method
 
             functionsBuilder = new FunctionsBuilder(_mainData);
             functionsBuilder.Build(grid);
-            CreateNumericalSolutions(grid, functionsBuilder);
+            CreateObjectsForNumericalSolution(grid, functionsBuilder);
 
             var xEndChamber = _mainData.Barrel.EndChamberPoint.X;
-            var KSn = _k[xEndChamber];
+            var KChamber = constP.countDivideChamber;
 
             var gridBorderFiller = GetGridBorderFiller();
-            var gridWithFilledBorders = gridBorderFiller.FillAtZeroTime(grid, KSn);
-            var numericalSolution = GetNumericalSolution(gridWithFilledBorders, gridBorderFiller, KSn);
-            return outputDataTransmitter.GetOutputData(numericalSolution);
+            var gridWithFilledBorders = gridBorderFiller.FillAtZeroTime(grid, KChamber);
+            var gridWithNumericalSolution = GetNumericalSolution(gridWithFilledBorders, gridBorderFiller, KChamber);
+            return outputDataTransmitter.GetOutputData(gridWithNumericalSolution);
         }
 
         private IGridBorderFiller GetGridBorderFiller()
@@ -64,19 +69,32 @@ namespace NIRS.Numerical_Method
             var boundaryFunctions = functionsBuilder.BoundaryFunctionsBuild();
             return new GridBorderFiller(boundaryFunctions, _mainData);
         }
-        private IGrid GetNumericalSolution(IGrid grid, IGridBorderFiller gridBorderFiller, double KSn)
+        private IGrid GetNumericalSolution(IGrid grid, IGridBorderFiller gridBorderFiller, int KChamber)
         {
-            var KDynamicLast = GetKDynamicLast(KSn);
             double n = 0;
+
+            while (isBeltIntact)
+            {
+                n += 0.5;
+
+                grid = gridBorderFiller.FillBarrelBordersN(grid, n, KChamber);
+                //grid = gridBorderFiller.FillBarrelBordersK(grid, n, KChamber);
+                grid = GetNumericalSolutionAtNodesNIfBeltIntact(grid, n);
+                //grid = gridBorderFiller.FillLastNodeOfMixture(grid, n);
+                grid = GetInterpolateSolutionInKChamber(grid, n, gridBorderFiller);
+
+                AttemptRipOffBelt(grid, n);
+            }
+
             while (!IsEndConditionNumericalSolution(grid,n))// && n!=2363)
             {
                 n += 0.5;
 
-                grid = gridBorderFiller.FillBarrelBorders(grid, n, isBeltIntact, KDynamicLast);
-                var grid1 = GetNumericalSolutionAtNodesN(grid, n);
-                grid = gridBorderFiller.FillLastNodeOfMixture(grid1, n, isBeltIntact);
+                grid = gridBorderFiller.FillBarrelBordersN(grid, n, KChamber);
+                grid = GetNumericalSolutionAtNodesN(grid, n);
+                
                 grid = GetNumericalSolutionInProjectile(grid, n, gridBorderFiller);
-                grid = GetInterpolateSolutionAtInaccessibleNodes(grid, n); 
+                grid = GetInterpolateSolutionAtInaccessibleNodes(grid, n, isBeltIntact); 
                 AttemptRipOffBelt(grid, n);         
             }
             return grid;
@@ -93,20 +111,45 @@ namespace NIRS.Numerical_Method
             var x = grid.GetSn(PN.x, n);
             return x >= lengthBarrel;
         }
+        private double GetFirstK(double n)
+        {
+            if (n.IsInt())
+                return -0.5;
+            else
+                return 0;
+        }
+        private IGrid GetNumericalSolutionAtNodesNIfBeltIntact(IGrid grid, double n)
+        {
+            double k = GetFirstK(n);
+            bool isKLimit = CheckLimit(k);
+            while (!isKLimit)
+            {
+                k += 1;
+                grid = GetNumericalSolutionAtNodeNK(grid, n, k);
+                isKLimit = CheckLimit(k);
+            }
+            return grid;
+        }
+        private IGrid GetInterpolateSolutionInKChamber(IGrid grid, double n, IGridBorderFiller gridBorderFiller)
+        {
+            return gridBorderFiller.FillLastNodeOfMixture(grid, n);
+        }
+        private bool CheckLimit(double k)
+        {
+            return (int)k >= kChamber;
+        }
         private IGrid GetNumericalSolutionAtNodesN(IGrid grid, double n)
         {
-            double k;
-            if (n.IsInt())
-                k = -0.5;
-            else
-                k = 0;
+            double k = GetFirstK(n);
 
             var snKPrevious = _k[grid.GetSn(PN.x, n - 1)];
-            while (k + 2 <= snKPrevious)
+
+            while(k + 2 <= snKPrevious)
             {
                 k += 1;
                 grid = GetNumericalSolutionAtNodeNK(grid, n, k );
             }
+            
             return grid;
         }
         INumericalSolutionInNodes numericalSolutionInNodes;
@@ -143,15 +186,16 @@ namespace NIRS.Numerical_Method
 
         }
 
-        private IGrid GetInterpolateSolutionAtInaccessibleNodes(IGrid grid, double n)
+        private IGrid GetInterpolateSolutionAtInaccessibleNodes(IGrid grid, double n, bool isBeltIntact)
         {
-            grid = numericalSolutionInterpolation.Get(grid, n);
+            if(!isBeltIntact)
+                grid = numericalSolutionInterpolation.Get(grid, n);
 
             return grid;
         }
 
 
-        private void CreateNumericalSolutions(IGrid grid,FunctionsBuilder functionsBuilder)
+        private void CreateObjectsForNumericalSolution(IGrid grid,FunctionsBuilder functionsBuilder)
         {
             var functionsNewLayer = functionsBuilder.FunctionsParametersOfTheNextLayerUpdate(grid);
             var projectileFunctions = functionsBuilder.ProjectileFunctionsUpdate(grid);

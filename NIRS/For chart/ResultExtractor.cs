@@ -97,11 +97,11 @@ namespace NIRS.For_chart
         public DataForChart GetRo(double n)
         {
             List<double> massive = new List<double>();
-            double lastK = _grid.LastIndexK(PN.ro, n);
+            double lastK = _grid.LastIndexK(PN.rho, n);
             double firstK = GetFirstNode(lastK);
 
             for (double k = firstK; k <= lastK; k++)
-                massive.Add(_grid[PN.ro, n, k]);
+                massive.Add(_grid[PN.rho, n, k]);
             string title = "плотность, кг/м³";
             string lineName = "ro";
             return new DataForChart(massive, title, lineName);
@@ -112,12 +112,12 @@ namespace NIRS.For_chart
             var h = mainData.ConstParameters.h;
             var cv = mainData.ConstParameters.cv;
             List<double> massive = new List<double>();
-            double lastK = _grid.LastIndexK(PN.ro, n);
+            double lastK = _grid.LastIndexK(PN.rho, n);
             double firstK = GetFirstNode(lastK);
 
             for (double k = firstK; k <= lastK; k++)
             {
-                var eps = _grid[PN.e,n,k] / (_grid[PN.ro, n, k] * _grid[PN.m, n, k] * bs.S(k * h));
+                var eps = _grid[PN.e,n,k] / (_grid[PN.rho, n, k] * _grid[PN.m, n, k] * bs.S(k * h));
                 massive.Add(eps/cv);
             }
             string title = "температура, K";
@@ -158,7 +158,7 @@ namespace NIRS.For_chart
             List<double> massive = new List<double>();
             double lastK = _grid.LastIndexK(PN.a, n);
             double firstK = GetFirstNode(lastK);
-            double a_n = powder.Omega / (powder.LAMDA0 * powder.Delta * bs.Wkm);
+            double a_n = powder.Omega / (powder.LAMBDA0 * powder.Delta * bs.Wkm);
 
             for (double k = firstK; k <= lastK; k++)
                 massive.Add(_grid[PN.a, n, k] / a_n);

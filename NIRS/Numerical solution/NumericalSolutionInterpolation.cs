@@ -22,12 +22,9 @@ namespace NIRS.Numerical_solution
         }
         public IGrid Get(IGrid g, double n)
         {
-            List<PN> parameters;
             if (n.IsInt())
             {
-                parameters = new List<PN> { PN.r, PN.z, PN.psi, PN.a, PN.m, PN.ro, PN.e, PN.p };
-
-                foreach (var pn in parameters)
+                foreach (var pn in VectorPN.mixture)
                 {
                     while (isExistNonCalculatedNodes(g, n, pn))
                     {
@@ -39,9 +36,7 @@ namespace NIRS.Numerical_solution
 
             if (n.IsHalfInt())
             {
-                parameters = new List<PN>() { PN.v, PN.w, PN.dynamic_m, PN.M };
-
-                foreach (var pn in parameters)
+                foreach (var pn in VectorPN.dynamic)
                 {
                     while (isExistNonCalculatedNodes(g, n, pn))
                     {

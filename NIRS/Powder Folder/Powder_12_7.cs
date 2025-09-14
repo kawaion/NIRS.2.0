@@ -25,12 +25,12 @@ namespace NIRS.Cannon_Folder.Powder_Folder
             this.e1 = constParameters.e1;            
             U1 = constParameters.u1;
 
-            (S0, LAMDA0) = InitialiseS0LAMDA0(D0, d0, L0);
+            (S0, LAMBDA0) = InitialiseS0LAMDA0(D0, d0, L0);
 
             BurningPowdersSize = new BurningPowdersSize_12_7(this, constParameters);
         }
         public double S0 { get; }
-        public double LAMDA0 { get; }
+        public double LAMBDA0 { get; }
         public double U1 { get; }
 
         

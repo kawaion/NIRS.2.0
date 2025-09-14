@@ -22,10 +22,10 @@ namespace NIRS.Grid_Folder
             {
                 if (isNullCell)
                 {
-                    K = value.Value;
+                    K = value.Integer;
                     isNullCell = false;
                 }
-                else if (K == value.Value)
+                else if (K == value.Integer)
                     return;
                 else
                     throw new Exception("нельзя задать новое значение k");

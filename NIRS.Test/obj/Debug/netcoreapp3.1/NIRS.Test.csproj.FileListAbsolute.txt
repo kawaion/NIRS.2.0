@@ -212,3 +212,5 @@ D:\нирс\NIRS.2.0\NIRS.Test\obj\Debug\netcoreapp3.1\NIRS.Test.csproj.CopyComp
 D:\нирс\NIRS.2.0\NIRS.Test\obj\Debug\netcoreapp3.1\NIRS.Test.dll
 D:\нирс\NIRS.2.0\NIRS.Test\obj\Debug\netcoreapp3.1\NIRS.Test.pdb
 D:\нирс\NIRS.2.0\NIRS.Test\obj\Debug\netcoreapp3.1\NIRS.Test.genruntimeconfig.cache
+G:\нирс\NIRS.2.0\NIRS.Test\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
+G:\нирс\NIRS.2.0\NIRS.Test\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.xml

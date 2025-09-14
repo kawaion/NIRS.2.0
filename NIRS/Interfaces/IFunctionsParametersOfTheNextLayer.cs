@@ -18,7 +18,7 @@ namespace NIRS.Interfaces
         double Get_a(double n, double k);
         double Get_m(double n, double k);
         double Get_p(double n, double k);
-        double Get_ro(double n, double k);
+        double Get_rho(double n, double k);
 
         void Update(IGrid grid);
     }

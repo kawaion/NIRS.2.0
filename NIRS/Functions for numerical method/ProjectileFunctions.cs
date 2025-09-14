@@ -1,4 +1,5 @@
 ﻿using MyDouble;
+using NIRS.BPMN_folder;
 using NIRS.Cannon_Folder.Barrel_Folder;
 using NIRS.Data_Parameters.Input_Data_Parameters;
 using NIRS.Grid_Folder;
@@ -8,6 +9,8 @@ using NIRS.Nabla_Functions.Projectile;
 using NIRS.Parameter_names;
 using NIRS.Projectile_Folder;
 using System;
+using System.Drawing;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace NIRS.Functions_for_numerical_method
 {
@@ -23,6 +26,7 @@ namespace NIRS.Functions_for_numerical_method
         private readonly IHFunctions hf;
 
         private readonly Differencial d;
+        private readonly double tau;
 
         public ProjectileFunctions(IGrid grid, 
                                    IWaypointCalculator waypointCalculator,           
@@ -39,6 +43,7 @@ namespace NIRS.Functions_for_numerical_method
             hf = hFunctions;
 
             d = new Differencial(grid, mainData.ConstParameters);
+            tau = constP.tau;
         }
 
         public double Get(PN pn, double n)
@@ -51,7 +56,7 @@ namespace NIRS.Functions_for_numerical_method
                 case PN.p: return Get_p(n);
                 case PN.psi: return Get_psi(n);
                 case PN.r: return Get_r(n);
-                case PN.ro: return Get_ro(n);
+                case PN.rho: return Get_ro(n);
                 case PN.v: return Get_vSn(n);
                 case PN.x: return Get_x(n);
                 case PN.z: return Get_z(n);
@@ -64,53 +69,55 @@ namespace NIRS.Functions_for_numerical_method
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
 
-            var x_n = g.GetSn(PN.x, n);
-            var x_nPlus1 = g.GetSn(PN.x, n + 1);
+            double a_n = g.GetSn(PN.a, n);
+            double dwdx_nP05 = d.dwdx(n + 0.5);
+            double tau = this.tau;
 
-            return g.GetSn(PN.a, n) * (bs.S(x_n) / bs.S(x_nPlus1)) *
-                (
-                    1 - constP.tau * d.dvdx(n + 0.5)
-                );
+            var res = MainFunctions.a_Sn_nP1(a_n, dwdx_nP05, tau);
+            return res;
         }
         public double Get_e(double N)
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
 
-            return g.GetSn(PN.e, n) - constP.tau *
-                (
-                    g.GetSn(PN.e, n) * d.dvdx(n + 0.5)
-                    + g.GetSn(PN.p, n) * 
-                    (wc.sn.Nabla(PN.m,PN.S,PN.v).Cell(n + 0.5) + wc.sn.Nabla(PN.One_minus_m, PN.S, PN.w).Cell(n + 0.5))
-                    - hf.sn.H4(n + 0.5)
-                );
-                   
+            double e_n = g.GetSn(PN.e, n);
+            double dvdx_nP05 = d.dvdx(n + 0.5);
+            double p_n = g.GetSn(PN.p, n);
+            double nabla_mSv_nP05 = wc.sn.Nabla(PN.m, PN.S, PN.v, n + 0.5);
+            double nabla_OneMinusmSw_nP05 = wc.sn.Nabla(PN.One_minus_m, PN.S, PN.w, n + 0.5);
+            double H4_nP05 = hf.sn.H4(n + 0.5);
+            double tau = this.tau;
+
+            var res = MainFunctions.e_Sn_nP1(e_n, dvdx_nP05, p_n, nabla_mSv_nP05, nabla_OneMinusmSw_nP05, H4_nP05, tau);
+            return res;
         }
         public double Get_m(double N)
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
 
-            return 1 - g.GetSn(PN.a, n + 1) * powder.LAMDA0 * (1 - g.GetSn(PN.psi, n + 1));
+            double a_nP1 = g.GetSn(PN.a, n + 1);
+            double psi_nP1 = g.GetSn(PN.psi, n + 1);
+            double LAMBDA0 = powder.LAMBDA0;
+
+            var res = MainFunctions.m_Sn_nP1(a_nP1, psi_nP1, LAMBDA0);
+            return res;
         }
 
         public double Get_p(double N)
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
 
-            var x_nPlus1 = g.GetSn(PN.x, n + 1);
+            double x_nP1 = g.GetSn(PN.x, n + 1);
 
-            var res = (constP.teta * g.GetSn(PN.e, n + 1)) /
-                (
-                    g.GetSn(PN.m, n + 1) * bs.S(x_nPlus1)
-                    - constP.alpha * g.GetSn(PN.r, n + 1)
-                );
-            if (double.IsNaN(res))
-            {
-                var tmp1 = bs.S(x_nPlus1);
-                var tmp2 = g.GetSn(PN.r, n + 1);
-                var tmp3 = g.GetSn(PN.e, n + 1);
-            }
+            double e_nP1 = g.GetSn(PN.e, n + 1);
+            double m_nP1 = g.GetSn(PN.m, n + 1);
+            double r_nP1 = g.GetSn(PN.r, n + 1);
+            double S_nP1 = bs.S(x_nP1);
+            double teta = constP.teta;
+            double alpha = constP.alpha;
 
-                return res;
+            var res = MainFunctions.p_Sn_nP1(e_nP1, m_nP1, r_nP1, S_nP1, teta, alpha);
+            return res;
         }
 
         public double Get_psi(double N)
@@ -121,45 +128,32 @@ namespace NIRS.Functions_for_numerical_method
 
             var z = g.GetSn(PN.z, n + 1);
 
-            if(z>=1)
-                psi = g.GetSn(PN.psi, n)
-                   + constP.tau * hf.sn.HPsi(n + 0.5);
+            if (z >= 1)
+            {
+                double psi_n = g.GetSn(PN.psi, n);
+                double HPsi_nP05 = hf.sn.HPsi(n + 0.5);
+                double tau = this.tau;
+
+                psi = MainFunctions.psi_Sn_nP1(psi_n, HPsi_nP05, tau);
+            }
             else
             {
                 psi = powder.BurningPowdersSize.Psi(z);
             }
-            if (double.IsNaN(psi))
-            {
-                int c = 0;
-                var tmpn = n;
-                var tmp1 = hf.sn.HPsi(n + 0.5);
-                var tmp2 = g.GetSn(PN.psi, n);
-            }
 
-            psi = PowderValidation(psi);
+            psi = Validation.PsiValidation(psi);
             return psi;
-        }
-        private static double PowderValidation(double value) // метод скопирован
-        {
-            if (value > 1)
-                value = 1;
-            return value;
         }
         public double Get_r(double N)
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
 
-            var res = g.GetSn(PN.r, n) - constP.tau *
-                (
-                   g.GetSn(PN.r, n) * d.dvdx(n + 0.5) - hf.sn.H3(n + 0.5)
-                );
+            double r_n = g.GetSn(PN.r, n);
+            double dvdx_nP05 = d.dvdx(n + 0.5);
+            double H3_nP05 = hf.sn.H3(n + 0.5);
+            double tau = this.tau;
 
-            if (double.IsNaN(res))
-            {
-                var tmp1 = g.GetSn(PN.r, n);
-                var tmp2 = d.dvdx(n + 0.5);
-                var tmp3 = hf.sn.H3(n + 0.5);
-            }
+            var res = MainFunctions.r_Sn_nP1(r_n, dvdx_nP05, H3_nP05, tau);
             return res;
         }
 
@@ -167,10 +161,14 @@ namespace NIRS.Functions_for_numerical_method
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
 
-            var x_nPlus1 = g.GetSn(PN.x, n + 1);
+            var x_nP1 = g.GetSn(PN.x, n + 1);
 
-            return g.GetSn(PN.r, n + 1) /
-                  (g.GetSn(PN.m, n + 1) * bs.S(x_nPlus1));
+            double r_nP1 = g.GetSn(PN.r, n + 1);
+            double m_nP1 = g.GetSn(PN.m, n + 1);
+            double S_nP1 = bs.S(x_nP1);
+
+            var res = MainFunctions.ro_Sn_nP1(r_nP1, m_nP1, S_nP1);
+            return res;
         }
 
         public double Get_vSn(double N)
@@ -178,14 +176,16 @@ namespace NIRS.Functions_for_numerical_method
             var n = OffseterN.AppointAndOffset(N, + 0.5);
 
             var x_n = g.GetSn(PN.x, n);
-            var tmp = bs.S(x_n);
 
-            var tmp2 = g.GetSn(PN.vSn, n - 0.5) + (constP.tau / projectile.q)
-                                    * (g.GetSn(PN.p, n) * bs.S(x_n));
+            double vSn_nM05 = g.GetSn(PN.vSn, n - 0.5);
+            double p_n = g.GetSn(PN.p, n);
+            double S_n = bs.S(x_n);
+            double q = projectile.q;
+            double tau = this.tau;
 
-            return g.GetSn(PN.vSn, n - 0.5) + (constP.tau / projectile.q)
-                                    * (g.GetSn(PN.p, n) * bs.S(x_n));
-                  
+            var res = MainFunctions.vSn_nP05(vSn_nM05, p_n, S_n, q, tau);
+            return res;
+
         }
 
         public double Get_x(double N)
@@ -194,22 +194,37 @@ namespace NIRS.Functions_for_numerical_method
             {
                 var n = OffseterN.AppointAndOffset(N, + 0.5);
 
-                return g.GetSn(PN.x, n - 0.5) + constP.tau * (g.GetSn(PN.vSn, n - 0.5) + g.GetSn(PN.vSn, n + 0.5)) / 2;
+                double x_nM05 = g.GetSn(PN.x, n - 0.5);
+                double vSn_nM05 = g.GetSn(PN.vSn, n - 0.5);
+                double vSn_nP05 = g.GetSn(PN.vSn, n + 0.5);
+                double tau = this.tau;
+
+                var res = MainFunctions.x_Sn_nP05(x_nM05, vSn_nM05, vSn_nP05, tau);
+                return res;
             }
             else
             {
                 var n = OffseterN.AppointAndOffset(N, + 1);
 
-                return g.GetSn(PN.x, n) + constP.tau * g.GetSn(PN.vSn, n + 0.5);
+                double x_n = g.GetSn(PN.x, n);
+                double vSn_nP05 = g.GetSn(PN.vSn, n + 0.5);
+                double tau = this.tau;
+
+                var res = MainFunctions.x_Sn_nP1(x_n, vSn_nP05, tau);
+                return res;
             }
         }
 
         public double Get_z(double N)
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
+  
+            double z_n = g.GetSn(PN.z, n);
+            double H5_nP05 = hf.sn.H5(n + 0.5);
+            double tau = this.tau;
 
-            return g.GetSn(PN.psi, n)
-                   + constP.tau * hf.sn.H5(n + 0.5);
+            var res = MainFunctions.z_Sn_nP1(z_n, H5_nP05, tau);
+            return res;
         }
 
         public void Update(IGrid grid)

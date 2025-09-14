@@ -1,4 +1,5 @@
 ﻿using MyDouble;
+using NIRS.BPMN_folder;
 using NIRS.Helpers;
 using NIRS.Interfaces;
 using NIRS.Parameter_names;
@@ -33,7 +34,11 @@ namespace NIRS.H_Functions
 
             var x_n = g.GetSn(PN.x, n);
 
-            return bs.S(x_n) * G(n);
+            double S_n = bs.S(x_n);
+            double G_n = G(n);
+
+            var res = MainFunctions.H3_Sn_nP05(S_n, G_n);
+            return res;
         }
 
         public double H4(double N)
@@ -42,38 +47,48 @@ namespace NIRS.H_Functions
 
             var x_n = g.GetSn(PN.x, n);
 
-            return bs.S(x_n) * G(n) * constP.Q;
+            double S_n = bs.S(x_n);
+            double G_n = G(n);
+            double Q = constP.Q;
+
+            var res = MainFunctions.H4_Sn_nP05(S_n, G_n, Q);
+            return res;
         }
 
         public double H5(double N)
         {
             var n = OffseterN.AppointAndOffset(N, + 0.5);
 
-            return bps.Uk(g.GetSn(PN.p, n)) / constP.e1;
+            double Uk_n = bps.Uk(g.GetSn(PN.p, n));
+            double e1 = constP.e1;
+
+            var res = MainFunctions.H5_Sn_nP05(Uk_n, e1);
+            return res;
         }
 
         public double HPsi(double N)
         {
             var n = OffseterN.AppointAndOffset(N, + 0.5);
 
-            var hpsi =  (powder.S0 / powder.LAMDA0)
-                   * bps.Sigma(g.GetSn(PN.z, n), g.GetSn(PN.psi, n))
-                   * bps.Uk(g.GetSn(PN.p, n));
-            if (double.IsNaN(hpsi))
-            {
-                int c = 0;
-                var tmpn = n;
-                var tmp1 = bps.Sigma(g.GetSn(PN.z, n), g.GetSn(PN.psi, n));
-                var tmp11 = g.GetSn(PN.p, n);
-                var tmp12 = g.GetSn(PN.p, n-1);
-                var tmp2 = bps.Uk(g.GetSn(PN.p, n));
-            }
-            return hpsi;
+            double Sigma_n = bps.Sigma(g.GetSn(PN.z, n), g.GetSn(PN.psi, n));
+            double Uk_n = bps.Uk(g.GetSn(PN.p, n));
+            double S0 = powder.S0;
+            double LAMBDA0 = powder.LAMBDA0;
+
+            var res = MainFunctions.HPsi_Sn_nP05(Sigma_n, Uk_n, S0, LAMBDA0);
+            return res;
         }
 
         private double G(double n)
         {
-            return g.GetSn(PN.a, n) * powder.S0 * bps.Sigma(g.GetSn(PN.z, n), g.GetSn(PN.psi, n)) * constP.PowderDelta * bps.Uk(g.GetSn(PN.p, n));
+            double a_n = g.GetSn(PN.a, n);
+            double Sigma_n = bps.Sigma(g.GetSn(PN.z, n), g.GetSn(PN.psi, n));
+            double Uk_n = bps.Uk(g.GetSn(PN.p, n));
+            double S0 = powder.S0;
+            double Delta = constP.PowderDelta;
+
+            var res = MainFunctions.G_Sn_n(a_n, Sigma_n, Uk_n, S0, Delta);
+            return res;
         }
     }
 }

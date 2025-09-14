@@ -42,7 +42,7 @@ namespace NIRS.Grid_Folder
             for (var k = 0; k <= KSn + 0.5; k += 1)
             {
                 grid[PN.p, 0, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.p, k - 0.5);
-                grid[PN.ro, 0, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.ro, k - 0.5);
+                grid[PN.rho, 0, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.rho, k - 0.5);
                 grid[PN.z, 0, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.z, k - 0.5);
                 grid[PN.psi, 0, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.psi, k - 0.5);
                 grid[PN.m, 0, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.m, k - 0.5);
@@ -53,6 +53,8 @@ namespace NIRS.Grid_Folder
             grid.SetSn(PN.x, 0,      b.EndChamberPoint.X);
             grid.SetSn(PN.x, -0.5,    b.EndChamberPoint.X);
             grid.SetSn(PN.vSn, -0.5,    0);
+            grid.SetSn(PN.r, 0, _boundaryFunctions.GetMixture_n0(PN.r, KSn));
+            grid.SetSn(PN.m, 0, _boundaryFunctions.GetMixture_n0(PN.m, KSn));
 
             return grid;
         }
@@ -65,7 +67,7 @@ namespace NIRS.Grid_Folder
             return K;
         }
 
-        public IGrid FillBarrelBorders(IGrid grid, double n, bool isBeltIntact, double KDynamicLast)
+        public IGrid FillBarrelBordersN(IGrid grid, double n, double KDynamicLast)
         {
 
             if (n.IsHalfInt())
@@ -79,27 +81,33 @@ namespace NIRS.Grid_Folder
                 grid[PN.M, n, -1] = _boundaryFunctions.GetDynamic_k0(PN.M, n);
                 grid[PN.v, n, -1] = _boundaryFunctions.GetDynamic_k0(PN.v, n);
                 grid[PN.w, n, -1] = _boundaryFunctions.GetDynamic_k0(PN.w, n);
-
-                if (isBeltIntact)
-                {
-                    var K = KDynamicLast;
-
-                    grid[PN.dynamic_m, n, K] = _boundaryFunctions.GetDynamic_K(PN.dynamic_m, n);
-                    grid[PN.M, n, K] = _boundaryFunctions.GetDynamic_K(PN.M, n);
-                    grid[PN.v, n, K] = _boundaryFunctions.GetDynamic_K(PN.v, n);
-                    grid[PN.w, n, K] = _boundaryFunctions.GetDynamic_K(PN.w, n);
-                }
             }
             if (n.IsInt())
             {
                 grid[PN.p, n, -0.5] = 0;
-                grid[PN.ro, n, -0.5] = 0;
+                grid[PN.rho, n, -0.5] = 0;
                 grid[PN.z, n, -0.5] = 0;
                 grid[PN.psi, n, -0.5] = 0;
                 grid[PN.m, n, -0.5] = 0;
                 grid[PN.a, n, -0.5] = 0;
                 grid[PN.r, n, -0.5] = 0;
                 grid[PN.e, n, -0.5] = 0;
+            }
+
+            return grid;
+        }
+        public IGrid FillBarrelBordersK(IGrid grid, double n, double KDynamicLast)
+        {
+
+            if (n.IsHalfInt())
+            {
+                var K = KDynamicLast;
+
+                grid[PN.dynamic_m, n, K] = _boundaryFunctions.GetDynamic_K(PN.dynamic_m, n);
+                grid[PN.M, n, K] = _boundaryFunctions.GetDynamic_K(PN.M, n);
+                grid[PN.v, n, K] = _boundaryFunctions.GetDynamic_K(PN.v, n);
+                grid[PN.w, n, K] = _boundaryFunctions.GetDynamic_K(PN.w, n);
+
             }
 
             return grid;
@@ -120,13 +128,13 @@ namespace NIRS.Grid_Folder
                 var K = grid.LastIndexK(PN.p, n);
 
                 grid.SetSn(PN.p, n, grid[PN.p, n, K - 0.5]);
-                grid.SetSn(PN.ro, n, grid[PN.ro, n, K - 0.5]);
+                grid.SetSn(PN.rho, n, grid[PN.rho, n, K - 0.5]);
                 grid.SetSn(PN.z, n, grid[PN.z, n, K - 0.5]);
                 grid.SetSn(PN.psi, n, grid[PN.psi, n, K - 0.5]);
                 grid.SetSn(PN.a, n, grid[PN.a, n, K - 0.5]);
                 grid.SetSn(PN.m, n, grid[PN.m, n, K - 0.5]);
                 grid.SetSn(PN.e, n, grid[PN.e, n, K - 0.5]);
-                grid.SetSn(PN.r, n, grid.GetSn(PN.ro, n) * grid.GetSn(PN.m, n) * bs.S(x[K - 0.5]));
+                grid.SetSn(PN.r, n, grid.GetSn(PN.rho, n) * grid.GetSn(PN.m, n) * bs.S(x[K - 0.5]));
             }
             grid.SetSn(PN.x, n, b.EndChamberPoint.X);
 
@@ -140,13 +148,11 @@ namespace NIRS.Grid_Folder
             }
             return grid;
         }
-        public IGrid FillLastNodeOfMixture(IGrid grid, double n, bool isBeltIntact)
+        public IGrid FillLastNodeOfMixture(IGrid grid, double n)
         {
-            if (isBeltIntact && n.IsInt())
+            if (n.IsInt())
             {
-
-
-                var parameters = new List<PN> { PN.r, PN.z, PN.a, PN.m, PN.ro, PN.e, PN.p, PN.psi };
+                var parameters = VectorPN.mixture;
                 foreach (var pn in parameters)
                 {                
                     var K = grid.LastIndexK(pn, n);

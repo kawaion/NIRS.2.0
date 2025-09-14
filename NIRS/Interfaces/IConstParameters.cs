@@ -9,6 +9,7 @@ namespace NIRS.Interfaces
 
         double tau { get; }
         double h { get; }
+        int countDivideChamber { get; }
         double teta { get; }
         double alpha { get; }
         double PowderDelta { get; }

@@ -18,11 +18,11 @@ namespace NIRS.Additional_calculated_values
             double NablaV = wc.Nabla(PN.v, n + 0.5, k - 0.5);
             if (NablaV < 0)
             {
-                var res = Math.Pow(constP.mu0, 2) * Math.Pow(constP.h, 2) * g[PN.ro, n + 1, k - 0.5] * Math.Pow(NablaV, 2);
+                var res = Math.Pow(constP.mu0, 2) * Math.Pow(constP.h, 2) * g[PN.rho, n + 1, k - 0.5] * Math.Pow(NablaV, 2);
                 if(double.IsInfinity(res))
                 {
                     var tmp1 = Math.Pow(constP.mu0, 2);
-                    var tmp2 = g[PN.ro, n + 1, k - 0.5];
+                    var tmp2 = g[PN.rho, n + 1, k - 0.5];
                     var tmp3 = Math.Pow(NablaV, 2);
                 }
                 return res;
