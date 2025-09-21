@@ -19,7 +19,7 @@ namespace NIRS.Helpers
             g = grid;
             x = new XGetter(constParameters);
         }
-        public double dvdx(double n)
+        public double dvdx(LimitedDouble n)
         {
             var kLast = g.LastIndexK(PN.v, n);
             var res = (g.GetSn(PN.vSn, n) - g[PN.v, n, kLast]) /
@@ -33,14 +33,14 @@ namespace NIRS.Helpers
             }
             return res;
         }
-        public double dwdx(double n)
+        public double dwdx(LimitedDouble n)
         {
             var kLast = g.LastIndexK(PN.w, n);
             return (g.GetSn(PN.vSn, n) - g[PN.w, n, kLast]) /
                    (g.GetSn(PN.x, n) - x[kLast]);
         }
 
-        public double dPNdx(double n, PN pn)
+        public double dPNdx(LimitedDouble n, PN pn)
         {
             var kLast = g.LastIndexK(pn, n);
             return (g.GetSn(pn, n) - g[pn, n, kLast]) /

@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace NIRS.Helpers
 {
-    static class DoubleTypeIssuer
-    {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsInt(this double value) 
-        {
-            return Math.Abs(value - Math.Round(value)) == 0;
-        }
+    //static class DoubleTypeIssuer
+    //{
+    //    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //    public static bool IsInt(this double value) 
+    //    {
+    //        return Math.Abs(value - Math.Round(value)) == 0;
+    //    }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsHalfInt(this double value)
-        {
-            return Math.Abs(value - Math.Round(value)) == 0.5;
-        }
+    //    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    //    public static bool IsHalfInt(this double value)
+    //    {
+    //        return Math.Abs(value - Math.Round(value)) == 0.5;
+    //    }
         //public static bool IsHalfIntbyte(double value)
         //{
         //    const long exponentMask = 0x7FF0000000000000;
@@ -61,5 +61,5 @@ namespace NIRS.Helpers
         //public static bool IsHalfInt(this double value) => IsOdd(value / 0.5);
         //private static bool IsEven(double value) => Math.Abs(value) % 2 == 0;
         //private static bool IsOdd(double value) => Math.Abs(value) % 2 == 1;
-    }
+    //}
 }

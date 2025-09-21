@@ -6,11 +6,11 @@ namespace NIRS.Parameter_Type
 {
     static class ParameterTypeGetter
     {
-        public static bool IsDynamic(double n, double k)
+        public static bool IsDynamic(LimitedDouble n, LimitedDouble k)
         {
             return n.IsHalfInt() && k.IsInt();
         }
-        public static bool IsMixture(double n, double k)
+        public static bool IsMixture(LimitedDouble n, LimitedDouble k)
         {
             return n.IsInt() && k.IsHalfInt();
         }

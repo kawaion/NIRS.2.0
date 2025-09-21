@@ -26,7 +26,7 @@ namespace NIRS.Functions_for_numerical_method
             x = new XGetter(mainData.ConstParameters);
         }
 
-        public double GetDynamic_k0(PN pn, double n)
+        public double GetDynamic_k0(PN pn, LimitedDouble n)
         {
             switch (pn)
             {
@@ -37,7 +37,7 @@ namespace NIRS.Functions_for_numerical_method
             }
             throw new Exception();
         }
-        public double GetDynamic_nMinus0Dot5(PN pn, double n)
+        public double GetDynamic_nMinus0Dot5(PN pn, LimitedDouble n)
         {
             switch (pn)
             {
@@ -48,7 +48,7 @@ namespace NIRS.Functions_for_numerical_method
             }
             throw new Exception();
         }
-        public double GetDynamic_K(PN pn, double n)
+        public double GetDynamic_K(PN pn, LimitedDouble n)
         {
             switch (pn)
             {
@@ -59,6 +59,7 @@ namespace NIRS.Functions_for_numerical_method
             }
             throw new Exception();
         }
+        public double GetMixture_n0(PN pn, LimitedDouble k) => GetMixture_n0(pn, k.GetDouble());
         public double GetMixture_n0(PN pn, double k)
         {
             switch (pn)
@@ -75,53 +76,53 @@ namespace NIRS.Functions_for_numerical_method
             throw new Exception();
         }
         double zero = 1e-5;
-        public double Get_dynamic_m0(double n)
+        public double Get_dynamic_m0(LimitedDouble n)
         {
             return zero;
         }
-        public double Get_M0(double n)
+        public double Get_M0(LimitedDouble n)
         {
             return zero;
         }
-        public double Get_v0(double n)
+        public double Get_v0(LimitedDouble n)
         {
             return zero;
         }
-        public double Get_w0(double n)
-        {
-            return zero;
-        }
-
-        public double Get_dynamic_mMinus0Dot5(double k)
-        {
-            return zero;
-        }
-        public double Get_MMinus0Dot5(double k)
-        {
-            return zero;
-        }
-        public double Get_vMinus0Dot5(double k)
-        {
-            return zero;
-        }
-        public double Get_wMinus0Dot5(double k)
+        public double Get_w0(LimitedDouble n)
         {
             return zero;
         }
 
-        public double Get_dynamic_mK(double n)
+        public double Get_dynamic_mMinus0Dot5(LimitedDouble k)
         {
             return zero;
         }
-        public double Get_MK(double n)
+        public double Get_MMinus0Dot5(LimitedDouble k)
+        {
+            return zero;
+        }
+        public double Get_vMinus0Dot5(LimitedDouble k)
+        {
+            return zero;
+        }
+        public double Get_wMinus0Dot5(LimitedDouble k)
+        {
+            return zero;
+        }
+
+        public double Get_dynamic_mK(LimitedDouble n)
+        {
+            return zero;
+        }
+        public double Get_MK(LimitedDouble n)
         {
             return zero;
         }   
-        public double Get_vK(double n)
+        public double Get_vK(LimitedDouble n)
         {
             return zero;
         }
-        public double Get_wK(double n)
+        public double Get_wK(LimitedDouble n)
         {
             return zero;
         }

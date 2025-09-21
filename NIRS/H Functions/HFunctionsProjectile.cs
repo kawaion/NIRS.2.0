@@ -28,7 +28,7 @@ namespace NIRS.H_Functions
             constP = mainData.ConstParameters;
         }
 
-        public double H3(double N)
+        public double H3(LimitedDouble N)
         {
             var n = OffseterN.AppointAndOffset(N, + 0.5);
 
@@ -41,7 +41,7 @@ namespace NIRS.H_Functions
             return res;
         }
 
-        public double H4(double N)
+        public double H4(LimitedDouble N)
         {
             var n = OffseterN.AppointAndOffset(N, + 0.5);
 
@@ -55,7 +55,7 @@ namespace NIRS.H_Functions
             return res;
         }
 
-        public double H5(double N)
+        public double H5(LimitedDouble N)
         {
             var n = OffseterN.AppointAndOffset(N, + 0.5);
 
@@ -66,7 +66,7 @@ namespace NIRS.H_Functions
             return res;
         }
 
-        public double HPsi(double N)
+        public double HPsi(LimitedDouble N)
         {
             var n = OffseterN.AppointAndOffset(N, + 0.5);
 
@@ -79,7 +79,7 @@ namespace NIRS.H_Functions
             return res;
         }
 
-        private double G(double n)
+        private double G(LimitedDouble n)
         {
             double a_n = g.GetSn(PN.a, n);
             double Sigma_n = bps.Sigma(g.GetSn(PN.z, n), g.GetSn(PN.psi, n));

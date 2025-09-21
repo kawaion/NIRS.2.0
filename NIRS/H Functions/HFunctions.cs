@@ -41,7 +41,7 @@ namespace NIRS.H_Functions
             sn = new HFunctionsProjectile(grid, mainData);
         }
 
-        public double H1(double n, double k)
+        public double H1(LimitedDouble n, LimitedDouble k)
         {
             double x_k = x[k];
 
@@ -54,7 +54,7 @@ namespace NIRS.H_Functions
             return res;
         }
 
-        public double H2(double n, double k)
+        public double H2(LimitedDouble n, LimitedDouble k)
         {
             double x_k = x[k];
 
@@ -67,7 +67,7 @@ namespace NIRS.H_Functions
             return res;
         }
 
-        public double H3(double N, double K)
+        public double H3(LimitedDouble N, LimitedDouble K)
         {
             (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
 
@@ -80,7 +80,7 @@ namespace NIRS.H_Functions
             return res;
         }
 
-        public double H4(double N, double K)
+        public double H4(LimitedDouble N, LimitedDouble K)
         {
             (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
 
@@ -97,7 +97,7 @@ namespace NIRS.H_Functions
             return res;
         }
 
-        public double H5(double N, double K)
+        public double H5(LimitedDouble N, LimitedDouble K)
         {
             (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
 
@@ -108,7 +108,7 @@ namespace NIRS.H_Functions
             return res;
         }
 
-        public double HPsi(double N, double K)
+        public double HPsi(LimitedDouble N, LimitedDouble K)
         {
             (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
 
@@ -122,7 +122,7 @@ namespace NIRS.H_Functions
         }
 
 
-        private double tauW(double n, double k)
+        private double tauW(LimitedDouble n, LimitedDouble k)
         {
             double rho_n_kM05 = g[PN.rho, n, k - 0.5];
             double v_nM05_k = g[PN.v, n - 0.5, k];
@@ -135,7 +135,7 @@ namespace NIRS.H_Functions
             var res = MainFunctions.tau_w_n_k(rho_n_kM05, v_nM05_k, w_nM05_k, a_n_kM05, sigma_z_n_kM05, lambda0, S0);
             return res;
         }
-        private double G(double n, double k)
+        private double G(LimitedDouble n, LimitedDouble k)
         {
             double a_n_kM05 = g[PN.a, n, k - 0.5];
             double S0 = powder.S0;

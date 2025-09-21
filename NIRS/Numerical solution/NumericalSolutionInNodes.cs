@@ -17,7 +17,7 @@ namespace NIRS.Numerical_solution
         {
             _functions = functionsParametersOfTheNextLayer;
         }
-        public IGrid Get(IGrid grid, double n, double k)
+        public IGrid Get(IGrid grid, LimitedDouble n, LimitedDouble k)
         {
             if (ParameterTypeGetter.IsDynamic(n, k))
                 grid = GetDynamicParametersOfNextLayer(grid, n, k, _functions);
@@ -29,7 +29,7 @@ namespace NIRS.Numerical_solution
         }
 
 
-        private IGrid GetDynamicParametersOfNextLayer(IGrid grid, double n, double k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
+        private IGrid GetDynamicParametersOfNextLayer(IGrid grid, LimitedDouble n, LimitedDouble k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
         {
 
             grid[PN.dynamic_m, n, k] = _functions.Get_dynamic_m(n, k);
@@ -40,7 +40,7 @@ namespace NIRS.Numerical_solution
 
             return grid;
         }
-        private IGrid GetMixtureParametersOfNextLayer(IGrid grid, double n, double k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
+        private IGrid GetMixtureParametersOfNextLayer(IGrid grid, LimitedDouble n, LimitedDouble k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
         {
             //if(n==1068 && k == 78.5)
             //{

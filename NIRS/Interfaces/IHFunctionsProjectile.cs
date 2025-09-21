@@ -9,9 +9,9 @@ namespace NIRS.Interfaces
 {
     public interface IHFunctionsProjectile
     {
-        double H3(double n);
-        double H4(double n);
-        double H5(double n);
-        double HPsi(double n);
+        double H3(LimitedDouble n);
+        double H4(LimitedDouble n);
+        double H5(LimitedDouble n);
+        double HPsi(LimitedDouble n);
     }
 }

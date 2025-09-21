@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyDouble;
+using NIRS.Parameter_Type;
 
 namespace NIRS.Grid_Folder
 {
@@ -56,9 +57,9 @@ namespace NIRS.Grid_Folder
 
         private void Validation(LimitedDouble n, LimitedDouble k)
         {
-            if (n.IsInt() && k.IsHalfInt())
+            if (ParameterTypeGetter.IsMixture(n, k))
                 return;
-            if (n.IsHalfInt() && k.IsInt())
+            if (ParameterTypeGetter.IsDynamic(n, k))
                 return;
             throw new Exception();
         }

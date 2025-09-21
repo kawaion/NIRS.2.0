@@ -21,7 +21,7 @@ namespace NIRS.Numerical_solution
             _functions = projectileFunctions;
         }
 
-        public IGrid Get(IGrid grid, double n, bool isBeltIntact)
+        public IGrid Get(IGrid grid, LimitedDouble n, bool isBeltIntact)
         {
             if (n.IsHalfInt())
                 grid = GetDynamicParametersOfNextLayer(grid, n,  _functions, isBeltIntact);
@@ -38,7 +38,7 @@ namespace NIRS.Numerical_solution
         }
 
 
-        private IGrid GetDynamicParametersOfNextLayer(IGrid grid, double n, IProjectileFunctions functions, bool isBeltIntact)
+        private IGrid GetDynamicParametersOfNextLayer(IGrid grid, LimitedDouble n, IProjectileFunctions functions, bool isBeltIntact)
         {
             if (isBeltIntact)
                 grid.SetSn(PN.vSn, n,   0);
@@ -50,7 +50,7 @@ namespace NIRS.Numerical_solution
 
             return grid;
         }
-        private IGrid GetMixtureParametersOfNextLayer(IGrid grid, double n, IProjectileFunctions functions, bool isBeltIntact)
+        private IGrid GetMixtureParametersOfNextLayer(IGrid grid, LimitedDouble n, IProjectileFunctions functions, bool isBeltIntact)
         {
             if (!isBeltIntact)
             {

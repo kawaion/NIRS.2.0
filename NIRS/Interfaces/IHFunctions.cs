@@ -10,12 +10,12 @@ namespace NIRS.Interfaces
 {
     public interface IHFunctions
     {
-        double H1(double n, double k);
-        double H2(double n, double k);
-        double H3(double n, double k);
-        double H4(double n, double k);
-        double H5(double n, double k);
-        double HPsi(double n, double k);
+        double H1(LimitedDouble n, LimitedDouble k);
+        double H2(LimitedDouble n, LimitedDouble k);
+        double H3(LimitedDouble n, LimitedDouble k);
+        double H4(LimitedDouble n, LimitedDouble k);
+        double H5(LimitedDouble n, LimitedDouble k);
+        double HPsi(LimitedDouble n, LimitedDouble k);
 
         IHFunctionsProjectile sn { get; set; }
 

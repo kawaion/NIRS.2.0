@@ -7,8 +7,8 @@ namespace MyDouble
 {
     public struct LimitedDouble
     {
-        internal int Integer { get; }
-        internal bool IsFractional { get; }
+        internal int Integer { get; private set; }
+        internal bool IsFractional { get; private set; }
 
         private const double half = 0.5; 
 
@@ -63,6 +63,11 @@ namespace MyDouble
             return hashCode;
         }
 
+        public override string ToString()
+        {
+            return GetDouble().ToString();
+        }
+
         private static LimitedDoubleArithmetic limitedDoubleArithmetic = new LimitedDoubleArithmetic();
 
         #region методы арифметики
@@ -96,6 +101,13 @@ namespace MyDouble
         {
             return limitedDoubleArithmetic.Multiply(myDouble, multiplier);
         }
+
+
+        public static LimitedDouble operator ++(LimitedDouble myDouble)
+        {
+            myDouble.Integer += 1;
+            return myDouble;
+        }
         #endregion
 
         #region методы сравнения
@@ -128,6 +140,35 @@ namespace MyDouble
         public static bool operator >=(LimitedDouble myDouble1, LimitedDouble myDouble2)
         {
             return myDouble1 > myDouble2 || myDouble1 == myDouble2;
+        }
+
+
+
+
+
+        public static bool operator ==(LimitedDouble myDouble, double otherValue)
+        {
+            return myDouble.GetDouble() == otherValue;
+        }
+        public static bool operator !=(LimitedDouble myDouble, double otherValue)
+        {
+            return !(myDouble.GetDouble() == otherValue);
+        }
+        public static bool operator <(LimitedDouble myDouble, double otherValue)
+        {
+            return myDouble.GetDouble() < otherValue;
+        }
+        public static bool operator >(LimitedDouble myDouble, double otherValue)
+        {
+            return myDouble.GetDouble() > otherValue;
+        }
+        public static bool operator <=(LimitedDouble myDouble, double otherValue)
+        {
+            return myDouble < otherValue || myDouble == otherValue;
+        }
+        public static bool operator >=(LimitedDouble myDouble, double otherValue)
+        {
+            return myDouble > otherValue || myDouble == otherValue;
         }
         #endregion
 

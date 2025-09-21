@@ -17,18 +17,18 @@ namespace NIRS.Helpers
         {
             g = grid;
         }
-        public int Get(double n, double k, PN pn)
+        public int Get(LimitedDouble n, LimitedDouble k, PN pn)
         {
             var kLast = g.LastIndexK(pn, n);
 
             var distance = k - kLast;
             validation(distance);
-            return (int)(distance);
+            return distance.GetInt();
         }
 
-        private void validation(double distance)
+        private void validation(LimitedDouble distance)
         {
-            if (distance < 0 || distance.IsHalfInt()) throw new Exception();
+            if (distance.GetDouble() < 0 || distance.IsHalfInt()) throw new Exception();
         }
     }
 }

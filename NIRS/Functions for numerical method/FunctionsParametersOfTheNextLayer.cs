@@ -45,7 +45,7 @@ namespace NIRS.Functions_for_numerical_method
             tau = mainData.ConstParameters.tau;
         }
 
-        public double Get(PN pn, double n, double k)
+        public double Get(PN pn, LimitedDouble n, LimitedDouble k)
         {
             switch (pn)
             {
@@ -66,7 +66,7 @@ namespace NIRS.Functions_for_numerical_method
         }
 
 
-        public double Get_dynamic_m(double n, double k)
+        public double Get_dynamic_m(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.AppointAndOffset(n, +0.5, k, 0);
 
@@ -87,7 +87,7 @@ namespace NIRS.Functions_for_numerical_method
                                                      S_kM05, S_kP05, dpStrokeDivDx_n_k, H1_n_k, tau);
             return res;
         }
-        public double Get_v(double n, double k)
+        public double Get_v(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.AppointAndOffset(n ,0.5, k ,0);
 
@@ -98,7 +98,7 @@ namespace NIRS.Functions_for_numerical_method
             var res = MainFunctions.v_nP05_k(dynamicm_nP05_k, r_n_kM05, r_n_kP05);
             return res;
         }        
-        public double Get_M(double n, double k)
+        public double Get_M(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.AppointAndOffset(n ,0.5, k ,0);
 
@@ -122,7 +122,7 @@ namespace NIRS.Functions_for_numerical_method
                                               tau);
             return res;
         }
-        public double Get_w(double n, double k)
+        public double Get_w(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.AppointAndOffset(n, 0.5, k, 0);
 
@@ -142,7 +142,7 @@ namespace NIRS.Functions_for_numerical_method
         }     
 
 
-        public double Get_r(double n, double k)
+        public double Get_r(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
 
@@ -154,7 +154,7 @@ namespace NIRS.Functions_for_numerical_method
             var res = MainFunctions.r_nP1_kM05(r_n_kM05, nabla_rv_nP05_kM05, H3_nP05_kM05, tau);
             return res;
         }        
-        public double Get_e(double n, double k)
+        public double Get_e(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
 
@@ -174,7 +174,7 @@ namespace NIRS.Functions_for_numerical_method
                                tau);
             return res;
         }
-        public double Get_psi(double n, double k)
+        public double Get_psi(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
 
@@ -197,7 +197,7 @@ namespace NIRS.Functions_for_numerical_method
 
             return res;
         }
-        public double Get_z(double n, double k)
+        public double Get_z(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
 
@@ -210,7 +210,7 @@ namespace NIRS.Functions_for_numerical_method
             var res = MainFunctions.z_nP1_kM05(z_n_kM05, nabla_zw_nP05_kM05, nabla_w_nP05_kM05, H5_nP05_kM05, tau);
             return res;
         }   
-        public double Get_a(double n, double k)
+        public double Get_a(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
 
@@ -224,7 +224,7 @@ namespace NIRS.Functions_for_numerical_method
             var res = MainFunctions.a_nP1_kM05(a_n_kM05, nabla_aSw_nP05_kM05, S_kM05, tau);
             return res;
         }
-        public double Get_p(double n, double k)
+        public double Get_p(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
 
@@ -240,7 +240,7 @@ namespace NIRS.Functions_for_numerical_method
             var res = MainFunctions.p_nP1_kM05(e_nP1_kM05, m_nP1_kM05, S_kM05, r_nP1_kM05, teta, alpha);
             return res;
         }
-        public double Get_m(double n, double k)
+        public double Get_m(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
 
@@ -258,7 +258,7 @@ namespace NIRS.Functions_for_numerical_method
 
 
 
-        public double Get_rho(double n, double k)
+        public double Get_rho(LimitedDouble n, LimitedDouble k)
         {
             double x_k = x[k];
 
@@ -274,7 +274,7 @@ namespace NIRS.Functions_for_numerical_method
 
 
 
-        private double q(double n, double k)
+        private double q(LimitedDouble n, LimitedDouble k)
         {
             return PseudoViscosityMechanism.q(g, wc, constP, n, k);
         }

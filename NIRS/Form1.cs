@@ -82,7 +82,7 @@ namespace NIRS
             INumericalMethod numericalMethod = new SEL(mainData);
             grid = numericalMethod.Calculate();
             hScrollBar1.Minimum = 0;
-            hScrollBar1.Maximum = (int)grid.LastIndexN(PN.m);
+            hScrollBar1.Maximum = grid.LastIndexN(PN.m).GetInt();
             var tmp = grid.GetSn(PN.vSn, grid.LastIndexN(PN.v));
             var maxN = grid.LastIndexN(PN.p);
             nForMaxP = FindNPMax();
@@ -97,15 +97,15 @@ namespace NIRS
             //chartPlaceholder.SetIntervalY(100);
             //chart3 = chartPlaceholder.GetChart;
         }
-        double nForMaxP;
-        private double FindNPMax()
+        LimitedDouble nForMaxP;
+        private LimitedDouble FindNPMax()
         {
-            double nForMaxP = double.MinValue;
+            LimitedDouble nForMaxP = new LimitedDouble(double.MinValue);
             double maxP = double.MinValue;
             var N = grid.LastIndexN(PN.p);
-            for (double n = 0; n <= N; n++)
+            for (LimitedDouble n = new LimitedDouble(0); n <= N; n++)
             {
-                for (double k = 0.5; k <= grid.LastIndexK(PN.p, n); k++)
+                for (LimitedDouble k = new LimitedDouble(0.5); k <= grid.LastIndexK(PN.p, n); k++)
                 {
                     double currentP = grid[PN.p, n, k];
                     if (currentP > maxP)
@@ -124,12 +124,12 @@ namespace NIRS
             return nForMaxP;
         }
         IGrid grid;
-        private void ShowLayer(double n, List<PN> pns)
+        private void ShowLayer(LimitedDouble n, List<PN> pns)
         {
             for (int j = 0; j < pns.Count; j++)
                 chart1.Series[j].Points.Clear();
             var last = grid.LastIndexK(pns[0], n);
-            for (double i = 0; i <= last; i++)
+            for (LimitedDouble i = new LimitedDouble(0); i <= last; i++)
                 for (int j = 0; j < pns.Count; j++)
                     chart1.Series[j].Points.AddXY(i, grid[pns[j], n, i]);
         }
@@ -169,7 +169,7 @@ namespace NIRS
         private void Visualise(PN pn)
         {
             var pns = new List<PN>() { pn };
-            var n = Convert.ToDouble(textBox1.Text);
+            var n = new LimitedDouble(Convert.ToDouble(textBox1.Text));
             if (n > grid.LastIndexN(pns[0]) - 1)
             {
                 n = grid.LastIndexN(pns[0]) - 1;
@@ -248,7 +248,7 @@ namespace NIRS
         }
         private void Draw3()
         {
-            double n = grid.LastIndexN(PN.rho);
+            LimitedDouble n = grid.LastIndexN(PN.rho);
             ResultExtractor resultExtractor = new ResultExtractor(grid);
             var dataX = resultExtractor.GetX(PN.rho, n, mainData);
             var dataRo = resultExtractor.GetRo(n);
@@ -265,7 +265,7 @@ namespace NIRS
         }
         private void Draw4()
         {
-            double n = nForMaxP;
+            LimitedDouble n = nForMaxP;
             ResultExtractor resultExtractor = new ResultExtractor(grid);
             var dataXForP = resultExtractor.GetX(PN.p, n, mainData);
             var dataXForV = resultExtractor.GetX(PN.v, n, mainData);
@@ -285,7 +285,7 @@ namespace NIRS
         }
         private void Draw5()
         {
-            double n = grid.LastIndexN(PN.p);
+            LimitedDouble n = grid.LastIndexN(PN.p);
             ResultExtractor resultExtractor = new ResultExtractor(grid);
             var dataXForP = resultExtractor.GetX(PN.p, n, mainData);
             var dataXForV = resultExtractor.GetX(PN.v, n - 0.5, mainData);
@@ -305,7 +305,7 @@ namespace NIRS
         }
         private void Draw6()
         {
-            double n = grid.LastIndexN(PN.a); //nForMaxP;
+            LimitedDouble n = grid.LastIndexN(PN.a); //nForMaxP;
             ResultExtractor resultExtractor = new ResultExtractor(grid);
             var dataX = resultExtractor.GetX(PN.a, n, mainData);
             var dataA = resultExtractor.GetA(n, mainData);
@@ -322,7 +322,7 @@ namespace NIRS
         }
         private void Draw7()
         {
-            double n = grid.LastIndexN(PN.p);
+            LimitedDouble n = grid.LastIndexN(PN.p);
             ResultExtractor resultExtractor = new ResultExtractor(grid);
             var dataX = resultExtractor.GetX(PN.p, n, mainData);
             var dataEpure = resultExtractor.GetEpure(mainData);

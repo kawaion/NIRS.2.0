@@ -46,7 +46,7 @@ namespace NIRS.Functions_for_numerical_method
             tau = constP.tau;
         }
 
-        public double Get(PN pn, double n)
+        public double Get(PN pn, LimitedDouble n)
         {
             switch(pn)
             {
@@ -65,7 +65,7 @@ namespace NIRS.Functions_for_numerical_method
             throw new Exception();
         }
 
-        public double Get_a(double N)
+        public double Get_a(LimitedDouble N)
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
 
@@ -76,7 +76,7 @@ namespace NIRS.Functions_for_numerical_method
             var res = MainFunctions.a_Sn_nP1(a_n, dwdx_nP05, tau);
             return res;
         }
-        public double Get_e(double N)
+        public double Get_e(LimitedDouble N)
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
 
@@ -91,7 +91,7 @@ namespace NIRS.Functions_for_numerical_method
             var res = MainFunctions.e_Sn_nP1(e_n, dvdx_nP05, p_n, nabla_mSv_nP05, nabla_OneMinusmSw_nP05, H4_nP05, tau);
             return res;
         }
-        public double Get_m(double N)
+        public double Get_m(LimitedDouble N)
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
 
@@ -103,7 +103,7 @@ namespace NIRS.Functions_for_numerical_method
             return res;
         }
 
-        public double Get_p(double N)
+        public double Get_p(LimitedDouble N)
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
 
@@ -120,7 +120,7 @@ namespace NIRS.Functions_for_numerical_method
             return res;
         }
 
-        public double Get_psi(double N)
+        public double Get_psi(LimitedDouble N)
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
 
@@ -144,7 +144,7 @@ namespace NIRS.Functions_for_numerical_method
             psi = Validation.PsiValidation(psi);
             return psi;
         }
-        public double Get_r(double N)
+        public double Get_r(LimitedDouble N)
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
 
@@ -157,7 +157,7 @@ namespace NIRS.Functions_for_numerical_method
             return res;
         }
 
-        public double Get_ro(double N)
+        public double Get_ro(LimitedDouble N)
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
 
@@ -171,7 +171,7 @@ namespace NIRS.Functions_for_numerical_method
             return res;
         }
 
-        public double Get_vSn(double N)
+        public double Get_vSn(LimitedDouble N)
         {
             var n = OffseterN.AppointAndOffset(N, + 0.5);
 
@@ -188,7 +188,7 @@ namespace NIRS.Functions_for_numerical_method
 
         }
 
-        public double Get_x(double N)
+        public double Get_x(LimitedDouble N)
         {
             if (N.IsHalfInt())
             {
@@ -215,7 +215,7 @@ namespace NIRS.Functions_for_numerical_method
             }
         }
 
-        public double Get_z(double N)
+        public double Get_z(LimitedDouble N)
         {
             var n = OffseterN.AppointAndOffset(N, + 1);
   

@@ -48,7 +48,7 @@ namespace NIRS.Numerical_Method
 
         public IGrid Calculate()
         {
-            IGrid grid = new TimeSpaceGridTest();
+            IGrid grid = new TimeSpaceGrid();
 
             functionsBuilder = new FunctionsBuilder(_mainData);
             functionsBuilder.Build(grid);
@@ -71,13 +71,13 @@ namespace NIRS.Numerical_Method
         }
         private IGrid GetNumericalSolution(IGrid grid, IGridBorderFiller gridBorderFiller, int KChamber)
         {
-            double n = 0;
+            LimitedDouble n = new LimitedDouble(0);
 
             while (isBeltIntact)
             {
                 n += 0.5;
 
-                grid = gridBorderFiller.FillBarrelBordersN(grid, n, KChamber);
+                grid = gridBorderFiller.FillBarrelBordersN(grid, n);
                 //grid = gridBorderFiller.FillBarrelBordersK(grid, n, KChamber);
                 grid = GetNumericalSolutionAtNodesNIfBeltIntact(grid, n);
                 //grid = gridBorderFiller.FillLastNodeOfMixture(grid, n);
@@ -90,7 +90,7 @@ namespace NIRS.Numerical_Method
             {
                 n += 0.5;
 
-                grid = gridBorderFiller.FillBarrelBordersN(grid, n, KChamber);
+                grid = gridBorderFiller.FillBarrelBordersN(grid, n);
                 grid = GetNumericalSolutionAtNodesN(grid, n);
                 
                 grid = GetNumericalSolutionInProjectile(grid, n, gridBorderFiller);
@@ -106,21 +106,21 @@ namespace NIRS.Numerical_Method
                 return lastIntNode + 0.5;
             else return lastIntNode - 0.5;
         }
-        bool IsEndConditionNumericalSolution(IGrid grid, double n)
+        bool IsEndConditionNumericalSolution(IGrid grid, LimitedDouble n)
         {
             var x = grid.GetSn(PN.x, n);
             return x >= lengthBarrel;
         }
-        private double GetFirstK(double n)
+        private LimitedDouble GetFirstK(LimitedDouble n)
         {
             if (n.IsInt())
-                return -0.5;
+                return new LimitedDouble(-0.5);
             else
-                return 0;
+                return new LimitedDouble(0);
         }
-        private IGrid GetNumericalSolutionAtNodesNIfBeltIntact(IGrid grid, double n)
+        private IGrid GetNumericalSolutionAtNodesNIfBeltIntact(IGrid grid, LimitedDouble n)
         {
-            double k = GetFirstK(n);
+            LimitedDouble k = GetFirstK(n);
             bool isKLimit = CheckLimit(k);
             while (!isKLimit)
             {
@@ -130,17 +130,17 @@ namespace NIRS.Numerical_Method
             }
             return grid;
         }
-        private IGrid GetInterpolateSolutionInKChamber(IGrid grid, double n, IGridBorderFiller gridBorderFiller)
+        private IGrid GetInterpolateSolutionInKChamber(IGrid grid, LimitedDouble n, IGridBorderFiller gridBorderFiller)
         {
             return gridBorderFiller.FillLastNodeOfMixture(grid, n);
         }
-        private bool CheckLimit(double k)
+        private bool CheckLimit(LimitedDouble k)
         {
-            return (int)k >= kChamber;
+            return k.GetInt() >= kChamber;
         }
-        private IGrid GetNumericalSolutionAtNodesN(IGrid grid, double n)
+        private IGrid GetNumericalSolutionAtNodesN(IGrid grid, LimitedDouble n)
         {
-            double k = GetFirstK(n);
+            LimitedDouble k = GetFirstK(n);
 
             var snKPrevious = _k[grid.GetSn(PN.x, n - 1)];
 
@@ -157,7 +157,7 @@ namespace NIRS.Numerical_Method
         INumericalSolutionInterpolation numericalSolutionInterpolation;
 
         VerifierAbilityCalculateNode verifier;
-        private IGrid GetNumericalSolutionAtNodeNK(IGrid grid, double n, double k)
+        private IGrid GetNumericalSolutionAtNodeNK(IGrid grid, LimitedDouble n, LimitedDouble k)
         {
             //bool isPossible=verifier.Check(n, k);
 
@@ -165,7 +165,7 @@ namespace NIRS.Numerical_Method
 
             return grid;
         }
-        private IGrid GetNumericalSolutionInProjectile(IGrid grid, double n,IGridBorderFiller gridBorderFiller)
+        private IGrid GetNumericalSolutionInProjectile(IGrid grid, LimitedDouble n,IGridBorderFiller gridBorderFiller)
         {
             if (isBeltIntact == true)
             {
@@ -175,7 +175,7 @@ namespace NIRS.Numerical_Method
 
             return grid;
         }
-        private void AttemptRipOffBelt(IGrid grid, double n)
+        private void AttemptRipOffBelt(IGrid grid, LimitedDouble n)
         {
             if(isBeltIntact == true && n.IsInt())
             {
@@ -186,7 +186,7 @@ namespace NIRS.Numerical_Method
 
         }
 
-        private IGrid GetInterpolateSolutionAtInaccessibleNodes(IGrid grid, double n, bool isBeltIntact)
+        private IGrid GetInterpolateSolutionAtInaccessibleNodes(IGrid grid, LimitedDouble n, bool isBeltIntact)
         {
             if(!isBeltIntact)
                 grid = numericalSolutionInterpolation.Get(grid, n);

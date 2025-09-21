@@ -8,17 +8,17 @@ namespace NIRS.Interfaces
 {
     public interface IProjectileFunctions
     {
-        double Get(PN pn,double n);
-        double Get_vSn(double n);
-        double Get_x(double n);
-        double Get_r(double n);
-        double Get_z(double n);
-        double Get_psi(double n);
-        double Get_a(double n);
-        double Get_m(double n);
-        double Get_ro(double n);
-        double Get_e(double n);
-        double Get_p(double n);
+        double Get(PN pn, LimitedDouble n);
+        double Get_vSn(LimitedDouble n);
+        double Get_x(LimitedDouble n);
+        double Get_r(LimitedDouble n);
+        double Get_z(LimitedDouble n);
+        double Get_psi(LimitedDouble n);
+        double Get_a(LimitedDouble n);
+        double Get_m(LimitedDouble n);
+        double Get_ro(LimitedDouble n);
+        double Get_e(LimitedDouble n);
+        double Get_p(LimitedDouble n);
 
         void Update(IGrid grid);
     }

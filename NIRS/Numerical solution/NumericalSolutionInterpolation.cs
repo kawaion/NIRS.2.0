@@ -20,7 +20,7 @@ namespace NIRS.Numerical_solution
             _functions = parameterInterpolationFunctions;
             x = new XGetter(mainData.ConstParameters);
         }
-        public IGrid Get(IGrid g, double n)
+        public IGrid Get(IGrid g, LimitedDouble n)
         {
             if (n.IsInt())
             {
@@ -49,7 +49,7 @@ namespace NIRS.Numerical_solution
             return g;
 
         }
-        private bool isExistNonCalculatedNodes(IGrid g, double n, PN pn)
+        private bool isExistNonCalculatedNodes(IGrid g, LimitedDouble n, PN pn)
         {
             var kLast = g.LastIndexK(pn, n);
             var xEmptyNode = x[kLast+1];
