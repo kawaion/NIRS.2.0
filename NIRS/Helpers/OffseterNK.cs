@@ -41,7 +41,7 @@ namespace NIRS.Helpers
         //    return (newN, newK);
         //}
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static (double n, double k) AppointAndOffset(double n, double offsetN, double k, double offsetK)
+        public static (LimitedDouble n, LimitedDouble k) AppointAndOffset(LimitedDouble n, double offsetN, LimitedDouble k, double offsetK)
         {
             return (offsetN == 0 ? n : n - offsetN,
                     offsetK == 0 ? k : k - offsetK);

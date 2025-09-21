@@ -29,7 +29,7 @@ namespace NIRS.Grid_Folder
         {
             for(int i = 0; i < countParams; i++)
             {
-                data[i] = new List<(double n, List<(double k, double value)> layer)>();
+                data[i] = new List<(LimitedDouble n, List<(LimitedDouble k, double value)> layer)>();
             }
         }
         private void InicialiseDataSn()
@@ -40,7 +40,7 @@ namespace NIRS.Grid_Folder
             }
         }
         const int countParams = 13;
-        List<(double n, List<(double k,double value)>layer )>[] data = new List<(double n, List<(double k, double value)> layer)>[countParams]; // количество переменных
+        List<(LimitedDouble n, List<(LimitedDouble k,double value)>layer )>[] data = new List<(LimitedDouble n, List<(LimitedDouble k, double value)> layer)>[countParams]; // количество переменных
 
         const int maximumnNegativeN = 1;
         const int maximumnNegativeK = 1;
@@ -85,9 +85,9 @@ namespace NIRS.Grid_Folder
                 var nIndex = ConvertToNIndex(n);
                 var kIndex = ConvertToKIndex(k);
                 var layers = data[(int)pn];
-                layers = AllocateMemoryNLayersForTheIndex(layers, nIndex, n.Double());
+                layers = AllocateMemoryNLayersForTheIndex(layers, nIndex, n.GetDouble());
                 var cells = layers[nIndex].layer;
-                cells = AllocateMemoryCellsForTheIndex(cells, kIndex, k.Double());
+                cells = AllocateMemoryCellsForTheIndex(cells, kIndex, k.GetDouble());
                 var cellK = cells[kIndex];
                 value = Validation(value);
                 cellK.value = value;
@@ -104,20 +104,20 @@ namespace NIRS.Grid_Folder
         private int ConvertToNIndex(LimitedDouble n)
         {
             if (n.IsInt())
-                return (n + maximumnNegativeN).Int();
+                return (n + maximumnNegativeN).GetInt();
             if (n.IsHalfInt())
-                return (n - 0.5 + maximumnNegativeN).Int();
+                return (n - 0.5 + maximumnNegativeN).GetInt();
             throw new Exception();
         }
         private int ConvertToKIndex(LimitedDouble k)
         {
             if(k.IsInt())
-                return (k + maximumnNegativeK).Int();
+                return (k + maximumnNegativeK).GetInt();
             if(k.IsHalfInt())
-                return (k-0.5 + maximumnNegativeK).Int();
+                return (k-0.5 + maximumnNegativeK).GetInt();
             throw new Exception();
         }
-        private List<(double n, List<(double k, double value)> layer)> AllocateMemoryNLayersForTheIndex(List<(double n, List<(double k, double value)> layer)> layers, int index, double n)
+        private List<(LimitedDouble n, List<(LimitedDouble k, double value)> layer)> AllocateMemoryNLayersForTheIndex(List<(LimitedDouble n, List<(LimitedDouble k, double value)> layer)> layers, int index, LimitedDouble n)
         {
             layers.AllocateUpTo(index, GetNewN);
             var layerN = layers[index];
@@ -129,7 +129,7 @@ namespace NIRS.Grid_Folder
         double newN = -maximumnNegativeN - 1;
         private (double n, List<(double k, double layer)> layer) GetNewN()
         {
-            var newlayer = new List<(double k, double layer)>();
+            var newlayer = new List<(LimitedDouble k, double layer)>();
             (double n, List<(double k, double layer)> layer) res = (n: newN, layer: newlayer);
             return res;
         }

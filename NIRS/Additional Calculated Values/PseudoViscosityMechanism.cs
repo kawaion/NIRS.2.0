@@ -11,7 +11,7 @@ namespace NIRS.Additional_calculated_values
 {
     static class PseudoViscosityMechanism
     {
-        public static double q(IGrid g, IWaypointCalculator wc, IConstParameters constP, double N, double K)
+        public static double q(IGrid g, IWaypointCalculator wc, IConstParameters constP, LimitedDouble N, LimitedDouble K)
         {
             (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
 

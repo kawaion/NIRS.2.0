@@ -7,8 +7,8 @@ namespace MyDouble
 {
     public struct LimitedDouble
     {
-        public int Integer { get; }
-        public bool IsFractional { get; }
+        internal int Integer { get; }
+        internal bool IsFractional { get; }
 
         private const double half = 0.5; 
 
@@ -16,12 +16,12 @@ namespace MyDouble
         {
             int integer = (int)value;
             IsFractional = ConverterOfCertainDouble.Is05(value - integer);
-            Integer = HalfValueTransformer.Transform(integer, IsFractional);
+            Integer = HalfValueTransformer.TransformForLimitedDouble(integer, IsFractional);
         }
         public LimitedDouble(int integer, int fractional)
         {
             IsFractional = СonverterNumberToFlag.Convert(fractional);
-            Integer = HalfValueTransformer.Transform(integer, IsFractional);
+            Integer = HalfValueTransformer.TransformForLimitedDouble(integer, IsFractional);
         }
         internal LimitedDouble(int integer, bool isFractional)
         {
@@ -31,16 +31,16 @@ namespace MyDouble
         public bool IsHalfInt() => IsFractional;
         public bool IsInt() => !IsFractional;
 
-        public double Double()
+        public double GetDouble()
         {
             if (IsFractional)
                 return Integer + half;
             else
                 return Integer;
         }
-        public int Int()
+        public int GetInt()
         {
-            return Integer;
+            return HalfValueTransformer.TransformForInt(Integer, IsFractional);
         }
 
         public LimitedDouble Copy()
@@ -48,19 +48,24 @@ namespace MyDouble
             return new LimitedDouble(Integer, IsFractional);
         }
 
-        //public static LimitedDouble Floor(double value)
-        //{
-        //    var doubleFloor = (int)value;
-        //    var MyDouble = new LimitedDouble(doubleFloor);
-        //    if (MyDouble + 0.5 <= value)
-        //        return MyDouble + 0.5;
-        //    else
-        //        return MyDouble;
-        //}
+        public override bool Equals(object obj)
+        {
+            return obj is LimitedDouble @double &&
+                   Integer == @double.Integer &&
+                   IsFractional == @double.IsFractional;
+        }
 
+        public override int GetHashCode()
+        {
+            int hashCode = -317837413;
+            hashCode = hashCode * -1521134295 + Integer.GetHashCode();
+            hashCode = hashCode * -1521134295 + IsFractional.GetHashCode();
+            return hashCode;
+        }
 
         private static LimitedDoubleArithmetic limitedDoubleArithmetic = new LimitedDoubleArithmetic();
 
+        #region методы арифметики
         public static LimitedDouble operator +(LimitedDouble myDouble1, LimitedDouble myDouble2)
         {
             return limitedDoubleArithmetic.Add(myDouble1, myDouble2);
@@ -87,6 +92,13 @@ namespace MyDouble
             return limitedDoubleArithmetic.Minus(myDouble, otherValue);
         }
 
+        public static LimitedDouble operator *(LimitedDouble myDouble, int multiplier)
+        {
+            return limitedDoubleArithmetic.Multiply(myDouble, multiplier);
+        }
+        #endregion
+
+        #region методы сравнения
         public static bool operator ==(LimitedDouble myDouble1, LimitedDouble myDouble2)
         {
             return (myDouble1.Integer == myDouble2.Integer) && (myDouble1.IsFractional == myDouble2.IsFractional);
@@ -117,7 +129,7 @@ namespace MyDouble
         {
             return myDouble1 > myDouble2 || myDouble1 == myDouble2;
         }
-
+        #endregion
 
         //public static bool operator !=(LimitedDouble myDouble1, double otherValue)
         //{

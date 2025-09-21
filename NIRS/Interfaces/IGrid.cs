@@ -6,13 +6,13 @@ namespace NIRS.Interfaces
     public interface IGrid
     {
         double this[PN pn, LimitedDouble n, LimitedDouble k] { get;set; }
-        double LastIndexK(PN pn, LimitedDouble n);
-        double LastIndexN(PN pn);
+        LimitedDouble LastIndexK(PN pn, LimitedDouble n);
+        LimitedDouble LastIndexN(PN pn);
 
-        double GetSn(PN pn, double n);
-        void SetSn(PN pn, double n, double value);
-        double LastIndexNSn(PN pn);
+        double GetSn(PN pn, LimitedDouble n);
+        void SetSn(PN pn, LimitedDouble n, double value);
+        LimitedDouble LastIndexNSn(PN pn);
 
-        double[,] GetFullData(int pn);
+        //double[,] GetFullData(int pn);
     }
 }

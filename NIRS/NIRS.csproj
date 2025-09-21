@@ -67,9 +67,12 @@
     <Compile Include="For chart\DataForChart.cs" />
     <Compile Include="For chart\ResultExtractor.cs" />
     <Compile Include="Functions for numerical method\BoundaryFunctions.cs" />
-    <Compile Include="Grid Folder\Nulls.cs" />
-    <Compile Include="Grid Folder\SpaceCellProjectile.cs" />
-    <Compile Include="Grid Folder\SpaceCellWithK.cs" />
+    <Compile Include="Grid Folder\DataArray.cs" />
+    <Compile Include="Grid Folder\DataSnArray.cs" />
+    <Compile Include="Grid Folder\LastKArray.cs" />
+    <Compile Include="Grid Folder\LastNArray.cs" />
+    <Compile Include="Grid Folder\Subfolder\CapasityEnsurerForArray.cs" />
+    <Compile Include="Grid Folder\Subfolder\NewSizeCalculator.cs" />
     <Compile Include="Grid Folder\TimeSpaceGrid.cs" />
     <Compile Include="Grid Folder\DynamicBlock3DArray.cs" />
     <Compile Include="H Functions\HFunctionsProjectile.cs" />
@@ -126,8 +129,6 @@
     <Compile Include="Interfaces\IGrid.cs" />
     <Compile Include="Grid Folder\GridBorderFiller.cs" />
     <Compile Include="Interfaces\IGridBorderFiller.cs" />
-    <Compile Include="Grid Folder\SpaceCell.cs" />
-    <Compile Include="Grid Folder\SpaceGrid.cs" />
     <Compile Include="Interfaces\ISubGrid.cs" />
     <Compile Include="Grid Folder\TimeSpaceGridTest.cs" />
     <Compile Include="H Functions\HFunctions.cs" />

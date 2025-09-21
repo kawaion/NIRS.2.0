@@ -8,11 +8,20 @@ namespace MyDouble
 {
     class HalfValueTransformer
     {
-        public static int Transform(int integer, bool isFractional)
+        public static int TransformForLimitedDouble(int integer, bool isFractional)
         {
             if ((integer < 0) && isFractional)
             {
                 return integer - 1;
+            }
+            else
+                return integer;
+        }
+        public static int TransformForInt(int integer, bool isFractional)
+        {
+            if ((integer < 0) && isFractional)
+            {
+                return integer + 1;
             }
             else
                 return integer;

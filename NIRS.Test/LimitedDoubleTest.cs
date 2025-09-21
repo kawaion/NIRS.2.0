@@ -21,7 +21,7 @@ namespace NIRS.Test
             var c = a + b;
 
             // Assert
-            Assert.True(eps >= Math.Abs(c.Double() - 4));
+            Assert.True(eps >= Math.Abs(c.GetDouble() - 4));
         }
         [Fact]
         public void checking_the_limitedDouble_arithmetic_half_plus_Int()
@@ -34,7 +34,7 @@ namespace NIRS.Test
             var c = a + b;
 
             // Assert
-            Assert.True(eps >= Math.Abs(c.Double() - 3.5));
+            Assert.True(eps >= Math.Abs(c.GetDouble() - 3.5));
         }
         [Fact]
         public void checking_the_limitedDouble_arithmetic_Int_plus_half()
@@ -47,7 +47,7 @@ namespace NIRS.Test
             var c = a + b;
 
             // Assert
-            Assert.True(eps >= Math.Abs(c.Double() - 3.5));
+            Assert.True(eps >= Math.Abs(c.GetDouble() - 3.5));
         }
         [Fact]
         public void checking_the_limitedDouble_arithmetic_Int_plus_Int()
@@ -60,7 +60,7 @@ namespace NIRS.Test
             var c = a + b;
 
             // Assert
-            Assert.True(eps >= Math.Abs(c.Double() - 3));
+            Assert.True(eps >= Math.Abs(c.GetDouble() - 3));
         }
 
 
@@ -76,7 +76,7 @@ namespace NIRS.Test
             var c = a - b;
 
             // Assert
-            Assert.True(eps >= Math.Abs(c.Double() - -1));
+            Assert.True(eps >= Math.Abs(c.GetDouble() - -1));
         }
         [Fact]
         public void checking_the_limitedDouble_arithmetic_half_minus_Int()
@@ -89,7 +89,7 @@ namespace NIRS.Test
             var c = a - b;
 
             // Assert
-            Assert.True(eps >= Math.Abs(c.Double() - -0.5));
+            Assert.True(eps >= Math.Abs(c.GetDouble() - -0.5));
         }
         [Fact]
         public void checking_the_limitedDouble_arithmetic_Int_minus_half()
@@ -102,7 +102,7 @@ namespace NIRS.Test
             var c = a - b;
 
             // Assert
-            Assert.True(eps >= Math.Abs(c.Double() - -1.5));
+            Assert.True(eps >= Math.Abs(c.GetDouble() - -1.5));
         }
         [Fact]
         public void checking_the_limitedDouble_arithmetic_Int_minus_Int()
@@ -115,7 +115,7 @@ namespace NIRS.Test
             var c = a - b;
 
             // Assert
-            Assert.True(eps >= Math.Abs(c.Double() - -1));
+            Assert.True(eps >= Math.Abs(c.GetDouble() - -1));
         }
 
 
@@ -130,7 +130,7 @@ namespace NIRS.Test
             var c = a + b;
 
             // Assert
-            Assert.True(eps >= Math.Abs(c.Double() - 3));
+            Assert.True(eps >= Math.Abs(c.GetDouble() - 3));
         }
         [Fact]
         public void checking_the_limitedDouble_arithmetic_half_plus_DoubleInt()
@@ -143,7 +143,7 @@ namespace NIRS.Test
             var c = a + b;
 
             // Assert
-            Assert.True(eps >= Math.Abs(c.Double() - 2.5));
+            Assert.True(eps >= Math.Abs(c.GetDouble() - 2.5));
         }
         [Fact]
         public void checking_the_limitedDouble_arithmetic_Int_plus_Doublehalf()
@@ -156,7 +156,7 @@ namespace NIRS.Test
             var c = a + b;
 
             // Assert
-            Assert.True(eps >= Math.Abs(c.Double() - 2.5));
+            Assert.True(eps >= Math.Abs(c.GetDouble() - 2.5));
         }
         [Fact]
         public void checking_the_limitedDouble_arithmetic_Int_plus_DoubleInt()
@@ -169,7 +169,7 @@ namespace NIRS.Test
             var c = a + b;
 
             // Assert
-            Assert.True(eps >= Math.Abs(c.Double() - 2));
+            Assert.True(eps >= Math.Abs(c.GetDouble() - 2));
         }
 
 
@@ -185,7 +185,7 @@ namespace NIRS.Test
             var c = a - b;
 
             // Assert
-            Assert.True(eps >= Math.Abs(c.Double() - 0));
+            Assert.True(eps >= Math.Abs(c.GetDouble() - 0));
         }
         [Fact]
         public void checking_the_limitedDouble_arithmetic_half_minus_DoubleInt()
@@ -198,7 +198,7 @@ namespace NIRS.Test
             var c = a - b;
 
             // Assert
-            Assert.True(eps >= Math.Abs(c.Double() - 0.5));
+            Assert.True(eps >= Math.Abs(c.GetDouble() - 0.5));
         }
         [Fact]
         public void checking_the_limitedDouble_arithmetic_Int_minus_Doublehalf()
@@ -211,7 +211,7 @@ namespace NIRS.Test
             var c = a - b;
 
             // Assert
-            Assert.True(eps >= Math.Abs(c.Double() - -0.5));
+            Assert.True(eps >= Math.Abs(c.GetDouble() - -0.5));
         }
         [Fact]
         public void checking_the_limitedDouble_arithmetic_Int_minus_DoubleInt()
@@ -224,7 +224,7 @@ namespace NIRS.Test
             var c = a - b;
 
             // Assert
-            Assert.True(eps >= Math.Abs(c.Double() - 0));
+            Assert.True(eps >= Math.Abs(c.GetDouble() - 0));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Net.Http.Headers;
 
 namespace MyDouble
@@ -40,5 +41,18 @@ namespace MyDouble
             LimitedDouble otherMyDouble = converterOfCertainDouble.Convert(otherValue);
             return Minus(myDouble, otherMyDouble);
         }
+
+        public LimitedDouble Multiply(LimitedDouble myDouble, int multiplier)
+        {
+            if(multiplier == 2)
+            {
+                int newInteger = myDouble.Integer * 2;
+                if (myDouble.IsFractional)
+                    newInteger++;
+                return new LimitedDouble(newInteger, false);
+            }
+            throw new Exception();
+        }
+        
     }
 }
