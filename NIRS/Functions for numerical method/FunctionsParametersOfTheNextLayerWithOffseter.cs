@@ -1,18 +1,23 @@
 ﻿using MyDouble;
-using NIRS.Additional_calculated_values;
-using NIRS.BPMN_folder;
-using NIRS.Helpers;
-using NIRS.Interfaces;
-using NIRS.Parameter_names;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NIRS.Grid_Folder;
+using NIRS.Helpers;
+using NIRS.Data_Parameters.Input_Data_Parameters;
+using NIRS.Parameter_names;
+using NIRS.Nabla_Functions;
+using NIRS.Cannon_Folder.Barrel_Folder;
+using NIRS.H_Functions;
+using NIRS.Cannon_Folder.Powder_Folder;
+using NIRS.Additional_calculated_values;
+using NIRS.Interfaces;
+using System.Diagnostics;
+using System.Data;
+using System.Diagnostics.Eventing.Reader;
+using NIRS.BPMN_folder;
 
 namespace NIRS.Functions_for_numerical_method
 {
-    class FunctionsParametersOfTheNextLayer : IFunctionsParametersOfTheNextLayer
+    class FunctionsParametersOfTheNextLayerWithOffseter : IFunctionsParametersOfTheNextLayer
     {
         private IGrid g;
         private readonly IConstParameters constP;
@@ -24,8 +29,8 @@ namespace NIRS.Functions_for_numerical_method
 
         private readonly XGetter x;
 
-        public FunctionsParametersOfTheNextLayer(IGrid grid,
-                                                    IWaypointCalculator waypointCalculator,
+        public FunctionsParametersOfTheNextLayerWithOffseter(   IGrid grid, 
+                                                    IWaypointCalculator waypointCalculator, 
                                                     IHFunctions hFunctions,
                                                     IMainData mainData)
         {
@@ -84,7 +89,7 @@ namespace NIRS.Functions_for_numerical_method
         }
         public double Get_v(LimitedDouble n, LimitedDouble k)
         {
-            (n, k) = OffseterNK.AppointAndOffset(n, 0.5, k, 0);
+            (n, k) = OffseterNK.AppointAndOffset(n ,0.5, k ,0);
 
             double dynamicm_nP05_k = g[PN.dynamic_m, n + 0.5, k];
             double r_n_kM05 = g[PN.r, n, k - 0.5];
@@ -92,10 +97,10 @@ namespace NIRS.Functions_for_numerical_method
 
             var res = MainFunctions.v_nP05_k(dynamicm_nP05_k, r_n_kM05, r_n_kP05);
             return res;
-        }
+        }        
         public double Get_M(LimitedDouble n, LimitedDouble k)
         {
-            (n, k) = OffseterNK.AppointAndOffset(n, 0.5, k, 0);
+            (n, k) = OffseterNK.AppointAndOffset(n ,0.5, k ,0);
 
             double x_kM05 = x[k - 0.5];
             double x_kP05 = x[k + 0.5];
@@ -134,7 +139,7 @@ namespace NIRS.Functions_for_numerical_method
             var res = MainFunctions.w_nP05_k(M_nP05_k, oneMm_n_kM05, oneMm_n_kP05,
                                              S_kM05, S_kP05, delta);
             return res;
-        }
+        }     
 
 
         public double Get_r(LimitedDouble n, LimitedDouble k)
@@ -148,7 +153,7 @@ namespace NIRS.Functions_for_numerical_method
 
             var res = MainFunctions.r_nP1_kM05(r_n_kM05, nabla_rv_nP05_kM05, H3_nP05_kM05, tau);
             return res;
-        }
+        }        
         public double Get_e(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
@@ -158,7 +163,7 @@ namespace NIRS.Functions_for_numerical_method
             double p_n_kM05 = g[PN.p, n, k - 0.5];
             double q_nP05_kM05 = q(n + 0.5, k - 0.5);
             double nabla_mSv_nP05_kM05 = wc.Nabla(PN.m, PN.S, PN.v, n + 0.5, k - 0.5);
-            double nabla_oneMmSw_nP05_kM05 = wc.Nabla(PN.One_minus_m, PN.S, PN.w, n + 0.5, k - 0.5);
+            double nabla_oneMmSw_nP05_kM05 = wc.Nabla(1, PN.S, PN.w, n + 0.5, k - 0.5) - wc.Nabla(PN.m, PN.S, PN.w, n + 0.5, k - 0.5);
             double H4_nP05_kM05 = hf.H4(n + 0.5, k - 0.5);
             double tau = this.tau;
 
@@ -195,7 +200,10 @@ namespace NIRS.Functions_for_numerical_method
         public double Get_z(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
-
+            //if (n == 1 && k == 0)
+            //{
+            //    int c = 0;
+            //}
             double z_n_kM05 = g[PN.z, n, k - 0.5];
             double nabla_zw_nP05_kM05 = wc.Nabla(PN.z, PN.w, n + 0.5, k - 0.5);
             double nabla_w_nP05_kM05 = wc.Nabla(PN.w, n + 0.5, k - 0.5);
@@ -208,7 +216,7 @@ namespace NIRS.Functions_for_numerical_method
             //    int c = 0;
             //}
             return res;
-        }
+        }   
         public double Get_a(LimitedDouble n, LimitedDouble k)
         {
             (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);

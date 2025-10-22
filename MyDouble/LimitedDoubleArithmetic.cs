@@ -25,21 +25,21 @@ namespace MyDouble
             return Add(myDouble, otherMyDouble);
         }
 
-        public LimitedDouble Minus(LimitedDouble myDouble1, LimitedDouble myDouble2)
+        public LimitedDouble Subtract(LimitedDouble myDouble1, LimitedDouble myDouble2)
         {
             int integerValue = myDouble1.Integer - myDouble2.Integer;
             (int additiveInteger, bool isFractional) = fractionalArithmetic.Minus(myDouble1.IsFractional, myDouble2.IsFractional);
             return new LimitedDouble(integerValue + additiveInteger, isFractional);
         }
-        public LimitedDouble Minus(LimitedDouble myDouble, int otherValue)
+        public LimitedDouble Subtract(LimitedDouble myDouble, int otherValue)
         {
             int integerValue = myDouble.Integer - otherValue;
             return new LimitedDouble(integerValue, myDouble.IsFractional);
         }
-        public LimitedDouble Minus(LimitedDouble myDouble, double otherValue)
+        public LimitedDouble Subtract(LimitedDouble myDouble, double otherValue)
         {
             LimitedDouble otherMyDouble = converterOfCertainDouble.Convert(otherValue);
-            return Minus(myDouble, otherMyDouble);
+            return Subtract(myDouble, otherMyDouble);
         }
 
         public LimitedDouble Multiply(LimitedDouble myDouble, int multiplier)

@@ -10,13 +10,12 @@ namespace NIRS.Grid_Folder
 {
     class LastKArray
     {
-        private const int InitialCapacity = 256;
+        private const int InitialCapacity = 128;
 
         private LimitedDouble[,] data;
 
         public int SizeP => data.GetLength(0);
         public int SizeN => data.GetLength(1);
-        public int SizeK => data.GetLength(2);
 
         public LastKArray (int constParam)
         {
@@ -36,12 +35,16 @@ namespace NIRS.Grid_Folder
             }
         }
 
+        public bool IsNewLayer(int n)
+        {
+            return n >= SizeN;
+        }
+
         private void TryResizeArray(int n)
         {
-            int newSizeN = n;
             if (n >= SizeN)
             {
-                newSizeN = NewSizeCalculator.Calculate(SizeN, n);
+                int newSizeN = NewSizeCalculator.Calculate(SizeN, n);
                 data = data.Resize2DArray(SizeP, newSizeN);
             }
         }

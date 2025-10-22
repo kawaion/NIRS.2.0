@@ -59,12 +59,11 @@ namespace NIRS.Functions_for_numerical_method
             }
             throw new Exception();
         }
-        public double GetMixture_n0(PN pn, LimitedDouble k) => GetMixture_n0(pn, k.GetDouble());
-        public double GetMixture_n0(PN pn, double k)
+        public double GetMixture_n0(PN pn, LimitedDouble k)
         {
             switch (pn)
             {
-                case PN.p: return Get_p0(k);
+                case PN.p: return Get_p0();
                 case PN.rho: return Get_ro0();
                 case PN.z: return Get_z0(k);
                 case PN.psi: return Get_psi0(k);
@@ -75,7 +74,7 @@ namespace NIRS.Functions_for_numerical_method
             }
             throw new Exception();
         }
-        double zero = 1e-5;
+        double zero = 0;
         public double Get_dynamic_m0(LimitedDouble n)
         {
             return zero;
@@ -86,55 +85,55 @@ namespace NIRS.Functions_for_numerical_method
         }
         public double Get_v0(LimitedDouble n)
         {
-            return zero;
+            return 1e-05;
         }
         public double Get_w0(LimitedDouble n)
         {
-            return zero;
+            return 1e-05;
         }
 
         public double Get_dynamic_mMinus0Dot5(LimitedDouble k)
         {
-            return zero;
+            return 1e-05;
         }
         public double Get_MMinus0Dot5(LimitedDouble k)
         {
-            return zero;
+            return 1e-05;
         }
         public double Get_vMinus0Dot5(LimitedDouble k)
         {
-            return zero;
+            return 1e-05;
         }
         public double Get_wMinus0Dot5(LimitedDouble k)
         {
-            return zero;
+            return 1e-05;
         }
 
         public double Get_dynamic_mK(LimitedDouble n)
         {
-            return zero;
+            return 1e-05;
         }
         public double Get_MK(LimitedDouble n)
         {
-            return zero;
+            return 1e-05;
         }   
         public double Get_vK(LimitedDouble n)
         {
-            return zero;
+            return 1e-05;
         }
         public double Get_wK(LimitedDouble n)
         {
-            return zero;
+            return 1e-05;
         }
 
-        public double Get_p0(double k)
+        public double Get_p0()
         {
             return (0.3 * constP.omegaV * constP.f) /
                    (bs.Wkm - powder.Omega / powder.Delta - constP.alpha * constP.omegaV);
         }
         private double pV()
         {
-            return Get_p0(0);
+            return Get_p0();
         }
         public double Get_ro0()
         {
@@ -146,11 +145,11 @@ namespace NIRS.Functions_for_numerical_method
             return constP.f /
                    constP.teta;
         }
-        public double Get_z0(double k)
+        public double Get_z0(LimitedDouble k)
         {
             return zero;
         }
-        public double Get_psi0(double k)
+        public double Get_psi0(LimitedDouble k)
         {
             return zero;
         }
@@ -158,22 +157,18 @@ namespace NIRS.Functions_for_numerical_method
         {
             return 1 - powder.DELTA / powder.Delta;
         }
-        public double Get_a0(double k)
+        public double Get_a0(LimitedDouble k)
         {
             return powder.Omega/
                   (powder.LAMBDA0 * powder.Delta * bs.Wkm);
         }
-        public double Get_r0(double k)
+        public double Get_r0(LimitedDouble k)
         {
             return Get_ro0() * Get_m0() * bs.S(x[k]);
         }
-        public double Get_e0(double k)
+        public double Get_e0(LimitedDouble k)
         {
             return Get_ro0() * Get_m0() * bs.S(x[k]) * Get_eps0();
-        }
-
-        public void Update()
-        {
         }
     }
 }

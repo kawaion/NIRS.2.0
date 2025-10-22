@@ -46,7 +46,7 @@ namespace NIRS.BPMN_folder
         public static double w_nP05_k(double M_nP05_k, double oneMm_n_kM05, double oneMm_n_kP05,
                                              double S_kM05, double S_kP05, double delta)
         {
-            return 2 * M_nP05_k / delta * (oneMm_n_kM05 * S_kM05 + oneMm_n_kP05 * S_kP05);
+            return 2 * M_nP05_k / (delta * (oneMm_n_kM05 * S_kM05 + oneMm_n_kP05 * S_kP05));
         }
         public static double r_nP1_kM05(double r_n_kM05, double nabla_rv_nP05_kM05, double H3_nP05_kM05, double tau)
         {

@@ -10,8 +10,8 @@ namespace NIRS.Interfaces
 {
     public interface IParameterInterpolationFunctions
     {
-        double InterpolateMixture(PN pn, LimitedDouble n, LimitedDouble k);
-        double InterpolateDynamic(PN pn, LimitedDouble n, LimitedDouble k);
+        double InterpolateMixture(PN pn, LimitedDouble n, double xSn, LimitedDouble kLast);
+        double InterpolateDynamic(PN pn, LimitedDouble n, LimitedDouble kLast, double xSn);
         void Update(IGrid grid);
     }
 }

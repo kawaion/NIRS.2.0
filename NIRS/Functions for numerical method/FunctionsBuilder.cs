@@ -40,7 +40,7 @@ namespace NIRS.Functions_for_numerical_method
             waypointCalculator = new WaypointCalculator(grid, _mainData);
             hFunctions = new HFunctions(grid, _mainData);
 
-            functionsNewLayer = new FunctionsParametersOfTheNextLayer(
+            functionsNewLayer = new FunctionsParametersOfTheNextLayerWithOffseter(
                 grid,
                 waypointCalculator,
                 hFunctions,
@@ -67,28 +67,6 @@ namespace NIRS.Functions_for_numerical_method
         public IParameterInterpolationFunctions ParameterInterpolationFunctionsBuild(IGrid grid)
         {
             parameterInterpolationFunctions = new ParameterInterpolationFunctions(grid, _mainData);
-            return parameterInterpolationFunctions;
-        }
-
-
-        public IFunctionsParametersOfTheNextLayer FunctionsParametersOfTheNextLayerUpdate(IGrid grid)
-        {
-            functionsNewLayer.Update(grid);
-            return functionsNewLayer;
-        }
-        public IProjectileFunctions ProjectileFunctionsUpdate(IGrid grid)
-        {
-            projectileFunctions.Update(grid);
-            return projectileFunctions;
-        }
-        public IBoundaryFunctions BoundaryFunctionsUpdate()
-        {
-            boundaryFunctions.Update();
-            return boundaryFunctions;
-        }
-        public IParameterInterpolationFunctions ParameterInterpolationFunctionsUpdate(IGrid grid)
-        {
-            parameterInterpolationFunctions.Update(grid);
             return parameterInterpolationFunctions;
         }
     }

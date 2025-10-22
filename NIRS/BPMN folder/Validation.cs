@@ -8,7 +8,7 @@ namespace NIRS.BPMN_folder
 {
     static class Validation
     {
-        public static double PsiValidation(double value) // метод скопирован
+        public static double Validation01(double value) // метод скопирован
         {
             if (value > 1)
                 value = 1;

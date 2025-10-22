@@ -32,11 +32,18 @@ namespace NIRS.Numerical_solution
         private IGrid GetDynamicParametersOfNextLayer(IGrid grid, LimitedDouble n, LimitedDouble k, IFunctionsParametersOfTheNextLayer functionsNewLayer)
         {
 
-            grid[PN.dynamic_m, n, k] = _functions.Get_dynamic_m(n, k);
-            grid[PN.M, n, k] = _functions.Get_M(n, k);
-            grid[PN.v, n, k] = _functions.Get_v(n, k);
-            grid[PN.w, n, k] = _functions.Get_w(n, k);
-                
+            double dynamic_m_value = _functions.Get_dynamic_m(n, k);
+            grid[PN.dynamic_m, n, k] = dynamic_m_value;
+
+            double M_value = _functions.Get_M(n, k);
+            grid[PN.M, n, k] = M_value;
+
+            double v_value = _functions.Get_v(n, k);
+            grid[PN.v, n, k] = v_value;
+
+            double w_value = _functions.Get_w(n, k);
+            grid[PN.w, n, k] = w_value;
+
 
             return grid;
         }
@@ -47,14 +54,30 @@ namespace NIRS.Numerical_solution
             //    int c = 0;
             //}
 
-            grid[PN.r, n, k] = functionsNewLayer.Get_r(n, k);
-            grid[PN.a, n, k] = functionsNewLayer.Get_a(n, k);
-            grid[PN.z, n, k] = functionsNewLayer.Get_z(n, k);
-            grid[PN.psi, n, k] = functionsNewLayer.Get_psi(n, k);
-            grid[PN.m, n, k] = functionsNewLayer.Get_m(n, k); // нужен a и psi
-            grid[PN.rho, n, k] = functionsNewLayer.Get_rho(n, k); // может не занимать место в памяти, нужен r и m
-            grid[PN.e, n, k] = functionsNewLayer.Get_e(n, k);// нужен z и psi
-            grid[PN.p, n, k] = functionsNewLayer.Get_p(n, k);
+            double r_value = functionsNewLayer.Get_r(n, k);
+            grid[PN.r, n, k] = r_value;
+
+            double a_value = functionsNewLayer.Get_a(n, k);
+            grid[PN.a, n, k] = a_value;
+
+            double z_value = functionsNewLayer.Get_z(n, k);
+            grid[PN.z, n, k] = z_value;
+
+            double psi_value = functionsNewLayer.Get_psi(n, k);
+            grid[PN.psi, n, k] = psi_value;
+
+            double m_value = functionsNewLayer.Get_m(n, k); // нужен a и psi
+            grid[PN.m, n, k] = m_value;
+
+            double rho_value = functionsNewLayer.Get_rho(n, k); // нужен r и m
+            grid[PN.rho, n, k] = rho_value;
+
+            double e_value = functionsNewLayer.Get_e(n, k); // нужен z и psi
+            grid[PN.e, n, k] = e_value;
+
+            double p_value = functionsNewLayer.Get_p(n, k);
+            grid[PN.p, n, k] = p_value;
+
             return grid;
         }
     }

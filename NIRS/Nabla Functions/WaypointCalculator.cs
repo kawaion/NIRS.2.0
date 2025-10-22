@@ -48,14 +48,36 @@ namespace NIRS.Nabla_Functions
             // формула преобразуется в значение на n,k
             double V = g[v, n, k];
 
+            double m = Get_m(n - 0.5, k - 0.5, mu);
+
             if (V >= 0)
-                return V * Get_m(n - 0.5, k - 0.5, mu) * bs.S(x[k - 0.5]);
+                return V * m * bs.S(x[k - 0.5]);
             else
-                return V * Get_m(n - 0.5, k + 0.5, mu) * bs.S(x[k + 0.5]);
+                return V * m * bs.S(x[k + 0.5]);
         }
+        //
+        public double Nabla(double param1, PN param2, PN param3, LimitedDouble N, LimitedDouble K)
+        {
+            (var n, var k) = OffseterNK.AppointAndOffset(N, +0.5, K, -0.5);
+
+            return (AverageWithS(param1, param3, n + 0.5, k) - AverageWithS(param1, param3, n + 0.5, k - 1)) / constP.h;
+        }
+        private double AverageWithS(double mu, PN v, LimitedDouble n, LimitedDouble k)
+        {
+            // формула преобразуется в значение на n,k
+            double V = g[v, n, k];
+
+            if (V >= 0)
+                return V * bs.S(x[k - 0.5]);
+            else
+                return V * bs.S(x[k + 0.5]);
+        }
+        //
         private double Get_m(LimitedDouble n, LimitedDouble k, PN mu)
         {
-             return g[mu, n, k];
+            if (mu == PN.One_minus_m)
+                return 1 - g[PN.m, n, k];
+            return g[mu, n, k];
         }
 
 
@@ -71,7 +93,15 @@ namespace NIRS.Nabla_Functions
             if (param1.IsMixture())
             {
                 (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, - 0.5);
-
+                //if (double.IsInfinity(MixtureAverage(param1, v, n + 0.5, k, NablaType.plus)))
+                //{
+                //    int c = 0;
+                //}
+                //if (double.IsInfinity(MixtureAverage(param1, v, n + 0.5, k - 1, NablaType.minus)))
+                //{
+                //    int c = 0;
+                //}
+                
                 return (MixtureAverage(param1, v, n + 0.5, k , NablaType.plus) - MixtureAverage(param1, v, n + 0.5, k - 1, NablaType.minus)) / constP.h;
             }
 
@@ -147,11 +177,11 @@ namespace NIRS.Nabla_Functions
         public double dPStrokeDivdx(LimitedDouble n, LimitedDouble k)
         {
             var res = (g.PStroke(this, constP, n, k + 0.5) - g.PStroke(this, constP, n, k - 0.5)) / constP.h;
-            if (double.IsNaN(res))
-            {
-                var tmp1 = g.PStroke(this, constP, n, k + 0.5);
-                var tmp2 = g.PStroke(this, constP, n, k - 0.5);
-            }
+            //if (double.IsNaN(res))
+            //{
+            //    var tmp1 = g.PStroke(this, constP, n, k + 0.5);
+            //    var tmp2 = g.PStroke(this, constP, n, k - 0.5);
+            //}
             return res;
         }
 

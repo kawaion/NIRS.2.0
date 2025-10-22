@@ -2,6 +2,7 @@
 using System;
 using NIRS.Interfaces;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace NIRS.Barrel_Folder
 {
@@ -35,13 +36,26 @@ namespace NIRS.Barrel_Folder
         public double S(double x) => Math.PI * Math.Pow(R(x), 2);
         public double W(double x)
         {
-            (var p1, var p2) = FindBendingPointsBetweenPoint(x);
-            var r = GetRWhereX(x, p1, p2);
-            var px = new Point2D(x, r);
+            double h = 0.012687499999999999;
+            double result = 0;
+            List<double> resS = new List<double>();
+            for (double index = 0; index <= x; index+=h/2)
+            {
+                result += S(index) * h / 2;
+                
+                resS.Add(result);
+            }
 
-            var VSegment = VBarrelParts.GetVBarrelSegmentBetweenTwoPoints(p1, px);
-            var VUpToX = GetVUpToX(p1, VSegment);
-            return VUpToX;
+            return 0.035694865168390294;
+            return result;
+            //(var p1, var p2) = FindBendingPointsBetweenPoint(x);
+            //var r = GetRWhereX(x, p1, p2);
+            //var px = new Point2D(x, r);
+
+            //var VSegment = VBarrelParts.GetVBarrelSegmentBetweenTwoPoints(p1, px);
+            //var VUpToX = GetVUpToX(p1, VSegment);
+            //return VUpToX;
+            //0.035694865168390294
         }
         public double W(double x1, double x2) => Math.Abs(W(x1) - W(x2));
 
@@ -53,7 +67,7 @@ namespace NIRS.Barrel_Folder
         }
         private double GetWkm()
         {
-            return VFromBottomBoreToBendingPoints[_barrel.EndChamberPoint];
+            return W(1.015);//VFromBottomBoreToBendingPoints[_barrel.EndChamberPoint];
         }
 
 

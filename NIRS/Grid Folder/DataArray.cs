@@ -9,7 +9,7 @@ namespace NIRS.Grid_Folder
 {
     class DataArray
     {
-        private const int InitialCapacity = 256;
+        private const int InitialCapacity = 128;
 
         private double[,,] data;
 
@@ -38,7 +38,7 @@ namespace NIRS.Grid_Folder
         private void TryResizeArray(int n, int k)
         {
             bool isResize = false;
-            int newSizeN = n, newSizeK = k;
+            int newSizeN = SizeN, newSizeK = SizeK;
             if (n >= SizeN)
             {
                 isResize = true;

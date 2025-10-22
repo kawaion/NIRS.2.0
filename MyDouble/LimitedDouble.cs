@@ -14,9 +14,13 @@ namespace MyDouble
 
         public LimitedDouble(double value)
         {
-            int integer = (int)value;
-            IsFractional = ConverterOfCertainDouble.Is05(value - integer);
-            Integer = HalfValueTransformer.TransformForLimitedDouble(integer, IsFractional);
+            Integer = (int)Math.Floor(value);
+            IsFractional = Is05(value - Integer);
+        }
+        private const double eps = 1e-9;
+        public static bool Is05(double value)
+        {
+            return 0.5 - eps < value && value < 0.5 + eps;
         }
         public LimitedDouble(int integer, int fractional)
         {
@@ -86,15 +90,15 @@ namespace MyDouble
 
         public static LimitedDouble operator -(LimitedDouble myDouble1, LimitedDouble myDouble2)
         {
-            return limitedDoubleArithmetic.Minus(myDouble1, myDouble2);
+            return limitedDoubleArithmetic.Subtract(myDouble1, myDouble2);
         }
         public static LimitedDouble operator -(LimitedDouble myDouble, int otherValue)
         {
-            return limitedDoubleArithmetic.Minus(myDouble, otherValue);
+            return limitedDoubleArithmetic.Subtract(myDouble, otherValue);
         }
         public static LimitedDouble operator -(LimitedDouble myDouble, double otherValue)
         {
-            return limitedDoubleArithmetic.Minus(myDouble, otherValue);
+            return limitedDoubleArithmetic.Subtract(myDouble, otherValue);
         }
 
         public static LimitedDouble operator *(LimitedDouble myDouble, int multiplier)

@@ -1,0 +1,21 @@
+﻿using NIRS.Parameter_names;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace NIRS
+{
+    public partial class FormPN: Form
+    {
+        public FormPN(PN pn, double[] massive)
+        {
+            InitializeComponent();
+        }
+    }
+}

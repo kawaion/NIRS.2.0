@@ -43,7 +43,7 @@ namespace NIRS
             //chart2.ChartAreas[0].AxisY.Interval = 100000000;
         }
         IMainData mainData;
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             IInitialParameters initialParameters = new InitialParametersCase1();
             double h = 1.015/80; //0.0025;
@@ -80,7 +80,7 @@ namespace NIRS
             //IGrid grid = task.Result;//numericalMethod.Calculate();
 
             INumericalMethod numericalMethod = new SEL(mainData);
-            grid = numericalMethod.Calculate();
+            grid = await Task.Run(() => numericalMethod.Calculate());
             hScrollBar1.Minimum = 0;
             hScrollBar1.Maximum = grid.LastIndexN(PN.m).GetInt();
             var tmp = grid.GetSn(PN.vSn, grid.LastIndexN(PN.v));

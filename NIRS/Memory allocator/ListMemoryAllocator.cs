@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyDouble;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
@@ -23,14 +24,14 @@ namespace NIRS.Memory_allocator
 
             return list;
         }
-        public static List<(double n, List<(double k, double layer)> layer)> AllocateUpTo(this List<(double n, List<(double k, double layer)> layer)> list, int index, GetNew<(double n, List<(double k, double layer)> layer)> getNew)
+        public static List<(LimitedDouble n, List<(LimitedDouble k, double layer)> layer)> AllocateUpTo(this List<(LimitedDouble n, List<(LimitedDouble k, double layer)> layer)> list, int index, GetNew<(LimitedDouble n, List<(LimitedDouble k, double layer)> layer)> getNew)
         {
             while (list.Count <= index)
                 list.Add(getNew());
 
             return list;
         }
-        public static List<(double k, double cell)> AllocateUpTo(this List<(double k, double cell)> list, int index, GetNew<(double k, double cell)> getNew)
+        public static List<(LimitedDouble k, double cell)> AllocateUpTo(this List<(LimitedDouble k, double cell)> list, int index, GetNew<(LimitedDouble k, double cell)> getNew)
         {
             while (list.Count <= index)
                 list.Add(getNew());

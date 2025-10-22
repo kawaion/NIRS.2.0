@@ -22,14 +22,16 @@ namespace NIRS.Numerical_solution
         }
         public IGrid Get(IGrid g, LimitedDouble n)
         {
+            var xSn = g.GetSn(PN.x, n);
             if (n.IsInt())
             {
+                
                 foreach (var pn in VectorPN.mixture)
                 {
-                    while (isExistNonCalculatedNodes(g, n, pn))
+                    while (isExistNonCalculatedNodes(g, n, pn, xSn))
                     {
                         var kLast = g.LastIndexK(pn, n);
-                        g[pn, n, kLast + 1] = _functions.InterpolateMixture(pn, n, kLast + 1);
+                        g[pn, n, kLast + 1] = _functions.InterpolateMixture(pn, n, xSn, kLast);
                     }
                 }
             }
@@ -38,10 +40,10 @@ namespace NIRS.Numerical_solution
             {
                 foreach (var pn in VectorPN.dynamic)
                 {
-                    while (isExistNonCalculatedNodes(g, n, pn))
+                    while (isExistNonCalculatedNodes(g, n, pn, xSn))
                     {
                         var kLast = g.LastIndexK(pn, n);
-                        g[pn, n, kLast + 1] = _functions.InterpolateDynamic(pn, n, kLast + 1);
+                        g[pn, n, kLast + 1] = _functions.InterpolateDynamic(pn, n, kLast, xSn);
                     }
                 }
             }
@@ -49,11 +51,11 @@ namespace NIRS.Numerical_solution
             return g;
 
         }
-        private bool isExistNonCalculatedNodes(IGrid g, LimitedDouble n, PN pn)
+        private bool isExistNonCalculatedNodes(IGrid g, LimitedDouble n, PN pn, double xSn)
         {
             var kLast = g.LastIndexK(pn, n);
             var xEmptyNode = x[kLast+1];
-            return g.GetSn(PN.x, n) >= xEmptyNode;
+            return xSn >= xEmptyNode;
         }
     }
 }

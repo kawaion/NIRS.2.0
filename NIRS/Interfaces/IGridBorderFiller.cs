@@ -5,7 +5,7 @@ namespace NIRS.Interfaces
 {
     interface IGridBorderFiller
     {
-        IGrid FillAtZeroTime(IGrid grid, double KSn);
+        IGrid FillAtZeroTime(IGrid grid, LimitedDouble KSn);
         IGrid FillBarrelBordersN(IGrid grid, LimitedDouble n);
         IGrid FillBarrelBordersK(IGrid grid, LimitedDouble n, LimitedDouble KDynamicLast);
         IGrid FillProjectileAtFixedBorder(IGrid grid, LimitedDouble n);

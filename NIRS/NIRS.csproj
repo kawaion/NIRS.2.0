@@ -14,7 +14,7 @@
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -66,7 +66,14 @@
     <Compile Include="For chart\ChartPlaceholder.cs" />
     <Compile Include="For chart\DataForChart.cs" />
     <Compile Include="For chart\ResultExtractor.cs" />
+    <Compile Include="FormPN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPN.Designer.cs">
+      <DependentUpon>FormPN.cs</DependentUpon>
+    </Compile>
     <Compile Include="Functions for numerical method\BoundaryFunctions.cs" />
+    <Compile Include="Functions for numerical method\FunctionsParametersOfTheNextLayer.cs" />
     <Compile Include="Grid Folder\DataArray.cs" />
     <Compile Include="Grid Folder\DataSnArray.cs" />
     <Compile Include="Grid Folder\LastKArray.cs" />
@@ -75,6 +82,7 @@
     <Compile Include="Grid Folder\Subfolder\NewSizeCalculator.cs" />
     <Compile Include="Grid Folder\TimeSpaceGrid.cs" />
     <Compile Include="Grid Folder\DynamicBlock3DArray.cs" />
+    <Compile Include="Grid Folder\VariableArray.cs" />
     <Compile Include="H Functions\HFunctionsProjectile.cs" />
     <Compile Include="Helpers\Differencial.cs" />
     <Compile Include="Helpers\DoubleTypeIssuer.cs" />
@@ -143,7 +151,7 @@
     <Compile Include="Nabla Functions\NablaFunctionType.cs" />
     <Compile Include="Nabla Functions\NablaNode.cs" />
     <Compile Include="Nabla Functions\WaypointCalculatorExtension.cs" />
-    <Compile Include="Functions for numerical method\FunctionsParametersOfTheNextLayer.cs" />
+    <Compile Include="Functions for numerical method\FunctionsParametersOfTheNextLayerWithOffseter.cs" />
     <Compile Include="Interfaces\IFunctionsParametersOfTheNextLayer.cs" />
     <Compile Include="Interfaces\INumericalMethod.cs" />
     <Compile Include="Parameter Type\DynamicCharacteristicsFlow.cs" />
@@ -162,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPN.resx">
+      <DependentUpon>FormPN.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

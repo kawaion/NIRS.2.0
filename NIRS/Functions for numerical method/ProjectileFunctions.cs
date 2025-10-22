@@ -141,7 +141,7 @@ namespace NIRS.Functions_for_numerical_method
                 psi = powder.BurningPowdersSize.Psi(z);
             }
 
-            psi = Validation.PsiValidation(psi);
+            psi = Validation.Validation01(psi);
             return psi;
         }
         public double Get_r(LimitedDouble N)

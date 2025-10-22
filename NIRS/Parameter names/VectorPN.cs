@@ -9,7 +9,7 @@ namespace NIRS.Parameter_names
     class VectorPN
     {
         public static List<PN> mixture = new List<PN> { PN.r, PN.z, PN.a, PN.m, PN.rho, PN.e, PN.p, PN.psi };
-        public static List<PN> dynamic = new List<PN> { PN.dynamic_m, PN.M, PN.v, PN.w};
+        public static List<PN> dynamic = new List<PN> { PN.v, PN.w, PN.dynamic_m, PN.M};
     };
 }
 

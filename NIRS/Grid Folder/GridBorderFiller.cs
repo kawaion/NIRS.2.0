@@ -21,6 +21,10 @@ namespace NIRS.Grid_Folder
         private readonly KGetter k;
         private readonly XGetter x;
 
+        private LimitedDouble zero = new LimitedDouble(0);
+        private LimitedDouble minus05 = new LimitedDouble(-0.5);
+        private LimitedDouble minus1 = new LimitedDouble(-1);
+
         public GridBorderFiller(IBoundaryFunctions boundaryFunctions, IMainData mainData)
         {
             _boundaryFunctions = boundaryFunctions;
@@ -30,28 +34,49 @@ namespace NIRS.Grid_Folder
             k = new KGetter(mainData.ConstParameters);
             x = new XGetter(mainData.ConstParameters);
         }
-        public IGrid FillAtZeroTime(IGrid grid, double KSn)
+        public IGrid FillAtZeroTime(IGrid grid, LimitedDouble KSn)
         {
-            var minus05 = new LimitedDouble(-0.5);
-            var zero = new LimitedDouble(0);
-
             for (var k = new LimitedDouble(-1); k <= KSn; k += 1)
             {
-                grid[PN.dynamic_m, minus05, k] = _boundaryFunctions.GetDynamic_nMinus0Dot5(PN.dynamic_m, k);
-                grid[PN.M, minus05, k] = _boundaryFunctions.GetDynamic_nMinus0Dot5(PN.M, k);
-                grid[PN.v, minus05, k] = _boundaryFunctions.GetDynamic_nMinus0Dot5(PN.v, k);
-                grid[PN.w, minus05, k] = _boundaryFunctions.GetDynamic_nMinus0Dot5(PN.w, k);
+                double dynamic_m_value = _boundaryFunctions.GetDynamic_nMinus0Dot5(PN.dynamic_m, k);
+                grid[PN.dynamic_m, minus05, k] = dynamic_m_value;
+
+                double M_value = _boundaryFunctions.GetDynamic_nMinus0Dot5(PN.M, k);
+                grid[PN.M, minus05, k] = M_value;
+
+                double v_value = _boundaryFunctions.GetDynamic_nMinus0Dot5(PN.v, k);
+                grid[PN.v, minus05, k] = v_value;
+
+                double w_value = _boundaryFunctions.GetDynamic_nMinus0Dot5(PN.w, k);
+                grid[PN.w, minus05, k] = w_value;
             }
             for (var k = new LimitedDouble(0); k <= KSn + 0.5; k += 1)
             {
-                grid[PN.p, zero, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.p, k - 0.5);
-                grid[PN.rho, zero, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.rho, k - 0.5);
-                grid[PN.z, zero, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.z, k - 0.5);
-                grid[PN.psi, zero, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.psi, k - 0.5);
-                grid[PN.m, zero, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.m, k - 0.5);
-                grid[PN.a, zero, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.a, k - 0.5);
-                grid[PN.r, zero, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.r, k - 0.5);
-                grid[PN.e, zero, k - 0.5] = _boundaryFunctions.GetMixture_n0(PN.e, k - 0.5);
+                LimitedDouble kMinus05 = k - 0.5;
+
+                double p_value = _boundaryFunctions.GetMixture_n0(PN.p, kMinus05);
+                grid[PN.p, zero, kMinus05] = p_value;
+
+                double rho_value = _boundaryFunctions.GetMixture_n0(PN.rho, kMinus05);
+                grid[PN.rho, zero, kMinus05] = rho_value;
+
+                double z_value = _boundaryFunctions.GetMixture_n0(PN.z, kMinus05);
+                grid[PN.z, zero, kMinus05] = z_value;
+
+                double psi_value = _boundaryFunctions.GetMixture_n0(PN.psi, kMinus05);
+                grid[PN.psi, zero, kMinus05] = psi_value;
+
+                double m_value = _boundaryFunctions.GetMixture_n0(PN.m, kMinus05);
+                grid[PN.m, zero, kMinus05] = m_value;
+
+                double a_value = _boundaryFunctions.GetMixture_n0(PN.a, kMinus05);
+                grid[PN.a, zero, kMinus05] = a_value;
+
+                double r_value = _boundaryFunctions.GetMixture_n0(PN.r, kMinus05);
+                grid[PN.r, zero, kMinus05] = r_value;
+
+                double e_value = _boundaryFunctions.GetMixture_n0(PN.e, kMinus05);
+                grid[PN.e, zero, kMinus05] = e_value;
             }
             grid.SetSn(PN.x, zero,      b.EndChamberPoint.X);
             grid.SetSn(PN.x, minus05,    b.EndChamberPoint.X);
@@ -62,22 +87,11 @@ namespace NIRS.Grid_Folder
             return grid;
         }
 
-        private double GetK()
-        {
-            var xEndChamber = b.EndChamberPoint.X;
-            var K = k[xEndChamber];
-            //K = Math.Floor(K);
-            return K;
-        }
-
         public IGrid FillBarrelBordersN(IGrid grid, LimitedDouble n)
         {
 
             if (n.IsHalfInt())
             {
-                var zero = new LimitedDouble(0);
-                var minus1 = new LimitedDouble(-1);
-
                 grid[PN.dynamic_m, n, zero] = _boundaryFunctions.GetDynamic_k0(PN.dynamic_m, n);
                 grid[PN.M, n, zero] = _boundaryFunctions.GetDynamic_k0(PN.M, n);
                 grid[PN.v, n, zero] = _boundaryFunctions.GetDynamic_k0(PN.v, n);
@@ -90,7 +104,6 @@ namespace NIRS.Grid_Folder
             }
             if (n.IsInt())
             {
-                var minus05 = new LimitedDouble(-0.5);
                 grid[PN.p, n, minus05] = 0;
                 grid[PN.rho, n, minus05] = 0;
                 grid[PN.z, n, minus05] = 0;
@@ -157,10 +170,17 @@ namespace NIRS.Grid_Folder
         }
         public IGrid FillLastNodeOfMixture(IGrid grid, LimitedDouble n)
         {
-            if (n.IsInt())
+            List<PN> parameters = new List<PN>();
+            //if (n.IsInt())
+            //{
+            //    parameters = VectorPN.mixture;
+            //}
+            if (n.IsHalfInt())
             {
-                var parameters = VectorPN.mixture;
-                foreach (var pn in parameters)
+                parameters = VectorPN.dynamic;
+            
+            foreach (var pn in parameters) 
+            { 
                 {                
                     var K = grid.LastIndexK(pn, n);
                     var KMinus1 = K - 1;
@@ -169,8 +189,9 @@ namespace NIRS.Grid_Folder
                     var p1 = new Point2D(KMinus1.GetDouble(), grid[pn, n, KMinus1]);
                     var p2 = new Point2D(K.GetDouble(), grid[pn, n, K]);
                     EquationOfLineFromTwoPoints equation = new EquationOfLineFromTwoPoints(p1, p2);
-                    grid[pn, n, KPlus1] = equation.GetY(KPlus1.GetDouble());
+                    grid[pn, n, KPlus1] = 1e-5;//equation.GetY(KPlus1.GetDouble());
                 }
+            }
             }
             return grid;     
         }
