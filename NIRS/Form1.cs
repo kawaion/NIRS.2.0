@@ -83,7 +83,7 @@ namespace NIRS
         }
 
         List<double> DymamicX;
-
+        List<double> MixtureX;
         private void InitializePostData()
         {
             hScrollBar1.Minimum = 0;
