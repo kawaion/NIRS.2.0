@@ -26,6 +26,8 @@ using System.Net.NetworkInformation;
 using System.Threading;
 using NIRS.For_chart;
 using System.Windows.Forms.DataVisualization.Charting;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using NIRS.Visualization.Progress;
 
 namespace NIRS
 {
@@ -45,10 +47,48 @@ namespace NIRS
         IMainData mainData;
         private async void button1_Click(object sender, EventArgs e)
         {
+            mainData = InitializeMainData();
+            //INumericalMethod numericalMethod = new SEL(mainData,DrawGrid);
+            //Task<IGrid> task = new Task<IGrid>(()=>numericalMethod.Calculate());
+            //task.Start();
+            //IGrid grid = task.Result;//numericalMethod.Calculate();
+            progressBar1.Maximum = (int)(mainData.Barrel.Length / mainData.ConstParameters.h * 2);
+            var progress = new Progress<ProgressInfo>(info =>
+            {
+                if (progressBar1.Maximum < info.progressbarValue)
+                    progressBar1.Value = progressBar1.Maximum;
+                else
+                    progressBar1.Value = info.progressbarValue;
+                labelN.Text = info.layerValue.ToString();
+                labelTime.Text = info.time.ToString();
+            });
+            Progresser progresser = new Progresser(progress);
+            INumericalMethod numericalMethod = new SEL(mainData);
+            numericalMethod.ProgressActivate(progresser);
+            grid = await Task.Run(() => numericalMethod.Calculate());
+            hScrollBar1.Minimum = 0;
+            hScrollBar1.Maximum = grid.LastIndexN(PN.m).GetInt();
+            var tmp = grid.GetSn(PN.vSn, grid.LastIndexN(PN.v));
+            var maxN = grid.LastIndexN(PN.p);
+            nForMaxP = FindNPMax();
+
+            //ResultExtractor resultExtractor = new ResultExtractor(grid);
+            //var dataT = resultExtractor.GetT(PN.p, mainData);
+            //var dataPkn = resultExtractor.GetPKn();
+            //var dataPSn = resultExtractor.GetPSn();
+            //ChartPlaceholder chartPlaceholder = new ChartPlaceholder(chart3);
+            //chartPlaceholder.Add(dataT, dataPkn);
+            //chartPlaceholder.Add(dataT, dataPSn);
+            //chartPlaceholder.SetIntervalY(100);
+            //chart3 = chartPlaceholder.GetChart;
+        }
+
+        private IMainData InitializeMainData()
+        {
             IInitialParameters initialParameters = new InitialParametersCase1();
-            double h = 1.015/80; //0.0025;
-            double tau = 1.015/(80*(2500+1500)); //curantTau(h, 945);
-            
+            double h = 1.015 / 80; //0.0025;
+            double tau = 1.015 / (80 * (2500 + 1500)); //curantTau(h, 945);
+
             ;//inputDataTransmitter.GetInputData(initialParameters, constParameters);
             List<Point2D> points = new List<Point2D>();
             points.Add(new Point2D(0, 0.214));
@@ -73,30 +113,9 @@ namespace NIRS
             IBarrel barrel = new Barrel(points, endChamber, Dimension.D);
             IPowder powder = new Powder_12_7(newConstParameters, barrel.BarrelSize, omega);
             IProjectile projectile = new Projectile(newConstParameters.q, d);
-            mainData = new MainData(barrel, powder, newConstParameters, newInitialParameters, projectile);
-            //INumericalMethod numericalMethod = new SEL(mainData,DrawGrid);
-            //Task<IGrid> task = new Task<IGrid>(()=>numericalMethod.Calculate());
-            //task.Start();
-            //IGrid grid = task.Result;//numericalMethod.Calculate();
-
-            INumericalMethod numericalMethod = new SEL(mainData);
-            grid = await Task.Run(() => numericalMethod.Calculate());
-            hScrollBar1.Minimum = 0;
-            hScrollBar1.Maximum = grid.LastIndexN(PN.m).GetInt();
-            var tmp = grid.GetSn(PN.vSn, grid.LastIndexN(PN.v));
-            var maxN = grid.LastIndexN(PN.p);
-            nForMaxP = FindNPMax();
-
-            //ResultExtractor resultExtractor = new ResultExtractor(grid);
-            //var dataT = resultExtractor.GetT(PN.p, mainData);
-            //var dataPkn = resultExtractor.GetPKn();
-            //var dataPSn = resultExtractor.GetPSn();
-            //ChartPlaceholder chartPlaceholder = new ChartPlaceholder(chart3);
-            //chartPlaceholder.Add(dataT, dataPkn);
-            //chartPlaceholder.Add(dataT, dataPSn);
-            //chartPlaceholder.SetIntervalY(100);
-            //chart3 = chartPlaceholder.GetChart;
+            return new MainData(barrel, powder, newConstParameters, newInitialParameters, projectile);
         }
+
         LimitedDouble nForMaxP;
         private LimitedDouble FindNPMax()
         {

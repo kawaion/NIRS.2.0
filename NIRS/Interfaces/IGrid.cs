@@ -7,6 +7,7 @@ namespace NIRS.Interfaces
     {
         double this[PN pn, LimitedDouble n, LimitedDouble k] { get;set; }
         LimitedDouble LastIndexK(PN pn, LimitedDouble n);
+        LimitedDouble LastIndexK(LimitedDouble n);
         LimitedDouble LastIndexN(PN pn);
 
         double GetSn(PN pn, LimitedDouble n);

@@ -16,3 +16,9 @@ D:\нирс\NIRS.2.0\MyDouble\obj\Debug\MyDouble.csproj.AssemblyReference.cache
 D:\нирс\NIRS.2.0\MyDouble\obj\Debug\MyDouble.csproj.CoreCompileInputs.cache
 D:\нирс\NIRS.2.0\MyDouble\obj\Debug\MyDouble.dll
 D:\нирс\NIRS.2.0\MyDouble\obj\Debug\MyDouble.pdb
+C:\Users\admin\Desktop\nirs\MyDouble\obj\Debug\MyDouble.csproj.AssemblyReference.cache
+C:\Users\admin\Desktop\nirs\MyDouble\obj\Debug\MyDouble.csproj.CoreCompileInputs.cache
+C:\Users\admin\Desktop\nirs\MyDouble\obj\Debug\MyDouble.dll
+C:\Users\admin\Desktop\nirs\MyDouble\obj\Debug\MyDouble.pdb
+C:\Users\admin\Desktop\nirs\MyDouble\bin\Debug\MyDouble.dll
+C:\Users\admin\Desktop\nirs\MyDouble\bin\Debug\MyDouble.pdb

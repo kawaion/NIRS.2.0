@@ -21,6 +21,7 @@ using System.Runtime.InteropServices.ComTypes;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NIRS.Visualization.Progress;
 
 namespace NIRS.Numerical_Method
 {
@@ -34,6 +35,13 @@ namespace NIRS.Numerical_Method
         private int kChamber;
 
         private KGetter _k;
+
+        Progresser _progresser = null;
+        public void ProgressActivate(Progresser progresser)
+        {
+            _progresser = progresser;
+        }
+
         public SEL(IMainData mainData)
         {
             //3.1718749999999996E-06
@@ -102,36 +110,33 @@ namespace NIRS.Numerical_Method
                 //grid = gridBorderFiller.FillLastNodeOfMixture(grid, n);
                 grid = GetInterpolateSolutionInKChamber(grid, n, gridBorderFiller);
                 grid = GetProjectileParametersBeforeBeltIntact(grid, n);
-                
 
-                LimitedDouble lastK;
+                _progresser.Update(grid.LastIndexK(n).GetIndex(), n.GetDouble());
 
-                if (n.IsHalfInt())
-                {
-                    lastK = grid.LastIndexK(PN.dynamic_m, n);
-                    lastdynamic_m = grid[PN.dynamic_m, n, lastK];
-                    lastM = grid[PN.M, n, lastK];
-                    lastv = grid[PN.v, n, lastK];
-                    lastw = grid[PN.w, n, lastK];
-                }
+                //LimitedDouble lastK;
 
-                if (n.IsInt())
-                {
-                    lastK = grid.LastIndexK(PN.p, n);
-                    lastpsi = grid[PN.psi, n, lastK];
-                    laste = grid[PN.e, n, lastK];
-                    lasta = grid[PN.a, n, lastK];
-                    lastp = grid[PN.p, n, lastK];
-                    lastr = grid[PN.r, n, lastK];
-                    lastrho = grid[PN.rho, n, lastK];
-                    lastz = grid[PN.z, n, lastK];
+                //if (n.IsHalfInt())
+                //{
+                //    lastK = grid.LastIndexK(PN.dynamic_m, n);
+                //    lastdynamic_m = grid[PN.dynamic_m, n, lastK];
+                //    lastM = grid[PN.M, n, lastK];
+                //    lastv = grid[PN.v, n, lastK];
+                //    lastw = grid[PN.w, n, lastK];
+                //}
 
-                    lastrS.Add(lastp);
-                }
-                if (n == 1066)
-                {
-                    int c = 0;
-                }
+                //if (n.IsInt())
+                //{
+                //    lastK = grid.LastIndexK(PN.p, n);
+                //    lastpsi = grid[PN.psi, n, lastK];
+                //    laste = grid[PN.e, n, lastK];
+                //    lasta = grid[PN.a, n, lastK];
+                //    lastp = grid[PN.p, n, lastK];
+                //    lastr = grid[PN.r, n, lastK];
+                //    lastrho = grid[PN.rho, n, lastK];
+                //    lastz = grid[PN.z, n, lastK];
+
+                //    lastrS.Add(lastp);
+                //}
             }
 
             while (!IsEndConditionNumericalSolution(grid, n))// && n!=2363)
@@ -144,17 +149,19 @@ namespace NIRS.Numerical_Method
                 grid = GetNumericalSolutionInProjectile(grid, n, gridBorderFiller);
                 grid = GetInterpolateSolutionAtInaccessibleNodes(grid, n);
                 double x = grid.GetSn(PN.x, n);
-                
-                LimitedDouble lastK;
 
-                if (n.IsInt())
-                {
+                _progresser.Update(grid.LastIndexK(n).GetIndex(), n.GetDouble());
 
-                    lastK = grid.LastIndexK(PN.p, n);
-                    lastp = grid[PN.p, n, lastK];
-                    lastrS.Add(lastp);
-                }
-                
+                //LimitedDouble lastK;
+
+                //if (n.IsInt())
+                //{
+
+                //    lastK = grid.LastIndexK(PN.p, n);
+                //    lastp = grid[PN.p, n, lastK];
+                //    lastrS.Add(lastp);
+                //}
+
             } 
             return grid;
         }

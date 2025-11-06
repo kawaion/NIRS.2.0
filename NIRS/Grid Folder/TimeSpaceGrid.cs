@@ -16,8 +16,8 @@ namespace NIRS.Grid_Folder
         const int maximumnNegativeK = 1;
 
         private DataArray data = new DataArray(countParams);
-        private LastKArray lastK = new LastKArray(countParams);
-        private LastNArray lastN = new LastNArray(countParams);
+        private LastKArray lastK = new LastKArray(countParams, new LimitedDouble(-1));
+        private LastNArray lastN = new LastNArray(countParams,new LimitedDouble(-1));
 
         // Словари для кэширования конвертации LimitedDouble в int
         private Dictionary<LimitedDouble, int> nIndexCache = new Dictionary<LimitedDouble, int>();
@@ -74,31 +74,28 @@ namespace NIRS.Grid_Folder
 
         private int ConvertToNIndex(LimitedDouble n)
         {
-            // Используем словарь для кэширования результатов конвертации
-            if (!nIndexCache.TryGetValue(n, out int index))
-            {
-                index = (n + maximumnNegativeN).GetInt();
-                nIndexCache[n] = index;
-            }
-            return index;
+            return (n + maximumnNegativeN).GetInt();
         }
 
         private int ConvertToKIndex(LimitedDouble k)
         {
-            // Используем словарь для кэширования результатов конвертации
-            if (!kIndexCache.TryGetValue(k, out int index))
-            {
-                index = (k + maximumnNegativeK).GetInt();
-                kIndexCache[k] = index;
-            }
-            return index;
+            return (k + maximumnNegativeK).GetInt();
         }
-
+        static int DynamicParamIndexForLastK = (int)PN.dynamic_m;
+        static int MixtureParamIndexForLastK = (int)PN.r;
         public LimitedDouble LastIndexK(PN pn, LimitedDouble n)
         {
             var paramIndex = (int)pn;
             var nIndex = ConvertToNIndex(n);
             return lastK[paramIndex, nIndex];
+        }
+        public LimitedDouble LastIndexK(LimitedDouble n)
+        {
+            var nIndex = ConvertToNIndex(n);
+            if (n.IsHalfInt())
+                return lastK[DynamicParamIndexForLastK, nIndex];
+            else 
+                return lastK[MixtureParamIndexForLastK, nIndex];
         }
 
         public LimitedDouble LastIndexN(PN pn)
@@ -116,7 +113,7 @@ namespace NIRS.Grid_Folder
 
         const int countParamsSn = 15;
         private DataSnArray dataSn = new DataSnArray(countParamsSn);
-        private LastNArray lastNSn = new LastNArray(countParamsSn);
+        private LastNArray lastNSn = new LastNArray(countParamsSn, new LimitedDouble(-1));
 
         public double GetSn(PN pn, LimitedDouble n)
         {
@@ -149,29 +146,7 @@ namespace NIRS.Grid_Folder
 
         private int ConvertToNIndexSn(LimitedDouble n)
         {
-            // Используем словарь для кэширования результатов конвертации
-            if (!nSnIndexCache.TryGetValue(n, out int index))
-            {
-                index = ((n + maximumnNegativeN) * 2).GetInt();
-                nSnIndexCache[n] = index;
-            }
-            return index;
-        }
-
-        // Метод для очистки кэша (если понадобится)
-        public void ClearCache()
-        {
-            nIndexCache.Clear();
-            kIndexCache.Clear();
-            nSnIndexCache.Clear();
-        }
-
-        // Метод для получения статистики использования кэша (опционально)
-        public void GetCacheStats(out int nCacheCount, out int kCacheCount, out int nSnCacheCount)
-        {
-            nCacheCount = nIndexCache.Count;
-            kCacheCount = kIndexCache.Count;
-            nSnCacheCount = nSnIndexCache.Count;
+            return (n + maximumnNegativeN).GetIndex();
         }
     }
 }

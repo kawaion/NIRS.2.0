@@ -64,6 +64,11 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.button5 = new System.Windows.Forms.Button();
             this.chart4 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.labelTime = new System.Windows.Forms.Label();
+            this.labelN = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -265,6 +270,11 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.labelN);
+            this.tabPage2.Controls.Add(this.labelTime);
+            this.tabPage2.Controls.Add(this.label2);
+            this.tabPage2.Controls.Add(this.label1);
+            this.tabPage2.Controls.Add(this.progressBar1);
             this.tabPage2.Controls.Add(this.dataGridView1);
             this.tabPage2.Controls.Add(this.comboBox3);
             this.tabPage2.Controls.Add(this.button1);
@@ -279,9 +289,9 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(87, 3);
+            this.dataGridView1.Location = new System.Drawing.Point(754, 8);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1334, 856);
+            this.dataGridView1.Size = new System.Drawing.Size(664, 442);
             this.dataGridView1.TabIndex = 2;
             // 
             // comboBox3
@@ -389,6 +399,47 @@
             this.chart4.TabIndex = 0;
             this.chart4.Text = "chart4";
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(6, 564);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(1412, 23);
+            this.progressBar1.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 515);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(91, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "время работы = ";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(7, 537);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(25, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "n = ";
+            // 
+            // labelTime
+            // 
+            this.labelTime.AutoSize = true;
+            this.labelTime.Location = new System.Drawing.Point(94, 515);
+            this.labelTime.Name = "labelTime";
+            this.labelTime.Size = new System.Drawing.Size(0, 13);
+            this.labelTime.TabIndex = 6;
+            // 
+            // labelN
+            // 
+            this.labelN.AutoSize = true;
+            this.labelN.Location = new System.Drawing.Point(29, 537);
+            this.labelN.Name = "labelN";
+            this.labelN.Size = new System.Drawing.Size(0, 13);
+            this.labelN.TabIndex = 7;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -403,6 +454,7 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).EndInit();
@@ -437,6 +489,11 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label labelN;
+        private System.Windows.Forms.Label labelTime;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }
 

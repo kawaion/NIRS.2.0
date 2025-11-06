@@ -5,66 +5,43 @@ using System.ComponentModel;
 
 namespace MyDouble
 {
-    public struct LimitedDouble
+    public class LimitedDouble
     {
-        internal int Integer { get; private set; }
-        internal bool IsFractional { get; private set; }
+        internal int _value;
+        internal bool _half;
 
-        private const double half = 0.5; 
-
+        static ConverterToLimitedDoubleValue converter = new ConverterToLimitedDoubleValue();
         public LimitedDouble(double value)
         {
-            Integer = (int)Math.Floor(value);
-            IsFractional = Is05(value - Integer);
+            (_value, _half) = converter.LimitedDoubleConverter(value);
         }
-        private const double eps = 1e-9;
-        public static bool Is05(double value)
+        public LimitedDouble(int value)
         {
-            return 0.5 - eps < value && value < 0.5 + eps;
+            (_value,_half) = converter.LimitedDoubleConverter(value);
         }
-        public LimitedDouble(int integer, int fractional)
+        public LimitedDouble(int value, bool half)
         {
-            IsFractional = СonverterNumberToFlag.Convert(fractional);
-            Integer = HalfValueTransformer.TransformForLimitedDouble(integer, IsFractional);
+            _value = value;
+            _half = half;
         }
-        internal LimitedDouble(int integer, bool isFractional)
-        {
-            IsFractional = isFractional;
-            Integer = integer;
-        }
-        public bool IsHalfInt() => IsFractional;
-        public bool IsInt() => !IsFractional;
+        public bool IsHalfInt() => _half == true;
+        public bool IsInt() => _half == false;
 
         public double GetDouble()
         {
-            if (IsFractional)
-                return Integer + half;
-            else
-                return Integer;
+            return _value / 2.0;
         }
         public int GetInt()
         {
-            return HalfValueTransformer.TransformForInt(Integer, IsFractional);
+            return _value / 2;
         }
-
+        public int GetIndex()
+        {
+            return _value;
+        }
         public LimitedDouble Copy()
         {
-            return new LimitedDouble(Integer, IsFractional);
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is LimitedDouble @double &&
-                   Integer == @double.Integer &&
-                   IsFractional == @double.IsFractional;
-        }
-
-        public override int GetHashCode()
-        {
-            int hashCode = -317837413;
-            hashCode = hashCode * -1521134295 + Integer.GetHashCode();
-            hashCode = hashCode * -1521134295 + IsFractional.GetHashCode();
-            return hashCode;
+            return new LimitedDouble(_value, _half);
         }
 
         public override string ToString()
@@ -72,7 +49,18 @@ namespace MyDouble
             return GetDouble().ToString();
         }
 
-        private static LimitedDoubleArithmetic limitedDoubleArithmetic = new LimitedDoubleArithmetic();
+        public override bool Equals(object obj)
+        {
+            return obj is LimitedDouble @double &&
+                   _value == @double._value;
+        }
+
+        public override int GetHashCode()
+        {
+            return -1939223833 + _value.GetHashCode();
+        }
+
+        private static LimitedDoubleArithmetic2 limitedDoubleArithmetic = new LimitedDoubleArithmetic2();
 
         #region методы арифметики
         public static LimitedDouble operator +(LimitedDouble myDouble1, LimitedDouble myDouble2)
@@ -109,7 +97,7 @@ namespace MyDouble
 
         public static LimitedDouble operator ++(LimitedDouble myDouble)
         {
-            myDouble.Integer += 1;
+            myDouble._value += 2;
             return myDouble;
         }
         #endregion
@@ -117,7 +105,7 @@ namespace MyDouble
         #region методы сравнения
         public static bool operator ==(LimitedDouble myDouble1, LimitedDouble myDouble2)
         {
-            return (myDouble1.Integer == myDouble2.Integer) && (myDouble1.IsFractional == myDouble2.IsFractional);
+            return myDouble1._value == myDouble2._value;
         }
         public static bool operator !=(LimitedDouble myDouble1, LimitedDouble myDouble2)
         {
@@ -125,17 +113,11 @@ namespace MyDouble
         }
         public static bool operator <(LimitedDouble myDouble1, LimitedDouble myDouble2)
         {
-            if (myDouble1.Integer == myDouble2.Integer)
-                return (myDouble1.IsFractional == false && myDouble2.IsFractional == true);
-
-            return myDouble1.Integer < myDouble2.Integer;
+            return myDouble1._value < myDouble2._value;
         }
         public static bool operator >(LimitedDouble myDouble1, LimitedDouble myDouble2)
         {
-            if (myDouble1.Integer == myDouble2.Integer)
-                return (myDouble1.IsFractional == true && myDouble2.IsFractional == false);
-
-            return myDouble1.Integer > myDouble2.Integer;
+            return myDouble1._value > myDouble2._value;
         }
         public static bool operator <=(LimitedDouble myDouble1, LimitedDouble myDouble2)
         {
@@ -152,19 +134,22 @@ namespace MyDouble
 
         public static bool operator ==(LimitedDouble myDouble, double otherValue)
         {
-            return myDouble.GetDouble() == otherValue;
+            (int convertedOtherValue, _) = converter.LimitedDoubleConverter(otherValue);
+            return myDouble._value == convertedOtherValue;
         }
         public static bool operator !=(LimitedDouble myDouble, double otherValue)
         {
-            return !(myDouble.GetDouble() == otherValue);
+            return !(myDouble == otherValue);
         }
         public static bool operator <(LimitedDouble myDouble, double otherValue)
         {
-            return myDouble.GetDouble() < otherValue;
+            (int convertedOtherValue, _) = converter.LimitedDoubleConverter(otherValue);
+            return myDouble._value < convertedOtherValue;
         }
         public static bool operator >(LimitedDouble myDouble, double otherValue)
         {
-            return myDouble.GetDouble() > otherValue;
+            (int convertedOtherValue, _) = converter.LimitedDoubleConverter(otherValue);
+            return myDouble._value > convertedOtherValue;
         }
         public static bool operator <=(LimitedDouble myDouble, double otherValue)
         {
@@ -200,9 +185,6 @@ namespace MyDouble
         //{
         //    return myDouble1 > otherValue || myDouble1 == otherValue;
         //}
-
-
-
     }
     public enum DoubleType
     {

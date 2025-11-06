@@ -66,10 +66,10 @@
     <Compile Include="For chart\ChartPlaceholder.cs" />
     <Compile Include="For chart\DataForChart.cs" />
     <Compile Include="For chart\ResultExtractor.cs" />
-    <Compile Include="FormPN.cs">
+    <Compile Include="Visualization\FormPN.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPN.Designer.cs">
+    <Compile Include="Visualization\FormPN.Designer.cs">
       <DependentUpon>FormPN.cs</DependentUpon>
     </Compile>
     <Compile Include="Functions for numerical method\BoundaryFunctions.cs" />
@@ -84,6 +84,7 @@
     <Compile Include="Grid Folder\DynamicBlock3DArray.cs" />
     <Compile Include="Grid Folder\VariableArray.cs" />
     <Compile Include="H Functions\HFunctionsProjectile.cs" />
+    <Compile Include="Helpers\DeepCopyer.cs" />
     <Compile Include="Helpers\Differencial.cs" />
     <Compile Include="Helpers\DoubleTypeIssuer.cs" />
     <Compile Include="Helpers\InterpolateStep.cs" />
@@ -165,13 +166,15 @@
     <Compile Include="Numerical Method\SEL.cs" />
     <Compile Include="RAM folder\RAM.cs" />
     <Compile Include="Verifer\VerifierAbilityCalculateNode.cs" />
+    <Compile Include="Visualization\Progress\Progresser.cs" />
+    <Compile Include="Visualization\Progress\ProgressInfo.cs" />
     <EmbeddedResource Include="Barrel Folder\BarrelInitializationInterface.resx">
       <DependentUpon>BarrelInitializationInterface.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPN.resx">
+    <EmbeddedResource Include="Visualization\FormPN.resx">
       <DependentUpon>FormPN.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

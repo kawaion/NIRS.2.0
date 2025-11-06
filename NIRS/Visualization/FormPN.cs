@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace NIRS
+namespace NIRS.Visualization
 {
     public partial class FormPN: Form
     {

@@ -13,13 +13,19 @@ namespace NIRS.Grid_Folder
         private const int InitialCapacity = 128;
 
         private LimitedDouble[,] data;
+        LimitedDouble _defaultValue;
 
         public int SizeP => data.GetLength(0);
         public int SizeN => data.GetLength(1);
 
-        public LastKArray (int constParam)
+        public LastKArray (int constParam, LimitedDouble defaultValue)
         {
             data = new LimitedDouble[constParam, InitialCapacity];
+            for (int i = 0; i < constParam; i++)
+                for (int j = 0; j < InitialCapacity; j++)
+                    data[i, j] = defaultValue.Copy();
+
+            _defaultValue = defaultValue;
         }
 
         public LimitedDouble this[int p, int n]
@@ -44,8 +50,12 @@ namespace NIRS.Grid_Folder
         {
             if (n >= SizeN)
             {
+                int lastN = n;
                 int newSizeN = NewSizeCalculator.Calculate(SizeN, n);
                 data = data.Resize2DArray(SizeP, newSizeN);
+                for (int i = 0; i < data.GetLength(0); i++)
+                    for (int j = lastN; j < data.GetLength(1); j++)
+                        data[i, j] = _defaultValue.Copy();
             }
         }
     }

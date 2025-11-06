@@ -339,6 +339,11 @@ namespace NIRS.Grid_Folder
             throw new NotImplementedException();
         }
 
+        public LimitedDouble LastIndexK(LimitedDouble n)
+        {
+            throw new NotImplementedException();
+        }
+
         //RAM<double, ISubGrid> ram;
         //public TimeSpaceGrid()
         //{

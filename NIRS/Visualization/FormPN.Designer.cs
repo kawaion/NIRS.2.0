@@ -1,4 +1,4 @@
-﻿namespace NIRS
+﻿namespace NIRS.Visualization
 {
     partial class FormPN
     {

@@ -15,9 +15,11 @@ namespace NIRS.Grid_Folder
 
         public int SizeP => data.GetLength(0);
 
-        public LastNArray(int constParam)
+        public LastNArray(int constParam, LimitedDouble defaultValue)
         {
             data = new LimitedDouble[constParam];
+            for (int i = 0; i < data.Length; i++)
+                data[i] = defaultValue.Copy();
         }
 
         public LimitedDouble this[int p]

@@ -41,11 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BooleanField.cs" />
     <Compile Include="ConverterOfCertainDouble.cs" />
+    <Compile Include="ConverterToLimitedDoubleValue.cs" />
     <Compile Include="FractionalArithmetic.cs" />
     <Compile Include="HalfValueTransformer.cs" />
     <Compile Include="LimitedDouble.cs" />
     <Compile Include="LimitedDoubleArithmetic.cs" />
+    <Compile Include="LimitedDoubleArithmetic2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="СonverterNumberToFlag .cs" />
   </ItemGroup>
