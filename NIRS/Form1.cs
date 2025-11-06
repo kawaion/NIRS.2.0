@@ -62,15 +62,14 @@ namespace NIRS
                 labelN.Text = info.layerValue.ToString();
                 labelTime.Text = info.time.ToString();
             });
-            Progresser progresser = new Progresser(progress);
+
             INumericalMethod numericalMethod = new SEL(mainData);
+            Progresser progresser = new Progresser(progress);
             numericalMethod.ProgressActivate(progresser);
+
             grid = await Task.Run(() => numericalMethod.Calculate());
-            hScrollBar1.Minimum = 0;
-            hScrollBar1.Maximum = grid.LastIndexN(PN.m).GetInt();
-            var tmp = grid.GetSn(PN.vSn, grid.LastIndexN(PN.v));
-            var maxN = grid.LastIndexN(PN.p);
-            nForMaxP = FindNPMax();
+
+            InitializePostData();
 
             //ResultExtractor resultExtractor = new ResultExtractor(grid);
             //var dataT = resultExtractor.GetT(PN.p, mainData);
@@ -81,6 +80,17 @@ namespace NIRS
             //chartPlaceholder.Add(dataT, dataPSn);
             //chartPlaceholder.SetIntervalY(100);
             //chart3 = chartPlaceholder.GetChart;
+        }
+
+        List<double> DymamicX;
+
+        private void InitializePostData()
+        {
+            hScrollBar1.Minimum = 0;
+            hScrollBar1.Maximum = grid.LastIndexN(PN.m).GetInt();
+            var tmp = grid.GetSn(PN.vSn, grid.LastIndexN(PN.v));
+            var maxN = grid.LastIndexN(PN.p);
+            nForMaxP = FindNPMax();
         }
 
         private IMainData InitializeMainData()

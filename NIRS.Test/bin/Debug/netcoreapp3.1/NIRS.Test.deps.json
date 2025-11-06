@@ -1091,10 +1091,7 @@
       "xunit.runner.visualstudio/2.4.3": {},
       "MyDouble/1.0.0": {
         "runtime": {
-          "MyDouble.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "MyDouble.dll": {}
         }
       },
       "NIRS/1.0.0": {
@@ -1102,10 +1099,7 @@
           "MyDouble": "1.0.0"
         },
         "runtime": {
-          "NIRS.exe": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "NIRS.exe": {}
         }
       },
       "Microsoft.Bcl.HashCode/6.0.0.0": {

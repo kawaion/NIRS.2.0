@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace MyDouble
 {
-    public class LimitedDouble
+    public struct LimitedDouble
     {
         internal int _value;
         internal bool _half;

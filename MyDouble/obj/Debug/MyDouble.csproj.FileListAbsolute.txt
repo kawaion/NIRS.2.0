@@ -22,3 +22,9 @@ C:\Users\admin\Desktop\nirs\MyDouble\obj\Debug\MyDouble.dll
 C:\Users\admin\Desktop\nirs\MyDouble\obj\Debug\MyDouble.pdb
 C:\Users\admin\Desktop\nirs\MyDouble\bin\Debug\MyDouble.dll
 C:\Users\admin\Desktop\nirs\MyDouble\bin\Debug\MyDouble.pdb
+C:\Users\Student\Desktop\nirs\MyDouble\bin\Debug\MyDouble.dll
+C:\Users\Student\Desktop\nirs\MyDouble\bin\Debug\MyDouble.pdb
+C:\Users\Student\Desktop\nirs\MyDouble\obj\Debug\MyDouble.csproj.AssemblyReference.cache
+C:\Users\Student\Desktop\nirs\MyDouble\obj\Debug\MyDouble.csproj.CoreCompileInputs.cache
+C:\Users\Student\Desktop\nirs\MyDouble\obj\Debug\MyDouble.dll
+C:\Users\Student\Desktop\nirs\MyDouble\obj\Debug\MyDouble.pdb
