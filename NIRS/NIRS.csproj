@@ -66,6 +66,8 @@
     <Compile Include="For chart\ChartPlaceholder.cs" />
     <Compile Include="For chart\DataForChart.cs" />
     <Compile Include="For chart\ResultExtractor.cs" />
+    <Compile Include="Parameter Type\DictPN.cs" />
+    <Compile Include="Parameter Type\FirstLimitedDouble.cs" />
     <Compile Include="Visualization\FormPN.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,8 +157,6 @@
     <Compile Include="Functions for numerical method\FunctionsParametersOfTheNextLayerWithOffseter.cs" />
     <Compile Include="Interfaces\IFunctionsParametersOfTheNextLayer.cs" />
     <Compile Include="Interfaces\INumericalMethod.cs" />
-    <Compile Include="Parameter Type\DynamicCharacteristicsFlow.cs" />
-    <Compile Include="Parameter Type\MixtureStateParameters.cs" />
     <Compile Include="Parameter Type\ParameterTypeGetter.cs" />
     <Compile Include="Parameter Type\PT.cs" />
     <Compile Include="Parameter Type\TypeFromParameterName.cs" />
@@ -166,6 +166,8 @@
     <Compile Include="Numerical Method\SEL.cs" />
     <Compile Include="RAM folder\RAM.cs" />
     <Compile Include="Verifer\VerifierAbilityCalculateNode.cs" />
+    <Compile Include="Visualization\PNDataArrayByN.cs" />
+    <Compile Include="Visualization\PNExtractor.cs" />
     <Compile Include="Visualization\Progress\Progresser.cs" />
     <Compile Include="Visualization\Progress\ProgressInfo.cs" />
     <EmbeddedResource Include="Barrel Folder\BarrelInitializationInterface.resx">

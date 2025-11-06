@@ -28,6 +28,8 @@ using NIRS.For_chart;
 using System.Windows.Forms.DataVisualization.Charting;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using NIRS.Visualization.Progress;
+using NIRS.Visualization;
+using NIRS.Parameter_Type;
 
 namespace NIRS
 {
@@ -211,18 +213,8 @@ namespace NIRS
         {
             var n = hScrollBar1.Value;
             textBox1.Text = Convert.ToString(n);
-            var pn = GetPNFromComboBox();
+            var pn = DictPN.Get(comboBoxPN.Text);
             Visualise(pn);
-        }
-        private PN GetPNFromComboBox()
-        {
-            var pn = comboBox1.Text;
-            switch (pn)
-            {
-                case "p": return PN.p;
-                case "psi": return PN.psi;
-                default: throw new Exception();
-            }
         }
         Chart chartForDraw;
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -410,6 +402,14 @@ namespace NIRS
                 result.Add(grid.GetSn(PN.vSn, lastN));
             }
 
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var pn = DictPN.Get(comboBoxPN.Text);
+            PNDataArrayByN data = new PNDataArrayByN(pn, grid, mainData);
+            FormPN form = new FormPN(data);
+            form.Show();
         }
 
 
@@ -600,8 +600,8 @@ namespace NIRS
         //private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         //{
         //    int pnNumber = comboBox3.SelectedIndex;
-        //    var data = grid.GetFullData(pnNumber);
-        //    DisplayMatrix(data);
+        //    var Array = grid.GetFullData(pnNumber);
+        //    DisplayMatrix(Array);
         //}
     }
     delegate void Draw(IGrid grid);

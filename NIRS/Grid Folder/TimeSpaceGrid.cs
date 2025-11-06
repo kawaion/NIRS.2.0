@@ -19,11 +19,6 @@ namespace NIRS.Grid_Folder
         private LastKArray lastK = new LastKArray(countParams, new LimitedDouble(-1));
         private LastNArray lastN = new LastNArray(countParams,new LimitedDouble(-1));
 
-        // Словари для кэширования конвертации LimitedDouble в int
-        private Dictionary<LimitedDouble, int> nIndexCache = new Dictionary<LimitedDouble, int>();
-        private Dictionary<LimitedDouble, int> kIndexCache = new Dictionary<LimitedDouble, int>();
-        private Dictionary<LimitedDouble, int> nSnIndexCache = new Dictionary<LimitedDouble, int>();
-
         public TimeSpaceGrid()
         {
         }

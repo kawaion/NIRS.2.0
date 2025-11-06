@@ -257,7 +257,7 @@ namespace NIRS.Grid_Folder
         //{
         //    try
         //    {
-        //        var lastKValues = string.Join(", ", data.Select(d =>
+        //        var lastKValues = string.Join(", ", Array.Select(d =>
         //            d?.LastOrDefault().layer?.LastOrDefault().k.ToString() ?? "null"));
         //        return lastKValues;
         //    }
@@ -280,7 +280,7 @@ namespace NIRS.Grid_Folder
         //    for (int i = 0; i < countParams; i++)
         //    {
         //        var paramName = ((PN)i).ToString();
-        //        var layers = data[i];
+        //        var layers = Array[i];
         //        sb.AppendLine($"{paramName}: {layers?.Count ?? 0} layers");
 
         //        if (layers != null && layers.Count > 0)

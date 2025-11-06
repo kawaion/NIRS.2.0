@@ -3,6 +3,7 @@ using NIRS.Helpers;
 using NIRS.Interfaces;
 using NIRS.Numerical_Method;
 using NIRS.Parameter_names;
+using NIRS.Parameter_Type;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,7 +24,7 @@ namespace NIRS.For_chart
         {
             List<double> massive = new List<double>();
             LimitedDouble lastN = _grid.LastIndexN(PN.p);
-            LimitedDouble firstN = GetFirstNode(lastN);
+            LimitedDouble firstN = FirstLimitedDouble.GetFirstN(PN.p);
 
             for (LimitedDouble n = firstN; n <= lastN; n++)
                 massive.Add(_grid[PN.p, n, new LimitedDouble(0.5)] * 1e-6);
@@ -36,7 +37,7 @@ namespace NIRS.For_chart
         {
             List<double> massive = new List<double>();
             LimitedDouble lastN = _grid.LastIndexNSn(PN.p);
-            LimitedDouble firstN = GetFirstNode(lastN);
+            LimitedDouble firstN = FirstLimitedDouble.GetFirstN(PN.p);
             
 
             for (LimitedDouble n = firstN; n <= lastN; n++)
@@ -49,7 +50,7 @@ namespace NIRS.For_chart
         {
             List<double> massive = new List<double>();
             LimitedDouble lastK = _grid.LastIndexK(PN.p, n);
-            LimitedDouble firstK = GetFirstNode(lastK);
+            LimitedDouble firstK = FirstLimitedDouble.GetFirstK(PN.p);
 
             for (LimitedDouble k = firstK; k <= lastK; k++)
                 massive.Add(_grid[PN.p, n, k] * 1e-6);
@@ -61,7 +62,7 @@ namespace NIRS.For_chart
         {
             List<double> massive = new List<double>();
             LimitedDouble lastN = _grid.LastIndexNSn(PN.vSn);
-            LimitedDouble firstN = GetFirstNode(lastN);
+            LimitedDouble firstN = FirstLimitedDouble.GetFirstN(PN.v);
 
             for (LimitedDouble n = firstN; n <= lastN; n++)
                 massive.Add(_grid.GetSn(PN.vSn, n));
@@ -74,7 +75,7 @@ namespace NIRS.For_chart
             var tau = mainData.ConstParameters.tau;
             List<double> massive = new List<double>();
             LimitedDouble lastN = _grid.LastIndexN(pn);
-            LimitedDouble firstN = GetFirstNode(lastN);
+            LimitedDouble firstN = FirstLimitedDouble.GetFirstN(pn);
 
             for (LimitedDouble n = firstN; n <= lastN; n++)
                 massive.Add(n.GetDouble() * tau * 1e3);
@@ -87,7 +88,7 @@ namespace NIRS.For_chart
             var h = mainData.ConstParameters.h;
             List<double> massive = new List<double>();
             LimitedDouble lastK = _grid.LastIndexK(pn,n);
-            LimitedDouble firstK = GetFirstNode(lastK);
+            LimitedDouble firstK = FirstLimitedDouble.GetFirstK(pn);
 
             for (LimitedDouble K = firstK; K <= lastK; K++)
                 massive.Add(K.GetDouble() * h);
@@ -99,7 +100,7 @@ namespace NIRS.For_chart
         {
             List<double> massive = new List<double>();
             LimitedDouble lastK = _grid.LastIndexK(PN.rho, n);
-            LimitedDouble firstK = GetFirstNode(lastK);
+            LimitedDouble firstK = FirstLimitedDouble.GetFirstK(PN.rho);
 
             for (LimitedDouble k = firstK; k <= lastK; k++)
                 massive.Add(_grid[PN.rho, n, k]);
@@ -114,7 +115,7 @@ namespace NIRS.For_chart
             var cv = mainData.ConstParameters.cv;
             List<double> massive = new List<double>();
             LimitedDouble lastK = _grid.LastIndexK(PN.rho, n);
-            LimitedDouble firstK = GetFirstNode(lastK);
+            LimitedDouble firstK = FirstLimitedDouble.GetFirstK(PN.rho);
 
             for (LimitedDouble k = firstK; k <= lastK; k++)
             {
@@ -129,7 +130,7 @@ namespace NIRS.For_chart
         {
             List<double> massive = new List<double>();
             LimitedDouble lastK = _grid.LastIndexK(PN.v, n);
-            LimitedDouble firstK = GetFirstNode(lastK);
+            LimitedDouble firstK = FirstLimitedDouble.GetFirstK(PN.v);
 
             for (LimitedDouble k = firstK; k <= lastK; k++)
                 massive.Add(_grid[PN.v, n, k]);
@@ -141,7 +142,7 @@ namespace NIRS.For_chart
         {
             List<double> massive = new List<double>();
             LimitedDouble lastK = _grid.LastIndexK(PN.w, n);
-            LimitedDouble firstK = GetFirstNode(lastK);
+            LimitedDouble firstK = FirstLimitedDouble.GetFirstK(PN.w);
 
             for (LimitedDouble k = firstK; k <= lastK; k++)
                 massive.Add(_grid[PN.w, n, k]);
@@ -158,7 +159,7 @@ namespace NIRS.For_chart
             var cv = mainData.ConstParameters.cv;
             List<double> massive = new List<double>();
             LimitedDouble lastK = _grid.LastIndexK(PN.a, n);
-            LimitedDouble firstK = GetFirstNode(lastK);
+            LimitedDouble firstK = FirstLimitedDouble.GetFirstK(PN.a);
             double a_n = powder.Omega / (powder.LAMBDA0 * powder.Delta * bs.Wkm);
 
             for (LimitedDouble k = firstK; k <= lastK; k++)
@@ -171,7 +172,7 @@ namespace NIRS.For_chart
         {
             List<double> massive = new List<double>();
             LimitedDouble lastK = _grid.LastIndexK(PN.psi, n);
-            LimitedDouble firstK = GetFirstNode(lastK);
+            LimitedDouble firstK = FirstLimitedDouble.GetFirstK(PN.psi);
 
             for (LimitedDouble k = firstK; k <= lastK; k++)
                 massive.Add(_grid[PN.psi, n, k]);
@@ -183,10 +184,10 @@ namespace NIRS.For_chart
         {
             List<double> massive = new List<double>();
             LimitedDouble lastN = _grid.LastIndexN(PN.p);
-            LimitedDouble firstN = GetFirstNode(lastN);
+            LimitedDouble firstN = FirstLimitedDouble.GetFirstN(PN.p);
 
             LimitedDouble endOfChamberK = _grid.LastIndexK(PN.p, lastN);
-            LimitedDouble bottomK = GetFirstNode(endOfChamberK);
+            LimitedDouble bottomK = FirstLimitedDouble.GetFirstK(PN.p);
             LimitedDouble minNForCurrentK = firstN;
 
             for(LimitedDouble k = bottomK; k <= endOfChamberK; k++)
@@ -205,15 +206,6 @@ namespace NIRS.For_chart
             string title = "эпюра максимальных давлений, МПа";
             string lineName = "Epur";
             return new DataForChart(massive, title, lineName);
-        }
-        private static LimitedDouble GetFirstNode(LimitedDouble lastNode)
-        {
-            if (lastNode.IsInt())
-                return new LimitedDouble(0);
-            else if (lastNode.IsHalfInt())
-                return new LimitedDouble(0.5);
-            else
-                throw new Exception();
         }
     }
     enum PT

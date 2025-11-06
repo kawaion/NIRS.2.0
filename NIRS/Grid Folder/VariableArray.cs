@@ -13,7 +13,7 @@ namespace NIRS.Grid_Folder
         double[] data;
         public VariableArray(IGrid grid, PN pn)
         {
-            //data = new 
+            //Array = new 
         }
     }
 }
