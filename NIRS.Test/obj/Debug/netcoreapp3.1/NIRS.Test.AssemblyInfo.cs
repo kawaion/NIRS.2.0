@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NIRS.Test")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2ec923c43b583e8950dde00963bfe912d2fd6308")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1bdf4e9461b14ae65042ee6e3ae964cc5e0a4649")]
 [assembly: System.Reflection.AssemblyProductAttribute("NIRS.Test")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NIRS.Test")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
