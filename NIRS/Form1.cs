@@ -17,7 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NIRS.Interfaces;
-using NIRS.Main_data;
+using NIRS.Main_Data;
 using NIRS.Projectile_Folder;
 using NIRS.Helpers;
 using MyDouble;
@@ -30,6 +30,10 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using NIRS.Visualization.Progress;
 using NIRS.Visualization;
 using NIRS.Parameter_Type;
+using System.IO;
+using OfficeOpenXml;
+using System.Diagnostics;
+using NIRS.Main_Data;
 
 namespace NIRS
 {
@@ -67,9 +71,53 @@ namespace NIRS
 
             INumericalMethod numericalMethod = new SEL(mainData);
             Progresser progresser = new Progresser(progress);
-            numericalMethod.ProgressActivate(progresser);
+            //numericalMethod.ProgressActivate(progresser);
 
-            grid = await Task.Run(() => numericalMethod.Calculate());
+            //grid = await Task.Run(() => numericalMethod.Calculate());
+            grid = numericalMethod.Calculate();
+
+            int maxN = 10;
+
+            var dataSheets = new Dictionary<string, double[,]>
+            {
+                //{"dynamic_m", grid.GetFullData(PN.dynamic_m)},
+                //{"v", grid.GetFullData(PN.v)},
+                //{"M", grid.GetFullData(PN.M)},
+                //{"w", grid.GetFullData(PN.w)},
+                //{"a", grid.GetFullData(PN.a)},
+                {"e", grid.GetFullData(PN.e, maxN)},
+                {"m_", grid.GetFullData(PN.m, maxN)},
+                {"p", grid.GetFullData(PN.p, maxN)},
+                //{"r", grid.GetFullData(PN.r)},
+                //{"rho", grid.GetFullData(PN.rho)},
+                //{"z", grid.GetFullData(PN.z)},
+                //{"psi", grid.GetFullData(PN.psi)}
+            };
+            string programFolder = Application.StartupPath;
+            string parentFolder = Directory.GetParent(programFolder).FullName;
+            string fileName = "multi_sheet_data.xlsx";
+
+            try
+            {
+                ExcelHelper.CreateExcelFileWithSheets(dataSheets, fileName);
+
+                // Показать сообщение о успешном сохранении
+                MessageBox.Show($"✅ Файл первой программы успешно сохранен!\n\nПуть: {fileName}",
+                    "Сохранено", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Открыть папку с файлом
+                if (MessageBox.Show("Открыть расположение файла?", "Файл сохранен",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start("explorer.exe", $"/select, \"{fileName}\"");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"❌ Ошибка при сохранении файла: {ex.Message}",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
 
             InitializePostData();
 

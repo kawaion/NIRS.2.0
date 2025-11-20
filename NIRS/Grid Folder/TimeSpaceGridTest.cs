@@ -73,7 +73,7 @@ namespace NIRS.Grid_Folder
                 var kIndex = ConvertToKIndex(k);
 
                 //if (ram.isContains((pn, n)))
-                //    return ram.Get((pn, n))[kIndex].value;//память
+                //    return ram.GetNodeNK((pn, n))[kIndex].value;//память
 
                 var nIndex = ConvertToNIndex(n);
 
@@ -181,7 +181,7 @@ namespace NIRS.Grid_Folder
         public double GetSn(PN pn, LimitedDouble n)
         {
             //if (ramSn.isContains((pn, n)))
-            //    return ramSn.Get((pn, n));//память
+            //    return ramSn.GetNodeNK((pn, n));//память
 
             
             if (pn == PN.One_minus_m)
@@ -334,7 +334,7 @@ namespace NIRS.Grid_Folder
             }
         }
 
-        public double[,] GetFullData(int pn)
+        public double[,] GetFullData(PN pn, int maxN)
         {
             throw new NotImplementedException();
         }
@@ -359,7 +359,7 @@ namespace NIRS.Grid_Folder
         //    get
         //    {
         //        if (ram.isContains(n.Value))
-        //            return ram.Get(n.Value);
+        //            return ram.GetNodeNK(n.Value);
 
         //        (var index, var subGrid) = ChooseIndexAndSubGrid(n);
 

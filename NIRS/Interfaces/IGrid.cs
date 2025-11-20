@@ -14,6 +14,6 @@ namespace NIRS.Interfaces
         void SetSn(PN pn, LimitedDouble n, double value);
         LimitedDouble LastIndexNSn(PN pn);
 
-        //double[,] GetFullData(int pn);
+        double[,] GetFullData(PN pn, int maxN);
     }
 }

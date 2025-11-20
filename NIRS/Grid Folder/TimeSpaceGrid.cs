@@ -42,6 +42,11 @@ namespace NIRS.Grid_Folder
             {
                 Validation(n, k);
 
+                if(pn == PN.e && n == 1 && k == 0.5)
+                {
+                    int c = 0;
+                }
+
                 var paramIndex = (int)pn;
                 var nIndex = ConvertToNIndex(n);
                 var kIndex = ConvertToKIndex(k);
@@ -142,6 +147,27 @@ namespace NIRS.Grid_Folder
         private int ConvertToNIndexSn(LimitedDouble n)
         {
             return (n + maximumnNegativeN).GetIndex();
+        }
+
+
+        public double[,] GetFullData(PN pn, int maxN = -1)
+        {
+            int ln;
+            int int_pn = (int)pn;
+            if (maxN == -1)
+                ln = data.SizeN;
+            else
+                ln = maxN;
+            int lk = data.SizeK;
+
+            double[,] res = new double[ln,lk];
+
+            for (int i = maximumnNegativeN; i < ln; i++)
+                for (int j = maximumnNegativeK; j < lk; j++)
+                {
+                    res[i- maximumnNegativeN, j - maximumnNegativeK] = data[int_pn, i, j];
+                }
+            return res;
         }
     }
 }

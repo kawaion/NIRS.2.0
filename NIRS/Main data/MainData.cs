@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIRS.Main_data
+namespace NIRS.Main_Data
 {
     class MainData : IMainData
     {

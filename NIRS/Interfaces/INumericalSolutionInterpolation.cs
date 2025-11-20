@@ -9,6 +9,6 @@ namespace NIRS.Interfaces
 {
     internal interface INumericalSolutionInterpolation
     {
-        IGrid Get(IGrid grid, LimitedDouble n);
+        IGrid GetAtUnavailableNodes(IGrid grid, LimitedDouble n);
     }
 }

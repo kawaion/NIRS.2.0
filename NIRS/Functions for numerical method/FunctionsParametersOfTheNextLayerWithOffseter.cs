@@ -154,10 +154,13 @@ namespace NIRS.Functions_for_numerical_method
             var res = MainFunctions.r_nP1_kM05(r_n_kM05, nabla_rv_nP05_kM05, H3_nP05_kM05, tau);
             return res;
         }        
-        public double Get_e(LimitedDouble n, LimitedDouble k)
+        public double Get_e(LimitedDouble N, LimitedDouble K)
         {
-            (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
-
+            (var n,var k) = OffseterNK.AppointAndOffset(N, 1, K, -0.5);
+            if (n == 1 && k == 1)
+            {
+                int c = 0;
+            }
             double e_n_kM05 = g[PN.e, n, k - 0.5];
             double nabla_ev_nP05_kM05 = wc.Nabla(PN.e, PN.v, n + 0.5, k - 0.5);
             double p_n_kM05 = g[PN.p, n, k - 0.5];

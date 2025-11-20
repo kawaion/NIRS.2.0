@@ -5789,11 +5789,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\admin\\Desktop\\nirs\\NIRS.Test\\NIRS.Test.csproj",
+      "projectUniqueName": "F:\\NIRS_\\nirs\\NIRS.Test\\NIRS.Test.csproj",
       "projectName": "NIRS.Test",
-      "projectPath": "C:\\Users\\admin\\Desktop\\nirs\\NIRS.Test\\NIRS.Test.csproj",
+      "projectPath": "F:\\NIRS_\\nirs\\NIRS.Test\\NIRS.Test.csproj",
       "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\admin\\Desktop\\nirs\\NIRS.Test\\obj\\",
+      "outputPath": "F:\\NIRS_\\nirs\\NIRS.Test\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -5814,11 +5814,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\admin\\Desktop\\nirs\\MyDouble\\MyDouble.csproj": {
-              "projectPath": "C:\\Users\\admin\\Desktop\\nirs\\MyDouble\\MyDouble.csproj"
+            "F:\\NIRS_\\nirs\\MyDouble\\MyDouble.csproj": {
+              "projectPath": "F:\\NIRS_\\nirs\\MyDouble\\MyDouble.csproj"
             },
-            "C:\\Users\\admin\\Desktop\\nirs\\NIRS\\NIRS.csproj": {
-              "projectPath": "C:\\Users\\admin\\Desktop\\nirs\\NIRS\\NIRS.csproj"
+            "F:\\NIRS_\\nirs\\NIRS\\NIRS.csproj": {
+              "projectPath": "F:\\NIRS_\\nirs\\NIRS\\NIRS.csproj"
             }
           }
         }

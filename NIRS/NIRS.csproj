@@ -33,11 +33,65 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.105.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.105.0\lib\netstandard2.0\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML.Parser, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1d5f7376574c51ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.Parser.2.0.0\lib\netstandard2.0\ClosedXML.Parser.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=3.1.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.3.1.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml.Framework, Version=3.1.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.Framework.3.1.1\lib\net46\DocumentFormat.OpenXml.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=8.1.0.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.Interfaces.8.1.0\lib\net462\EPPlus.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.System.Drawing, Version=6.0.0.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.System.Drawing.6.0.0\lib\net452\EPPlus.System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.1.0.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.1.0\lib\net20\ExcelNumberFormat.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.HashCode, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.HashCode.6.0.0\lib\net462\Microsoft.Bcl.HashCode.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.3.0.1\lib\netstandard2.0\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="RBush, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c77e27b81f4d0187, processorArchitecture=MSIL">
+      <HintPath>..\packages\RBush.Signed.4.0.0\lib\net47\RBush.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.Fonts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
+      <HintPath>..\packages\SixLabors.Fonts.1.0.0\lib\netstandard2.0\SixLabors.Fonts.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Xml, Version=8.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Xml.8.0.2\lib\net462\System.Security.Cryptography.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,24 +102,32 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Additional calculated values\BlurryP.cs" />
     <Compile Include="Boundary Interfaces\IInputDataTransmitter.cs" />
-    <Compile Include="Barrel Folder\Barrel.cs" />
-    <Compile Include="Barrel Folder\BarrelInitializationInterface.cs">
+    <Compile Include="Main Data\Barrel Folder\Barrel.cs" />
+    <Compile Include="Main Data\Barrel Folder\BarrelInitializationInterface.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Barrel Folder\BarrelInitializationInterface.Designer.cs">
+    <Compile Include="Main Data\Barrel Folder\BarrelInitializationInterface.Designer.cs">
       <DependentUpon>BarrelInitializationInterface.cs</DependentUpon>
     </Compile>
-    <Compile Include="Barrel Folder\BarrelSize.cs" />
-    <Compile Include="Barrel Folder\FinderPointsBetweenCurrent.cs" />
+    <Compile Include="Main Data\Barrel Folder\BarrelSize.cs" />
+    <Compile Include="Main Data\Barrel Folder\FinderPointsBetweenCurrent.cs" />
+    <Compile Include="Interfaces\IMainFunctions.cs" />
     <Compile Include="BPMN folder\MainFunctions.cs" />
     <Compile Include="BPMN folder\Validation.cs" />
+    <Compile Include="ExcelHelper.cs" />
     <Compile Include="For chart\ChartPlaceholder.cs" />
     <Compile Include="For chart\DataForChart.cs" />
     <Compile Include="For chart\ResultExtractor.cs" />
+    <Compile Include="Helpers\ConvertTo2DArray.cs" />
+    <Compile Include="Numerical Method\Method SEL\Solution\Helper\FirstKGetter.cs" />
+    <Compile Include="Numerical Method\Method SEL\Solution\Helper\Visualizator.cs" />
+    <Compile Include="Numerical Method\Method SEL\Solution\Solution Calculator After The Belt Breaks\SolutionCalculatorAfterTheBeltBreaks.cs" />
+    <Compile Include="Numerical Method\Method SEL\Solution\Solution Calculator Before The Belt Breaks\SolutionCalculatorBeforeTheBeltBreaks.cs" />
     <Compile Include="Parameter Type\DictPN.cs" />
     <Compile Include="Parameter Type\FirstLimitedDouble.cs" />
     <Compile Include="Visualization\FormPN.cs">
@@ -85,28 +147,28 @@
     <Compile Include="Grid Folder\TimeSpaceGrid.cs" />
     <Compile Include="Grid Folder\DynamicBlock3DArray.cs" />
     <Compile Include="Grid Folder\VariableArray.cs" />
-    <Compile Include="H Functions\HFunctionsProjectile.cs" />
+    <Compile Include="Functions for numerical method\H Functions\HFunctionsProjectile.cs" />
     <Compile Include="Helpers\DeepCopyer.cs" />
     <Compile Include="Helpers\Differencial.cs" />
     <Compile Include="Helpers\DoubleTypeIssuer.cs" />
     <Compile Include="Helpers\InterpolateStep.cs" />
     <Compile Include="Interfaces\IBarrel.cs" />
     <Compile Include="Interfaces\IBarrelSize.cs" />
-    <Compile Include="Barrel Folder\ShifterCannonToZero.cs" />
-    <Compile Include="Barrel Folder\VBarrelParts.cs" />
+    <Compile Include="Main Data\Barrel Folder\ShifterCannonToZero.cs" />
+    <Compile Include="Main Data\Barrel Folder\VBarrelParts.cs" />
     <Compile Include="Interfaces\IBoundaryFunctions.cs" />
     <Compile Include="Interfaces\IGridCell.cs" />
     <Compile Include="Interfaces\IHFunctionsProjectile.cs" />
     <Compile Include="Interfaces\INumericalSolutionInterpolation.cs" />
-    <Compile Include="Main data\MainData.cs" />
+    <Compile Include="Main Data\MainData.cs" />
     <Compile Include="Numerical solution\NumericalSolutionInterpolation.cs" />
     <Compile Include="Parameter names\PN.cs" />
     <Compile Include="Parameter names\VectorPN.cs" />
-    <Compile Include="Powder Folder\BurningPowdersSize_12_7.cs" />
+    <Compile Include="Main Data\Powder Folder\BurningPowdersSize_12_7.cs" />
     <Compile Include="Interfaces\IBurningPowdersSize.cs" />
     <Compile Include="Interfaces\IMainData.cs" />
     <Compile Include="Interfaces\IPowder.cs" />
-    <Compile Include="Powder Folder\Powder_12_7.cs" />
+    <Compile Include="Main Data\Powder Folder\Powder_12_7.cs" />
     <Compile Include="Interfaces\IParameterInterpolationFunctions.cs" />
     <Compile Include="Functions for numerical method\ParameterInterpolationFunctions.cs" />
     <Compile Include="Helpers\KGetter.cs" />
@@ -123,9 +185,9 @@
     <Compile Include="Interfaces\IProjectile.cs" />
     <Compile Include="Interfaces\IProjectileFunctions.cs" />
     <Compile Include="Functions for numerical method\ProjectileFunctions.cs" />
-    <Compile Include="Projectile Folder\Projectile.cs" />
-    <Compile Include="Data Parameters\Input Data Parameters\ConstParametersCase1.cs" />
-    <Compile Include="Data Parameters\Input Data Parameters\InitialParametersCase1.cs" />
+    <Compile Include="Main Data\Projectile Folder\Projectile.cs" />
+    <Compile Include="Main Data\Input Data Parameters\ConstParametersCase1.cs" />
+    <Compile Include="Main Data\Input Data Parameters\InitialParametersCase1.cs" />
     <Compile Include="Data Transmitters\InputDataTransmitter.cs" />
     <Compile Include="Boundary Interfaces\IOutputDataTransmitter.cs" />
     <Compile Include="Data Transmitters\OutputDataTransmitter.cs" />
@@ -142,7 +204,7 @@
     <Compile Include="Interfaces\IGridBorderFiller.cs" />
     <Compile Include="Interfaces\ISubGrid.cs" />
     <Compile Include="Grid Folder\TimeSpaceGridTest.cs" />
-    <Compile Include="H Functions\HFunctions.cs" />
+    <Compile Include="Functions for numerical method\H Functions\HFunctions.cs" />
     <Compile Include="Interfaces\IHFunctions.cs" />
     <Compile Include="Helpers\EquationOfLineFromTwoPoints.cs" />
     <Compile Include="Helpers\OffseterNK.cs" />
@@ -161,16 +223,16 @@
     <Compile Include="Parameter Type\PT.cs" />
     <Compile Include="Parameter Type\TypeFromParameterName.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Projectile Folder\ProjectileParameters.cs" />
+    <Compile Include="Main Data\Projectile Folder\ProjectileParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Numerical Method\SEL.cs" />
+    <Compile Include="Numerical Method\Method SEL\SEL.cs" />
     <Compile Include="RAM folder\RAM.cs" />
     <Compile Include="Verifer\VerifierAbilityCalculateNode.cs" />
     <Compile Include="Visualization\PNDataArrayByN.cs" />
     <Compile Include="Visualization\PNExtractor.cs" />
     <Compile Include="Visualization\Progress\Progresser.cs" />
     <Compile Include="Visualization\Progress\ProgressInfo.cs" />
-    <EmbeddedResource Include="Barrel Folder\BarrelInitializationInterface.resx">
+    <EmbeddedResource Include="Main Data\Barrel Folder\BarrelInitializationInterface.resx">
       <DependentUpon>BarrelInitializationInterface.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
@@ -212,6 +274,8 @@
       <Name>MyDouble</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Data Parameters\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

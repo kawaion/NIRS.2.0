@@ -66,9 +66,9 @@ namespace NIRS.Numerical_solution
         private IGrid GetDynamicParametersOfNextLayer(IGrid grid, LimitedDouble n, IProjectileFunctions functions)
         {
             grid.SetSn(PN.vSn, n,   functions.Get(PN.v, n));
-            //grid[n].sn.dynamic_m = functions.Get(PN.dynamic_m, n);
-            //grid[n].sn.M = functions.Get(PN.M, n);
-            //grid[n].sn.w = functions.Get(PN.w, n);
+            //grid[n].sn.dynamic_m = functions.GetNodeNK(PN.dynamic_m, n);
+            //grid[n].sn.M = functions.GetNodeNK(PN.M, n);
+            //grid[n].sn.w = functions.GetNodeNK(PN.w, n);
 
             return grid;
         }

@@ -20,7 +20,7 @@ namespace NIRS.Numerical_solution
             _functions = parameterInterpolationFunctions;
             x = new XGetter(mainData.ConstParameters);
         }
-        public IGrid Get(IGrid g, LimitedDouble n)
+        public IGrid GetAtUnavailableNodes(IGrid g, LimitedDouble n)
         {
             var xSn = g.GetSn(PN.x, n);
             if (n.IsInt())

@@ -158,7 +158,7 @@ namespace NIRS.Functions_for_numerical_method
             double p_n_kM05 = g[PN.p, n, k - 0.5];
             double q_nP05_kM05 = q(n + 0.5, k - 0.5);
             double nabla_mSv_nP05_kM05 = wc.Nabla(PN.m, PN.S, PN.v, n + 0.5, k - 0.5);
-            double nabla_oneMmSw_nP05_kM05 = wc.Nabla(PN.One_minus_m, PN.S, PN.w, n + 0.5, k - 0.5);
+            double nabla_oneMmSw_nP05_kM05 = wc.Nabla(1, PN.S, PN.w, n + 0.5, k - 0.5) - wc.Nabla(PN.m, PN.S, PN.w, n + 0.5, k - 0.5);
             double H4_nP05_kM05 = hf.H4(n + 0.5, k - 0.5);
             double tau = this.tau;
 

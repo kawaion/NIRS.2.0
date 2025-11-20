@@ -11,7 +11,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace NIRS.BPMN_folder
 {
-    static class MainFunctions
+    class MainFunctions : IMainFunctions
     {
         public static double dynamic_m_nP05_k(double dynamicm_nM05_k, double nabla_dynamicm_v_nM05_k,
                                            double m_n_kM05, double m_n_kP05,
