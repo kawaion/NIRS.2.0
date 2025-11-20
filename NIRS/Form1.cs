@@ -33,7 +33,6 @@ using NIRS.Parameter_Type;
 using System.IO;
 using OfficeOpenXml;
 using System.Diagnostics;
-using NIRS.Main_Data;
 
 namespace NIRS
 {
