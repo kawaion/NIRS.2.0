@@ -51,7 +51,7 @@ namespace NIRS.Visualization
             labelT.Text = _data.time(firstN + value).ToString();
 
             var massive = _data.Array[value];
-            var size = massive.Count();
+            var size = _data.Array[value].Count();
 
             for (int i = 0; i < size; i++)
             {

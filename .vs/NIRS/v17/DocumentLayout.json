@@ -3,19 +3,19 @@
   "WorkspaceRootPath": "C:\\Users\\admin\\Desktop\\nirs\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|c:\\users\\admin\\desktop\\nirs\\nirs\\visualization\\formpn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\visualization\\formpn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|C:\\Users\\admin\\Desktop\\nirs\\NIRS\\Visualization\\FormPN.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:NIRS\\Visualization\\FormPN.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|C:\\Users\\admin\\Desktop\\nirs\\NIRS\\Form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:NIRS\\Form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|C:\\Users\\admin\\Desktop\\nirs\\nirs\\visualization\\pndataarraybyn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|c:\\users\\admin\\desktop\\nirs\\nirs\\visualization\\pndataarraybyn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\visualization\\pndataarraybyn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|C:\\Users\\admin\\Desktop\\nirs\\nirs\\parameter type\\typefromparametername.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|c:\\users\\admin\\desktop\\nirs\\nirs\\parameter type\\typefromparametername.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\parameter type\\typefromparametername.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -27,7 +27,7 @@
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|C:\\Users\\admin\\Desktop\\nirs\\nirs\\parameter type\\dictpn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|c:\\users\\admin\\desktop\\nirs\\nirs\\parameter type\\dictpn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\parameter type\\dictpn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -35,26 +35,26 @@
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:NIRS\\For chart\\ResultExtractor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|C:\\Users\\admin\\Desktop\\nirs\\nirs\\grid folder\\timespacegrid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|c:\\users\\admin\\desktop\\nirs\\nirs\\grid folder\\timespacegrid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\grid folder\\timespacegrid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|C:\\Users\\admin\\Desktop\\nirs\\nirs\\parameter type\\pt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|c:\\users\\admin\\desktop\\nirs\\nirs\\parameter type\\pt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\parameter type\\pt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|C:\\Users\\admin\\Desktop\\nirs\\nirs\\parameter type\\parametertypegetter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|c:\\users\\admin\\desktop\\nirs\\nirs\\parameter type\\parametertypegetter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\parameter type\\parametertypegetter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|C:\\Users\\admin\\Desktop\\nirs\\nirs\\parameter type\\firstlimiteddouble.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|c:\\users\\admin\\desktop\\nirs\\nirs\\parameter type\\firstlimiteddouble.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\parameter type\\firstlimiteddouble.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Msbuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|C:\\Users\\admin\\Desktop\\nirs\\nirs\\visualization\\pnextractor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|c:\\users\\admin\\desktop\\nirs\\nirs\\visualization\\pnextractor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{43F91875-39C2-4FE6-9EAA-082BE8981656}|NIRS\\NIRS.csproj|solutionrelative:nirs\\visualization\\pnextractor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -248,8 +248,8 @@
               "Title": "FormPN.cs",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\nirs\\NIRS\\Visualization\\FormPN.cs",
               "RelativeDocumentMoniker": "NIRS\\Visualization\\FormPN.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\nirs\\NIRS\\Visualization\\FormPN.cs",
-              "RelativeToolTip": "NIRS\\Visualization\\FormPN.cs",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\nirs\\NIRS\\Visualization\\FormPN.cs*",
+              "RelativeToolTip": "NIRS\\Visualization\\FormPN.cs*",
               "ViewState": "AgIAAAsAAAAAAAAAAAAhwCMAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-12T20:25:07.18Z",
@@ -265,7 +265,8 @@
               "RelativeToolTip": "NIRS\\Parameter Type\\ParameterTypeGetter.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-06T22:00:34.229Z"
+              "WhenOpened": "2025-11-06T22:00:34.229Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -277,7 +278,8 @@
               "RelativeToolTip": "NIRS\\Parameter Type\\FirstLimitedDouble.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-06T22:01:35.556Z"
+              "WhenOpened": "2025-11-06T22:01:35.556Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -288,7 +290,8 @@
               "ToolTip": "C:\\Users\\admin\\Desktop\\nirs\\NIRS\\Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "RelativeToolTip": "NIRS\\Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-12T17:55:57.477Z"
+              "WhenOpened": "2025-10-12T17:55:57.477Z",
+              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
             },
             {
               "$type": "Document",
@@ -300,7 +303,8 @@
               "RelativeToolTip": "NIRS\\Form1.cs",
               "ViewState": "AgIAAIQBAAAAAAAAAAAowJkBAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-12T18:03:25.793Z"
+              "WhenOpened": "2025-10-12T18:03:25.793Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -312,7 +316,8 @@
               "RelativeToolTip": "NIRS\\Grid Folder\\TimeSpaceGrid.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAA8wB0AAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T07:36:49.826Z"
+              "WhenOpened": "2025-05-31T07:36:49.826Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -324,7 +329,8 @@
               "RelativeToolTip": "NIRS\\For chart\\ResultExtractor.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAASwBoAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-20T10:18:41.046Z"
+              "WhenOpened": "2025-10-20T10:18:41.046Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -336,7 +342,8 @@
               "RelativeToolTip": "NIRS\\Parameter Type\\TypeFromParameterName.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-06T23:16:19.167Z"
+              "WhenOpened": "2025-11-06T23:16:19.167Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -348,7 +355,8 @@
               "RelativeToolTip": "NIRS\\Parameter Type\\DictPN.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-06T23:18:22.639Z"
+              "WhenOpened": "2025-11-06T23:18:22.639Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -360,7 +368,8 @@
               "RelativeToolTip": "NIRS\\Visualization\\PNDataArrayByN.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAQwDQAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-06T21:43:16.915Z"
+              "WhenOpened": "2025-11-06T21:43:16.915Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -368,10 +377,11 @@
               "Title": "FormPN.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "C:\\Users\\admin\\Desktop\\nirs\\NIRS\\Visualization\\FormPN.cs",
               "RelativeDocumentMoniker": "NIRS\\Visualization\\FormPN.cs",
-              "ToolTip": "C:\\Users\\admin\\Desktop\\nirs\\NIRS\\Visualization\\FormPN.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
-              "RelativeToolTip": "NIRS\\Visualization\\FormPN.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "ToolTip": "C:\\Users\\admin\\Desktop\\nirs\\NIRS\\Visualization\\FormPN.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]*",
+              "RelativeToolTip": "NIRS\\Visualization\\FormPN.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]*",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-12T18:31:01.983Z"
+              "WhenOpened": "2025-10-12T18:31:01.983Z",
+              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
             },
             {
               "$type": "Document",
@@ -383,7 +393,8 @@
               "RelativeToolTip": "NIRS\\Parameter Type\\PT.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-06T23:16:26.215Z"
+              "WhenOpened": "2025-11-06T23:16:26.215Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -395,7 +406,8 @@
               "RelativeToolTip": "..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
               "ViewState": "AgIAAJEZAAAAAAAAAAASwKUZAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2025-11-06T22:15:51.078Z"
+              "WhenOpened": "2025-11-06T22:15:51.078Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -407,7 +419,8 @@
               "RelativeToolTip": "NIRS\\Visualization\\PNExtractor.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-06T21:53:51.455Z"
+              "WhenOpened": "2025-11-06T21:53:51.455Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -419,7 +432,8 @@
               "RelativeToolTip": "MyDouble\\LimitedDouble.cs",
               "ViewState": "AgIAAEsAAAAAAAAAAAAowGcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-21T21:22:27.898Z"
+              "WhenOpened": "2025-09-21T21:22:27.898Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -431,7 +445,8 @@
               "RelativeToolTip": "NIRS\\Numerical Method\\SEL.cs",
               "ViewState": "AgIAAMMAAAAAAAAAAAASwNQAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-11T19:53:49.921Z"
+              "WhenOpened": "2025-05-11T19:53:49.921Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -443,7 +458,8 @@
               "RelativeToolTip": "NIRS\\Helpers\\DeepCopyer.cs",
               "ViewState": "AgIAADQBAAAAAAAAAAAAAEMBAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-05T17:08:21.65Z"
+              "WhenOpened": "2025-11-05T17:08:21.65Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -455,7 +471,8 @@
               "RelativeToolTip": "NIRS\\Numerical solution\\NumericalSolutionProjectile.cs",
               "ViewState": "AgIAABIAAAAAAAAAAAAhwCQAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-24T18:55:21.797Z"
+              "WhenOpened": "2025-09-24T18:55:21.797Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -467,7 +484,8 @@
               "RelativeToolTip": "NIRS\\Interfaces\\IBoundaryFunctions.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAqwBAAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-21T13:56:24.002Z"
+              "WhenOpened": "2025-10-21T13:56:24.002Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -479,7 +497,8 @@
               "RelativeToolTip": "NIRS\\Functions for numerical method\\BoundaryFunctions.cs",
               "ViewState": "AgIAAD0AAAAAAAAAAAAqwD0AAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-13T22:11:07.154Z"
+              "WhenOpened": "2025-10-13T22:11:07.154Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -491,7 +510,8 @@
               "RelativeToolTip": "NIRS\\Parameter names\\VectorPN.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAAAAoAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-10T12:54:31.404Z"
+              "WhenOpened": "2025-10-10T12:54:31.404Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -503,7 +523,8 @@
               "RelativeToolTip": "NIRS\\Numerical solution\\NumericalSolutionInterpolation.cs",
               "ViewState": "AgIAABwAAAAAAAAAAAAAACEAAABLAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-24T23:50:14.711Z"
+              "WhenOpened": "2025-09-24T23:50:14.711Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -515,7 +536,8 @@
               "RelativeToolTip": "NIRS\\Functions for numerical method\\ParameterInterpolationFunctions.cs",
               "ViewState": "AgIAAC8AAAAAAAAAAAAqwC8AAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-24T22:36:22.602Z"
+              "WhenOpened": "2025-09-24T22:36:22.602Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -527,7 +549,8 @@
               "RelativeToolTip": "NIRS\\Interfaces\\IParameterInterpolationFunctions.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAqwAwAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T00:41:01.243Z"
+              "WhenOpened": "2025-09-25T00:41:01.243Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -539,7 +562,8 @@
               "RelativeToolTip": "NIRS\\Numerical solution\\NumericalSolutionInNodes.cs",
               "ViewState": "AgIAAB4AAAAAAAAAAAApwDEAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-24T13:24:15.971Z"
+              "WhenOpened": "2025-09-24T13:24:15.971Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -551,7 +575,8 @@
               "RelativeToolTip": "NIRS\\Nabla Functions\\WaypointCalculator.cs",
               "ViewState": "AgIAAHEAAAAAAAAAAIAwwIUAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T11:42:54.388Z"
+              "WhenOpened": "2025-09-25T11:42:54.388Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -563,7 +588,8 @@
               "RelativeToolTip": "NIRS\\Grid Folder\\GridBorderFiller.cs",
               "ViewState": "AgIAAJcAAAAAAAAAAAApwK8AAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-21T22:15:55.606Z"
+              "WhenOpened": "2025-09-21T22:15:55.606Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -575,7 +601,8 @@
               "RelativeToolTip": "NIRS\\Visualization\\Progress\\ProgressInfo.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-05T19:03:38.779Z"
+              "WhenOpened": "2025-11-05T19:03:38.779Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -599,7 +626,8 @@
               "RelativeToolTip": "NIRS\\Grid Folder\\TimeSpaceGridTest.cs",
               "ViewState": "AgIAAKkAAAAAAAAAAAAUwIoAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-25T11:52:16.221Z"
+              "WhenOpened": "2025-09-25T11:52:16.221Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -755,7 +783,8 @@
               "RelativeToolTip": "NIRS\\Functions for numerical method\\FunctionsParametersOfTheNextLayer.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAcwA4AAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-09T11:00:14.48Z"
+              "WhenOpened": "2025-10-09T11:00:14.48Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -840,7 +869,8 @@
               "RelativeToolTip": "NIRS\\Grid Folder\\VariableArray.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-12T20:29:14.502Z"
+              "WhenOpened": "2025-10-12T20:29:14.502Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
