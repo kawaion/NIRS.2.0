@@ -9,7 +9,7 @@ namespace NIRS
 {
     public static class ExcelHelper
     {
-        private static readonly string TargetDirectory = @"F:\NIRS_";
+        private static readonly string TargetDirectory = @"C:\Users\admin\Desktop\NIRS_";
 
         // Создание файла с несколькими страницами
         public static void CreateExcelFileWithSheets(Dictionary<string, double[,]> dataSheets, string fileName)
@@ -192,7 +192,7 @@ namespace NIRS
                     double oldValue = cell.Value.GetNumber();
                     double newValue = newArray[row, col];
 
-                    cell.Value = $"{oldValue:F6}/{newValue:F6}";
+                    cell.Value = $"{oldValue}/{newValue}";
 
                     if (Math.Abs(oldValue - newValue) < tolerance)
                     {
@@ -229,7 +229,7 @@ namespace NIRS
                     int excelRow = row + 2;
                     int excelCol = col + 2;
 
-                    worksheet.Cell(excelRow, excelCol).Value = $"–/{newArray[row, col]:F6}";
+                    worksheet.Cell(excelRow, excelCol).Value = $"–/{newArray[row, col]}";
                     worksheet.Cell(excelRow, excelCol).Style.Fill.BackgroundColor = XLColor.LightYellow;
                     worksheet.Cell(excelRow, excelCol).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 }
@@ -254,7 +254,7 @@ namespace NIRS
                     int excelRow = row + 2;
                     int excelCol = col + 2;
 
-                    worksheet.Cell(excelRow, excelCol).Value = $"–/{newArray[row, col]:F6}";
+                    worksheet.Cell(excelRow, excelCol).Value = $"–/{newArray[row, col]}";
                     worksheet.Cell(excelRow, excelCol).Style.Fill.BackgroundColor = XLColor.LightYellow;
                     worksheet.Cell(excelRow, excelCol).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 }

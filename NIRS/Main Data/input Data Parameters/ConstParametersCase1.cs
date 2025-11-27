@@ -29,7 +29,7 @@ namespace NIRS.Data_Parameters.Input_Data_Parameters
         public double D0 => 0.0115;
         public double d0 => 0.0009;
         public double L0 => 0.019;
-        public double mu0 => 5.18e-5;
+        public double mu0 => 1.000000000000000000000;//5.18e-5;
         public double lamda0 => 0.45;
         public double Q => f / teta;
         public double e1 => 0.0022/2;

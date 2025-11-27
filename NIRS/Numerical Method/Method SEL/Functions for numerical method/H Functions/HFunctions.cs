@@ -90,7 +90,7 @@ namespace NIRS.H_Functions
             double G_n_k = G(n, k);
             double v_nP05_k = g[PN.v, n + 0.5, k];
             double w_nP05_k = g[PN.w, n + 0.5, k];
-            double tau_w_nP1_k = tauW(n + 1, k);
+            double tau_w_nP1_k = tauW(n, k);
             double Q = constP.Q;
 
             var res = MainFunctions.H4_nP05_kM05(S_kM05, G_n_k, v_nP05_k, w_nP05_k, tau_w_nP1_k, Q);

@@ -6,7 +6,7 @@ using NIRS.Numerical_Method.Method_SEL.Solution.Helper;
 using NIRS.Parameter_names;
 using NIRS.Visualization.Progress;
 
-namespace NIRS.Numerical_Method.Method_SEL.SolutionCalculatorAfterTheBeltBreaks
+namespace NIRS.Numerical_Method.Method_SEL.Solution_Calculator_After_The_Belt_Breaks
 {
     class SolutionCalculatorAfterTheBeltBreaks
     {
@@ -35,8 +35,9 @@ namespace NIRS.Numerical_Method.Method_SEL.SolutionCalculatorAfterTheBeltBreaks
             _visualizator = visualizator;
             _kGetter = kGetter;
         }
-        public IGrid Calculate(IGrid grid, LimitedDouble n)
+        public IGrid Calculate(IGrid grid)
         {
+            LimitedDouble n = grid.LastIndexN();
             while (!IsEndConditionNumericalSolution(grid, n))// && n!=2363)
             {
                 n += 0.5;

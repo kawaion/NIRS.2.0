@@ -17,7 +17,7 @@ namespace NIRS.Numerical_Method.Method_SEL.Solution_Calculator_Before_The_Belt_B
     class SolutionCalculatorBeforeTheBeltBreaks
     {
         private readonly double _forsingPressure;
-        private readonly int _kChamber;
+        private readonly LimitedDouble _kChamber;
         private readonly IGridBorderFiller _gridBorderFiller;
         private readonly INumericalSolutionInNodes _numericalSolutionInNodes;
         private readonly INumericalSolutionProjectile _numericalSolutionProjectile;
@@ -25,7 +25,7 @@ namespace NIRS.Numerical_Method.Method_SEL.Solution_Calculator_Before_The_Belt_B
         private readonly Progresser _progresser;
         private bool isBeltIntact;
         public SolutionCalculatorBeforeTheBeltBreaks(double forsingPressure,
-                                                     int kChamber,
+                                                     LimitedDouble kChamber,
                                                      IGridBorderFiller gridBorderFiller,
                                                      INumericalSolutionInNodes numericalSolutionInNodes,
                                                      INumericalSolutionProjectile numericalSolutionProjectile,
@@ -40,8 +40,9 @@ namespace NIRS.Numerical_Method.Method_SEL.Solution_Calculator_Before_The_Belt_B
             _numericalSolutionProjectile = numericalSolutionProjectile;
             _visualizator = visualizator;
         }
-        public IGrid Calculate(IGrid grid, LimitedDouble n)
+        public IGrid Calculate(IGrid grid)
         {
+            LimitedDouble n = new LimitedDouble(0);
             while (isBeltIntact || n.IsHalfInt())
             {
                 isBeltIntact = AttemptRipOffBelt(grid, n, isBeltIntact);

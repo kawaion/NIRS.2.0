@@ -53,7 +53,6 @@ namespace NIRS.Numerical_solution
             //{
             //    int c = 0;
             //}
-
             double r_value = functionsNewLayer.Get_r(n, k);
             grid[PN.r, n, k] = r_value;
 
@@ -66,20 +65,16 @@ namespace NIRS.Numerical_solution
             double psi_value = functionsNewLayer.Get_psi(n, k);
             grid[PN.psi, n, k] = psi_value;
 
-            double m_value = functionsNewLayer.Get_m(n, k); // нужен a и psi
+            double m_value = functionsNewLayer.Get_m(n, k); // нужен a psi
             grid[PN.m, n, k] = m_value;
 
-            double rho_value = functionsNewLayer.Get_rho(n, k); // нужен r и m
+            double rho_value = functionsNewLayer.Get_rho(n, k); // нужен r m
             grid[PN.rho, n, k] = rho_value;
 
-            if (n == 1 && k == 0.5)
-            {
-                int c = 0;
-            }
-            double e_value = functionsNewLayer.Get_e(n, k); // нужен z и psi
+            double e_value = functionsNewLayer.Get_e(n, k); // нужен z psi
             grid[PN.e, n, k] = e_value;
 
-            double p_value = functionsNewLayer.Get_p(n, k);
+            double p_value = functionsNewLayer.Get_p(n, k); // нужен e m r
             grid[PN.p, n, k] = p_value;
 
             return grid;

@@ -1,5 +1,4 @@
 ﻿using MyDouble;
-using NIRS.Grid_Folder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NIRS.Interfaces
 {
-    interface INumericalSolutionInNodes
+    internal interface INumericalSolutionInNodes
     {
         IGrid GetNodeNK(IGrid grid, LimitedDouble n, LimitedDouble k);
     }

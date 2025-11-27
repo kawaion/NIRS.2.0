@@ -1,0 +1,12 @@
+G:\NIRS_\nirs\Domain\bin\Debug\net8.0\Domain.deps.json
+G:\NIRS_\nirs\Domain\bin\Debug\net8.0\Domain.dll
+G:\NIRS_\nirs\Domain\bin\Debug\net8.0\Domain.pdb
+G:\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+G:\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.AssemblyInfoInputs.cache
+G:\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.cs
+G:\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.csproj.CoreCompileInputs.cache
+G:\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.sourcelink.json
+G:\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.dll
+G:\NIRS_\nirs\Domain\obj\Debug\net8.0\refint\Domain.dll
+G:\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.pdb
+G:\NIRS_\nirs\Domain\obj\Debug\net8.0\ref\Domain.dll

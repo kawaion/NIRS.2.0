@@ -9,6 +9,7 @@ namespace NIRS.Interfaces
         LimitedDouble LastIndexK(PN pn, LimitedDouble n);
         LimitedDouble LastIndexK(LimitedDouble n);
         LimitedDouble LastIndexN(PN pn);
+        LimitedDouble LastIndexN();
 
         double GetSn(PN pn, LimitedDouble n);
         void SetSn(PN pn, LimitedDouble n, double value);

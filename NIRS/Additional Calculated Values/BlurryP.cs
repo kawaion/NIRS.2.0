@@ -18,13 +18,9 @@ namespace NIRS.Additional_calculated_values
         public static double PStroke(this IGrid g,IWaypointCalculator waypointCalculator,IConstParameters constP, LimitedDouble N, LimitedDouble K)
         {
             (var n, var k) = OffseterNK.AppointAndOffset(N, 0, K, + 0.5);
-
-            var res = g[PN.p, n, k + 0.5] + PseudoViscosityMechanism.q(g, waypointCalculator, constP, n - 0.5, k + 0.5);
-            if(double.IsInfinity(res) )
-            {
-                var tmp1 = g[PN.p, n, k + 0.5];
-                var tmp2 = PseudoViscosityMechanism.q(g, waypointCalculator, constP, n - 0.5, k + 0.5);
-            }
+            var p = g[PN.p, n, k + 0.5];
+            var res = p + PseudoViscosityMechanism.q(g, waypointCalculator, constP, n - 0.5, k + 0.5);
+            
             return res;
         }
     }

@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="Additional calculated values\BlurryP.cs" />
     <Compile Include="Boundary Interfaces\IInputDataTransmitter.cs" />
+    <Compile Include="Interfaces\INumericalSolutionInNodes.cs" />
     <Compile Include="Main Data\Barrel Folder\Barrel.cs" />
     <Compile Include="Main Data\Barrel Folder\BarrelInitializationInterface.cs">
       <SubType>Form</SubType>
@@ -124,8 +125,10 @@
     <Compile Include="For chart\DataForChart.cs" />
     <Compile Include="For chart\ResultExtractor.cs" />
     <Compile Include="Helpers\ConvertTo2DArray.cs" />
+    <Compile Include="Main Data\Projectile Folder\Projectile.cs" />
     <Compile Include="Numerical Method\Method SEL\Solution\Helper\FirstKGetter.cs" />
     <Compile Include="Numerical Method\Method SEL\Solution\Helper\Visualizator.cs" />
+    <Compile Include="Numerical Method\Method SEL\Solution\NumericalSolution.cs" />
     <Compile Include="Numerical Method\Method SEL\Solution\Solution Calculator After The Belt Breaks\SolutionCalculatorAfterTheBeltBreaks.cs" />
     <Compile Include="Numerical Method\Method SEL\Solution\Solution Calculator Before The Belt Breaks\SolutionCalculatorBeforeTheBeltBreaks.cs" />
     <Compile Include="Parameter Type\DictPN.cs" />
@@ -136,8 +139,8 @@
     <Compile Include="Visualization\FormPN.Designer.cs">
       <DependentUpon>FormPN.cs</DependentUpon>
     </Compile>
-    <Compile Include="Functions for numerical method\BoundaryFunctions.cs" />
-    <Compile Include="Functions for numerical method\FunctionsParametersOfTheNextLayer.cs" />
+    <Compile Include="Numerical Method\Method SEL\Functions for numerical method\BoundaryFunctions.cs" />
+    <Compile Include="Numerical Method\Method SEL\Functions for numerical method\FunctionsParametersOfTheNextLayer.cs" />
     <Compile Include="Grid Folder\DataArray.cs" />
     <Compile Include="Grid Folder\DataSnArray.cs" />
     <Compile Include="Grid Folder\LastKArray.cs" />
@@ -147,7 +150,7 @@
     <Compile Include="Grid Folder\TimeSpaceGrid.cs" />
     <Compile Include="Grid Folder\DynamicBlock3DArray.cs" />
     <Compile Include="Grid Folder\VariableArray.cs" />
-    <Compile Include="Functions for numerical method\H Functions\HFunctionsProjectile.cs" />
+    <Compile Include="Numerical Method\Method SEL\Functions for numerical method\H Functions\HFunctionsProjectile.cs" />
     <Compile Include="Helpers\DeepCopyer.cs" />
     <Compile Include="Helpers\Differencial.cs" />
     <Compile Include="Helpers\DoubleTypeIssuer.cs" />
@@ -170,22 +173,20 @@
     <Compile Include="Interfaces\IPowder.cs" />
     <Compile Include="Main Data\Powder Folder\Powder_12_7.cs" />
     <Compile Include="Interfaces\IParameterInterpolationFunctions.cs" />
-    <Compile Include="Functions for numerical method\ParameterInterpolationFunctions.cs" />
+    <Compile Include="Numerical Method\Method SEL\Functions for numerical method\ParameterInterpolationFunctions.cs" />
     <Compile Include="Helpers\KGetter.cs" />
     <Compile Include="Helpers\XGetter.cs" />
     <Compile Include="Interfaces\IWaypointCalculatorProjectile.cs" />
     <Compile Include="Nabla Functions\Projectile\NablaNodeProjectile.cs" />
     <Compile Include="Nabla Functions\Projectile\WaypointCalculatorExtensionProjectile.cs" />
     <Compile Include="Nabla Functions\Projectile\WaypointCalculatorProjectile.cs" />
-    <Compile Include="Functions for numerical method\FunctionsBuilder.cs" />
+    <Compile Include="Numerical Method\Method SEL\Functions for numerical method\FunctionsBuilder.cs" />
     <Compile Include="Interfaces\INumericalSolutionProjectile.cs" />
-    <Compile Include="Interfaces\INumericalSolutionInNodes.cs" />
     <Compile Include="Numerical solution\NumericalSolutionInNodes.cs" />
     <Compile Include="Numerical solution\NumericalSolutionProjectile.cs" />
     <Compile Include="Interfaces\IProjectile.cs" />
     <Compile Include="Interfaces\IProjectileFunctions.cs" />
-    <Compile Include="Functions for numerical method\ProjectileFunctions.cs" />
-    <Compile Include="Main Data\Projectile Folder\Projectile.cs" />
+    <Compile Include="Numerical Method\Method SEL\Functions for numerical method\ProjectileFunctions.cs" />
     <Compile Include="Main Data\Input Data Parameters\ConstParametersCase1.cs" />
     <Compile Include="Main Data\Input Data Parameters\InitialParametersCase1.cs" />
     <Compile Include="Data Transmitters\InputDataTransmitter.cs" />
@@ -204,7 +205,7 @@
     <Compile Include="Interfaces\IGridBorderFiller.cs" />
     <Compile Include="Interfaces\ISubGrid.cs" />
     <Compile Include="Grid Folder\TimeSpaceGridTest.cs" />
-    <Compile Include="Functions for numerical method\H Functions\HFunctions.cs" />
+    <Compile Include="Numerical Method\Method SEL\Functions for numerical method\H Functions\HFunctions.cs" />
     <Compile Include="Interfaces\IHFunctions.cs" />
     <Compile Include="Helpers\EquationOfLineFromTwoPoints.cs" />
     <Compile Include="Helpers\OffseterNK.cs" />
@@ -216,7 +217,7 @@
     <Compile Include="Nabla Functions\NablaFunctionType.cs" />
     <Compile Include="Nabla Functions\NablaNode.cs" />
     <Compile Include="Nabla Functions\WaypointCalculatorExtension.cs" />
-    <Compile Include="Functions for numerical method\FunctionsParametersOfTheNextLayerWithOffseter.cs" />
+    <Compile Include="Numerical Method\Method SEL\Functions for numerical method\FunctionsParametersOfTheNextLayerWithOffseter.cs" />
     <Compile Include="Interfaces\IFunctionsParametersOfTheNextLayer.cs" />
     <Compile Include="Interfaces\INumericalMethod.cs" />
     <Compile Include="Parameter Type\ParameterTypeGetter.cs" />

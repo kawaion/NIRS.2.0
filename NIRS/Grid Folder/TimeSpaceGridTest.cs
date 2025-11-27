@@ -338,10 +338,25 @@ namespace NIRS.Grid_Folder
         {
             throw new NotImplementedException();
         }
-
+        static int DynamicParamIndex = (int)PN.dynamic_m;
+        static int MixtureParamIndex = (int)PN.r;
         public LimitedDouble LastIndexK(LimitedDouble n)
         {
-            throw new NotImplementedException();
+            var nIndex = ConvertToNIndex(n);
+            if (n.IsHalfInt())
+                return data[DynamicParamIndex][nIndex].kLayers.Last().k;
+            else
+                return data[MixtureParamIndex][nIndex].kLayers.Last().k;
+        }
+
+        public LimitedDouble LastIndexN()
+        {
+            var nDynamic = data[DynamicParamIndex].Last().n;
+            var nMixture = data[MixtureParamIndex].Last().n;
+            if (nDynamic > nMixture)
+                return nDynamic;
+            else
+                return nMixture;
         }
 
         //RAM<double, ISubGrid> ram;

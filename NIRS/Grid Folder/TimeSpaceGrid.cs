@@ -51,7 +51,7 @@ namespace NIRS.Grid_Folder
                 var nIndex = ConvertToNIndex(n);
                 var kIndex = ConvertToKIndex(k);
 
-                data[paramIndex, nIndex, kIndex] = ValidationValue(value);
+                data[paramIndex, nIndex, kIndex] = value;
 
                 if (n > lastN[paramIndex])
                     lastN[paramIndex] = n;
@@ -81,8 +81,8 @@ namespace NIRS.Grid_Folder
         {
             return (k + maximumnNegativeK).GetInt();
         }
-        static int DynamicParamIndexForLastK = (int)PN.dynamic_m;
-        static int MixtureParamIndexForLastK = (int)PN.r;
+        static int DynamicParamIndex = (int)PN.dynamic_m;
+        static int MixtureParamIndex = (int)PN.r;
         public LimitedDouble LastIndexK(PN pn, LimitedDouble n)
         {
             var paramIndex = (int)pn;
@@ -93,9 +93,9 @@ namespace NIRS.Grid_Folder
         {
             var nIndex = ConvertToNIndex(n);
             if (n.IsHalfInt())
-                return lastK[DynamicParamIndexForLastK, nIndex];
+                return lastK[DynamicParamIndex, nIndex];
             else 
-                return lastK[MixtureParamIndexForLastK, nIndex];
+                return lastK[MixtureParamIndex, nIndex];
         }
 
         public LimitedDouble LastIndexN(PN pn)
@@ -103,6 +103,16 @@ namespace NIRS.Grid_Folder
             var paramIndex = (int)pn;
             return lastN[paramIndex];
         }
+        public LimitedDouble LastIndexN() 
+        {
+            var nDynamic = lastN[DynamicParamIndex];
+            var nMixture = lastN[MixtureParamIndex];
+            if (nDynamic > nMixture)
+                return nDynamic;
+            else
+                return nMixture;
+        }
+
 
         private double ValidationValue(double value)
         {

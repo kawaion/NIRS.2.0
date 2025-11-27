@@ -77,11 +77,11 @@ namespace NIRS.Functions_for_numerical_method
         double zero = 0;
         public double Get_dynamic_m0(LimitedDouble n)
         {
-            return zero;
+            return 1e-05;
         }
         public double Get_M0(LimitedDouble n)
         {
-            return zero;
+            return 1e-05;
         }
         public double Get_v0(LimitedDouble n)
         {

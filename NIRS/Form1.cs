@@ -33,6 +33,7 @@ using NIRS.Parameter_Type;
 using System.IO;
 using OfficeOpenXml;
 using System.Diagnostics;
+using NIRS.Main_Data.Projectile_Folder;
 
 namespace NIRS
 {
@@ -70,17 +71,17 @@ namespace NIRS
 
             INumericalMethod numericalMethod = new SEL(mainData);
             Progresser progresser = new Progresser(progress);
-            //numericalMethod.ProgressActivate(progresser);
+            numericalMethod.ProgressActivate(progresser);
 
-            //grid = await Task.Run(() => numericalMethod.Calculate());
-            grid = numericalMethod.Calculate();
+            grid = await Task.Run(() => numericalMethod.Calculate());
+            //grid = numericalMethod.Calculate();
 
-            int maxN = 10;
+            int maxN = 20;
 
             var dataSheets = new Dictionary<string, double[,]>
             {
-                //{"dynamic_m", grid.GetFullData(PN.dynamic_m)},
-                //{"v", grid.GetFullData(PN.v)},
+                {"dynamic_m", grid.GetFullData(PN.dynamic_m, maxN)},
+                {"v", grid.GetFullData(PN.v, maxN)},
                 //{"M", grid.GetFullData(PN.M)},
                 //{"w", grid.GetFullData(PN.w)},
                 //{"a", grid.GetFullData(PN.a)},

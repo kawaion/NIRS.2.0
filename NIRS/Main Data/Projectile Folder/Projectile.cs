@@ -5,18 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NIRS.Projectile_Folder
+namespace NIRS.Main_Data.Projectile_Folder
 {
-    class Projectile : IProjectile
+    internal class Projectile : IProjectile
     {
-        public double q { get; }
-        public double d { get; }
-        public double r { get; }
+        public double q {  get; set; }
+        public double d { get; set; }
+        public double r => d / 2;
+
         public Projectile(double q, double d)
         {
             this.q = q;
             this.d = d;
-            this.r = d / 2;
         }
     }
 }
