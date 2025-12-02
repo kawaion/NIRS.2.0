@@ -48,12 +48,16 @@ namespace NIRS.Nabla_Functions
             // формула преобразуется в значение на n,k
             double V = g[v, n, k];
 
-            double m = Get_m(n - 0.5, k - 0.5, mu);
-
             if (V >= 0)
-                return V * m * bs.S(x[k - 0.5]);
+            {
+                return V * g[mu, n - 0.5, k - 0.5] * bs.S(x[k - 0.5]);
+            }
+
             else
-                return V * m * bs.S(x[k + 0.5]);
+            {
+                return V * g[mu, n - 0.5, k + 0.5] * bs.S(x[k + 0.5]);
+            }
+                
         }
         //
         public double Nabla(double param1, PN param2, PN param3, LimitedDouble N, LimitedDouble K)

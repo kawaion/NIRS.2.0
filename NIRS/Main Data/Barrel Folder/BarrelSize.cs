@@ -16,11 +16,11 @@ namespace NIRS.Barrel_Folder
             _barrel = barrel;
             _finderPointsBetweenCurrent = new FinderPointsBetweenCurrent(barrel.BendingPoints);
             VFromBottomBoreToBendingPoints = _barrel.BendingPoints.GetListOfBarrelVFromBottomToBendingPoint();            
-            Skn = GetSkn();
+            Skm = GetSkm();
             Wkm = GetWkm();
         }
 
-        public double Skn { get; }
+        public double Skm { get; }
         public double Wkm { get; }
 
 
@@ -30,10 +30,11 @@ namespace NIRS.Barrel_Folder
 
             (var p1, var p2) = FindBendingPointsBetweenPoint(x);
             var RWhereX = GetRWhereX(x, p1, p2);
+            var d = RWhereX*2;
             return RWhereX;
         }
         public double D(double x) => 2 * R(x);
-        public double S(double x) => Math.PI * Math.Pow(R(x), 2);
+        public double S(double x) => Math.PI * Math.Pow(D(x), 2)/4;
         public double W(double x)
         {
             double h = 0.012687499999999999;
@@ -60,10 +61,10 @@ namespace NIRS.Barrel_Folder
         public double W(double x1, double x2) => Math.Abs(W(x1) - W(x2));
 
 
-        private double GetSkn()
+        private double GetSkm()
         {
-            var xkn = _barrel.BendingPoints[0].X;
-            return S(xkn);
+            var xkm = _barrel.EndChamberPoint.X;
+            return S(xkm);
         }
         private double GetWkm()
         {

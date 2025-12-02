@@ -1,4 +1,5 @@
 ﻿using MyDouble;
+using NIRS.Barrel_Folder;
 using NIRS.Functions_for_numerical_method;
 using NIRS.Grid_Folder;
 using NIRS.H_Functions;
@@ -19,11 +20,13 @@ namespace NIRS.Numerical_solution
         private readonly IProjectileFunctions _functions;
 
         private readonly double xEndChamber;
+        private readonly IBarrelSize bs;
 
         public NumericalSolutionProjectile(IProjectileFunctions projectileFunctions, IMainData mainData)
         {
             _functions = projectileFunctions;
             xEndChamber = mainData.Barrel.EndChamberPoint.X;
+            bs = mainData.Barrel.BarrelSize;
         }
 
         public IGrid Get(IGrid grid, LimitedDouble n)
@@ -44,13 +47,16 @@ namespace NIRS.Numerical_solution
 
             if (n.IsHalfInt())
             {
-                grid.SetSn(PN.vSn, n,   0);
+                grid.SetSn(PN.vSn, n,  1e-5);
             }
             else
             {
-                var k = grid.LastIndexK(PN.r, n);
+                var k = grid.LastIndexK(n);
 
-                grid.SetSn(PN.r, n,     grid[PN.r, n, k]);
+                //grid.SetSn(PN.r, n,     grid[PN.r, n, k]);
+                //
+                grid.SetSn(PN.r, n,     grid[PN.rho, n, k] * grid[PN.m, n, k] * bs.Skm);
+                //
                 grid.SetSn(PN.e, n,     grid[PN.e, n, k]);
                 grid.SetSn(PN.z, n,     grid[PN.z, n, k]);
                 grid.SetSn(PN.psi, n,   grid[PN.psi, n, k]);

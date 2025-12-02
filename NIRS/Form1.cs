@@ -76,47 +76,47 @@ namespace NIRS
             grid = await Task.Run(() => numericalMethod.Calculate());
             //grid = numericalMethod.Calculate();
 
-            int maxN = 20;
+            //int maxN = 1100;
 
-            var dataSheets = new Dictionary<string, double[,]>
-            {
-                {"dynamic_m", grid.GetFullData(PN.dynamic_m, maxN)},
-                {"v", grid.GetFullData(PN.v, maxN)},
-                //{"M", grid.GetFullData(PN.M)},
-                //{"w", grid.GetFullData(PN.w)},
-                //{"a", grid.GetFullData(PN.a)},
-                {"e", grid.GetFullData(PN.e, maxN)},
-                {"m_", grid.GetFullData(PN.m, maxN)},
-                {"p", grid.GetFullData(PN.p, maxN)},
-                //{"r", grid.GetFullData(PN.r)},
-                //{"rho", grid.GetFullData(PN.rho)},
-                //{"z", grid.GetFullData(PN.z)},
-                //{"psi", grid.GetFullData(PN.psi)}
-            };
-            string programFolder = Application.StartupPath;
-            string parentFolder = Directory.GetParent(programFolder).FullName;
-            string fileName = "multi_sheet_data.xlsx";
+            //var dataSheets = new Dictionary<string, double[,]>
+            //{
+            //    //{"dynamic_m", grid.GetFullData(PN.dynamic_m, maxN)},
+            //    //{"v", grid.GetFullData(PN.v, maxN)},
+            //    //{"M", grid.GetFullData(PN.M)},
+            //    //{"w", grid.GetFullData(PN.w)},
+            //    //{"a", grid.GetFullData(PN.a)},
+            //    {"e", grid.GetFullData(PN.e, maxN)},
+            //    //{"m_", grid.GetFullData(PN.m, maxN)},
+            //    //{"p", grid.GetFullData(PN.p, maxN)},
+            //    //{"r", grid.GetFullData(PN.r)},
+            //    //{"rho", grid.GetFullData(PN.rho)},
+            //    //{"z", grid.GetFullData(PN.z)},
+            //    //{"psi", grid.GetFullData(PN.psi)}
+            //};
+            //string programFolder = Application.StartupPath;
+            //string parentFolder = Directory.GetParent(programFolder).FullName;
+            //string fileName = "multi_sheet_data.xlsx";
 
-            try
-            {
-                ExcelHelper.CreateExcelFileWithSheets(dataSheets, fileName);
+            //try
+            //{
+            //    ExcelHelper.CreateExcelFileWithSheets(dataSheets, fileName);
 
-                // Показать сообщение о успешном сохранении
-                MessageBox.Show($"✅ Файл первой программы успешно сохранен!\n\nПуть: {fileName}",
-                    "Сохранено", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    // Показать сообщение о успешном сохранении
+            //    MessageBox.Show($"✅ Файл первой программы успешно сохранен!\n\nПуть: {fileName}",
+            //        "Сохранено", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Открыть папку с файлом
-                if (MessageBox.Show("Открыть расположение файла?", "Файл сохранен",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    System.Diagnostics.Process.Start("explorer.exe", $"/select, \"{fileName}\"");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"❌ Ошибка при сохранении файла: {ex.Message}",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //    // Открыть папку с файлом
+            //    if (MessageBox.Show("Открыть расположение файла?", "Файл сохранен",
+            //        MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            //    {
+            //        System.Diagnostics.Process.Start("explorer.exe", $"/select, \"{fileName}\"");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show($"❌ Ошибка при сохранении файла: {ex.Message}",
+            //        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
 
 
             InitializePostData();
@@ -337,10 +337,10 @@ namespace NIRS
             LimitedDouble n = nForMaxP;
             ResultExtractor resultExtractor = new ResultExtractor(grid);
             var dataXForP = resultExtractor.GetX(PN.p, n, mainData);
-            var dataXForV = resultExtractor.GetX(PN.v, n, mainData);
+            var dataXForV = resultExtractor.GetX(PN.v, n-0.5, mainData);
             var dataP = resultExtractor.GetP(n);
-            var dataVtw = resultExtractor.GetV(n);
-            var dataWgas = resultExtractor.GetW(n);
+            var dataVtw = resultExtractor.GetV(n - 0.5);
+            var dataWgas = resultExtractor.GetW(n - 0.5);
             ChartPlaceholder chartPlaceholder = new ChartPlaceholder(chartForDraw);
             chartPlaceholder.Add(dataXForP, dataP);
             chartPlaceholder.AddLeft(dataXForV, dataVtw);

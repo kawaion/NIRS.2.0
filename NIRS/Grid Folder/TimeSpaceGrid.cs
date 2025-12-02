@@ -42,7 +42,12 @@ namespace NIRS.Grid_Folder
             {
                 Validation(n, k);
 
-                if(pn == PN.e && n == 1 && k == 0.5)
+                if (pn == PN.e && n == 1078 && k == 79.5)
+                {
+                    int c = 0;
+                }
+
+                if (pn == PN.e && n == 1 && k == 0.5)
                 {
                     int c = 0;
                 }

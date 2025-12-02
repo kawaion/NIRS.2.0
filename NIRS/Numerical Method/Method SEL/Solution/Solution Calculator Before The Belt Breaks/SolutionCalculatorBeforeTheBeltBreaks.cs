@@ -45,7 +45,6 @@ namespace NIRS.Numerical_Method.Method_SEL.Solution_Calculator_Before_The_Belt_B
             LimitedDouble n = new LimitedDouble(0);
             while (isBeltIntact || n.IsHalfInt())
             {
-                isBeltIntact = AttemptRipOffBelt(grid, n, isBeltIntact);
                 n += 0.5;
 
                 grid = _gridBorderFiller.FillBarrelBordersN(grid, n);
@@ -56,6 +55,8 @@ namespace NIRS.Numerical_Method.Method_SEL.Solution_Calculator_Before_The_Belt_B
                 grid = _numericalSolutionProjectile.GetProjectileParametersBeforeBeltIntact(grid, n);
 
                 _visualizator.VisualizationProgress(grid, n);
+                
+                isBeltIntact = AttemptRipOffBelt(grid, n, isBeltIntact);
             }
             return grid;
         }

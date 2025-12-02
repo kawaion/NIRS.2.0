@@ -21,16 +21,16 @@ namespace NIRS.Helpers
         }
         public double dvdx(LimitedDouble n)
         {
-            var kLast = g.LastIndexK(PN.v, n);
+            var kLast = g.LastIndexK(PN.v, n);                
+            
+            var tmp1 = g.GetSn(PN.vSn, n);
+            var tmp2 = g[PN.v, n, kLast];
+            var tmp3 = g.GetSn(PN.x, n);
+            var tmp4 = x[kLast];
+
             var res = (g.GetSn(PN.vSn, n) - g[PN.v, n, kLast]) /
                    (g.GetSn(PN.x, n) - x[kLast]);
-            if (double.IsNaN(res))
-            {
-                var tmp1 = g.GetSn(PN.vSn, n);
-                var tmp2 = g[PN.v, n, kLast];
-                var tmp3 = g.GetSn(PN.x, n);
-                var tmp4 = x[kLast];
-            }
+
             return res;
         }
         public double dwdx(LimitedDouble n)

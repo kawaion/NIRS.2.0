@@ -4,7 +4,7 @@ namespace NIRS.Interfaces
 {
     public interface IBarrelSize
     {
-        double Skn { get; }
+        double Skm { get; }
         double Wkm { get; }
 
         double R(double x);        

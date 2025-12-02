@@ -31,6 +31,11 @@ namespace NIRS.Numerical_solution
                     while (isExistNonCalculatedNodes(g, n, pn, xSn))
                     {
                         var kLast = g.LastIndexK(pn, n);
+                        if (pn == PN.e && n == 1078 && (kLast + 1) == 79.5)
+                        {
+                            int c = 0;
+                        }
+                        
                         g[pn, n, kLast + 1] = _functions.InterpolateMixture(pn, n, xSn, kLast);
                     }
                 }

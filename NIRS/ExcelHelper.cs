@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using ClosedXML.Excel;
 using System.Drawing;
+using System.Globalization;
 
 namespace NIRS
 {
     public static class ExcelHelper
     {
-        private static readonly string TargetDirectory = @"C:\Users\admin\Desktop\NIRS_";
+        private static readonly string TargetDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;//@"C:\Users\Student\Desktop\NIRS_";
 
         // Создание файла с несколькими страницами
         public static void CreateExcelFileWithSheets(Dictionary<string, double[,]> dataSheets, string fileName)
@@ -125,12 +126,16 @@ namespace NIRS
             var dataRange = worksheet.Range(startRow, startCol, startRow + rows - 1, startCol + cols - 1);
             dataRange.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
 
+            dataRange.Style.NumberFormat.Format = "@";
+
             // Прямое заполнение значений
             for (int row = 0; row < rows; row++)
             {
                 for (int col = 0; col < cols; col++)
                 {
-                    worksheet.Cell(startRow + row, startCol + col).Value = array[row, col];
+                    //worksheet.Cell(startRow + row, startCol + col).Value = array[row, col];
+                    string valueStr = array[row, col].ToString("G17", CultureInfo.InvariantCulture);
+                    worksheet.Cell(startRow + row, startCol + col).Value = valueStr;
                 }
             }
         }
@@ -179,7 +184,7 @@ namespace NIRS
         private static int UpdateCommonArea(IXLWorksheet worksheet, double[,] newArray, int minRows, int minCols)
         {
             int matches = 0;
-            const double tolerance = 0.000001;
+            const double tolerance = 0.0000000001;
 
             for (int row = 0; row < minRows; row++)
             {
@@ -193,6 +198,16 @@ namespace NIRS
                     double newValue = newArray[row, col];
 
                     cell.Value = $"{oldValue}/{newValue}";
+
+                    //if (oldValue == newValue)
+                    //{
+                    //    cell.Style.Fill.BackgroundColor = XLColor.LightGreen;
+                    //    matches++;
+                    //}
+                    //else                    
+                    //{
+                    //    cell.Style.Fill.BackgroundColor = XLColor.LightCoral;
+                    //}
 
                     if (Math.Abs(oldValue - newValue) < tolerance)
                     {

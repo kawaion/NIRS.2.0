@@ -167,8 +167,8 @@ namespace NIRS.Functions_for_numerical_method
             return res;
         }        
         public double Get_e(LimitedDouble N, LimitedDouble K)
-        {            
-            if (N == 2)
+        {
+            if (N == 1078 && K == 79.5)
             {
                 int c = 0;
             }
@@ -249,7 +249,7 @@ namespace NIRS.Functions_for_numerical_method
         }
         public double Get_p(LimitedDouble n, LimitedDouble k)
         {
-            if (n == 9 && k == 0.5)
+            if (n == 1078 && k == 79.5)
             {
                 int c = 0;
             }

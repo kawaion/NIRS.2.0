@@ -1,14 +1,14 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\NIRS.Test\\NIRS.Test.csproj": {}
+    "E:\\reserv\\NIRS_\\nirs\\NIRS.Test\\NIRS.Test.csproj": {}
   },
   "projects": {
-    "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\MyDouble\\MyDouble.csproj": {
+    "E:\\reserv\\NIRS_\\nirs\\MyDouble\\MyDouble.csproj": {
       "restore": {
-        "projectUniqueName": "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\MyDouble\\MyDouble.csproj",
+        "projectUniqueName": "E:\\reserv\\NIRS_\\nirs\\MyDouble\\MyDouble.csproj",
         "projectName": "MyDouble",
-        "projectPath": "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\MyDouble\\MyDouble.csproj",
+        "projectPath": "E:\\reserv\\NIRS_\\nirs\\MyDouble\\MyDouble.csproj",
         "UsingMicrosoftNETSdk": false,
         "frameworks": {
           "net472": {
@@ -20,14 +20,14 @@
         "net472": {}
       }
     },
-    "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\NIRS.Test\\NIRS.Test.csproj": {
+    "E:\\reserv\\NIRS_\\nirs\\NIRS.Test\\NIRS.Test.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\NIRS.Test\\NIRS.Test.csproj",
+        "projectUniqueName": "E:\\reserv\\NIRS_\\nirs\\NIRS.Test\\NIRS.Test.csproj",
         "projectName": "NIRS.Test",
-        "projectPath": "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\NIRS.Test\\NIRS.Test.csproj",
+        "projectPath": "E:\\reserv\\NIRS_\\nirs\\NIRS.Test\\NIRS.Test.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\NIRS.Test\\obj\\",
+        "outputPath": "E:\\reserv\\NIRS_\\nirs\\NIRS.Test\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -48,11 +48,11 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\MyDouble\\MyDouble.csproj": {
-                "projectPath": "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\MyDouble\\MyDouble.csproj"
+              "E:\\reserv\\NIRS_\\nirs\\MyDouble\\MyDouble.csproj": {
+                "projectPath": "E:\\reserv\\NIRS_\\nirs\\MyDouble\\MyDouble.csproj"
               },
-              "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\NIRS\\NIRS.csproj": {
-                "projectPath": "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\NIRS\\NIRS.csproj"
+              "E:\\reserv\\NIRS_\\nirs\\NIRS\\NIRS.csproj": {
+                "projectPath": "E:\\reserv\\NIRS_\\nirs\\NIRS\\NIRS.csproj"
               }
             }
           }
@@ -114,17 +114,17 @@
         }
       }
     },
-    "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\NIRS\\NIRS.csproj": {
+    "E:\\reserv\\NIRS_\\nirs\\NIRS\\NIRS.csproj": {
       "restore": {
-        "projectUniqueName": "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\NIRS\\NIRS.csproj",
+        "projectUniqueName": "E:\\reserv\\NIRS_\\nirs\\NIRS\\NIRS.csproj",
         "projectName": "NIRS",
-        "projectPath": "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\NIRS\\NIRS.csproj",
+        "projectPath": "E:\\reserv\\NIRS_\\nirs\\NIRS\\NIRS.csproj",
         "UsingMicrosoftNETSdk": false,
         "frameworks": {
           "net472": {
             "projectReferences": {
-              "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\MyDouble\\MyDouble.csproj": {
-                "projectPath": "C:\\Users\\admin\\Desktop\\NIRS_\\nirs\\MyDouble\\MyDouble.csproj"
+              "E:\\reserv\\NIRS_\\nirs\\MyDouble\\MyDouble.csproj": {
+                "projectPath": "E:\\reserv\\NIRS_\\nirs\\MyDouble\\MyDouble.csproj"
               }
             }
           }
