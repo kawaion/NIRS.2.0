@@ -40,12 +40,13 @@ namespace NIRS.Grid_Folder
             }
             set
             {
-                Validation(n, k);
+               Validation(n, k);
 
-                if (pn == PN.e && n == 1078 && k == 79.5)
+                if (value == 185388.03797155 && pn == PN.a)
                 {
                     int c = 0;
                 }
+
 
                 if (pn == PN.e && n == 1 && k == 0.5)
                 {
@@ -66,6 +67,11 @@ namespace NIRS.Grid_Folder
                 else if (k > lastK[paramIndex, nIndex])
                     lastK[paramIndex, nIndex] = k;
             }
+        }
+        double eps = 1e-6; 
+        private bool IsEqual(double a, double b)
+        {
+            return (Math.Abs(a - b) < eps);
         }
 
         private void Validation(LimitedDouble n, LimitedDouble k)
@@ -145,6 +151,10 @@ namespace NIRS.Grid_Folder
 
         public void SetSn(PN pn, LimitedDouble n, double value)
         {
+            if(value == 185385.05291833592)
+            {
+                int c = 0;
+            }
             var paramIndex = (int)pn;
             var nIndex = ConvertToNIndexSn(n);
 

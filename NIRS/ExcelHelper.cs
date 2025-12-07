@@ -62,21 +62,18 @@ namespace NIRS
             string validSheetName = GetValidSheetName(sheetName);
             var worksheet = workbook.Worksheets.FirstOrDefault(ws => ws.Name == validSheetName);
 
-            // Получаем обрезанный массив
-            double[,] trimmedArray = TrimRows(array, skipRows);
-
             if (worksheet == null)
             {
                 worksheet = workbook.Worksheets.Add(validSheetName);
-                FillWorksheetWithData(worksheet, trimmedArray, skipRows);
+                FillWorksheetWithData(worksheet, array, skipRows);
             }
             else if (compareMode && !isNew)
             {
-                UpdateWorksheetWithComparison(worksheet, trimmedArray, skipRows);
+                UpdateWorksheetWithComparison(worksheet, array, skipRows);
             }
             else
             {
-                ClearAndFillWorksheet(worksheet, trimmedArray, skipRows);
+                ClearAndFillWorksheet(worksheet, array, skipRows);
             }
         }
 
@@ -105,11 +102,40 @@ namespace NIRS
             return trimmedArray;
         }
 
+        // Преобразование double в строку для записи в Excel
+        private static string DoubleToString(double value)
+        {
+            // Проверка специальных значений
+            if (double.IsNaN(value))
+                return "NaN";
+            if (double.IsPositiveInfinity(value))
+                return "∞";
+            if (double.IsNegativeInfinity(value))
+                return "-∞";
+
+            //// Для целых чисел убираем десятичную часть
+            //if (Math.Abs(value - Math.Round(value)) < 1e-10)
+            //{
+            //    // Для больших чисел используем научную нотацию
+            //    if (Math.Abs(value) > 1e10 || (Math.Abs(value) < 1e-10 && value != 0))
+            //        return value.ToString("G6");
+
+            //    return ((long)Math.Round(value)).ToString();
+            //}
+
+            // Для обычных чисел используем фиксированный формат
+            // с достаточной точностью для сравнения
+            return value.ToString("R", System.Globalization.CultureInfo.InvariantCulture);
+        }
+
         // Оптимизированное заполнение нового листа данными с учетом пропущенных строк
         private static void FillWorksheetWithData(IXLWorksheet worksheet, double[,] array, int skipRows)
         {
-            int rows = array.GetLength(0);
-            int cols = array.GetLength(1);
+            // Обрезаем массив если нужно
+            double[,] dataArray = TrimRows(array, skipRows);
+
+            int rows = dataArray.GetLength(0);
+            int cols = dataArray.GetLength(1);
 
             // Батч-обработка заголовков столбцов
             if (cols > 0)
@@ -120,7 +146,7 @@ namespace NIRS
 
                 for (int col = 0; col < cols; col++)
                 {
-                    worksheet.Cell(1, col + 2).Value = col;
+                    worksheet.Cell(1, col + 2).Value = $"Column {col}";
                 }
             }
 
@@ -137,18 +163,12 @@ namespace NIRS
                 }
             }
 
-            // Оптимизированное заполнение данных
-            FillDataRange(worksheet, array, 2, 2);
+            // Оптимизированное заполнение данных (записываем как текст)
+            FillDataRange(worksheet, dataArray, 2, 2);
             worksheet.Columns().AdjustToContents();
         }
 
-        // Перегрузка для обратной совместимости
-        private static void FillWorksheetWithData(IXLWorksheet worksheet, double[,] array)
-        {
-            FillWorksheetWithData(worksheet, array, 0);
-        }
-
-        // Оптимизированное заполнение данных
+        // Оптимизированное заполнение данных (записываем double как текст)
         private static void FillDataRange(IXLWorksheet worksheet, double[,] array, int startRow, int startCol)
         {
             int rows = array.GetLength(0);
@@ -156,17 +176,18 @@ namespace NIRS
 
             if (rows == 0 || cols == 0) return;
 
-            // Батч-стилизация
+            // Батч-стилизация - для текста используем текстовый формат
             var dataRange = worksheet.Range(startRow, startCol, startRow + rows - 1, startCol + cols - 1);
-            dataRange.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-            dataRange.Style.NumberFormat.Format = "@";
+            dataRange.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+            dataRange.Style.NumberFormat.Format = "@"; // Текстовый формат
 
-            // Прямое заполнение значений
+            // Заполняем значения, преобразуя double в строку
             for (int row = 0; row < rows; row++)
             {
                 for (int col = 0; col < cols; col++)
                 {
-                    worksheet.Cell(startRow + row, startCol + col).Value = array[row, col];
+                    string stringValue = DoubleToString(array[row, col]);
+                    worksheet.Cell(startRow + row, startCol + col).Value = stringValue;
                 }
             }
         }
@@ -178,15 +199,12 @@ namespace NIRS
             FillWorksheetWithData(worksheet, array, skipRows);
         }
 
-        // Перегрузка для обратной совместимости
-        private static void ClearAndFillWorksheet(IXLWorksheet worksheet, double[,] array)
-        {
-            ClearAndFillWorksheet(worksheet, array, 0);
-        }
-
         // Оптимизированное обновление с сравнением и учетом пропущенных строк
         private static void UpdateWorksheetWithComparison(IXLWorksheet worksheet, double[,] newArray, int skipRows)
         {
+            // Обрезаем новый массив если нужно
+            double[,] trimmedNewArray = TrimRows(newArray, skipRows);
+
             // Определяем размеры существующих данных по фактическому содержимому
             var lastCell = worksheet.LastCellUsed();
             if (lastCell == null)
@@ -201,33 +219,26 @@ namespace NIRS
             oldRows = Math.Max(0, oldRows);
             oldCols = Math.Max(0, oldCols);
 
-            int newRows = newArray.GetLength(0);
-            int newCols = newArray.GetLength(1);
+            int newRows = trimmedNewArray.GetLength(0);
+            int newCols = trimmedNewArray.GetLength(1);
 
             int minRows = Math.Min(oldRows, newRows);
             int minCols = Math.Min(oldCols, newCols);
 
-            // Обновляем общую область
-            int matches = UpdateCommonArea(worksheet, newArray, minRows, minCols, skipRows);
+            // Обновляем общую область (сравниваем строковые представления)
+            int matches = UpdateCommonArea(worksheet, trimmedNewArray, minRows, minCols, skipRows);
 
             // Добавляем новые строки и столбцы с учетом пропущенных строк
-            AddNewRows(worksheet, newArray, oldRows, newRows, newCols, skipRows);
-            AddNewColumns(worksheet, newArray, oldCols, newCols, newRows, oldRows, skipRows);
+            AddNewRows(worksheet, trimmedNewArray, oldRows, newRows, newCols, skipRows);
+            AddNewColumns(worksheet, trimmedNewArray, oldCols, newCols, newRows, oldRows, skipRows);
 
             worksheet.Columns().AdjustToContents();
         }
 
-        // Перегрузка для обратной совместимости
-        private static void UpdateWorksheetWithComparison(IXLWorksheet worksheet, double[,] newArray)
-        {
-            UpdateWorksheetWithComparison(worksheet, newArray, 0);
-        }
-
-        // Обновление общей области с сравнением и учетом пропущенных строк
+        // Обновление общей области с сравнением строковых представлений
         private static int UpdateCommonArea(IXLWorksheet worksheet, double[,] newArray, int minRows, int minCols, int skipRows)
         {
             int matches = 0;
-            const double tolerance = 0.0000000001;
 
             for (int row = 0; row < minRows; row++)
             {
@@ -237,12 +248,16 @@ namespace NIRS
                     int excelCol = col + 2;
 
                     var cell = worksheet.Cell(excelRow, excelCol);
-                    double oldValue = cell.Value.GetNumber();
-                    double newValue = newArray[row, col];
+                    string oldValueString = cell.GetValue<string>();
+                    string newValueString = DoubleToString(newArray[row, col]);
 
-                    cell.Value = $"{oldValue}/{newValue}";
+                    // Сравниваем строковые представления
+                    bool areEqual = string.Equals(oldValueString, newValueString, StringComparison.Ordinal);
 
-                    if (Math.Abs(oldValue - newValue) < tolerance)
+                    // Записываем оба значения через разделитель
+                    cell.Value = $"{oldValueString}/{newValueString}";
+
+                    if (areEqual)
                     {
                         cell.Style.Fill.BackgroundColor = XLColor.LightGreen;
                         matches++;
@@ -252,7 +267,8 @@ namespace NIRS
                         cell.Style.Fill.BackgroundColor = XLColor.LightCoral;
                     }
 
-                    cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+                    cell.Style.NumberFormat.Format = "@"; // Текстовый формат
                 }
             }
 
@@ -277,17 +293,13 @@ namespace NIRS
                     int excelRow = row + 2;
                     int excelCol = col + 2;
 
-                    worksheet.Cell(excelRow, excelCol).Value = $"–/{newArray[row, col]}";
+                    string newValueString = DoubleToString(newArray[row, col]);
+                    worksheet.Cell(excelRow, excelCol).Value = $"→ {newValueString}";
                     worksheet.Cell(excelRow, excelCol).Style.Fill.BackgroundColor = XLColor.LightYellow;
-                    worksheet.Cell(excelRow, excelCol).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    worksheet.Cell(excelRow, excelCol).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+                    worksheet.Cell(excelRow, excelCol).Style.NumberFormat.Format = "@"; // Текстовый формат
                 }
             }
-        }
-
-        // Перегрузка для обратной совместимости
-        private static void AddNewRows(IXLWorksheet worksheet, double[,] newArray, int oldRows, int newRows, int newCols)
-        {
-            AddNewRows(worksheet, newArray, oldRows, newRows, newCols, 0);
         }
 
         // Добавление новых столбцов с учетом пропущенных строк
@@ -298,7 +310,7 @@ namespace NIRS
             for (int col = oldCols; col < newCols; col++)
             {
                 // Заголовок столбца
-                worksheet.Cell(1, col + 2).Value = col;
+                worksheet.Cell(1, col + 2).Value = $"Column {col}";
                 worksheet.Cell(1, col + 2).Style.Font.Bold = true;
                 worksheet.Cell(1, col + 2).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
 
@@ -308,17 +320,13 @@ namespace NIRS
                     int excelRow = row + 2;
                     int excelCol = col + 2;
 
-                    worksheet.Cell(excelRow, excelCol).Value = $"–/{newArray[row, col]}";
+                    string newValueString = DoubleToString(newArray[row, col]);
+                    worksheet.Cell(excelRow, excelCol).Value = $"→ {newValueString}";
                     worksheet.Cell(excelRow, excelCol).Style.Fill.BackgroundColor = XLColor.LightYellow;
-                    worksheet.Cell(excelRow, excelCol).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    worksheet.Cell(excelRow, excelCol).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left;
+                    worksheet.Cell(excelRow, excelCol).Style.NumberFormat.Format = "@"; // Текстовый формат
                 }
             }
-        }
-
-        // Перегрузка для обратной совместимости
-        private static void AddNewColumns(IXLWorksheet worksheet, double[,] newArray, int oldCols, int newCols, int newRows, int oldRows)
-        {
-            AddNewColumns(worksheet, newArray, oldCols, newCols, newRows, oldRows, 0);
         }
 
         // Вспомогательные методы для определения границ данных
@@ -348,6 +356,50 @@ namespace NIRS
                 .Replace(']', '_');
 
             return validName.Length > 31 ? validName.Substring(0, 31) : validName;
+        }
+
+        // Метод для чтения строковых значений из Excel (для другой программы)
+        public static string[,] ReadStringDataFromExcel(string fileName, string sheetName, int skipRows = 0)
+        {
+            string fullPath = GetFullPath(fileName);
+
+            if (!File.Exists(fullPath))
+                return new string[0, 0];
+
+            using (var workbook = new XLWorkbook(fullPath))
+            {
+                var worksheet = workbook.Worksheet(sheetName);
+                if (worksheet == null)
+                    return new string[0, 0];
+
+                var lastCell = worksheet.LastCellUsed();
+                if (lastCell == null)
+                    return new string[0, 0];
+
+                int totalRows = worksheet.LastRowUsed().RowNumber();
+                int totalCols = worksheet.LastColumnUsed().ColumnNumber();
+
+                // Пропускаем строки заголовков (1 строка - заголовки столбцов)
+                int startRow = 2; // Первая строка с данными
+                int dataRows = Math.Max(0, totalRows - startRow + 1);
+
+                // Пропускаем столбец с номерами строк
+                int startCol = 2;
+                int dataCols = Math.Max(0, totalCols - startCol + 1);
+
+                string[,] data = new string[dataRows, dataCols];
+
+                for (int row = 0; row < dataRows; row++)
+                {
+                    for (int col = 0; col < dataCols; col++)
+                    {
+                        var cell = worksheet.Cell(startRow + row, startCol + col);
+                        data[row, col] = cell.GetValue<string>();
+                    }
+                }
+
+                return data;
+            }
         }
     }
 }

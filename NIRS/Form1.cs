@@ -76,23 +76,23 @@ namespace NIRS
             grid = await Task.Run(() => numericalMethod.Calculate());
             grid = numericalMethod.Calculate();
 
-            int minN = 0;
-            int maxN = 100;
+            int minN = 1070;
+            int maxN = 1100;
 
             var dataSheets = new Dictionary<string, double[,]>
             {
-                //{"dynamic_m", grid.GetFullData(PN.dynamic_m, maxN)},
-                //{"v", grid.GetFullData(PN.v, maxN)},
-                //{"M", grid.GetFullData(PN.M)},
-                //{"w", grid.GetFullData(PN.w)},
-                //{"a", grid.GetFullData(PN.a)},
+                {"dynamic_m", grid.GetFullData(PN.dynamic_m, maxN)},
+                {"v", grid.GetFullData(PN.v, maxN)},
+                {"M", grid.GetFullData(PN.M, maxN)},
+                {"w", grid.GetFullData(PN.w, maxN)},
+                {"a", grid.GetFullData(PN.a, maxN)},
                 {"e", grid.GetFullData(PN.e, maxN)},
-                //{"m_", grid.GetFullData(PN.m, maxN)},
-                //{"p", grid.GetFullData(PN.p, maxN)},
-                //{"r", grid.GetFullData(PN.r)},
+                {"m_", grid.GetFullData(PN.m, maxN)},
+                {"p", grid.GetFullData(PN.p, maxN)},
+                {"r", grid.GetFullData(PN.r, maxN)},
                 //{"rho", grid.GetFullData(PN.rho)},
-                //{"z", grid.GetFullData(PN.z)},
-                //{"psi", grid.GetFullData(PN.psi)}
+                {"z", grid.GetFullData(PN.z, maxN)},
+                {"psi", grid.GetFullData(PN.psi, maxN)}
             };
             string programFolder = Application.StartupPath;
             string parentFolder = Directory.GetParent(programFolder).FullName;

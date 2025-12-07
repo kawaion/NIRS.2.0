@@ -71,6 +71,11 @@ namespace NIRS.Numerical_solution
             double rho_value = functionsNewLayer.Get_rho(n, k); // нужен r m
             grid[PN.rho, n, k] = rho_value;
 
+            if(n == 1079 && k == 78.5)
+            {
+                int c = 0;
+            }
+
             double e_value = functionsNewLayer.Get_e(n, k); // нужен z psi
             grid[PN.e, n, k] = e_value;
 

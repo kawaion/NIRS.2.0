@@ -76,6 +76,7 @@ namespace NIRS.Functions_for_numerical_method
             double tau = this.tau;
 
             var res = MainFunctions.a_Sn_nP1(a_n, dwdx_nP05, tau);
+
             return res;
         }
         //

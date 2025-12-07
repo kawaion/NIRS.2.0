@@ -22,7 +22,7 @@ namespace NIRS.Helpers
         //public double dvdx(LimitedDouble n)
         //{
         //    var kLast = g.LastIndexK(PN.v, n);                
-            
+
         //    var tmp1 = g.GetSn(PN.vSn, n);
         //    var tmp2 = g[PN.v, n, kLast];
         //    var tmp3 = g.GetSn(PN.x, n);
@@ -32,6 +32,13 @@ namespace NIRS.Helpers
         //           (g.GetSn(PN.x, n) - x[kLast]);
 
         //    return res;
+        //}
+
+        //public double dwdx(LimitedDouble n)
+        //{
+        //    var kLast = g.LastIndexK(PN.w, n);
+        //    return (g.GetSn(PN.vSn, n) - g[PN.w, n, kLast - 1]) /
+        //           (g.GetSn(PN.x, n) - x[kLast - 1]);
         //}
 
         //
@@ -49,14 +56,14 @@ namespace NIRS.Helpers
 
             return res;
         }
-        //
+        
         public double dwdx(LimitedDouble n)
         {
             var kLast = g.LastIndexK(PN.w, n);
-            return (g.GetSn(PN.vSn, n) - g[PN.w, n, kLast]) /
-                   (g.GetSn(PN.x, n) - x[kLast]);
+            return (g.GetSn(PN.vSn, n) - g[PN.w, n, kLast - 1]) /
+                   (g.GetSn(PN.x, n) - x[kLast - 1]);
         }
-
+        //
         public double dPNdx(LimitedDouble n, PN pn)
         {
             var kLast = g.LastIndexK(pn, n);

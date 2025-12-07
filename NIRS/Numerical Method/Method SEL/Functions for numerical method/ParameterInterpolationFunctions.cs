@@ -24,12 +24,14 @@ namespace NIRS.Functions_for_numerical_method
         private readonly XGetter x;
         private readonly Differencial d;
         private InterpolateStep step;
+        private double lamda0;
 
         public ParameterInterpolationFunctions(IGrid grid, IMainData mainData)
         {
             x = new XGetter(mainData.ConstParameters);
             g = grid;
             constP = mainData.ConstParameters;
+            lamda0 = mainData.Powder.LAMBDA0;
             bs = mainData.Barrel.BarrelSize;
 
             d = new Differencial(grid, mainData.ConstParameters);
@@ -56,8 +58,15 @@ namespace NIRS.Functions_for_numerical_method
                 {
                     int c = 0;
                 }
-
-                g[pn, n, kLast] = equationOfLineFromTwoPoints.GetY(x[kLast], number * constP.h);
+                //
+                if(PN.m == pn)
+                {
+                    var tmp = 1 - g[PN.a, n, kLast] * lamda0 * (1 - g[PN.psi, n, kLast]);
+                    g[pn, n, kLast] = tmp;
+                }
+                //
+                else
+                    g[pn, n, kLast] = equationOfLineFromTwoPoints.GetY(x[kLast], number * constP.h);
             }
 
             return equationOfLineFromTwoPoints.GetY(x[kLast], number*constP.h);

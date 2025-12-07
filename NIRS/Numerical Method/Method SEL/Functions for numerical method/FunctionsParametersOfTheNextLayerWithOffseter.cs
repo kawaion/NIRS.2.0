@@ -89,6 +89,11 @@ namespace NIRS.Functions_for_numerical_method
 
             var res = MainFunctions.dynamic_m_nP05_k(dynamicm_nM05_k, nabla_dynamicm_v_nM05_k, m_n_kM05, m_n_kP05,
                                                      S_kM05, S_kP05, dpStrokeDivDx_n_k, H1_n_k, tau);
+            if (res == -4.6222391503999347)
+            {
+                int c = 0;
+            }
+
             return res;
         }
         public double Get_v(LimitedDouble n, LimitedDouble k)
@@ -104,6 +109,12 @@ namespace NIRS.Functions_for_numerical_method
             double r_n_kP05 = g[PN.r, n, k + 0.5];
 
             var res = MainFunctions.v_nP05_k(dynamicm_nP05_k, r_n_kM05, r_n_kP05);
+
+            if (res == -10.326917556113692)
+            {
+                int c = 0;
+            }
+
             return res;
         }        
         public double Get_M(LimitedDouble n, LimitedDouble k)
