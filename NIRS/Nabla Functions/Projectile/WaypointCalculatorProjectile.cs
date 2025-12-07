@@ -40,7 +40,16 @@ namespace NIRS.Nabla_Functions.Projectile
         {
             var n = OffseterN.AppointAndOffset(N, + 0.5);
 
-            return g.GetSn(v, n + 0.5) * g.GetSn(mu, n) * bs.S(g.GetSn(PN.x, n));
+            double muValue;
+
+            if(mu == PN.One_minus_m)
+            {
+                muValue = (1 - g.GetSn(PN.m, n));
+            }
+            else
+                muValue = g.GetSn(PN.m, n);
+
+            return g.GetSn(v, n + 0.5) * muValue * bs.S(g.GetSn(PN.x, n));
         }
 
         private double AverageK(PN mu, PN S, PN v, LimitedDouble N)

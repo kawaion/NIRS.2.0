@@ -19,20 +19,37 @@ namespace NIRS.Helpers
             g = grid;
             x = new XGetter(constParameters);
         }
+        //public double dvdx(LimitedDouble n)
+        //{
+        //    var kLast = g.LastIndexK(PN.v, n);                
+            
+        //    var tmp1 = g.GetSn(PN.vSn, n);
+        //    var tmp2 = g[PN.v, n, kLast];
+        //    var tmp3 = g.GetSn(PN.x, n);
+        //    var tmp4 = x[kLast];
+
+        //    var res = (g.GetSn(PN.vSn, n) - g[PN.v, n, kLast]) /
+        //           (g.GetSn(PN.x, n) - x[kLast]);
+
+        //    return res;
+        //}
+
+        //
         public double dvdx(LimitedDouble n)
         {
-            var kLast = g.LastIndexK(PN.v, n);                
-            
-            var tmp1 = g.GetSn(PN.vSn, n);
-            var tmp2 = g[PN.v, n, kLast];
-            var tmp3 = g.GetSn(PN.x, n);
-            var tmp4 = x[kLast];
+            var kLast = g.LastIndexK(PN.v, n);
 
-            var res = (g.GetSn(PN.vSn, n) - g[PN.v, n, kLast]) /
-                   (g.GetSn(PN.x, n) - x[kLast]);
+            var tmp1 = g.GetSn(PN.vSn, n);
+            var tmp2 = g[PN.v, n, kLast - 1];
+            var tmp3 = g.GetSn(PN.x, n);
+            var tmp4 = x[kLast - 1];
+
+            var res = (g.GetSn(PN.vSn, n) - g[PN.v, n, kLast - 1]) /
+                   (g.GetSn(PN.x, n) - x[kLast - 1]);
 
             return res;
         }
+        //
         public double dwdx(LimitedDouble n)
         {
             var kLast = g.LastIndexK(PN.w, n);

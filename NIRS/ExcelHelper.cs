@@ -10,10 +10,10 @@ namespace NIRS
 {
     public static class ExcelHelper
     {
-        private static readonly string TargetDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;//@"C:\Users\Student\Desktop\NIRS_";
+        private static readonly string TargetDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
 
-        // Создание файла с несколькими страницами
-        public static void CreateExcelFileWithSheets(Dictionary<string, double[,]> dataSheets, string fileName)
+        // Создание файла с несколькими страницами с обрезкой первых n строк
+        public static void CreateExcelFileWithSheets(Dictionary<string, double[,]> dataSheets, string fileName, int skipRows = 0)
         {
             string fullPath = GetFullPath(fileName);
 
@@ -21,21 +21,21 @@ namespace NIRS
             {
                 foreach (var sheetData in dataSheets)
                 {
-                    AddOrUpdateWorksheet(workbook, sheetData.Key, sheetData.Value, isNew: true);
+                    AddOrUpdateWorksheet(workbook, sheetData.Key, sheetData.Value, isNew: true, skipRows: skipRows);
                 }
 
                 workbook.SaveAs(fullPath);
             }
         }
 
-        // Обновление файла с несколькими страницами
-        public static void UpdateExcelFileWithSheets(Dictionary<string, double[,]> dataSheets, string fileName, bool compareMode = true)
+        // Обновление файла с несколькими страницами с обрезкой первых n строк
+        public static void UpdateExcelFileWithSheets(Dictionary<string, double[,]> dataSheets, string fileName, bool compareMode = true, int skipRows = 0)
         {
             string fullPath = GetFullPath(fileName);
 
             if (!File.Exists(fullPath))
             {
-                CreateExcelFileWithSheets(dataSheets, fileName);
+                CreateExcelFileWithSheets(dataSheets, fileName, skipRows);
                 return;
             }
 
@@ -43,7 +43,7 @@ namespace NIRS
             {
                 foreach (var sheetData in dataSheets)
                 {
-                    AddOrUpdateWorksheet(workbook, sheetData.Key, sheetData.Value, isNew: false, compareMode: compareMode);
+                    AddOrUpdateWorksheet(workbook, sheetData.Key, sheetData.Value, isNew: false, compareMode: compareMode, skipRows: skipRows);
                 }
 
                 workbook.Save();
@@ -56,29 +56,57 @@ namespace NIRS
             return Path.IsPathRooted(fileName) ? fileName : Path.Combine(TargetDirectory, fileName);
         }
 
-        // Универсальный метод для добавления/обновления листа
-        private static void AddOrUpdateWorksheet(XLWorkbook workbook, string sheetName, double[,] array, bool isNew, bool compareMode = false)
+        // Универсальный метод для добавления/обновления листа с обрезкой
+        private static void AddOrUpdateWorksheet(XLWorkbook workbook, string sheetName, double[,] array, bool isNew, bool compareMode = false, int skipRows = 0)
         {
             string validSheetName = GetValidSheetName(sheetName);
             var worksheet = workbook.Worksheets.FirstOrDefault(ws => ws.Name == validSheetName);
 
+            // Получаем обрезанный массив
+            double[,] trimmedArray = TrimRows(array, skipRows);
+
             if (worksheet == null)
             {
                 worksheet = workbook.Worksheets.Add(validSheetName);
-                FillWorksheetWithData(worksheet, array);
+                FillWorksheetWithData(worksheet, trimmedArray, skipRows);
             }
             else if (compareMode && !isNew)
             {
-                UpdateWorksheetWithComparison(worksheet, array);
+                UpdateWorksheetWithComparison(worksheet, trimmedArray, skipRows);
             }
             else
             {
-                ClearAndFillWorksheet(worksheet, array);
+                ClearAndFillWorksheet(worksheet, trimmedArray, skipRows);
             }
         }
 
-        // Оптимизированное заполнение нового листа данными
-        private static void FillWorksheetWithData(IXLWorksheet worksheet, double[,] array)
+        // Обрезка первых n строк массива
+        private static double[,] TrimRows(double[,] array, int skipRows)
+        {
+            if (skipRows <= 0 || skipRows >= array.GetLength(0))
+            {
+                return array;
+            }
+
+            int originalRows = array.GetLength(0);
+            int cols = array.GetLength(1);
+            int newRows = originalRows - skipRows;
+
+            double[,] trimmedArray = new double[newRows, cols];
+
+            for (int row = 0; row < newRows; row++)
+            {
+                for (int col = 0; col < cols; col++)
+                {
+                    trimmedArray[row, col] = array[row + skipRows, col];
+                }
+            }
+
+            return trimmedArray;
+        }
+
+        // Оптимизированное заполнение нового листа данными с учетом пропущенных строк
+        private static void FillWorksheetWithData(IXLWorksheet worksheet, double[,] array, int skipRows)
         {
             int rows = array.GetLength(0);
             int cols = array.GetLength(1);
@@ -96,7 +124,7 @@ namespace NIRS
                 }
             }
 
-            // Батч-обработка заголовков строк
+            // Батч-обработка заголовков строк с учетом пропущенных строк
             if (rows > 0)
             {
                 var rowRange = worksheet.Range(2, 1, rows + 1, 1);
@@ -105,13 +133,19 @@ namespace NIRS
 
                 for (int row = 0; row < rows; row++)
                 {
-                    worksheet.Cell(row + 2, 1).Value = row;
+                    worksheet.Cell(row + 2, 1).Value = row + skipRows; // Учитываем пропущенные строки
                 }
             }
 
             // Оптимизированное заполнение данных
             FillDataRange(worksheet, array, 2, 2);
             worksheet.Columns().AdjustToContents();
+        }
+
+        // Перегрузка для обратной совместимости
+        private static void FillWorksheetWithData(IXLWorksheet worksheet, double[,] array)
+        {
+            FillWorksheetWithData(worksheet, array, 0);
         }
 
         // Оптимизированное заполнение данных
@@ -125,7 +159,6 @@ namespace NIRS
             // Батч-стилизация
             var dataRange = worksheet.Range(startRow, startCol, startRow + rows - 1, startCol + cols - 1);
             dataRange.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
-
             dataRange.Style.NumberFormat.Format = "@";
 
             // Прямое заполнение значений
@@ -133,33 +166,37 @@ namespace NIRS
             {
                 for (int col = 0; col < cols; col++)
                 {
-                    //worksheet.Cell(startRow + row, startCol + col).Value = array[row, col];
-                    string valueStr = array[row, col].ToString("G17", CultureInfo.InvariantCulture);
-                    worksheet.Cell(startRow + row, startCol + col).Value = valueStr;
+                    worksheet.Cell(startRow + row, startCol + col).Value = array[row, col];
                 }
             }
         }
 
-        // Очистка и заполнение листа
-        private static void ClearAndFillWorksheet(IXLWorksheet worksheet, double[,] array)
+        // Очистка и заполнение листа с учетом пропущенных строк
+        private static void ClearAndFillWorksheet(IXLWorksheet worksheet, double[,] array, int skipRows)
         {
             worksheet.Clear();
-            FillWorksheetWithData(worksheet, array);
+            FillWorksheetWithData(worksheet, array, skipRows);
         }
 
-        // Оптимизированное обновление с сравнением
-        private static void UpdateWorksheetWithComparison(IXLWorksheet worksheet, double[,] newArray)
+        // Перегрузка для обратной совместимости
+        private static void ClearAndFillWorksheet(IXLWorksheet worksheet, double[,] array)
+        {
+            ClearAndFillWorksheet(worksheet, array, 0);
+        }
+
+        // Оптимизированное обновление с сравнением и учетом пропущенных строк
+        private static void UpdateWorksheetWithComparison(IXLWorksheet worksheet, double[,] newArray, int skipRows)
         {
             // Определяем размеры существующих данных по фактическому содержимому
             var lastCell = worksheet.LastCellUsed();
             if (lastCell == null)
             {
-                FillWorksheetWithData(worksheet, newArray);
+                FillWorksheetWithData(worksheet, newArray, skipRows);
                 return;
             }
 
-            int oldRows = GetLastUsedRow(worksheet) - 1; // -1 для учета заголовка
-            int oldCols = GetLastUsedColumn(worksheet) - 1; // -1 для учета заголовка
+            int oldRows = GetLastUsedRow(worksheet) - 1;
+            int oldCols = GetLastUsedColumn(worksheet) - 1;
 
             oldRows = Math.Max(0, oldRows);
             oldCols = Math.Max(0, oldCols);
@@ -171,17 +208,23 @@ namespace NIRS
             int minCols = Math.Min(oldCols, newCols);
 
             // Обновляем общую область
-            int matches = UpdateCommonArea(worksheet, newArray, minRows, minCols);
+            int matches = UpdateCommonArea(worksheet, newArray, minRows, minCols, skipRows);
 
-            // Добавляем новые строки и столбцы
-            AddNewRows(worksheet, newArray, oldRows, newRows, newCols);
-            AddNewColumns(worksheet, newArray, oldCols, newCols, newRows, oldRows);
+            // Добавляем новые строки и столбцы с учетом пропущенных строк
+            AddNewRows(worksheet, newArray, oldRows, newRows, newCols, skipRows);
+            AddNewColumns(worksheet, newArray, oldCols, newCols, newRows, oldRows, skipRows);
 
             worksheet.Columns().AdjustToContents();
         }
 
-        // Обновление общей области с сравнением
-        private static int UpdateCommonArea(IXLWorksheet worksheet, double[,] newArray, int minRows, int minCols)
+        // Перегрузка для обратной совместимости
+        private static void UpdateWorksheetWithComparison(IXLWorksheet worksheet, double[,] newArray)
+        {
+            UpdateWorksheetWithComparison(worksheet, newArray, 0);
+        }
+
+        // Обновление общей области с сравнением и учетом пропущенных строк
+        private static int UpdateCommonArea(IXLWorksheet worksheet, double[,] newArray, int minRows, int minCols, int skipRows)
         {
             int matches = 0;
             const double tolerance = 0.0000000001;
@@ -198,16 +241,6 @@ namespace NIRS
                     double newValue = newArray[row, col];
 
                     cell.Value = $"{oldValue}/{newValue}";
-
-                    //if (oldValue == newValue)
-                    //{
-                    //    cell.Style.Fill.BackgroundColor = XLColor.LightGreen;
-                    //    matches++;
-                    //}
-                    //else                    
-                    //{
-                    //    cell.Style.Fill.BackgroundColor = XLColor.LightCoral;
-                    //}
 
                     if (Math.Abs(oldValue - newValue) < tolerance)
                     {
@@ -226,15 +259,15 @@ namespace NIRS
             return matches;
         }
 
-        // Добавление новых строк
-        private static void AddNewRows(IXLWorksheet worksheet, double[,] newArray, int oldRows, int newRows, int newCols)
+        // Добавление новых строк с учетом пропущенных строк
+        private static void AddNewRows(IXLWorksheet worksheet, double[,] newArray, int oldRows, int newRows, int newCols, int skipRows)
         {
             if (newRows <= oldRows) return;
 
             for (int row = oldRows; row < newRows; row++)
             {
-                // Заголовок строки
-                worksheet.Cell(row + 2, 1).Value = row;
+                // Заголовок строки с учетом пропущенных строк
+                worksheet.Cell(row + 2, 1).Value = row + skipRows;
                 worksheet.Cell(row + 2, 1).Style.Font.Bold = true;
                 worksheet.Cell(row + 2, 1).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
 
@@ -251,8 +284,14 @@ namespace NIRS
             }
         }
 
-        // Добавление новых столбцов
-        private static void AddNewColumns(IXLWorksheet worksheet, double[,] newArray, int oldCols, int newCols, int newRows, int oldRows)
+        // Перегрузка для обратной совместимости
+        private static void AddNewRows(IXLWorksheet worksheet, double[,] newArray, int oldRows, int newRows, int newCols)
+        {
+            AddNewRows(worksheet, newArray, oldRows, newRows, newCols, 0);
+        }
+
+        // Добавление новых столбцов с учетом пропущенных строк
+        private static void AddNewColumns(IXLWorksheet worksheet, double[,] newArray, int oldCols, int newCols, int newRows, int oldRows, int skipRows)
         {
             if (newCols <= oldCols) return;
 
@@ -274,6 +313,12 @@ namespace NIRS
                     worksheet.Cell(excelRow, excelCol).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 }
             }
+        }
+
+        // Перегрузка для обратной совместимости
+        private static void AddNewColumns(IXLWorksheet worksheet, double[,] newArray, int oldCols, int newCols, int newRows, int oldRows)
+        {
+            AddNewColumns(worksheet, newArray, oldCols, newCols, newRows, oldRows, 0);
         }
 
         // Вспомогательные методы для определения границ данных

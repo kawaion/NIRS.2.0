@@ -74,49 +74,50 @@ namespace NIRS
             numericalMethod.ProgressActivate(progresser);
 
             grid = await Task.Run(() => numericalMethod.Calculate());
-            //grid = numericalMethod.Calculate();
+            grid = numericalMethod.Calculate();
 
-            //int maxN = 1100;
+            int minN = 0;
+            int maxN = 100;
 
-            //var dataSheets = new Dictionary<string, double[,]>
-            //{
-            //    //{"dynamic_m", grid.GetFullData(PN.dynamic_m, maxN)},
-            //    //{"v", grid.GetFullData(PN.v, maxN)},
-            //    //{"M", grid.GetFullData(PN.M)},
-            //    //{"w", grid.GetFullData(PN.w)},
-            //    //{"a", grid.GetFullData(PN.a)},
-            //    {"e", grid.GetFullData(PN.e, maxN)},
-            //    //{"m_", grid.GetFullData(PN.m, maxN)},
-            //    //{"p", grid.GetFullData(PN.p, maxN)},
-            //    //{"r", grid.GetFullData(PN.r)},
-            //    //{"rho", grid.GetFullData(PN.rho)},
-            //    //{"z", grid.GetFullData(PN.z)},
-            //    //{"psi", grid.GetFullData(PN.psi)}
-            //};
-            //string programFolder = Application.StartupPath;
-            //string parentFolder = Directory.GetParent(programFolder).FullName;
-            //string fileName = "multi_sheet_data.xlsx";
+            var dataSheets = new Dictionary<string, double[,]>
+            {
+                //{"dynamic_m", grid.GetFullData(PN.dynamic_m, maxN)},
+                //{"v", grid.GetFullData(PN.v, maxN)},
+                //{"M", grid.GetFullData(PN.M)},
+                //{"w", grid.GetFullData(PN.w)},
+                //{"a", grid.GetFullData(PN.a)},
+                {"e", grid.GetFullData(PN.e, maxN)},
+                //{"m_", grid.GetFullData(PN.m, maxN)},
+                //{"p", grid.GetFullData(PN.p, maxN)},
+                //{"r", grid.GetFullData(PN.r)},
+                //{"rho", grid.GetFullData(PN.rho)},
+                //{"z", grid.GetFullData(PN.z)},
+                //{"psi", grid.GetFullData(PN.psi)}
+            };
+            string programFolder = Application.StartupPath;
+            string parentFolder = Directory.GetParent(programFolder).FullName;
+            string fileName = "multi_sheet_data.xlsx";
 
-            //try
-            //{
-            //    ExcelHelper.CreateExcelFileWithSheets(dataSheets, fileName);
+            try
+            {
+                ExcelHelper.CreateExcelFileWithSheets(dataSheets, fileName, minN);
 
-            //    // Показать сообщение о успешном сохранении
-            //    MessageBox.Show($"✅ Файл первой программы успешно сохранен!\n\nПуть: {fileName}",
-            //        "Сохранено", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Показать сообщение о успешном сохранении
+                MessageBox.Show($"✅ Файл первой программы успешно сохранен!\n\nПуть: {fileName}",
+                    "Сохранено", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            //    // Открыть папку с файлом
-            //    if (MessageBox.Show("Открыть расположение файла?", "Файл сохранен",
-            //        MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            //    {
-            //        System.Diagnostics.Process.Start("explorer.exe", $"/select, \"{fileName}\"");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"❌ Ошибка при сохранении файла: {ex.Message}",
-            //        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+                // Открыть папку с файлом
+                if (MessageBox.Show("Открыть расположение файла?", "Файл сохранен",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start("explorer.exe", $"/select, \"{fileName}\"");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"❌ Ошибка при сохранении файла: {ex.Message}",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
 
             InitializePostData();

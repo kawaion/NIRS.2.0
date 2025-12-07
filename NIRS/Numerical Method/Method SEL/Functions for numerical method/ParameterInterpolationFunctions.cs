@@ -4,6 +4,7 @@ using NIRS.Grid_Folder;
 using NIRS.Helpers;
 using NIRS.Interfaces;
 using NIRS.Parameter_names;
+using NIRS.Visualization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ClosedXML.Excel.XLPredefinedFormat;
 
 namespace NIRS.Functions_for_numerical_method
 {
@@ -33,6 +35,70 @@ namespace NIRS.Functions_for_numerical_method
             d = new Differencial(grid, mainData.ConstParameters);
             step = new InterpolateStep(grid); 
         }
+        //
+        private double StraightLineInterpolation(IGrid g, PN pn, LimitedDouble n, double xSn, LimitedDouble kLast, int number)
+        {
+            if(pn == PN.e)
+            {
+                int c = 0;
+            }
+            var p1 = new Point2D(x[kLast], g[pn, n, kLast]);
+            var p2 = new Point2D(xSn, g.GetSn(pn, n));
+            EquationOfLineFromTwoPoints equationOfLineFromTwoPoints = new EquationOfLineFromTwoPoints(p1, p2);
+
+            number = 0;
+
+            while (isExistNonCalculatedNodes(g, n, pn, xSn))
+            {
+                number++;
+                kLast++;
+                if(number == 2)
+                {
+                    int c = 0;
+                }
+
+                g[pn, n, kLast] = equationOfLineFromTwoPoints.GetY(x[kLast], number * constP.h);
+            }
+
+            return equationOfLineFromTwoPoints.GetY(x[kLast], number*constP.h);
+        }
+        //
+        private bool isExistNonCalculatedNodes(IGrid g, LimitedDouble n, PN pn, double xSn)
+        {
+            var kLast = g.LastIndexK(pn, n);
+            var xEmptyNode = x[kLast + 1];
+            return xSn >= xEmptyNode;
+        }
+        //
+        public double InterpolateMixture(PN pn, LimitedDouble n, double xSn, LimitedDouble kLast, int number)
+        {
+            return StraightLineInterpolation(g, pn, n, xSn, kLast, number);
+        }
+
+
+        public double InterpolateDynamic(PN pn, LimitedDouble n, LimitedDouble kLast, double xSn, int number)
+        {
+            switch (pn)
+            {
+                case PN.v: return Interpolate_v(n, kLast, xSn, number);
+                case PN.w: return Interpolate_w(n, kLast, xSn, number);
+                case PN.dynamic_m: return Interpolate_dynamic_m(n, kLast + 1);
+                case PN.M: return Interpolate_M(n, kLast + 1);
+            }
+            throw new Exception();
+        }
+        public double Interpolate_v(LimitedDouble n, LimitedDouble kLast, double xSn, int number)
+        {
+            return StraightLineInterpolation(g, PN.v, n, xSn, kLast, number);
+        }
+        public double Interpolate_w(LimitedDouble n, LimitedDouble kLast, double xSn, int number)
+        {
+            return StraightLineInterpolation(g, PN.w, n, xSn, kLast, number);
+        }
+        //
+
+
+
         private double StraightLineInterpolation(IGrid g, PN pn, LimitedDouble n, double xSn, LimitedDouble kLast)
         {
             var p1 = new Point2D(x[kLast], g[pn, n, kLast]);
@@ -48,8 +114,8 @@ namespace NIRS.Functions_for_numerical_method
         public double InterpolateMixture(PN pn, LimitedDouble n, double xSn, LimitedDouble kLast)
         {
             return StraightLineInterpolation(g, pn, n, xSn, kLast);
-        }   
-        
+        }
+
 
         public double InterpolateDynamic(PN pn, LimitedDouble n, LimitedDouble kLast, double xSn)
         {
@@ -61,7 +127,7 @@ namespace NIRS.Functions_for_numerical_method
                 case PN.M: return Interpolate_M(n, kLast + 1);
             }
             throw new Exception();
-        }      
+        }
         public double Interpolate_v(LimitedDouble n, LimitedDouble kLast, double xSn)
         {
             return StraightLineInterpolation(g, PN.v, n, xSn, kLast);
@@ -72,56 +138,132 @@ namespace NIRS.Functions_for_numerical_method
         }
         public double Interpolate_dynamic_m(LimitedDouble N, LimitedDouble K)
         {
-            (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, + 1);
-
-            var opt = ChooseACalculationOptionFor_m_M(n, k);
-            if(opt == Option.opt1)
-            {
-                return g[PN.v, n + 0.5, k + 1] *
-                       (g[PN.r, n, k + 0.5] + g[PN.r, n, k + 1.5]) 
-                       / 2;
-            }
-            if (opt == Option.opt2)
-            {
-                return g[PN.v, n + 0.5, k + 1] *
-                       (g[PN.r, n, k + 0.5] + g.GetSn(PN.r, n))
-                       / 2;
-            }
-            if (opt == Option.opt3)
-            {
-                throw new Exception();
-                //return g[n + 0.5][k + 2].v *
-                //       (g[n][k + 0.5].r + g[n].sn.r)
-                //       / 2;
-            }
-            throw new Exception();
-        }
-        public double Interpolate_M(LimitedDouble N, LimitedDouble K)
-        {
-            (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, + 1);
+            (var n, var k) = OffseterNK.AppointAndOffset(N, +0.5, K, +1);
 
             var opt = ChooseACalculationOptionFor_m_M(n, k);
             if (opt == Option.opt1)
             {
-                return g[PN.w, n + 0.5, k + 1] * constP.PowderDelta *
+                g[PN.dynamic_m, n + 0.5, k + 1] = g[PN.v, n + 0.5, k + 1] *
+                       (g[PN.r, n, k + 0.5] + g[PN.r, n, k + 1.5])
+                       / 2;
+            }
+            if (opt == Option.opt2)
+            {
+                var tmp1 = g[PN.v, n + 0.5, k + 1];
+                var tmp2 = g[PN.r, n, k + 0.5];
+                var tmp3 = g.GetSn(PN.r, n - 1);
+
+                g[PN.dynamic_m, n + 0.5, k + 1] = g[PN.v, n + 0.5, k + 1] *
+                       (g[PN.r, n, k + 0.5] + g.GetSn(PN.r, n - 1))
+                       / 2;
+            }
+            if (x[k + 2] <= g.GetSn(PN.x, n + 0.5))// (opt == Option.opt3)
+            {
+                //throw new Exception();
+                var tmp1 = g[PN.v, n + 0.5, k + 2];
+                var tmp2 = g[PN.r, n, k + 1.5];
+                var tmp3 = g.GetSn(PN.r, n - 1);
+
+                g[PN.dynamic_m, n + 0.5, k + 2] = g[PN.v, n + 0.5, k + 2] *
+                       (g[PN.r, n, k + 1.5] + g.GetSn(PN.r, n - 1))
+                       / 2;
+            }
+            //
+            return 0;
+            //
+            //throw new Exception();
+        }
+        public double Interpolate_M(LimitedDouble N, LimitedDouble K)
+        {
+            (var n, var k) = OffseterNK.AppointAndOffset(N, +0.5, K, +1);
+
+            var opt = ChooseACalculationOptionFor_m_M(n, k);
+            if (opt == Option.opt1)
+            {
+                g[PN.M, n + 0.5, k + 1] = g[PN.w, n + 0.5, k + 1] * constP.PowderDelta *
                        (g[PN.One_minus_m, n, k + 0.5] * bs.S(x[k + 0.5]) + g[PN.One_minus_m, n, k + 1.5] * bs.S(x[k + 1.5]))
                        / 2;
             }
             if (opt == Option.opt2)
             {
-                return g[PN.w, n + 0.5, k + 1] * constP.PowderDelta *
+                g[PN.M, n + 0.5, k + 1] = g[PN.w, n + 0.5, k + 1] * constP.PowderDelta *
                        (g[PN.One_minus_m, n, k + 0.5] * bs.S(x[k + 0.5]) + (g.GetSn(PN.One_minus_m, n)) * bs.S(g.GetSn(PN.x, n)))
                        / 2;
             }
-            if (opt == Option.opt3)
+            //if (opt == Option.opt3)
+            if (x[k + 2] <= g.GetSn(PN.x, n + 0.5))
             {
-                throw new Exception();
-                //return g[n + 0.5][k + 2].w * constP.PowderDelta *
-                //       ((1 - g[n][k + 0.5].m) * bs.S(x[k + 0.5]) + (1 - g[n].sn.m) * bs.S(g[n].sn.x))
-                //       / 2;
+                //throw new Exception();
+                g[PN.M, n + 0.5, k + 2] = g[PN.w, n + 0.5, k + 2] * constP.PowderDelta *
+                       (g[PN.One_minus_m, n, k + 0.5] * bs.S(x[k + 0.5]) + g.GetSn(PN.One_minus_m, n) * bs.S(g.GetSn(PN.x, n)))
+                       / 2;
             }
+            //
+            return 0;
+            //
             throw new Exception();
-        }        
+        }
+        //public double Interpolate_dynamic_m(LimitedDouble N, LimitedDouble K)
+        //{
+        //    (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, + 1);
+
+        //    var opt = ChooseACalculationOptionFor_m_M(n, k);
+        //    if(opt == Option.opt1)
+        //    {
+        //        return g[PN.v, n + 0.5, k + 1] *
+        //               (g[PN.r, n, k + 0.5] + g[PN.r, n, k + 1.5]) 
+        //               / 2;
+        //    }
+        //    if (opt == Option.opt2)
+        //    {
+        //        var tmp1 = g[PN.v, n + 0.5, k + 1];
+        //        var tmp2 = g[PN.r, n, k + 0.5];
+        //        var tmp3 = g.GetSn(PN.r, n-1);
+
+        //        return g[PN.v, n + 0.5, k + 1] *
+        //               (g[PN.r, n, k + 0.5] + g.GetSn(PN.r, n - 1))
+        //               / 2;
+        //    }
+        //    if (x[k + 2] <= g.GetSn(PN.x, n + 0.5))// (opt == Option.opt3)
+        //    {
+        //        //throw new Exception();
+        //        var tmp1 = g[PN.v, n + 0.5, k + 2];
+        //        var tmp2 = g[PN.r, n, k + 1.5];
+        //        var tmp3 = g.GetSn(PN.r, n - 1);
+
+        //        return g[PN.v, n + 0.5, k + 2] *
+        //               (g[PN.r, n, k + 1.5] + g.GetSn(PN.r, n-1))
+        //               / 2;
+        //    }
+        //    throw new Exception();
+        //}
+        //public double Interpolate_M(LimitedDouble N, LimitedDouble K)
+        //{
+        //    (var n, var k) = OffseterNK.AppointAndOffset(N, + 0.5, K, + 1);
+
+        //    var opt = ChooseACalculationOptionFor_m_M(n, k);
+        //    if (opt == Option.opt1)
+        //    {
+        //        return g[PN.w, n + 0.5, k + 1] * constP.PowderDelta *
+        //               (g[PN.One_minus_m, n, k + 0.5] * bs.S(x[k + 0.5]) + g[PN.One_minus_m, n, k + 1.5] * bs.S(x[k + 1.5]))
+        //               / 2;
+        //    }
+        //    if (opt == Option.opt2)
+        //    {
+        //        return g[PN.w, n + 0.5, k + 1] * constP.PowderDelta *
+        //               (g[PN.One_minus_m, n, k + 0.5] * bs.S(x[k + 0.5]) + (g.GetSn(PN.One_minus_m, n)) * bs.S(g.GetSn(PN.x, n)))
+        //               / 2;
+        //    }
+        //    //if (opt == Option.opt3)
+        //    if (x[k + 2] <= g.GetSn(PN.x, n + 0.5))
+        //    {
+        //        //throw new Exception();
+        //        return g[n + 0.5][k + 2].w * constP.PowderDelta *
+        //               ((1 - g[n][k + 0.5].m) * bs.S(x[k + 0.5]) + (1 - g[n].sn.m) * bs.S(g[n].sn.x))
+        //               / 2;
+        //    }
+        //    throw new Exception();
+        //}        
 
         private Option ChooseACalculationOptionFor_m_M(LimitedDouble n, LimitedDouble k)
         {

@@ -27,6 +27,7 @@ namespace NIRS.Functions_for_numerical_method
 
         private readonly Differencial d;
         private readonly double tau;
+        XGetter xGetter;
 
         public ProjectileFunctions(IGrid grid, 
                                    IWaypointCalculator waypointCalculator,           
@@ -44,6 +45,7 @@ namespace NIRS.Functions_for_numerical_method
 
             d = new Differencial(grid, mainData.ConstParameters);
             tau = constP.tau;
+            xGetter = new XGetter(constP);
         }
 
         public double Get(PN pn, LimitedDouble n)
@@ -67,7 +69,7 @@ namespace NIRS.Functions_for_numerical_method
 
         public double Get_a(LimitedDouble N)
         {
-            var n = OffseterN.AppointAndOffset(N, + 1);
+            var n = OffseterN.AppointAndOffset(N, +1);
 
             double a_n = g.GetSn(PN.a, n);
             double dwdx_nP05 = d.dwdx(n + 0.5);
@@ -76,21 +78,52 @@ namespace NIRS.Functions_for_numerical_method
             var res = MainFunctions.a_Sn_nP1(a_n, dwdx_nP05, tau);
             return res;
         }
+        //
         public double Get_e(LimitedDouble N)
         {
-            var n = OffseterN.AppointAndOffset(N, + 1);
+            var n = OffseterN.AppointAndOffset(N, +1);
+            var k = g.LastIndexK(PN.v, n);
 
             double e_n = g.GetSn(PN.e, n);
             double dvdx_nP05 = d.dvdx(n + 0.5);
             double p_n = g.GetSn(PN.p, n);
-            double nabla_mSv_nP05 = wc.sn.Nabla(PN.m, PN.S, PN.v, n + 0.5);
-            double nabla_OneMinusmSw_nP05 = wc.sn.Nabla(PN.One_minus_m, PN.S, PN.w, n + 0.5);
+            double nabla_mSv_nP05 = 0;
+
+            //var tmp1 = g[PN.m, n, k - 0.5];
+            //var tmp2 = g[PN.m, n, k - 1.5];
+            //var tmp4 = bs.S(xGetter[k-0.5]);
+            //var tmp5 = bs.S(xGetter[k - 1.5]);
+            var tmp6 = g[PN.v, n + 0.5, k-1];
+            //var tmp7 = xGetter[k - 1];
+            //var tmp8 = g.GetSn(PN.x, n + 0.5);
+
+            double nabla_OneMinusmSw_nP05 = (bs.Skm * g.GetSn(PN.vSn, n + 0.5) -
+                (g[PN.m, n, k - 0.5] * bs.S(xGetter[k - 0.5])+ g[PN.m, n, k - 1.5] * bs.S(xGetter[k - 1.5])) * g[PN.v, n + 0.5, k - 1] / 2 -
+                ((1-g[PN.m, n, k - 0.5]) * bs.S(xGetter[k - 0.5]) + (1-g[PN.m, n, k - 1.5]) * bs.S(xGetter[k - 1.5])) *g[PN.w, n + 0.5, k - 1] / 2)
+                /(g.GetSn(PN.x, n + 0.5)- xGetter[k - 1]);
             double H4_nP05 = hf.sn.H4(n + 0.5);
             double tau = this.tau;
 
             var res = MainFunctions.e_Sn_nP1(e_n, dvdx_nP05, p_n, nabla_mSv_nP05, nabla_OneMinusmSw_nP05, H4_nP05, tau);
             return res;
         }
+        //
+
+        //public double Get_e(LimitedDouble N)
+        //{
+        //    var n = OffseterN.AppointAndOffset(N, + 1);
+
+        //    double e_n = g.GetSn(PN.e, n);
+        //    double dvdx_nP05 = d.dvdx(n + 0.5);
+        //    double p_n = g.GetSn(PN.p, n);
+        //    double nabla_mSv_nP05 = wc.sn.Nabla(PN.m, PN.S, PN.v, n + 0.5);
+        //    double nabla_OneMinusmSw_nP05 = wc.sn.Nabla(PN.One_minus_m, PN.S, PN.w, n + 0.5);
+        //    double H4_nP05 = hf.sn.H4(n + 0.5);
+        //    double tau = this.tau;
+
+        //    var res = MainFunctions.e_Sn_nP1(e_n, dvdx_nP05, p_n, nabla_mSv_nP05, nabla_OneMinusmSw_nP05, H4_nP05, tau);
+        //    return res;
+        //}
         public double Get_m(LimitedDouble N)
         {
             var n = OffseterN.AppointAndOffset(N, + 1);

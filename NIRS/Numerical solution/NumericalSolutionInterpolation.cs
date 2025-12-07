@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ClosedXML.Excel.XLPredefinedFormat;
 
 namespace NIRS.Numerical_solution
 {
@@ -20,6 +21,40 @@ namespace NIRS.Numerical_solution
             _functions = parameterInterpolationFunctions;
             x = new XGetter(mainData.ConstParameters);
         }
+        //public IGrid GetAtUnavailableNodes(IGrid g, LimitedDouble n)
+        //{
+        //    var xSn = g.GetSn(PN.x, n);
+        //    if (n.IsInt())
+        //    {
+
+        //        foreach (var pn in VectorPN.mixture)
+        //        {
+        //            while (isExistNonCalculatedNodes(g, n, pn, xSn))
+        //            {
+        //                var kLast = g.LastIndexK(pn, n);
+        //                if (pn == PN.e && n == 1078 && (kLast + 1) == 79.5)
+        //                {
+        //                    int c = 0;
+        //                }
+
+        //                g[pn, n, kLast + 1] = _functions.InterpolateMixture(pn, n, xSn, kLast);
+        //            }
+        //        }
+        //    }
+
+        //    if (n.IsHalfInt())
+        //    {
+        //        foreach (var pn in VectorPN.dynamic)
+        //        {
+        //            while (isExistNonCalculatedNodes(g, n, pn, xSn))
+        //            {
+        //                var kLast = g.LastIndexK(pn, n);
+        //                g[pn, n, kLast + 1] = _functions.InterpolateDynamic(pn, n, kLast, xSn);
+        //            }
+        //        }
+        //    }
+        //    return g;
+        //}
         public IGrid GetAtUnavailableNodes(IGrid g, LimitedDouble n)
         {
             var xSn = g.GetSn(PN.x, n);
@@ -28,15 +63,22 @@ namespace NIRS.Numerical_solution
                 
                 foreach (var pn in VectorPN.mixture)
                 {
+                    //
+                    int number = 0;
+                    //
                     while (isExistNonCalculatedNodes(g, n, pn, xSn))
                     {
+                        //
+                        number++;
+                        //
                         var kLast = g.LastIndexK(pn, n);
                         if (pn == PN.e && n == 1078 && (kLast + 1) == 79.5)
                         {
                             int c = 0;
                         }
                         
-                        g[pn, n, kLast + 1] = _functions.InterpolateMixture(pn, n, xSn, kLast);
+                        //g[pn, n, kLast + 1] = 
+                        _functions.InterpolateMixture(pn, n, xSn, kLast, number);
                     }
                 }
             }
@@ -45,10 +87,17 @@ namespace NIRS.Numerical_solution
             {
                 foreach (var pn in VectorPN.dynamic)
                 {
+                    //
+                    int number = 0;
+                    //
                     while (isExistNonCalculatedNodes(g, n, pn, xSn))
                     {
+                        //
+                        number++;
+                        //
                         var kLast = g.LastIndexK(pn, n);
-                        g[pn, n, kLast + 1] = _functions.InterpolateDynamic(pn, n, kLast, xSn);
+                        //g[pn, n, kLast + 1] =
+                        _functions.InterpolateDynamic(pn, n, kLast, xSn, number);
                     }
                 }
             }
