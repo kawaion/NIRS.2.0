@@ -113,13 +113,14 @@ namespace NIRS.For_chart
             var bs = mainData.Barrel.BarrelSize;
             var h = mainData.ConstParameters.h;
             var cv = mainData.ConstParameters.cv;
+            var xGetter = new XGetter(mainData.ConstParameters);
             List<double> massive = new List<double>();
             LimitedDouble lastK = _grid.LastIndexK(PN.rho, n);
             LimitedDouble firstK = FirstLimitedDouble.GetFirstK(PN.rho);
 
             for (LimitedDouble k = firstK; k <= lastK; k++)
             {
-                var eps = _grid[PN.e,n,k] / (_grid[PN.rho, n, k] * _grid[PN.m, n, k] * bs.S(k.GetDouble() * h));
+                var eps = _grid[PN.e,n,k] / (_grid[PN.rho, n, k] * _grid[PN.m, n, k] * bs.S(xGetter[k]));
                 massive.Add(eps/cv);
             }
             string title = "температура, K";

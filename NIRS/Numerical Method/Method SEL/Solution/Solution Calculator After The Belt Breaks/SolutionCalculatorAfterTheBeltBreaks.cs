@@ -41,7 +41,27 @@ namespace NIRS.Numerical_Method.Method_SEL.Solution_Calculator_After_The_Belt_Br
             while (!IsEndConditionNumericalSolution(grid, n))// && n!=2363)
             {
                 n += 0.5;
+                if(n == 1215.5)
+                {
+                    int c = 0;
+                }
 
+                //
+                //if (n.IsHalfInt())
+                //{
+                //    grid = _gridBorderFiller.FillBarrelBordersN(grid, n);
+                //    grid = _gridBorderFiller.FillBarrelBordersN(grid, n + 0.5);
+
+                //    grid = GetNumericalSolutionAtNodesN(grid, n);
+                //    grid = GetNumericalSolutionAtNodesN(grid, n + 0.5);
+
+                //    grid = _numericalSolutionProjectile.Get(grid, n);
+                //    grid = _numericalSolutionInterpolation.GetAtUnavailableNodes(grid, n);
+
+                //    grid = _numericalSolutionProjectile.Get(grid, n + 0.5);
+                //    grid = _numericalSolutionInterpolation.GetAtUnavailableNodes(grid, n + 0.5);
+                //}
+                //
                 grid = _gridBorderFiller.FillBarrelBordersN(grid, n);
                 grid = GetNumericalSolutionAtNodesN(grid, n);
                 grid = _numericalSolutionProjectile.Get(grid, n);

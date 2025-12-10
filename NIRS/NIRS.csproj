@@ -125,7 +125,9 @@
     <Compile Include="For chart\DataForChart.cs" />
     <Compile Include="For chart\ResultExtractor.cs" />
     <Compile Include="Helpers\ConvertTo2DArray.cs" />
+    <Compile Include="Main Data\Input Data Parameters\ConstParametersCase2.cs" />
     <Compile Include="Main Data\Projectile Folder\Projectile.cs" />
+    <Compile Include="Numerical Method\LeastSquaresSolver.cs" />
     <Compile Include="Numerical Method\Method SEL\Solution\Helper\FirstKGetter.cs" />
     <Compile Include="Numerical Method\Method SEL\Solution\Helper\Visualizator.cs" />
     <Compile Include="Numerical Method\Method SEL\Solution\NumericalSolution.cs" />

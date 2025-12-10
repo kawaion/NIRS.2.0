@@ -218,6 +218,10 @@ namespace NIRS.Functions_for_numerical_method
             double tau = this.tau;
 
             var res = MainFunctions.vSn_nP05(vSn_nM05, p_n, S_n, q, tau);
+            if(res == 0.37918421468827473)
+            {
+                int c = 0;
+            }
             return res;
 
         }

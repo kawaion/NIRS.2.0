@@ -1,6 +1,7 @@
 ﻿using MyDouble;
 using NIRS.Data_Parameters.Input_Data_Parameters;
 using NIRS.Grid_Folder;
+using NIRS.H_Functions;
 using NIRS.Helpers;
 using NIRS.Interfaces;
 using NIRS.Parameter_names;
@@ -47,7 +48,7 @@ namespace NIRS.Functions_for_numerical_method
             var p1 = new Point2D(x[kLast], g[pn, n, kLast]);
             var p2 = new Point2D(xSn, g.GetSn(pn, n));
             EquationOfLineFromTwoPoints equationOfLineFromTwoPoints = new EquationOfLineFromTwoPoints(p1, p2);
-
+            double S = bs.S(x[kLast+1]);
             number = 0;
 
             while (isExistNonCalculatedNodes(g, n, pn, xSn))
@@ -61,12 +62,37 @@ namespace NIRS.Functions_for_numerical_method
                 //
                 if(PN.m == pn)
                 {
+                    var tmp1 = g[PN.a, n, kLast];
+                    var tmp2 = g[PN.psi, n, kLast];
+
                     var tmp = 1 - g[PN.a, n, kLast] * lamda0 * (1 - g[PN.psi, n, kLast]);
                     g[pn, n, kLast] = tmp;
                 }
+                else if (PN.p == pn)
+                {
+                    var tmp1 = g[PN.e, n, kLast];
+                    var tmp2 = g[PN.m, n, kLast];
+                    var tmp4 = g[PN.r, n, kLast];
+
+                    var tmp = constP.teta * g[PN.e, n, kLast] / (g[PN.m, n, kLast] * S - constP.alpha * g[PN.r, n, kLast]);
+                    g[pn, n, kLast] = tmp;
+                }
+                else if (PN.rho == pn)
+                {
+                    g[pn, n, kLast] = g[PN.r, n, kLast] / (g[PN.m, n, kLast] * S);
+                }
                 //
                 else
-                    g[pn, n, kLast] = equationOfLineFromTwoPoints.GetY(x[kLast], number * constP.h);
+                {
+                    double dv = (p2.Y - p1.Y) / (p2.X - p1.X);
+                    var tmp = equationOfLineFromTwoPoints.GetY(x[kLast], number * constP.h);
+                    if(tmp == 33.774394697628487)
+                    {
+                        int c = 0;
+                    }
+                    g[pn, n, kLast] = tmp;
+                }
+                    
             }
 
             return equationOfLineFromTwoPoints.GetY(x[kLast], number*constP.h);
@@ -204,7 +230,7 @@ namespace NIRS.Functions_for_numerical_method
             {
                 //throw new Exception();
                 g[PN.M, n + 0.5, k + 2] = g[PN.w, n + 0.5, k + 2] * constP.PowderDelta *
-                       (g[PN.One_minus_m, n, k + 0.5] * bs.S(x[k + 0.5]) + g.GetSn(PN.One_minus_m, n) * bs.S(g.GetSn(PN.x, n)))
+                       (g[PN.One_minus_m, n, k + 1.5] * bs.S(x[k + 1.5]) + g.GetSn(PN.One_minus_m, n) * bs.S(g.GetSn(PN.x, n)))
                        / 2;
             }
             //

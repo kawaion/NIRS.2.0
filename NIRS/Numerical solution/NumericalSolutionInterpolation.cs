@@ -55,8 +55,10 @@ namespace NIRS.Numerical_solution
         //    }
         //    return g;
         //}
+        static LimitedDouble  lastnodeN;
         public IGrid GetAtUnavailableNodes(IGrid g, LimitedDouble n)
         {
+
             var xSn = g.GetSn(PN.x, n);
             if (n.IsInt())
             {
@@ -87,6 +89,7 @@ namespace NIRS.Numerical_solution
             {
                 foreach (var pn in VectorPN.dynamic)
                 {
+
                     //
                     int number = 0;
                     //

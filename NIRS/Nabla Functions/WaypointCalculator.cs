@@ -50,12 +50,12 @@ namespace NIRS.Nabla_Functions
 
             if (V >= 0)
             {
-                return V * g[mu, n - 0.5, k - 0.5] * bs.S(x[k - 0.5]);
+                return g[mu, n - 0.5, k - 0.5] * bs.S(x[k - 0.5]) * V;
             }
 
             else
             {
-                return V * g[mu, n - 0.5, k + 0.5] * bs.S(x[k + 0.5]);
+                return g[mu, n - 0.5, k + 0.5] * bs.S(x[k + 0.5]) * V;
             }
                 
         }

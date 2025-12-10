@@ -74,50 +74,50 @@ namespace NIRS
             numericalMethod.ProgressActivate(progresser);
 
             grid = await Task.Run(() => numericalMethod.Calculate());
-            grid = numericalMethod.Calculate();
+            //grid = numericalMethod.Calculate();
 
-            int minN = 1070;
-            int maxN = 1100;
+            //int minN = 1200;
+            //int maxN = 1300;
 
-            var dataSheets = new Dictionary<string, double[,]>
-            {
-                {"dynamic_m", grid.GetFullData(PN.dynamic_m, maxN)},
-                {"v", grid.GetFullData(PN.v, maxN)},
-                {"M", grid.GetFullData(PN.M, maxN)},
-                {"w", grid.GetFullData(PN.w, maxN)},
-                {"a", grid.GetFullData(PN.a, maxN)},
-                {"e", grid.GetFullData(PN.e, maxN)},
-                {"m_", grid.GetFullData(PN.m, maxN)},
-                {"p", grid.GetFullData(PN.p, maxN)},
-                {"r", grid.GetFullData(PN.r, maxN)},
-                //{"rho", grid.GetFullData(PN.rho)},
-                {"z", grid.GetFullData(PN.z, maxN)},
-                {"psi", grid.GetFullData(PN.psi, maxN)}
-            };
-            string programFolder = Application.StartupPath;
-            string parentFolder = Directory.GetParent(programFolder).FullName;
-            string fileName = "multi_sheet_data.xlsx";
+            //var dataSheets = new Dictionary<string, double[,]>
+            //{
+            //    {"dynamic_m", grid.GetFullData(PN.dynamic_m, maxN)},
+            //    {"v", grid.GetFullData(PN.v, maxN)},
+            //    {"M", grid.GetFullData(PN.M, maxN)},
+            //    {"w", grid.GetFullData(PN.w, maxN)},
+            //    {"a", grid.GetFullData(PN.a, maxN)},
+            //    {"e", grid.GetFullData(PN.e, maxN)},
+            //    {"m_", grid.GetFullData(PN.m, maxN)},
+            //    {"p", grid.GetFullData(PN.p, maxN)},
+            //    {"r", grid.GetFullData(PN.r, maxN)},
+            //    {"rho", grid.GetFullData(PN.rho, maxN)},
+            //    {"z", grid.GetFullData(PN.z, maxN)},
+            //    {"psi", grid.GetFullData(PN.psi, maxN)}
+            //};
+            //string programFolder = Application.StartupPath;
+            //string parentFolder = Directory.GetParent(programFolder).FullName;
+            //string fileName = "multi_sheet_data.xlsx";
 
-            try
-            {
-                ExcelHelper.CreateExcelFileWithSheets(dataSheets, fileName, minN);
+            //try
+            //{
+            //    ExcelHelper.CreateExcelFileWithSheets(dataSheets, fileName, minN);
 
-                // Показать сообщение о успешном сохранении
-                MessageBox.Show($"✅ Файл первой программы успешно сохранен!\n\nПуть: {fileName}",
-                    "Сохранено", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    // Показать сообщение о успешном сохранении
+            //    MessageBox.Show($"✅ Файл первой программы успешно сохранен!\n\nПуть: {fileName}",
+            //        "Сохранено", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Открыть папку с файлом
-                if (MessageBox.Show("Открыть расположение файла?", "Файл сохранен",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    System.Diagnostics.Process.Start("explorer.exe", $"/select, \"{fileName}\"");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"❌ Ошибка при сохранении файла: {ex.Message}",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //    // Открыть папку с файлом
+            //    if (MessageBox.Show("Открыть расположение файла?", "Файл сохранен",
+            //        MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            //    {
+            //        System.Diagnostics.Process.Start("explorer.exe", $"/select, \"{fileName}\"");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show($"❌ Ошибка при сохранении файла: {ex.Message}",
+            //        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
 
 
             InitializePostData();
@@ -144,11 +144,11 @@ namespace NIRS
             nForMaxP = FindNPMax();
         }
 
-        private IMainData InitializeMainData()
+        private IMainData InitializeMainData(int N = 80)
         {
             IInitialParameters initialParameters = new InitialParametersCase1();
-            double h = 1.015 / 80; //0.0025;
-            double tau = 1.015 / (80 * (2500 + 1500)); //curantTau(h, 945);
+            double h = 1.015 / N; //0.0025;
+            double tau = 1.015 / (N * (2500 + 1500)); //curantTau(h, 945);
 
             ;//inputDataTransmitter.GetInputData(initialParameters, constParameters);
             List<Point2D> points = new List<Point2D>();
@@ -165,7 +165,7 @@ namespace NIRS
             //Point2D endChamber = new Point2D(1.1225, 0.1524);
             Point2D endChamber = new Point2D(1.015, 0.1524);
 
-            IConstParameters constParameters = new ConstParametersCase1(tau, 80, endChamber);
+            IConstParameters constParameters = new ConstParametersCase1(tau, N, endChamber);
             (var newInitialParameters, var newConstParameters) = (initialParameters, constParameters);
 
             double omega = 19;
@@ -326,10 +326,10 @@ namespace NIRS
             ChartPlaceholder chartPlaceholder = new ChartPlaceholder(chartForDraw);
             chartPlaceholder.Add(dataX, dataRo);
             chartPlaceholder.AddLeft(dataX, dataTemperature);
-            chartPlaceholder.SetIntervalX(0.5);
-            chartPlaceholder.SetMaxY(400);
-            chartPlaceholder.SetMaxYLeft(4000);
-            chartPlaceholder.SetIntervalCount(4);
+            chartPlaceholder.SetIntervalX(1);
+            chartPlaceholder.SetMaxY(200);
+            chartPlaceholder.SetMaxYLeft(3000);
+            chartPlaceholder.SetIntervalCount(5);
 
             chartForDraw = chartPlaceholder.GetChart;
         }
@@ -347,9 +347,9 @@ namespace NIRS
             chartPlaceholder.AddLeft(dataXForV, dataVtw);
             chartPlaceholder.AddLeft(dataXForV, dataWgas);
             chartPlaceholder.SetIntervalX(0.25);
-            //chartPlaceholder.SetMaxY(500);
-            //chartPlaceholder.SetMaxYLeft(500);
-            //chartPlaceholder.SetIntervalCount(5);
+            chartPlaceholder.SetMaxY(600);
+            chartPlaceholder.SetMaxYLeft(900);
+            chartPlaceholder.SetIntervalCount(6);
 
             chartForDraw = chartPlaceholder.GetChart;
         }
@@ -361,21 +361,21 @@ namespace NIRS
             var dataXForV = resultExtractor.GetX(PN.v, n - 0.5, mainData);
             var dataP = resultExtractor.GetP(n);
             var dataVtw = resultExtractor.GetV(n - 0.5);
-            var dataWgas = resultExtractor.GetW(n - 0.5);
+            //var dataWgas = resultExtractor.GetW(n - 0.5);
             ChartPlaceholder chartPlaceholder = new ChartPlaceholder(chartForDraw);
             chartPlaceholder.Add(dataXForP, dataP);
             chartPlaceholder.AddLeft(dataXForV, dataVtw);
-            chartPlaceholder.AddLeft(dataXForV, dataWgas);
-            chartPlaceholder.SetIntervalX(0.25);
-            //chartPlaceholder.SetMaxY(500);
-            //chartPlaceholder.SetMaxYLeft(1000);
-            //chartPlaceholder.SetIntervalCount(5);
+            //chartPlaceholder.AddLeft(dataXForV, dataWgas);
+            chartPlaceholder.SetIntervalX(0.5);
+            chartPlaceholder.SetMaxY(150);
+            chartPlaceholder.SetMaxYLeft(2000);
+            chartPlaceholder.SetIntervalCount(5);
 
             chartForDraw = chartPlaceholder.GetChart;
         }
         private void Draw6()
         {
-            LimitedDouble n = grid.LastIndexN(PN.a); //nForMaxP;
+            LimitedDouble n = nForMaxP;
             ResultExtractor resultExtractor = new ResultExtractor(grid);
             var dataX = resultExtractor.GetX(PN.a, n, mainData);
             var dataA = resultExtractor.GetA(n, mainData);
@@ -407,50 +407,109 @@ namespace NIRS
 
         private void button5_Click(object sender, EventArgs e)
         {
-            List<double> result = new List<double>();
-            IInitialParameters initialParameters = new InitialParametersCase1();
-            double hFinal = 0.0126875; //0.0025;
-            double tauFinal = 3.171875e-6; //curantTau(h, 945);
-            for (int i = 3; i >= 0; i--)
+            LimitedDouble lastN;
+
+            List<int> numbersOfSplits = new List<int> { 20, 40, 60, 80 };
+            List<double> Vd = new List<double>();
+            List<double> h = new List<double>();
+            List<double> errors = new List<double>();
+            for (int i = 0;i< numbersOfSplits.Count; i++)
             {
-                double h = hFinal * Math.Pow(2, i);
-                double tau = tauFinal * Math.Pow(2, i);
-//inputDataTransmitter.GetInputData(initialParameters, constParameters);
-                List<Point2D> points = new List<Point2D>();
-                points.Add(new Point2D(0, 0.214));
-                points.Add(new Point2D(0.85, 0.214));
-                points.Add(new Point2D(0.96, 0.196));
-                //points.Add(new Point2D(1.015, 0.164));
-                //points.Add(new Point2D(1.045, 0.155));
-                //points.Add(new Point2D(1.1225, 0.1524));
-                //points.Add(new Point2D(6.322, 0.1524));
-                points.Add(new Point2D(1.015, 0.1524));
-                points.Add(new Point2D(6.322 + 1.015, 0.1524));
-
-                //Point2D endChamber = new Point2D(1.1225, 0.1524);
-                Point2D endChamber = new Point2D(1.015, 0.1524);
-
-                IConstParameters constParameters = new ConstParametersCase1(tau, 80, endChamber);
-                (var newInitialParameters, var newConstParameters) = (initialParameters, constParameters);
-
-                double omega = 19;
-                double d = 0.1524;
-
-                IBarrel barrel = new Barrel(points, endChamber, Dimension.D);
-                IPowder powder = new Powder_12_7(newConstParameters, barrel.BarrelSize, omega);
-                IProjectile projectile = new Projectile(newConstParameters.q, d);
-                mainData = new MainData(barrel, powder, newConstParameters, newInitialParameters, projectile);
-                //INumericalMethod numericalMethod = new SEL(mainData,DrawGrid);
-                //Task<IGrid> task = new Task<IGrid>(()=>numericalMethod.Calculate());
-                //task.Start();
-                //IGrid grid = task.Result;//numericalMethod.Calculate();
-
+                var mainData = InitializeMainData(numbersOfSplits[i]);
                 INumericalMethod numericalMethod = new SEL(mainData);
                 grid = numericalMethod.Calculate();
-                var lastN = grid.LastIndexNSn(PN.vSn);
-                result.Add(grid.GetSn(PN.vSn, lastN));
+                lastN = grid.LastIndexN(PN.v);
+                Vd.Add(grid.GetSn(PN.v, lastN));
+                h.Add(mainData.ConstParameters.h);
             }
+            for(int i = 0; i< Vd.Count; i++)
+            {
+                errors.Add(Math.Abs(Vd[i] - Vd.Last()));
+            }
+            List<double> hLog = new List<double>();
+            List<double> errorsLog = new List<double>();
+            for (int i = 0; i < errors.Count-1; i++)
+            {
+                hLog.Add(Math.Log(h[i]));
+                errorsLog.Add(Math.Log(errors[i]));
+            }
+            LeastSquaresSolver leastSquaresSolver = new LeastSquaresSolver(hLog.ToArray(), errorsLog.ToArray());
+            (var p, var a, _) = leastSquaresSolver.CalculateRegression();
+            for (int i = 0; i < hLog.Count; i++) 
+            {
+                chartVerification1.Series[0].Points.AddXY(hLog[i], errorsLog[i]);
+            }
+            chartVerification1.Series[1].Points.AddXY(hLog[0], a + p * hLog[0]);
+            chartVerification1.Series[1].Points.AddXY(hLog.Last(), a + p * hLog.Last());
 
+            for (int i = 0; i < numbersOfSplits.Count; i++)
+            {
+                chartVerification2.Series[0].Points.AddXY(1.0 / numbersOfSplits[i], errors[i]);
+                chartVerification2.Series[1].Points.AddXY(1.0 / numbersOfSplits[i], errors[i]);
+            }
+            label3.Text = p.ToString();
+
+            dataGridView1.ColumnCount = 3;
+            dataGridView1.RowCount = 2;
+
+            LimitedDouble firstN;
+            lastN = grid.LastIndexN(PN.r);
+            if (lastN.IsInt())
+            {
+                firstN = new LimitedDouble(1);
+            }
+            else
+            {
+                firstN = new LimitedDouble(0.5);
+            }
+            double initialRSum = 0;
+            double lastRSum = 0;
+            double initialESum = 0;
+            double lastESum = 0;
+
+            LimitedDouble firstK;
+            var lastK = grid.LastIndexK(PN.r, firstN);
+            if (lastK.IsInt())
+            {
+                firstK = new LimitedDouble(0);
+            }
+            else
+            {
+                firstK = new LimitedDouble(0.5);
+            }
+            mainData = InitializeMainData(numbersOfSplits.Last()); 
+            var delta = mainData.Powder.Delta;
+            var eps = mainData.ConstParameters.f/mainData.ConstParameters.teta;
+            XGetter xGetter = new XGetter(mainData.ConstParameters);
+            var bs = mainData.Barrel.BarrelSize; 
+            for (var k = firstK; k <= lastK;k++)
+            {
+                initialRSum += grid[PN.r, firstN, k] + delta * grid[PN.One_minus_m, firstN, k] * bs.S(xGetter[k]);
+                eps = grid[PN.e, firstN, k] / (grid[PN.rho, firstN, k] * grid[PN.m, firstN, k] * bs.S(xGetter[k]));
+                initialESum += grid[PN.e, firstN, k] + delta * grid[PN.One_minus_m, firstN, k] * bs.S(xGetter[k])*eps;
+            }
+            lastK = grid.LastIndexK(PN.r, lastN);
+            for (var k = firstK; k <= lastK; k++)
+            {
+                lastRSum += grid[PN.r, lastN, k] + delta * grid[PN.One_minus_m, lastN, k] * bs.S(xGetter[k]);
+                eps = grid[PN.e, lastN, k] / (grid[PN.rho, lastN, k] * grid[PN.m, lastN, k] * bs.S(xGetter[k]));
+                lastESum += grid[PN.e, lastN, k] + delta * grid[PN.One_minus_m, lastN, k] * bs.S(xGetter[k]) * eps;
+            }
+            dataGridView2.ColumnCount = 3;
+            dataGridView2.RowCount = 2;
+            // Заполняем заголовки столбцов
+            dataGridView2.Columns[0].HeaderText = "в начале";
+            dataGridView2.Columns[1].HeaderText = "в конце";
+            dataGridView2.Columns[2].HeaderText = "разница";
+
+            // Заполняем данные
+            dataGridView2.Rows[0].Cells[0].Value = initialRSum;
+            dataGridView2.Rows[0].Cells[1].Value = lastRSum;
+            dataGridView2.Rows[0].Cells[2].Value = Math.Abs(lastRSum - initialRSum);
+
+            dataGridView2.Rows[1].Cells[0].Value = initialESum;
+            dataGridView2.Rows[1].Cells[1].Value = lastESum;
+            dataGridView2.Rows[1].Cells[2].Value = Math.Abs(lastESum - initialESum);
         }
 
         private void button6_Click(object sender, EventArgs e)

@@ -73,6 +73,10 @@ namespace NIRS.Functions_for_numerical_method
                 int c = 0;
             }
             (n, k) = OffseterNK.AppointAndOffset(n, +0.5, k, 0);
+            if(n == 1092 && k == 79)
+            {
+                int c = 0;
+            }
 
             double x_kM05 = x[k - 0.5];
             double x_kP05 = x[k + 0.5];
@@ -89,7 +93,7 @@ namespace NIRS.Functions_for_numerical_method
 
             var res = MainFunctions.dynamic_m_nP05_k(dynamicm_nM05_k, nabla_dynamicm_v_nM05_k, m_n_kM05, m_n_kP05,
                                                      S_kM05, S_kP05, dpStrokeDivDx_n_k, H1_n_k, tau);
-            if (res == -4.6222391503999347)
+            if (res == 14.304765263820441)
             {
                 int c = 0;
             }
@@ -169,12 +173,20 @@ namespace NIRS.Functions_for_numerical_method
             }
             (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
 
+            if (n == 1216 && k == 80)
+            {
+                int c = 0;
+            }
             double r_n_kM05 = g[PN.r, n, k - 0.5];
             double nabla_rv_nP05_kM05 = wc.Nabla(PN.r, PN.v, n + 0.5, k - 0.5);
             double H3_nP05_kM05 = hf.H3(n + 0.5, k - 0.5);
             double tau = this.tau;
 
             var res = MainFunctions.r_nP1_kM05(r_n_kM05, nabla_rv_nP05_kM05, H3_nP05_kM05, tau);
+            if (res == 0.66303098901141089)
+            {
+                int c = 0;
+            }
             return res;
         }        
         public double Get_e(LimitedDouble N, LimitedDouble K)
@@ -199,6 +211,10 @@ namespace NIRS.Functions_for_numerical_method
                                nabla_mSv_nP05_kM05, nabla_oneMmSw_nP05_kM05,
                                H4_nP05_kM05,
                                tau);
+            if(res == 3456763.2728451136)
+            {
+                int c = 0;
+            }
             return res;
         }
         public double Get_psi(LimitedDouble n, LimitedDouble k)

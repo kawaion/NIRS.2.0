@@ -214,7 +214,7 @@ namespace NIRS.BPMN_folder
         }
         public static double vSn_nP05(double vSn_nM05, double p_n, double S_n, double q, double tau)
         {
-            return vSn_nM05 + (tau / q) * (p_n * S_n);
+            return vSn_nM05 + tau / q * p_n * S_n;
         }
         public static double x_Sn_nP05(double x_nM05, double vSn_nM05, double vSn_nP05, double tau)
         {
