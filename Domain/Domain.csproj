@@ -8,7 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Physical\Entities\" />
     <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
   </ItemGroup>
 
 </Project>

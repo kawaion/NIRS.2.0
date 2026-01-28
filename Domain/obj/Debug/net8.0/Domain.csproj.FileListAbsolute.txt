@@ -10,3 +10,16 @@ G:\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.dll
 G:\NIRS_\nirs\Domain\obj\Debug\net8.0\refint\Domain.dll
 G:\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.pdb
 G:\NIRS_\nirs\Domain\obj\Debug\net8.0\ref\Domain.dll
+E:\reserv\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.csproj.AssemblyReference.cache
+E:\reserv\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+E:\reserv\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.AssemblyInfoInputs.cache
+E:\reserv\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.cs
+E:\reserv\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.csproj.CoreCompileInputs.cache
+E:\reserv\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.sourcelink.json
+E:\reserv\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.dll
+E:\reserv\NIRS_\nirs\Domain\obj\Debug\net8.0\refint\Domain.dll
+E:\reserv\NIRS_\nirs\Domain\obj\Debug\net8.0\Domain.pdb
+E:\reserv\NIRS_\nirs\Domain\bin\Debug\net8.0\Domain.deps.json
+E:\reserv\NIRS_\nirs\Domain\bin\Debug\net8.0\Domain.dll
+E:\reserv\NIRS_\nirs\Domain\bin\Debug\net8.0\Domain.pdb
+E:\reserv\NIRS_\nirs\Domain\obj\Debug\net8.0\ref\Domain.dll

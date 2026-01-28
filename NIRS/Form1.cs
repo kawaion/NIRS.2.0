@@ -34,6 +34,8 @@ using System.IO;
 using OfficeOpenXml;
 using System.Diagnostics;
 using NIRS.Main_Data.Projectile_Folder;
+using NIRS.Main_Data.Input_Data_Parameters;
+using DocumentFormat.OpenXml.Drawing.Spreadsheet;
 
 namespace NIRS
 {
@@ -43,11 +45,20 @@ namespace NIRS
         public Form1()
         {
             InitializeComponent();
+            int N = 80;
+            Point2D endChamber = new Point2D(1.015, 0.1524);
+            IInitialParameters initialParameters = new InitialParametersCase1();
+            double h = 1.015 / N; //0.0025;
+            //double tau = 1.015 / (N * (2500 + 1500)); //curantTau(h, 945);
+            double tau = 1.015 / (N * (1000 + 1500));
+            var _parameters = new ConstParametersCase2(
+            tau,                // 1 микросекунда
+            N,
+            endChamber  // Камера 0.5 метра
+            );
+            propertyGrid1.SelectedObject = _parameters;
 
             //ConfigureDataGridView();
-
-
-            chart1.ChartAreas[0].AxisX.Minimum = 0;
             //chart2.ChartAreas[0].AxisY.Interval = 100000000;
         }
         IMainData mainData;
@@ -137,8 +148,6 @@ namespace NIRS
         List<double> MixtureX;
         private void InitializePostData()
         {
-            hScrollBar1.Minimum = 0;
-            hScrollBar1.Maximum = grid.LastIndexN(PN.m).GetInt();
             var tmp = grid.GetSn(PN.vSn, grid.LastIndexN(PN.v));
             var maxN = grid.LastIndexN(PN.p);
             nForMaxP = FindNPMax();
@@ -148,7 +157,8 @@ namespace NIRS
         {
             IInitialParameters initialParameters = new InitialParametersCase1();
             double h = 1.015 / N; //0.0025;
-            double tau = 1.015 / (N * (2500 + 1500)); //curantTau(h, 945);
+            //double tau = 1.015 / (N * (2500 + 1500)); //curantTau(h, 945);
+            double tau = 1.015 / (N * (1000 + 1500));
 
             ;//inputDataTransmitter.GetInputData(initialParameters, constParameters);
             List<Point2D> points = new List<Point2D>();
@@ -165,7 +175,7 @@ namespace NIRS
             //Point2D endChamber = new Point2D(1.1225, 0.1524);
             Point2D endChamber = new Point2D(1.015, 0.1524);
 
-            IConstParameters constParameters = new ConstParametersCase1(tau, N, endChamber);
+            IConstParameters constParameters = new ConstParametersCase2(tau, N, endChamber);
             (var newInitialParameters, var newConstParameters) = (initialParameters, constParameters);
 
             double omega = 19;
@@ -204,67 +214,18 @@ namespace NIRS
             return nForMaxP;
         }
         IGrid grid;
-        private void ShowLayer(LimitedDouble n, List<PN> pns)
-        {
-            for (int j = 0; j < pns.Count; j++)
-                chart1.Series[j].Points.Clear();
-            var last = grid.LastIndexK(pns[0], n);
-            for (LimitedDouble i = new LimitedDouble(0); i <= last; i++)
-                for (int j = 0; j < pns.Count; j++)
-                    chart1.Series[j].Points.AddXY(i, grid[pns[j], n, i]);
-        }
         private double curantTau(double h, double v)
         {
             double c = 340;
             return h / (v + c);
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            var h = GetStep();
-            textBox1.Text = (Convert.ToDouble(textBox1.Text) - h).ToString();
-            //Visualise();
-        }
-
-        private double GetStep()
-        {
-            if (radioButton1.Checked) return 1;
-            else if (radioButton2.Checked) return 10;
-            else if (radioButton3.Checked) return 100;
-            throw new Exception();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            var h = GetStep();
-            textBox1.Text = (Convert.ToDouble(textBox1.Text) + h).ToString();
-            //Visualise();
-        }
 
         private void button4_Click(object sender, EventArgs e)
         {
             //Visualise();
         }
 
-        private void Visualise(PN pn)
-        {
-            var pns = new List<PN>() { pn };
-            var n = new LimitedDouble(Convert.ToDouble(textBox1.Text));
-            if (n > grid.LastIndexN(pns[0]) - 1)
-            {
-                n = grid.LastIndexN(pns[0]) - 1;
-                textBox1.Text = n.ToString();
-            }
-            ShowLayer(n, pns);
-        }
-
-        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
-        {
-            var n = hScrollBar1.Value;
-            textBox1.Text = Convert.ToString(n);
-            var pn = DictPN.Get(comboBoxPN.Text);
-            Visualise(pn);
-        }
         Chart chartForDraw;
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -293,7 +254,7 @@ namespace NIRS
             chartPlaceholder.Add(dataTForP, dataPkn);
             chartPlaceholder.Add(dataTForP, dataPSn);
             chartPlaceholder.AddLeft(dataTForVsn, dataVsn);
-            chartPlaceholder.SetIntervalX(1);
+            chartPlaceholder.SetIntervalX(2);
             chartPlaceholder.SetMaxY(500);
             chartPlaceholder.SetMaxYLeft(2000);
             chartPlaceholder.SetIntervalCount(5);
@@ -338,7 +299,7 @@ namespace NIRS
             LimitedDouble n = nForMaxP;
             ResultExtractor resultExtractor = new ResultExtractor(grid);
             var dataXForP = resultExtractor.GetX(PN.p, n, mainData);
-            var dataXForV = resultExtractor.GetX(PN.v, n-0.5, mainData);
+            var dataXForV = resultExtractor.GetX(PN.v, n - 0.5, mainData);
             var dataP = resultExtractor.GetP(n);
             var dataVtw = resultExtractor.GetV(n - 0.5);
             var dataWgas = resultExtractor.GetW(n - 0.5);
@@ -398,7 +359,7 @@ namespace NIRS
             var dataEpure = resultExtractor.GetEpure(mainData);
             ChartPlaceholder chartPlaceholder = new ChartPlaceholder(chartForDraw);
             chartPlaceholder.Add(dataX, dataEpure);
-            chartPlaceholder.SetIntervalX(0.25);
+            chartPlaceholder.SetIntervalX(0.5);
             chartPlaceholder.SetMaxY(500);
             chartPlaceholder.SetIntervalCount(5);
 
@@ -407,35 +368,56 @@ namespace NIRS
 
         private void button5_Click(object sender, EventArgs e)
         {
-            LimitedDouble lastN;
+            chartVerification1.ChartAreas[0].AxisX.Interval = 0.5;
+            chartVerification1.ChartAreas[0].AxisX.Minimum = -5;
+            chartVerification1.ChartAreas[0].AxisX.Maximum = 0;
+            chartVerification2.ChartAreas[0].AxisX.Interval = 0.01;
+            chartVerification2.ChartAreas[0].AxisX.Minimum = 0;
+            chartVerification2.ChartAreas[0].AxisX.Maximum = 0.1;
 
-            List<int> numbersOfSplits = new List<int> { 20, 40, 60, 80 };
+            chartVerification1.ChartAreas[0].AxisX.Title = "ln(h), м";
+            chartVerification1.ChartAreas[0].AxisY.Title = "ln(Vд error), %";
+
+            chartVerification2.ChartAreas[0].AxisX.Title = "1/N";
+            chartVerification2.ChartAreas[0].AxisY.Title = "ln(Vд error), %";
+            LimitedDouble lastN;
+            LimitedDouble lastK;
+            XGetter xGetter;
+
+            List<int> numbersOfSplits = new List<int> { 10, 30, 40, 50, 60, 80 };
             List<double> Vd = new List<double>();
             List<double> h = new List<double>();
             List<double> errors = new List<double>();
-            for (int i = 0;i< numbersOfSplits.Count; i++)
+            for (int i = 0; i < numbersOfSplits.Count; i++)
             {
                 var mainData = InitializeMainData(numbersOfSplits[i]);
+                xGetter = new XGetter(mainData.ConstParameters);
                 INumericalMethod numericalMethod = new SEL(mainData);
                 grid = numericalMethod.Calculate();
                 lastN = grid.LastIndexN(PN.v);
-                Vd.Add(grid.GetSn(PN.v, lastN));
+                lastK = grid.LastIndexK(PN.v, lastN);
+                Point2D p1 = new Point2D(xGetter[lastK], grid[PN.v, lastN, lastK]);
+                Point2D p2 = new Point2D(grid.GetSn(PN.x, lastN), grid.GetSn(PN.vSn, lastN));
+                EquationOfLineFromTwoPoints equationOfLineFromTwoPoints = new EquationOfLineFromTwoPoints(p1, p2);
+                var res = equationOfLineFromTwoPoints.GetY(6.322 + 1.015);
+                Vd.Add(res);
                 h.Add(mainData.ConstParameters.h);
             }
-            for(int i = 0; i< Vd.Count; i++)
+            label4.Text = Vd.Last().ToString();
+            for (int i = 0; i < Vd.Count; i++)
             {
-                errors.Add(Math.Abs(Vd[i] - Vd.Last()));
+                errors.Add(Math.Abs(Vd[i] - Vd.Last()) / Vd.Last() * 100);
             }
             List<double> hLog = new List<double>();
             List<double> errorsLog = new List<double>();
-            for (int i = 0; i < errors.Count-1; i++)
+            for (int i = 0; i < errors.Count - 1; i++)
             {
                 hLog.Add(Math.Log(h[i]));
                 errorsLog.Add(Math.Log(errors[i]));
             }
             LeastSquaresSolver leastSquaresSolver = new LeastSquaresSolver(hLog.ToArray(), errorsLog.ToArray());
             (var p, var a, _) = leastSquaresSolver.CalculateRegression();
-            for (int i = 0; i < hLog.Count; i++) 
+            for (int i = 0; i < hLog.Count; i++)
             {
                 chartVerification1.Series[0].Points.AddXY(hLog[i], errorsLog[i]);
             }
@@ -468,7 +450,7 @@ namespace NIRS
             double lastESum = 0;
 
             LimitedDouble firstK;
-            var lastK = grid.LastIndexK(PN.r, firstN);
+            lastK = grid.LastIndexK(PN.r, firstN);
             if (lastK.IsInt())
             {
                 firstK = new LimitedDouble(0);
@@ -477,23 +459,27 @@ namespace NIRS
             {
                 firstK = new LimitedDouble(0.5);
             }
-            mainData = InitializeMainData(numbersOfSplits.Last()); 
+            mainData = InitializeMainData(numbersOfSplits.Last());
+            xGetter = new XGetter(mainData.ConstParameters);
             var delta = mainData.Powder.Delta;
-            var eps = mainData.ConstParameters.f/mainData.ConstParameters.teta;
-            XGetter xGetter = new XGetter(mainData.ConstParameters);
-            var bs = mainData.Barrel.BarrelSize; 
-            for (var k = firstK; k <= lastK;k++)
+            var Q = mainData.ConstParameters.Q;
+            //var eps = mainData.ConstParameters.f/mainData.ConstParameters.teta;
+
+            var bs = mainData.Barrel.BarrelSize;
+            for (var k = firstK; k <= lastK; k++)
             {
-                initialRSum += grid[PN.r, firstN, k] + delta * grid[PN.One_minus_m, firstN, k] * bs.S(xGetter[k]);
-                eps = grid[PN.e, firstN, k] / (grid[PN.rho, firstN, k] * grid[PN.m, firstN, k] * bs.S(xGetter[k]));
-                initialESum += grid[PN.e, firstN, k] + delta * grid[PN.One_minus_m, firstN, k] * bs.S(xGetter[k])*eps;
+                initialRSum += grid[PN.r, firstN, k] + delta * (1 - grid[PN.m, firstN, k]) * bs.S(xGetter[k]);
+                //eps = grid[PN.e, firstN, k] / (grid[PN.rho, firstN, k] * grid[PN.m, firstN, k] * bs.S(xGetter[k]));
+                initialESum += grid[PN.e, firstN, k] + grid[PN.r, firstN, k] * grid[PN.v, firstN - 0.5, k - 0.5] * Math.Abs(grid[PN.v, firstN - 0.5, k - 0.5]) / 2
+                                + delta * (1 - grid[PN.m, firstN, k]) * bs.S(xGetter[k]) * (Q + grid[PN.w, firstN - 0.5, k - 0.5] * Math.Abs(grid[PN.w, firstN - 0.5, k - 0.5]) / 2);
             }
             lastK = grid.LastIndexK(PN.r, lastN);
             for (var k = firstK; k <= lastK; k++)
             {
-                lastRSum += grid[PN.r, lastN, k] + delta * grid[PN.One_minus_m, lastN, k] * bs.S(xGetter[k]);
-                eps = grid[PN.e, lastN, k] / (grid[PN.rho, lastN, k] * grid[PN.m, lastN, k] * bs.S(xGetter[k]));
-                lastESum += grid[PN.e, lastN, k] + delta * grid[PN.One_minus_m, lastN, k] * bs.S(xGetter[k]) * eps;
+                lastRSum += grid[PN.r, lastN, k] + delta * (1 - grid[PN.m, lastN, k]) * bs.S(xGetter[k]);
+                //eps = grid[PN.e, lastN, k] / (grid[PN.rho, lastN, k] * grid[PN.m, lastN, k] * bs.S(xGetter[k]));
+                lastESum += grid[PN.e, lastN, k] + grid[PN.r, lastN, k] * grid[PN.v, lastN - 0.5, k - 0.5] * Math.Abs(grid[PN.v, lastN - 0.5, k - 0.5]) / 2
+                                + delta * (1 - grid[PN.m, lastN, k]) * bs.S(xGetter[k]) * (Q + grid[PN.w, lastN - 0.5, k - 0.5] * Math.Abs(grid[PN.w, lastN - 0.5, k - 0.5]) / 2);
             }
             dataGridView2.ColumnCount = 3;
             dataGridView2.RowCount = 2;
