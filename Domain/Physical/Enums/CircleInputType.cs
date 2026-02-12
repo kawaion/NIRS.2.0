@@ -1,4 +1,4 @@
-﻿namespace Core.Domain.Enums
+﻿namespace Core.Domain.Physical.Enums
 {
     public enum CircleInputType
     {
