@@ -1,5 +1,4 @@
 ﻿using Core.Domain.Common;
-using Core.Domain.Entities;
 using Core.Domain.Grid.Exceptions;
 using Core.Domain.Grid.Interfaces;
 using Core.Domain.Grid.Services;
@@ -34,7 +33,7 @@ public sealed class Dynamic3DArray : Entity, ICloneable
         _fixedX = fixedX;
         _currentY = initialY;
         _currentZ = initialZ;
-        _expansionStrategy = expansionStrategy ?? new ExponentialExpansionStrategy();
+        _expansionStrategy = expansionStrategy ?? ExponentialExpansionStrategy.Create();
 
         InitializeData();
     }
@@ -53,14 +52,14 @@ public sealed class Dynamic3DArray : Entity, ICloneable
         int initialZ = INITIAL_DIMENSION_SIZE, double growthFactor = 2.0)
     {
         return new Dynamic3DArray(fixedX, initialY, initialZ,
-            new ExponentialExpansionStrategy(growthFactor));
+            ExponentialExpansionStrategy.Create(growthFactor));
     }
 
     public static Dynamic3DArray CreateWithFixedIncrement(int fixedX, int initialY = INITIAL_DIMENSION_SIZE,
         int initialZ = INITIAL_DIMENSION_SIZE, int increment = 32)
     {
         return new Dynamic3DArray(fixedX, initialY, initialZ,
-            new FixedIncrementExpansionStrategy(increment));
+            FixedIncrementExpansionStrategy.Create(increment));
     }
 
 

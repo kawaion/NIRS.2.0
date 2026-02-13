@@ -14,15 +14,25 @@ internal class LastNArray : ValueObject
     private readonly LimitedDouble[] _data;
     public int SizeP { get; }
 
-    public LastNArray(int constParam, LimitedDouble defaultValue)
+    private LastNArray(int countParams, LimitedDouble defaultValue)
     {
-        SizeP = constParam;
-        _data = new LimitedDouble[constParam];
+        SizeP = countParams;
+        _data = new LimitedDouble[countParams];
 
-        if (defaultValue != null)
-        {
-            Array.Fill(_data, defaultValue);
-        }
+        Array.Fill(_data, defaultValue);
+    }
+    public static LastNArray Create(int countParams, LimitedDouble defaultValue)
+    {
+        Validate(countParams);
+
+        var instance = new LastNArray(countParams, defaultValue);
+
+        return instance;
+    }
+    private static void Validate(int countParams)
+    {
+        if (countParams <= 0)
+            throw new Exception("количство параметров должно быть больше 0");
     }
 
     public LimitedDouble this[int p]

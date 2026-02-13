@@ -16,7 +16,7 @@ internal class PointOfOccupiedVolumes : ValueObject
     public static PointOfOccupiedVolumes Create(BendPoint bendPoint, double volume)
     { 
         var instance = new PointOfOccupiedVolumes(bendPoint, volume);
-        _validator.Validate(instance);
+        _validator.ValidateAndThrow(instance);
         return instance;
     }
     private class Validator : AbstractValidator<PointOfOccupiedVolumes>

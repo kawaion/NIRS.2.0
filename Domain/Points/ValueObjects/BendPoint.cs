@@ -11,7 +11,7 @@ internal sealed class BendPoint : ValueObject
 
     private BendPoint(double distanceFromBottom, double radius)
     {
-        _point = new Point2D(distanceFromBottom, radius);
+        _point = Point2D.Create(distanceFromBottom, radius);
         DistanceFromBottom = distanceFromBottom;
         Radius = radius;
     }

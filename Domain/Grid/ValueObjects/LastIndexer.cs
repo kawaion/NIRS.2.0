@@ -4,6 +4,7 @@ using Core.Domain.Limited_Double;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,20 +16,44 @@ internal class LastIndexer : ValueObject
     static readonly int MixtureParamIndex = (int)PN.r;
 
     private readonly GridMapper _gridMapper;
+    private readonly int _countParams;
 
     private LastKArray lastK;
     private LastNArray lastN;
 
-    public LastIndexer(GridMapper gridMapper, int countParams)
+    private LastIndexer(GridMapper gridMapper, int countParams)
     {
         _gridMapper = gridMapper;
+        _countParams = countParams;
 
-        lastK = new LastKArray(countParams, new LimitedDouble(-1));
-        lastN = new LastNArray(countParams, new LimitedDouble(-1));
+        lastK = LastKArray.Create(countParams, new LimitedDouble(-1));
+        lastN = LastNArray.Create(countParams, new LimitedDouble(-1));
     }
+    public static LastIndexer Create(GridMapper gridMapper, int countParams)
+    {
+        Validate(countParams);
+
+        var instance = new LastIndexer(gridMapper, countParams);
+
+        return instance;
+    }
+    private static void Validate(int countParams)
+    {
+        if (countParams <= 0)
+            throw new Exception("количство параметров должно быть больше 0");
+    }
+    public void TryIncreaseLastIlndex(LimitedDouble n, LimitedDouble k, int paramIndex, int nIndex)
+    {
+        if (lastN[paramIndex] < n)
+            lastN[paramIndex] = n;
+
+        if (lastK[paramIndex,nIndex] < k)
+            lastK[paramIndex,nIndex] = k;
+    }
+
     public LimitedDouble LastIndexK(PN pn, LimitedDouble n)
     {
-        var paramIndex = (int)pn;
+        var paramIndex = _gridMapper.MappingPNToInt(pn);
         var nIndex = _gridMapper.MappingNToInt(n);
         return lastK[paramIndex, nIndex];
     }
@@ -57,6 +82,9 @@ internal class LastIndexer : ValueObject
     }
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        throw new NotImplementedException();
+        yield return _gridMapper;
+        yield return _countParams;
+        yield return lastK;
+        yield return lastN;
     }
 }

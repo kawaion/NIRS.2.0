@@ -1,5 +1,6 @@
 ﻿using Core.Domain.Common;
 using Core.Domain.Grid.Interfaces;
+using FluentValidation;
 
 namespace Core.Domain.Grid.ValueObjects;
 
@@ -7,14 +8,16 @@ internal class ExponentialExpansionStrategy : ValueObject, IArrayExpansionStrate
 {
     private readonly double _growthFactor;
 
-    public ExponentialExpansionStrategy(double growthFactor = 2.0, int minGrowth = 16)
+    private ExponentialExpansionStrategy(double growthFactor, int minGrowth)
     {
-        if (growthFactor <= 1.0)
-            throw new ArgumentException("Коэффициент роста должен быть больше 1", nameof(growthFactor));
-
         _growthFactor = growthFactor;
     }
-
+    public static ExponentialExpansionStrategy Create(double growthFactor = 2.0, int minGrowth = 16)
+    {
+        var instance = new ExponentialExpansionStrategy(growthFactor, minGrowth);
+        _validator.ValidateAndThrow(instance);
+        return instance;
+    }
     public (int newY, int newZ) CalculateNewDimensions(int currentY, int currentZ, int requiredY, int requiredZ)
     {
         int newY = currentY;
@@ -32,6 +35,17 @@ internal class ExponentialExpansionStrategy : ValueObject, IArrayExpansionStrate
 
         return (newY, newZ);
     }
+
+    public class Validator : AbstractValidator<ExponentialExpansionStrategy>
+    {
+        public Validator()
+        {
+            RuleFor(x => x._growthFactor)
+                .GreaterThan(1)
+                .WithMessage("GrowthFactor must be more 1");
+        }
+    }
+    private static readonly Validator _validator = new Validator();
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

@@ -16,16 +16,21 @@ namespace Core.Domain.Grid.Aggregates;
 
 internal class TimeSpaceGrid : Entity
 {
-    static readonly int COUNT_PARAMS = Enum.GetValues(typeof(PN)).Length;
+    static readonly int COUNT_PARAMS = Enum.GetValues(typeof(PN)).Length;    
+    
+    private const double MAXIMUM_NEGATIVE_N = -1;
+    private const double MAXIMUM_NEGATIVE_K = -1;
 
-    private Dynamic3DArray _data = Dynamic3DArray.CreateWithExponentialExpansion(COUNT_PARAMS);
+    private Dynamic3DArray _data;
 
-    private const double _maximumnNegativeN = -1;
-    private const double _maximumnNegativeK = -1;
-    private GridMapper _gridMapper = GridMapper.Create(_maximumnNegativeN, _maximumnNegativeK);
+    private GridMapper _gridMapper;
+
+    private LastIndexer _lastIndexer;
     public TimeSpaceGrid()
     {
-        
+        _data = Dynamic3DArray.CreateWithExponentialExpansion(COUNT_PARAMS);
+        _gridMapper = GridMapper.Create(MAXIMUM_NEGATIVE_N, MAXIMUM_NEGATIVE_K);
+        _lastIndexer = LastIndexer.Create(_gridMapper, COUNT_PARAMS);
     }
     public double this[PN pn, LimitedDouble n, LimitedDouble k]
     {
@@ -58,6 +63,8 @@ internal class TimeSpaceGrid : Entity
 
         (var paramIndex, var nIndex, var kIndex) = _gridMapper.MappingAllToInt(pn, n, k);
 
+        _lastIndexer.TryIncreaseLastIlndex(n, k, paramIndex, nIndex);
+
         _data[paramIndex, nIndex, kIndex] = value;
     }
     public Setter At(PN pn, LimitedDouble n, LimitedDouble k)
@@ -65,7 +72,23 @@ internal class TimeSpaceGrid : Entity
         return new Setter(this, pn, n, k);
     }
 
+    public LimitedDouble LastIndexK(PN pn, LimitedDouble n)
+    {
+        return _lastIndexer.LastIndexK(pn, n);
+    }
+    public LimitedDouble LastIndexK(LimitedDouble n)
+    {
+        return _lastIndexer.LastIndexK(n);
+    }
 
+    public LimitedDouble LastIndexN(PN pn)
+    {
+        return _lastIndexer.LastIndexN(pn);
+    }
+    public LimitedDouble LastIndexN()
+    {
+        return _lastIndexer.LastIndexN();
+    }
 
 
     private void Validation(PN pn, LimitedDouble n, LimitedDouble k)

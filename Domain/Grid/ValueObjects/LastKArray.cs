@@ -1,4 +1,5 @@
 ﻿using Core.Domain.Common;
+using Core.Domain.Enums;
 using Core.Domain.Limited_Double;
 using System;
 using System.Collections.Generic;
@@ -13,30 +14,43 @@ internal class LastKArray : ValueObject
 {
     private LimitedDouble[][] _data;
     private readonly LimitedDouble _defaultValue;
-    private readonly int _constParam;
+    private readonly int _countParams;
     private int _sizeN;
 
     private static readonly int[] _sizes = { 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536 };
 
-    public LastKArray(int constParam, LimitedDouble defaultValue)
+    private LastKArray(int countParams, LimitedDouble defaultValue)
     {
-        _constParam = constParam;
+        _countParams = countParams;
         _defaultValue = defaultValue;
         _sizeN = 128;
 
-        _data = new LimitedDouble[constParam][];
+        _data = new LimitedDouble[countParams][];
 
-        for (int i = 0; i < constParam; i++)
+        FillData(countParams, defaultValue);
+    }
+    private void FillData(int countParams, LimitedDouble defaultValue)
+    {
+        for (int i = 0; i < countParams; i++)
         {
             var row = new LimitedDouble[128];
-            if (defaultValue != null)
-            {
-                Array.Fill(row, defaultValue);
-            }
+            Array.Fill(row, defaultValue);
             _data[i] = row;
         }
     }
+    public static LastKArray Create(int countParams, LimitedDouble defaultValue)
+    {
+        Validate(countParams);
 
+        var instance = new LastKArray(countParams, defaultValue);
+
+        return instance;
+    }
+    private static void Validate(int countParams)
+    {
+        if (countParams <= 0)
+            throw new Exception("количство параметров должно быть больше 0");
+    }
     public LimitedDouble this[int p, int n]
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -66,7 +80,7 @@ internal class LastKArray : ValueObject
             }
         }
 
-        for (int i = 0; i < _constParam; i++)
+        for (int i = 0; i < _countParams; i++)
         {
             Array.Resize(ref _data[i], newSize);
 

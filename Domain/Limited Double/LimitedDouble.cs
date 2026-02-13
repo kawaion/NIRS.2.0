@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Domain.Limited_Double;
 
-internal sealed class LimitedDouble : ValueObject, IEquatable<LimitedDouble>
+internal sealed class LimitedDouble : ValueObject
 {
     private readonly int _scaled;
 
@@ -50,9 +50,6 @@ internal sealed class LimitedDouble : ValueObject, IEquatable<LimitedDouble>
     public static explicit operator double(LimitedDouble value) => value.GetDouble();
     public static explicit operator int(LimitedDouble value) => value.GetInt();    
     
-
-    public bool Equals(LimitedDouble other) => _scaled == other?._scaled;
-    public override int GetHashCode() => _scaled; 
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return _scaled;

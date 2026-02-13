@@ -7,10 +7,16 @@ internal class Point2D : ValueObject
     public double X { get; }
     public double Y { get; }
 
-    public Point2D(double x, double y)
+    private Point2D(double x, double y)
     {
         X = x;
         Y = y;
+    }
+    public static Point2D Create(double x, double y)
+    {
+        var instance = new Point2D(x, y);
+
+        return instance;
     }
     public static Point2D operator +(Point2D a, Point2D b) =>
         new Point2D(a.X + b.X, a.Y + b.Y);
