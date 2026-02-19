@@ -22,18 +22,16 @@ internal class FixedIncrementExpansionStrategy : ValueObject, IArrayExpansionStr
         _validator.ValidateAndThrow(instance);
         return instance;
     }
-    public (int newY, int newZ) CalculateNewDimensions(int currentY, int currentZ, int requiredY, int requiredZ)
+    public int CalculateNewDimension(int currentSize, int requiredSize)
     {
-        int newY = currentY;
-        int newZ = currentZ;
+        int newSize = currentSize;
 
-        while (requiredY >= newY)
-            newY += _increment;
+        while (requiredSize >= newSize)
+        {
+            newSize += _increment;
+        }
 
-        while (requiredZ >= newZ)
-            newZ += _increment;
-
-        return (newY, newZ);
+        return newSize;
     }
 
     public class Validator : AbstractValidator<FixedIncrementExpansionStrategy>

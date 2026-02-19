@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Domain.Grid.Services;
 
-internal static class Array2DInitializerWithNumber
+internal static class ArrayInitializerWithNumber
 {
     public static double[,] Initialize(double[,] slice, double value)
     {
@@ -21,5 +21,14 @@ internal static class Array2DInitializerWithNumber
             }
         }
         return slice;
+    }
+
+    public static double[] Initialize(double[] array, double value)
+    {
+        for (int i = 0; i < array.Length; i++)
+        {
+            array[i] = value;
+        }
+        return array;
     }
 }

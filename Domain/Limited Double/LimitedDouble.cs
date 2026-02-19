@@ -11,6 +11,23 @@ internal sealed class LimitedDouble : ValueObject
 {
     private readonly int _scaled;
 
+    /// <summary>
+    /// 0
+    /// </summary>
+    public static LimitedDouble ld0 { get; private set; } = new LimitedDouble(0);
+    /// <summary>
+    /// 0.5
+    /// </summary>
+    public static LimitedDouble ld0_5 { get; private set; } = new LimitedDouble(0.5);
+    /// <summary>
+    /// 1
+    /// </summary>
+    public static LimitedDouble ld1 { get; private set; } = new LimitedDouble(1);
+    /// <summary>
+    /// 1.5
+    /// </summary>
+    public static LimitedDouble ld1_5 { get; private set; } = new LimitedDouble(1.5);
+
     public LimitedDouble(double value) => _scaled = (int)Math.Round(value * 2);
     public LimitedDouble(int value) => _scaled = value * 2;
     private LimitedDouble(int scaled, bool _) => _scaled = scaled; 
@@ -33,6 +50,12 @@ internal sealed class LimitedDouble : ValueObject
 
     public static LimitedDouble operator -(LimitedDouble a, LimitedDouble b)
         => FromScaled(a._scaled - b._scaled);
+
+    public static LimitedDouble operator -(LimitedDouble a)
+        => FromScaled(-a._scaled);
+
+    public static LimitedDouble operator +(LimitedDouble a)
+    => FromScaled(a._scaled);
 
     public static bool operator >(LimitedDouble a, LimitedDouble b)
         => a._scaled > b._scaled;

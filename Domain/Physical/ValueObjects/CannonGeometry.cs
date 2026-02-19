@@ -21,7 +21,7 @@ internal class CannonGeometry : ValueObject
 
     public double GetRadius(double x)
     {
-        //if (x < 0) return 0;
+        //if (_x < 0) return 0;
 
         return _cannonRadius.GetRadius(x);
     }

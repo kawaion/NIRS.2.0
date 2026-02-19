@@ -2,6 +2,7 @@
 using Core.Domain.Enums;
 using Core.Domain.Grid.Entities;
 using Core.Domain.Grid.Exceptions;
+using Core.Domain.Grid.Interfaces;
 using Core.Domain.Grid.ValueObjects;
 using Core.Domain.Limited_Double;
 using Core.Domain.Services;
@@ -21,6 +22,8 @@ internal class TimeSpaceGrid : Entity
     private const double MAXIMUM_NEGATIVE_N = -1;
     private const double MAXIMUM_NEGATIVE_K = -1;
 
+    
+
     private Dynamic3DArray _data;
 
     private GridMapper _gridMapper;
@@ -31,6 +34,7 @@ internal class TimeSpaceGrid : Entity
         _data = Dynamic3DArray.CreateWithExponentialExpansion(COUNT_PARAMS);
         _gridMapper = GridMapper.Create(MAXIMUM_NEGATIVE_N, MAXIMUM_NEGATIVE_K);
         _lastIndexer = LastIndexer.Create(_gridMapper, COUNT_PARAMS);
+        sn = new TimeSpaceGridSn(_gridMapper);
     }
     public double this[PN pn, LimitedDouble n, LimitedDouble k]
     {
@@ -67,7 +71,7 @@ internal class TimeSpaceGrid : Entity
 
         _data[paramIndex, nIndex, kIndex] = value;
     }
-    public Setter At(PN pn, LimitedDouble n, LimitedDouble k)
+    public ISetter At(PN pn, LimitedDouble n, LimitedDouble k)
     {
         return new Setter(this, pn, n, k);
     }
@@ -91,6 +95,9 @@ internal class TimeSpaceGrid : Entity
     }
 
 
+    public TimeSpaceGridSn sn {  get; set; }
+
+
     private void Validation(PN pn, LimitedDouble n, LimitedDouble k)
     {
         if (ParameterTypeGetter.IsMixture(n, k) && ParameterTypeGetter.IsMixture(pn))
@@ -101,12 +108,12 @@ internal class TimeSpaceGrid : Entity
     }
 }    
 
-internal class Setter
+internal class Setter : ISetter
 {
-    TimeSpaceGrid _grid;
-    PN _pn;
-    LimitedDouble _n;
-    LimitedDouble _k;
+    private TimeSpaceGrid _grid;
+    private PN _pn;
+    private LimitedDouble _n;
+    private LimitedDouble _k;
     internal Setter(TimeSpaceGrid grid, PN pn, LimitedDouble n, LimitedDouble k)
     {
         _grid = grid;

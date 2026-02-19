@@ -18,6 +18,16 @@ static class ParameterTypeGetter
     {
         return n.IsInt && k.IsHalf;
     }
+
+    public static bool IsDynamic(LimitedDouble n)
+    {
+        return n.IsHalf;
+    }
+    public static bool IsMixture(LimitedDouble n)
+    {
+        return n.IsInt;
+    }
+
     public static bool IsDynamic(this PN pn)
     {
         return pn.GetTypeFromParameterName() == PT.Dynamic;

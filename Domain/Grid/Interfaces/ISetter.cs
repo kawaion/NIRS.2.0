@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Domain.Grid.Interfaces;
 
-public interface IArrayExpansionStrategy
+internal interface ISetter
 {
-    int CalculateNewDimension(int currentSize, int requiredSize);
+    void Set(double value);
 }

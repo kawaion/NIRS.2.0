@@ -18,22 +18,16 @@ internal class ExponentialExpansionStrategy : ValueObject, IArrayExpansionStrate
         _validator.ValidateAndThrow(instance);
         return instance;
     }
-    public (int newY, int newZ) CalculateNewDimensions(int currentY, int currentZ, int requiredY, int requiredZ)
+    public int CalculateNewDimension(int currentSize, int requiredSize)
     {
-        int newY = currentY;
-        int newZ = currentZ;
+        int newSize = currentSize;
 
-        while (requiredY >= newY)
+        while (requiredSize >= newSize)
         {
-            newY *= (int)(newY * _growthFactor);
+            newSize *= (int)(newSize * _growthFactor);
         }
 
-        while (requiredZ >= newZ)
-        {
-            newZ = (int)(newZ * _growthFactor);
-        }
-
-        return (newY, newZ);
+        return newSize;
     }
 
     public class Validator : AbstractValidator<ExponentialExpansionStrategy>

@@ -44,7 +44,7 @@ public sealed class Dynamic3DArray : Entity, ICloneable
         for (int x = 0; x < _fixedX; x++)
         {
             _data[x] = new double[_currentY, _currentZ];
-            _data[x] = Array2DInitializerWithNumber.Initialize(_data[x], UNINITIALIZED_VALUE);
+            _data[x] = ArrayInitializerWithNumber.Initialize(_data[x], UNINITIALIZED_VALUE);
         }
     }
 
@@ -97,8 +97,8 @@ public sealed class Dynamic3DArray : Entity, ICloneable
 
     private void ExpandArray(int requiredY, int requiredZ)
     {
-        var (newY, newZ) = _expansionStrategy.CalculateNewDimensions(
-            _currentY, _currentZ, requiredY, requiredZ);
+        var newY = _expansionStrategy.CalculateNewDimension(_currentY, requiredY);
+        var newZ = _expansionStrategy.CalculateNewDimension(_currentZ, requiredZ);
 
         ResizeData(newY, newZ);
     }
@@ -109,7 +109,7 @@ public sealed class Dynamic3DArray : Entity, ICloneable
         {
             var newSlice = new double[newY, newZ];
 
-            newSlice = Array2DInitializerWithNumber.Initialize(newSlice, UNINITIALIZED_VALUE);
+            newSlice = ArrayInitializerWithNumber.Initialize(newSlice, UNINITIALIZED_VALUE);
 
             int copyY = Math.Min(_currentY, newY);
             int copyZ = Math.Min(_currentZ, newZ);
@@ -139,7 +139,7 @@ public sealed class Dynamic3DArray : Entity, ICloneable
     {
         for (int x = 0; x < _fixedX; x++)
         {
-            _data[x] = Array2DInitializerWithNumber.Initialize(_data[x], UNINITIALIZED_VALUE);
+            _data[x] = ArrayInitializerWithNumber.Initialize(_data[x], UNINITIALIZED_VALUE);
         }
     }
 

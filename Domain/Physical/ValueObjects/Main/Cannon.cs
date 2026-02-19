@@ -1,10 +1,11 @@
 ﻿using Core.Domain.Common;
+using Core.Domain.Physical.Interfaces;
 using Core.Domain.Points.ValueObjects;
 using FluentValidation;
 
 namespace Core.Domain.Physical.ValueObjects.Main;
 
-internal sealed class Cannon : ValueObject
+internal sealed class Cannon : ValueObject, ICannon
 {
     private readonly CannonGeometry _cannonGeometry;
     private readonly OrderedList<BendPoint> _bendPoints;
@@ -35,8 +36,10 @@ internal sealed class Cannon : ValueObject
         return instance;
     }
 
-    public double R(double x) => _cannonGeometry.GetRadius(x);
+    public double R(double x) => _cannonGeometry.GetRadius(x);    
+    public double S(double x) => _cannonGeometry.GetArea(x);
     public double W(double x) => _cannonGeometry.GetVolume(x);
+
 
 
 
