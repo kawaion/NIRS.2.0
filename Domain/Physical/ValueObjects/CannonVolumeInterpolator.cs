@@ -1,31 +1,31 @@
 ﻿using Core.Domain.Common;
+using Core.Domain.interfaces;
 using Core.Domain.Physical.Services;
 using Core.Domain.Physical.Servises;
 using Core.Domain.Points.ValueObjects;
 
 namespace Core.Domain.Physical.ValueObjects;
 
-internal class CannonVolume : ValueObject
+internal class CannonVolumeInterpolator : ValueObject
 {
     private IReadOnlyList<PointOfOccupiedVolumes> _volumes;
-    private OrderedList<Point2D> _points;
-    private TableFunction _tableFunction;
-    private CannonVolume(OrderedList<BendPoint> bendPoints)
+    private CannonContour cannonContour;
+    private IInterpolator _interpolator;
+    private CannonVolumeInterpolator(CannonContour cannonContour, IInterpolator interpolator)
     {        
-        _points = bendPoints.ConvertToPoint2D();
-        _tableFunction = TableFunction.Create(_points);
-        _volumes = OccupiedVolumeCalculatorUpToBendPoint.Calculate(bendPoints);
+        _interpolator = interpolator;
+        _volumes = OccupiedVolumeCalculatorUpToBendPoint.Calculate(cannonContour);
     }
-    public static CannonVolume Create(OrderedList<BendPoint> bendPoints)
+    public static CannonVolumeInterpolator Create(CannonContour cannonContour, IInterpolator interpolator)
     {
-        var instance = new CannonVolume(bendPoints);
+        var instance = new CannonVolumeInterpolator(cannonContour);
         return instance;
     }
     public double GetOccupiedVolume(double x)
     {
         (var left, var right) = BinarySearchForAdjacentPoints.Search(_points, x);
 
-        var RadiusX = _tableFunction.Interpolate(x);
+        var RadiusX = _interpolator.Interpolate(x);
         var bendPointX = BendPoint.Create(x, RadiusX);
 
         var volumeAtPoint = GetVolumeAtPoint(left);

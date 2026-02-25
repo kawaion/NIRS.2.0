@@ -13,14 +13,7 @@ namespace Core.Domain.Numerical_methods.SEL.Functions.Interfaces;
 
 internal interface IWaypointCalculator
 {
-    double NablaWithS(PN param1, PN param2, LimitedDouble N, LimitedDouble K);
-
-    double Nabla(double param1, PN param2, PN param3, LimitedDouble N, LimitedDouble K);
-
-
-    double Nabla(PN param1, PN v, LimitedDouble N, LimitedDouble K);
+    double NablaWithS(PN mu, PN v, LimitedDouble N, LimitedDouble K);
+    double Nabla(PN mu, PN v, LimitedDouble N, LimitedDouble K);
     double Nabla(PN v, LimitedDouble N, LimitedDouble K);
-
-
-    double dPStrokeDivdx(LimitedDouble n, LimitedDouble k);
 }

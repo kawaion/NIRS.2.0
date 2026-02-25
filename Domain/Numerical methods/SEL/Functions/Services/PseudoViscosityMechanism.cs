@@ -13,18 +13,28 @@ using Core.Domain.Numerical_methods.SEL.Functions.Interfaces;
 
 namespace Core.Domain.Numerical_methods.SEL.Functions.Services;
 
-internal static class PseudoViscosityMechanism
+internal class PseudoViscosityMechanism : IPseudoViscosityMechanism
 {
-    private static INumericalMethodSettings _settings;
-    private static IWaypointCalculator wc;
-    public static double q(IGrid g, LimitedDouble N, LimitedDouble K)
+    private double _h;
+    private INumericalMethodSettings _settings;
+    private IWaypointCalculator wc;
+    private IGrid g;
+    public PseudoViscosityMechanism(IGrid grid, IWaypointCalculator waypointCalculator, INumericalMethodSettings settings)
+    {
+        g = grid;
+        wc = waypointCalculator;
+        _settings = settings;
+        _h = settings.h;
+    }
+
+    public double Calculate( LimitedDouble N, LimitedDouble K)
     {
         (var n, var k) = OffseterNK.AppointAndOffset(N, + ld0_5, K, - ld0_5);
 
         double NablaV = wc.Nabla(PN.v, n + ld0_5, k - ld0_5);
         if (NablaV < 0)
         {
-            var res = Math.Pow(_settings.h, 2) * g[PN.rho, n + ld1, k - ld0_5] * Math.Pow(NablaV, 2);
+            var res = Math.Pow(_h, 2) * g[PN.rho, n + ld1, k - ld0_5] * Math.Pow(NablaV, 2);
             return res;
         }
         else

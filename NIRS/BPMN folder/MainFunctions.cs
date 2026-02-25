@@ -135,9 +135,9 @@ namespace NIRS.BPMN_folder
             return uk_p_n_kM05 / e1;
         }
         public static double HPsi_nP05_kM05(double S0, double LAMBDA0,
-                                            double sigma_psi_n_kM05, double uk_p_n_kM05)
+                                            double sigma_n_kM05, double uk_p_n_kM05)
         {
-            return (S0 / LAMBDA0) * sigma_psi_n_kM05 * uk_p_n_kM05;
+            return (S0 / LAMBDA0) * sigma_n_kM05 * uk_p_n_kM05;
         }
 
 
@@ -145,19 +145,19 @@ namespace NIRS.BPMN_folder
 
         public static double tau_w_n_k(double rho_n_kM05, double v_nM05_k,
                                    double w_nM05_k, double a_n_kM05,
-                                   double sigma_z_n_kM05,
+                                   double sigma_n_kM05,
                                    double lambda0, double S0) 
         {
             double velocityDiff = v_nM05_k - w_nM05_k;
             double absVelocityDiff = Math.Abs(velocityDiff);
 
             return lambda0 * (rho_n_kM05 * velocityDiff * absVelocityDiff / 2.0)
-                   * a_n_kM05 * (S0 * sigma_z_n_kM05 / 4.0);
+                   * a_n_kM05 * (S0 * sigma_n_kM05 / 4.0);
         }
         public static double G_n_k(double a_n_kM05,
-                                   double S0, double sigma_z_n_kM0, double delta, double uk_p_n_kM05)
+                                   double S0, double sigma_n_kM0, double delta, double uk_p_n_kM05)
         {
-            return a_n_kM05 * S0 * sigma_z_n_kM0 * delta * uk_p_n_kM05;
+            return a_n_kM05 * S0 * sigma_n_kM0 * delta * uk_p_n_kM05;
         }
         private static double U_k(double p, double u1)
         {

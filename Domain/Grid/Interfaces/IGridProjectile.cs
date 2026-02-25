@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Core.Domain.Grid.Interfaces;
 
-internal interface IGridSn
+internal interface IGridProjectile
 {
-    double this[PN pn, LimitedDouble n] {  get; }
-    void Set(PN pn, LimitedDouble n, double value);
-    ISetter At(PN pn, LimitedDouble n, LimitedDouble k);
+    double this[PNsn pn, LimitedDouble n] {  get; }
+    void Set(PNsn pn, LimitedDouble n, double value);
+    ISetter At(PNsn pn, LimitedDouble n, LimitedDouble k);
 
 
     public LimitedDouble LastIndexN(PN pn);

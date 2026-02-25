@@ -68,11 +68,11 @@ internal class FunctionOfBurning_12_7 : ValueObject, IFunctionOfBurning
     
 
 
-    public double Sigma(double psi, List<double> z)
+    public double Sigma(double psi, double z)
     {
         ValidateSigmaInputs(psi, z);
 
-        var _z = z[0];
+        var _z = z;
         if (IsPreDisintegrationPhase(_z))
             return 1.0 + 2.0 * _lamda * _z + 3.0 * _mu * Math.Pow(_z, 2);
 
@@ -94,15 +94,12 @@ internal class FunctionOfBurning_12_7 : ValueObject, IFunctionOfBurning
     {
         return z < 1.0;
     }
-    private void ValidateSigmaInputs(double psi, List<double> z)
+    private void ValidateSigmaInputs(double psi, double z)
     {
         if (psi < 0 || psi > 1)
             throw new ArgumentException("ψ должен быть в диапазоне [0, 1]");
 
-        if (z == null || z.Count == 0)
-            throw new ArgumentException("Список z не может быть пустым");
-
-        if (z[0] < 0)
+        if (z < 0)
             throw new ArgumentException("z[0] должен быть неотрицательным");
     }
     private class Validator : AbstractValidator<FunctionOfBurning_12_7>

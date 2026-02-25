@@ -1,17 +1,25 @@
 ﻿using Core.Domain.Common;
+using Core.Domain.interfaces;
 using FluentValidation;
+using System.Transactions;
 
 namespace Core.Domain.Points.ValueObjects;
 
-internal class EquationOfLine : ValueObject
+internal class EquationOfLine : ValueObject, IInterpolator
 {
     private readonly Point2D _p1;
     private readonly Point2D _p2;
+
+    //private double dx;
+    //private double dy;
 
     private EquationOfLine(Point2D p1, Point2D p2)
     {
         _p1 = p1;
         _p2 = p2;
+
+        //dx = _p2.X - _p1.X;
+        //dy = _p2.Y - _p1.Y;
     }
 
     public static EquationOfLine Create(Point2D p1, Point2D p2)
@@ -20,7 +28,7 @@ internal class EquationOfLine : ValueObject
         _validator.ValidateAndThrow(instance);
         return instance;
     }
-    public double GetY(double x) => (x - _p1.X) * (_p2.Y - _p1.Y) / (_p2.X - _p1.X) + _p1.Y;
+    public double Interpolate(double x) => (x - _p1.X) * (_p2.Y - _p1.Y) / (_p2.X - _p1.X) + _p1.Y;
 
     public class Validator : AbstractValidator<EquationOfLine>
     {

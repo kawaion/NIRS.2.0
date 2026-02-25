@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Core.Domain.Grid.Aggregates;
 
-internal class TimeSpaceGridSn : Entity
+internal class TimeSpaceGridProjectile : Entity, IGridProjectile
 {
     static readonly int COUNT_PARAMS = Enum.GetValues(typeof(PNsn)).Length;
 
@@ -22,24 +22,29 @@ internal class TimeSpaceGridSn : Entity
     private const double MAXIMUM_NEGATIVE_K = -1;
 
     private Dynamic2DArray _data;
+    private Dynamic2DArray _dataX;
 
     private GridMapper _gridMapper;
 
     private LastIndexerSn _lastIndexerSn;
-    public TimeSpaceGridSn(GridMapper gridMapper)
+    public TimeSpaceGridProjectile(GridMapper gridMapper)
     {
-        _data = Dynamic2DArray.CreateWithExponentialExpansion(COUNT_PARAMS);
+        _data = Dynamic2DArray.CreateWithExponentialExpansion(COUNT_PARAMS-1);
+        _dataX = Dynamic2DArray.CreateWithExponentialExpansion(1);
         _gridMapper = gridMapper;
         _lastIndexerSn = LastIndexerSn.Create(_gridMapper, COUNT_PARAMS);
     }
-    public double this[PN pn, LimitedDouble n]
+    public double this[PNsn pn, LimitedDouble n]
     {
         get
         {
+            if (pn == PNsn.x)
+                return GetX(n);
+
             Validation(pn, n);
 
-            if (pn == PN.One_minus_m)
-                return 1.02 - this[PN.m, n];
+            if (pn == PNsn.One_minus_m)
+                return 1.02 - this[PNsn.m, n];
 
             var paramIndex = _gridMapper.MappingPNToInt(pn);
             var nIndex = _gridMapper.MappingNToInt(n);
@@ -55,12 +60,29 @@ internal class TimeSpaceGridSn : Entity
 
         }
     }
-    public void Set(PN pn, LimitedDouble n, double value)
+    private double GetX(LimitedDouble n)
     {
+        var nIndex = _gridMapper.MappingForUntypeNToInt(n);
+
+        try
+        {
+            return _dataX[0, nIndex];
+        }
+        catch (UninitializedElementException ex)
+        {
+            throw new Exception($"Неинициализованное значение _x по адресу: {n}");
+        }
+    }
+
+    public void Set(PNsn pn, LimitedDouble n, double value)
+    {
+        if (pn == PNsn.x)
+            SetX(n, value);
+
         Validation(pn, n);
 
-        if (pn == PN.One_minus_m)
-            Set(pn, n, 1.02 - this[PN.m, n]);
+        if (pn == PNsn.One_minus_m)
+            Set(pn, n, 1.02 - this[PNsn.m, n]);
 
         var paramIndex = _gridMapper.MappingPNToInt(pn);
         var nIndex = _gridMapper.MappingNToInt(n);
@@ -69,9 +91,18 @@ internal class TimeSpaceGridSn : Entity
 
         _data[paramIndex, nIndex] = value;
     }
-    public ISetter At(PN pn, LimitedDouble n, LimitedDouble k)
+    private void SetX(LimitedDouble n, double value)
     {
-        return new SetterSn(this, pn, n);
+        var paramIndex = _gridMapper.MappingPNToInt(PNsn.x);
+        var nIndex = _gridMapper.MappingForUntypeNToInt(n);
+
+        _lastIndexerSn.TryIncreaseLastIlndex(n, paramIndex, nIndex);
+
+        _dataX[0, nIndex] = value;
+    }
+    public ISetter At(PNsn pn, LimitedDouble n, LimitedDouble k)
+    {
+        return new SetterProjectile(this, pn, n);
     }
 
 
@@ -85,7 +116,7 @@ internal class TimeSpaceGridSn : Entity
     }
 
 
-    private void Validation(PN pn, LimitedDouble n)
+    private void Validation(PNsn pn, LimitedDouble n)
     {
         if (ParameterTypeGetter.IsMixture(n) && ParameterTypeGetter.IsMixture(pn))
             return;
@@ -95,12 +126,12 @@ internal class TimeSpaceGridSn : Entity
     }
 }
 
-internal class SetterSn : ISetter
+internal class SetterProjectile : ISetter
 {
-    TimeSpaceGridSn _grid;
-    PN _pn;
+    TimeSpaceGridProjectile _grid;
+    PNsn _pn;
     LimitedDouble _n;
-    internal SetterSn(TimeSpaceGridSn grid, PN pn, LimitedDouble n)
+    internal SetterProjectile(TimeSpaceGridProjectile grid, PNsn pn, LimitedDouble n)
     {
         _grid = grid;
         _pn = pn;

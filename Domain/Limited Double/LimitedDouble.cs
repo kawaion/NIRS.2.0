@@ -55,7 +55,7 @@ internal sealed class LimitedDouble : ValueObject
         => FromScaled(-a._scaled);
 
     public static LimitedDouble operator +(LimitedDouble a)
-    => FromScaled(a._scaled);
+        => FromScaled(a._scaled);
 
     public static bool operator >(LimitedDouble a, LimitedDouble b)
         => a._scaled > b._scaled;

@@ -1,4 +1,4 @@
-﻿using Core.Domain.Points.ValueObjects;
+﻿using Core.Domain.Physical.ValueObjects;
 
 namespace Core.Domain.Physical.Servises;
 

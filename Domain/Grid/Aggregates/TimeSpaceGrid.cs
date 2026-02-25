@@ -34,7 +34,7 @@ internal class TimeSpaceGrid : Entity
         _data = Dynamic3DArray.CreateWithExponentialExpansion(COUNT_PARAMS);
         _gridMapper = GridMapper.Create(MAXIMUM_NEGATIVE_N, MAXIMUM_NEGATIVE_K);
         _lastIndexer = LastIndexer.Create(_gridMapper, COUNT_PARAMS);
-        sn = new TimeSpaceGridSn(_gridMapper);
+        sn = new TimeSpaceGridProjectile(_gridMapper);
     }
     public double this[PN pn, LimitedDouble n, LimitedDouble k]
     {
@@ -95,7 +95,7 @@ internal class TimeSpaceGrid : Entity
     }
 
 
-    public TimeSpaceGridSn sn {  get; set; }
+    public TimeSpaceGridProjectile sn {  get; set; }
 
 
     private void Validation(PN pn, LimitedDouble n, LimitedDouble k)

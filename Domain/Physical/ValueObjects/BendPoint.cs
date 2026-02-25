@@ -1,7 +1,8 @@
 ﻿using Core.Domain.Common;
+using Core.Domain.Points.ValueObjects;
 using FluentValidation;
 
-namespace Core.Domain.Points.ValueObjects;
+namespace Core.Domain.Physical.ValueObjects;
 
 internal sealed class BendPoint : ValueObject
 {

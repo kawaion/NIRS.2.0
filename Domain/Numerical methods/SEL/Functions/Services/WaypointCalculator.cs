@@ -15,17 +15,24 @@ internal class WaypointCalculator : IWaypointCalculator
     private readonly IGrid g;
 
     private INumericalMethodSettings _settings;
-    private readonly ICannon _b;
+    private readonly ICannon _c;
+    private IPseudoViscosityMechanism _q;
 
-    private readonly XGetter _x;
+    private readonly IXGetter _x;
 
-    public WaypointCalculator(IGrid grid, XGetter x)
+    public WaypointCalculator(IGrid grid, 
+                              INumericalMethodSettings settings,
+                              ICannon cannon,
+                              IPseudoViscosityMechanism q,
+                              IXGetter xGetter)
     {
         g = grid;
+        _settings = settings;
+        _c = cannon;
+        _q = q;
+        _x = xGetter;
 
-        _x = x;
-
-        sn = new WaypointCalculatorProjectile(g, mainData);
+        sn = new WaypointCalculatorProjectile(g, settings, cannon, xGetter);
     }
 
 
@@ -42,21 +49,14 @@ internal class WaypointCalculator : IWaypointCalculator
 
         if (V >= 0)
         {
-            return g[mu, n - ld0_5, k - ld0_5] * _b.S(_x[k - ld0_5]) * V;
+            return g[mu, n - ld0_5, k - ld0_5] * _c.S(_x[k - ld0_5]) * V;
         }
 
         else
         {
-            return g[mu, n - ld0_5, k + ld0_5] * _b.S(_x[k + ld0_5]) * V;
+            return g[mu, n - ld0_5, k + ld0_5] * _c.S(_x[k + ld0_5]) * V;
         }
 
-    }
-    //
-    public double Nabla(double param1, PN param2, PN param3, LimitedDouble N, LimitedDouble K)
-    {
-        (var n, var k) = OffseterNK.AppointAndOffset(N, + ld0_5, K, - ld0_5);
-
-        return (AverageWithS(param1, param3, n + ld0_5, k) - AverageWithS(param1, param3, n + ld0_5, k - ld1)) / _settings.h;
     }
     private double AverageWithS(double mu, PN v, LimitedDouble n, LimitedDouble k)
     {
@@ -64,9 +64,9 @@ internal class WaypointCalculator : IWaypointCalculator
         double V = g[v, n, k];
 
         if (V >= 0)
-            return V * _b.S(_x[k - ld0_5]);
+            return V * _c.S(_x[k - ld0_5]);
         else
-            return V * _b.S(_x[k + ld0_5]);
+            return V * _c.S(_x[k + ld0_5]);
     }
     //
     private double Get_m(LimitedDouble n, LimitedDouble k, PN mu)
@@ -161,17 +161,11 @@ internal class WaypointCalculator : IWaypointCalculator
         return (g[v, n + ld0_5, k] - g[v, n + ld0_5, k - ld1]) / _settings.h;
     }
 
-
-    public double dPStrokeDivdx(LimitedDouble n, LimitedDouble k)
-    {
-        var res = (BlurryP.PStroke(g, n, k + ld0_5) - BlurryP.PStroke(g, n, k - ld0_5)) / _settings.h;
-        return res;
-    }
-
+    public IWaypointCalculatorProjectile sn { get; set; }    
+    
     enum NablaType
     {
         plus,
         minus
     }
-    public IWaypointCalculatorProjectile sn { get; set; }
 }

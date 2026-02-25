@@ -1,4 +1,5 @@
 ﻿using Core.Domain.Common;
+using Core.Domain.Physical.ValueObjects;
 using FluentValidation;
 
 namespace Core.Domain.Points.ValueObjects;

@@ -23,5 +23,5 @@ internal interface IGrid
     LimitedDouble LastIndexN(PN pn);
     LimitedDouble LastIndexN();
 
-    IGridSn sn { get; set; }
+    IGridProjectile sn { get; }
 }

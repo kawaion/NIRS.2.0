@@ -1,6 +1,6 @@
 ﻿using Core.Domain.Common;
+using Core.Domain.interfaces;
 using Core.Domain.Physical.Interfaces;
-using Core.Domain.Points.ValueObjects;
 using FluentValidation;
 
 namespace Core.Domain.Physical.ValueObjects.Main;
@@ -8,28 +8,27 @@ namespace Core.Domain.Physical.ValueObjects.Main;
 internal sealed class Cannon : ValueObject, ICannon
 {
     private readonly CannonGeometry _cannonGeometry;
-    private readonly OrderedList<BendPoint> _bendPoints;
+    private readonly CannonContour _cannonContour;
     public double ChamberLength { get; }
     public double Length { get; }
 
     public double Skn { get; }
     public double Wkm { get; }
 
-    private Cannon(OrderedList<BendPoint> bendPoints, double ChamberLength)
+    private Cannon(CannonContour cannonContour, double ChamberLength, IInterpolator interpolator)
     {
-        _bendPoints = bendPoints;
-        _cannonGeometry = CannonGeometry.Create(_bendPoints);
+        _cannonContour = cannonContour;
+        _cannonGeometry = CannonGeometry.Create(cannonContour, interpolator);
         this.ChamberLength = ChamberLength;        
-        Length = _bendPoints.Last().DistanceFromBottom;
+        Length = _cannonContour.Last().DistanceFromBottom;
         Skn = R(ChamberLength);
         Wkm = W(ChamberLength);
     }
-    public static Cannon Create(List<BendPoint> bendingPoints, double chamberLength)
+    public static Cannon Create(CannonContour cannonContour, double chamberLength, IInterpolator interpolator)
     {
-        ValidateInputParameters(bendingPoints, chamberLength);
+        ValidateInputParameters(cannonContour, chamberLength, interpolator);
 
-        var orderedList = OrderedList<BendPoint>.Create(bendingPoints, p=>p.DistanceFromBottom);
-        var instance = new Cannon(orderedList, chamberLength);
+        var instance = new Cannon(cannonContour, chamberLength, interpolator);
 
         _validator.ValidateAndThrow(instance);
 
@@ -57,23 +56,27 @@ internal sealed class Cannon : ValueObject, ICannon
         }
     }
     private static readonly Validator _validator = new Validator();
-    private static void ValidateInputParameters(List<BendPoint> bendingPoints, double endChamber)
+    private static void ValidateInputParameters(CannonContour cannonContour, double endChamber, IInterpolator interpolator)
     {
-        if (bendingPoints == null)
-            throw new ArgumentNullException(nameof(bendingPoints));
-
-        if (!bendingPoints.Any())
-            throw new ArgumentException("Должна быть хотя бы одна точка изгиба", nameof(bendingPoints));
-
+        string ex = "";
         if (endChamber <= 0)
-            throw new ArgumentException("Конец каморы должен быть положительным", nameof(endChamber));
+            ex+= $"Конец каморы ({endChamber}) должен быть положительным" +'\n';
+        for (var i = 0; i < cannonContour.Count; i++)
+        {
+            var point = cannonContour[i];
+            if (Math.Abs(point.Radius - interpolator.Interpolate(point.DistanceFromBottom)) < 0.000001)
+            {
+                ex += "интерполятор не соответсвует точкам контура";
+                break;
+            }
+        }
+
+        if(ex!="")
+            throw new Exception(ex);
     }
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        foreach (var point in _bendPoints)
-        {
-            yield return point;
-        }
+        yield return _cannonContour;
         yield return ChamberLength;
     }
 }

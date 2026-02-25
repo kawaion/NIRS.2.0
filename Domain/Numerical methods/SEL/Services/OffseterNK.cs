@@ -17,3 +17,11 @@ static class OffseterNK
                 k - offsetK);
     }
 }
+static class OffseterN
+{
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static LimitedDouble AppointAndOffset(LimitedDouble n, LimitedDouble offsetN)
+    {
+        return n - offsetN;
+    }
+}

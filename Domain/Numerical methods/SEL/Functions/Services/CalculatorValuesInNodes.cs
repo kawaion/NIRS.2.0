@@ -2,30 +2,37 @@
 using Core.Domain.Grid.Interfaces;
 using Core.Domain.Limited_Double;
 using Core.Domain.Numerical_methods.SEL.Functions.Interfaces;
+using Core.Domain.Numerical_methods.SEL.Interfaces;
+using Core.Domain.Numerical_methods.SEL.Services;
+using Core.Domain.Physical.Entities;
+using Core.Domain.Physical.Interfaces;
+
+using static Core.Domain.Limited_Double.LimitedDouble;
 
 namespace Core.Domain.Numerical_methods.SEL.Functions.Services;
 internal class CalculatorValuesInNodes : ICalculatorValuesInNodes
 {
     private IGrid g;
-    private readonly IConstParameters constP;
-    private IWaypointCalculator wc;
-    private readonly IBarrelSize bs;
-    private IHFunctions hf;
-    private readonly IPowder powder;
+    private IWaypointCalculator _wc;
+    private readonly ICannon _cannon;
+    private IHFunctionsCalculator _hf;
+    private readonly Gunpowder _powder;
+    private readonly IPressureGradientCalculator _pg;
+
     private double tau;
 
-    private readonly XGetter x;
+    private readonly IXGetter x;
 
     public CalculatorValuesInNodes(IGrid grid,
-                                                IWaypointCalculator waypointCalculator,
-                                                IHFunctions hFunctions,
+                                   IWaypointCalculator waypointCalculator,
+                                                IHFunctionsCalculator hFunctions,
                                                 IMainData mainData)
     {
         g = grid;
-        wc = waypointCalculator;
-        hf = hFunctions;
+        _wc = waypointCalculator;
+        _hf = hFunctions;
         constP = mainData.ConstParameters;
-        bs = mainData.Barrel.BarrelSize;
+        _cannon = mainData.Barrel.BarrelSize;
         powder = mainData.Powder;
 
         x = new XGetter(mainData.ConstParameters);
@@ -59,70 +66,57 @@ internal class CalculatorValuesInNodes : ICalculatorValuesInNodes
         {
             int c = 0;
         }
-        (n, k) = OffseterNK.AppointAndOffset(n, +0.5, k, 0);
+        (n, k) = OffseterNK.AppointAndOffset(n, ld0_5, k, ld0);
         if (n == 1092 && k == 79)
         {
             int c = 0;
         }
 
-        double x_kM05 = x[k - 0.5];
-        double x_kP05 = x[k + 0.5];
+        double x_kM05 = x[k - ld0_5];
+        double x_kP05 = x[k + ld0_5];
 
-        double dynamicm_nM05_k = g[PN.dynamic_m, n - 0.5, k];
-        double nabla_dynamicm_v_nM05_k = wc.Nabla(PN.dynamic_m, PN.v, n - 0.5, k);
-        double m_n_kM05 = g[PN.m, n, k - 0.5];
-        double m_n_kP05 = g[PN.m, n, k + 0.5];
-        double S_kM05 = bs.S(x_kM05);
-        double S_kP05 = bs.S(x_kP05);
-        double dpStrokeDivDx_n_k = wc.dPStrokeDivdx(n, k);
-        double H1_n_k = hf.H1(n, k);
+        double dynamicm_nM05_k = g[PN.dynamic_m, n - ld0_5, k];
+        double nabla_dynamicm_v_nM05_k = _wc.Nabla(PN.dynamic_m, PN.v, n - ld0_5, k);
+        double m_n_kM05 = g[PN.m, n, k - ld0_5];
+        double m_n_kP05 = g[PN.m, n, k + ld0_5];
+        double S_kM05 = _cannon.S(x_kM05);
+        double S_kP05 = _cannon.S(x_kP05);
+        double dpStrokeDivDx_n_k = _pg.dPStrokeDivdx(n, k);
+        double H1_n_k = _hf.H1(n, k);
         double tau = this.tau;
 
         var res = MainFunctions.dynamic_m_nP05_k(dynamicm_nM05_k, nabla_dynamicm_v_nM05_k, m_n_kM05, m_n_kP05,
                                                  S_kM05, S_kP05, dpStrokeDivDx_n_k, H1_n_k, tau);
-        if (res == 14.304765263820441)
-        {
-            int c = 0;
-        }
 
         return res;
     }
     public double GeCalculate_v(LimitedDouble n, LimitedDouble k)
     {
-        if (n == 1.5)
-        {
-            int c = 0;
-        }
-        (n, k) = OffseterNK.AppointAndOffset(n, 0.5, k, 0);
+        (n, k) = OffseterNK.AppointAndOffset(n, ld0_5, k, ld0);
 
-        double dynamicm_nP05_k = g[PN.dynamic_m, n + 0.5, k];
-        double r_n_kM05 = g[PN.r, n, k - 0.5];
-        double r_n_kP05 = g[PN.r, n, k + 0.5];
+        double dynamicm_nP05_k = g[PN.dynamic_m, n + ld0_5, k];
+        double r_n_kM05 = g[PN.r, n, k - ld0_5];
+        double r_n_kP05 = g[PN.r, n, k + ld0_5];
 
         var res = MainFunctions.v_nP05_k(dynamicm_nP05_k, r_n_kM05, r_n_kP05);
-
-        if (res == -10.326917556113692)
-        {
-            int c = 0;
-        }
 
         return res;
     }
     public double Calculate_M(LimitedDouble n, LimitedDouble k)
     {
-        (n, k) = OffseterNK.AppointAndOffset(n, 0.5, k, 0);
+        (n, k) = OffseterNK.AppointAndOffset(n, ld0_5, k, ld0);
 
-        double x_kM05 = x[k - 0.5];
-        double x_kP05 = x[k + 0.5];
+        double x_kM05 = x[k - ld0_5];
+        double x_kP05 = x[k + ld0_5];
 
-        double M_nM05_k = g[PN.M, n - 0.5, k];
-        double nabla_Mv_nM05_k = wc.Nabla(PN.M, PN.w, n - 0.5, k);
-        double oneMm_n_kM05 = g[PN.One_minus_m, n, k - 0.5];
-        double oneMm_n_kP05 = g[PN.One_minus_m, n, k + 0.5];
-        double S_kM05 = bs.S(x_kM05);
-        double S_kP05 = bs.S(x_kP05);
-        double dpStrokeDivDx_n_k = wc.dPStrokeDivdx(n, k);
-        double H2_n_k = hf.H2(n, k);
+        double M_nM05_k = g[PN.M, n - ld0_5, k];
+        double nabla_Mv_nM05_k = _wc.Nabla(PN.M, PN.w, n - ld0_5, k);
+        double oneMm_n_kM05 = g[PN.One_minus_m, n, k - ld0_5];
+        double oneMm_n_kP05 = g[PN.One_minus_m, n, k + ld0_5];
+        double S_kM05 = _cannon.S(x_kM05);
+        double S_kP05 = _cannon.S(x_kP05);
+        double dpStrokeDivDx_n_k = _pg.dPStrokeDivdx(n, k);
+        double H2_n_k = _hf.H2(n, k);
         double tau = this.tau;
 
         var res = MainFunctions.M_nP05_k(M_nM05_k, nabla_Mv_nM05_k,
@@ -134,17 +128,17 @@ internal class CalculatorValuesInNodes : ICalculatorValuesInNodes
     }
     public double Calculate_w(LimitedDouble n, LimitedDouble k)
     {
-        (n, k) = OffseterNK.AppointAndOffset(n, 0.5, k, 0);
+        (n, k) = OffseterNK.AppointAndOffset(n, ld0_5, k, ld0);
 
-        double x_kM05 = x[k - 0.5];
-        double x_kP05 = x[k + 0.5];
+        double x_kM05 = x[k - ld0_5];
+        double x_kP05 = x[k + ld0_5];
 
-        double M_nP05_k = g[PN.M, n + 0.5, k];
-        double oneMm_n_kM05 = g[PN.One_minus_m, n, k - 0.5];
-        double oneMm_n_kP05 = g[PN.One_minus_m, n, k + 0.5];
-        double S_kM05 = bs.S(x_kM05);
-        double S_kP05 = bs.S(x_kP05);
-        double delta = constP.PowderDelta;
+        double M_nP05_k = g[PN.M, n + ld0_5, k];
+        double oneMm_n_kM05 = g[PN.One_minus_m, n, k - ld0_5];
+        double oneMm_n_kP05 = g[PN.One_minus_m, n, k + ld0_5];
+        double S_kM05 = _cannon.S(x_kM05);
+        double S_kP05 = _cannon.S(x_kP05);
+        double delta = _powder.Delta;
 
         var res = MainFunctions.w_nP05_k(M_nP05_k, oneMm_n_kM05, oneMm_n_kP05,
                                          S_kM05, S_kP05, delta);
@@ -154,43 +148,27 @@ internal class CalculatorValuesInNodes : ICalculatorValuesInNodes
 
     public double Calculate_r(LimitedDouble n, LimitedDouble k)
     {
-        if (n == 2 && k == 0.5)
-        {
-            int c = 0;
-        }
-        (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
+        (n, k) = OffseterNK.AppointAndOffset(n, ld1, k, - ld0_5);
 
-        if (n == 1216 && k == 80)
-        {
-            int c = 0;
-        }
-        double r_n_kM05 = g[PN.r, n, k - 0.5];
-        double nabla_rv_nP05_kM05 = wc.Nabla(PN.r, PN.v, n + 0.5, k - 0.5);
-        double H3_nP05_kM05 = hf.H3(n + 0.5, k - 0.5);
+        double r_n_kM05 = g[PN.r, n, k - ld0_5];
+        double nabla_rv_nP05_kM05 = _wc.Nabla(PN.r, PN.v, n + ld0_5, k - ld0_5);
+        double H3_nP05_kM05 = _hf.H3(n + ld0_5, k - ld0_5);
         double tau = this.tau;
 
         var res = MainFunctions.r_nP1_kM05(r_n_kM05, nabla_rv_nP05_kM05, H3_nP05_kM05, tau);
-        if (res == 0.66303098901141089)
-        {
-            int c = 0;
-        }
         return res;
     }
     public double Calculate_e(LimitedDouble N, LimitedDouble K)
     {
-        if (N == 1078 && K == 79.5)
-        {
-            int c = 0;
-        }
-        (var n, var k) = OffseterNK.AppointAndOffset(N, 1, K, -0.5);
+        (var n, var k) = OffseterNK.AppointAndOffset(N, ld1, K, -ld0_5);
 
-        double e_n_kM05 = g[PN.e, n, k - 0.5];
-        double nabla_ev_nP05_kM05 = wc.Nabla(PN.e, PN.v, n + 0.5, k - 0.5);
-        double p_n_kM05 = g[PN.p, n, k - 0.5];
-        double q_nP05_kM05 = q(n + 0.5, k - 0.5);
-        double nabla_mSv_nP05_kM05 = wc.Nabla(PN.m, PN.S, PN.v, n + 0.5, k - 0.5);
-        double nabla_oneMmSw_nP05_kM05 = wc.Nabla(1, PN.S, PN.w, n + 0.5, k - 0.5) - wc.Nabla(PN.m, PN.S, PN.w, n + 0.5, k - 0.5);
-        double H4_nP05_kM05 = hf.H4(n + 0.5, k - 0.5);
+        double e_n_kM05 = g[PN.e, n, k - ld0_5];
+        double nabla_ev_nP05_kM05 = _wc.Nabla(PN.e, PN.v, n + ld0_5, k - ld0_5);
+        double p_n_kM05 = g[PN.p, n, k - ld0_5];
+        double q_nP05_kM05 = q(n + ld0_5, k - ld0_5);
+        double nabla_mSv_nP05_kM05 = _wc.Nabla(PN.m, PN.v, n + ld0_5, k - ld0_5);
+        double nabla_oneMmSw_nP05_kM05 = _wc.Nabla(PN.One_minus_m, PN.w, n + ld0_5, k - ld0_5);
+        double H4_nP05_kM05 = _hf.H4(n + ld0_5, k - ld0_5);
         double tau = this.tau;
 
         var res = MainFunctions.e_nP1_kM05(e_n_kM05, nabla_ev_nP05_kM05,
@@ -198,30 +176,26 @@ internal class CalculatorValuesInNodes : ICalculatorValuesInNodes
                            nabla_mSv_nP05_kM05, nabla_oneMmSw_nP05_kM05,
                            H4_nP05_kM05,
                            tau);
-        if (res == 3456763.2728451136)
-        {
-            int c = 0;
-        }
         return res;
     }
     public double Calculate_psi(LimitedDouble n, LimitedDouble k)
     {
-        (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
+        (n, k) = OffseterNK.AppointAndOffset(n, ld1, k, -ld0_5);
 
         double res;
-        double z = g[PN.z, n + 1, k - 0.5];
+        double z = g[PN.z, n + ld1, k - ld0_5];
         if (z >= 1)
         {
-            double psi_n_kM05 = g[PN.psi, n, k - 0.5];
-            double nabla_psiw_nP05_kM05 = wc.Nabla(PN.psi, PN.w, n + 0.5, k - 0.5);
-            double nabla_w_nP05_kM05 = wc.Nabla(PN.w, n + 0.5, k - 0.5);
-            double HPsi_nP05_kM05 = hf.HPsi(n + 0.5, k - 0.5);
+            double psi_n_kM05 = g[PN.psi, n, k - ld0_5];
+            double nabla_psiw_nP05_kM05 = _wc.Nabla(PN.psi, PN.w, n + ld0_5, k - ld0_5);
+            double nabla_w_nP05_kM05 = _wc.Nabla(PN.w, n + ld0_5, k - ld0_5);
+            double HPsi_nP05_kM05 = _hf.HPsi(n + ld0_5, k - ld0_5);
             double tau = this.tau;
 
             res = MainFunctions.psi_nP1_kM05(psi_n_kM05, nabla_psiw_nP05_kM05, nabla_w_nP05_kM05, HPsi_nP05_kM05, tau);
         }
         else
-            res = powder.BurningPowdersSize.Psi(z);
+            res = _powder.BurningPowdersSize.Psi(z);
 
         res = Validation.Validation01(res);
 
@@ -229,33 +203,25 @@ internal class CalculatorValuesInNodes : ICalculatorValuesInNodes
     }
     public double Calculate_z(LimitedDouble n, LimitedDouble k)
     {
-        (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
-        //if (n == 1 && k == 0)
-        //{
-        //    int c = 0;
-        //}
-        double z_n_kM05 = g[PN.z, n, k - 0.5];
-        double nabla_zw_nP05_kM05 = wc.Nabla(PN.z, PN.w, n + 0.5, k - 0.5);
-        double nabla_w_nP05_kM05 = wc.Nabla(PN.w, n + 0.5, k - 0.5);
-        double H5_nP05_kM05 = hf.H5(n + 0.5, k - 0.5);
+        (n, k) = OffseterNK.AppointAndOffset(n, ld1, k, -ld0_5);
+        double z_n_kM05 = g[PN.z, n, k - ld0_5];
+        double nabla_zw_nP05_kM05 = _wc.Nabla(PN.z, PN.w, n + ld0_5, k - ld0_5);
+        double nabla_w_nP05_kM05 = _wc.Nabla(PN.w, n + ld0_5, k - ld0_5);
+        double H5_nP05_kM05 = _hf.H5(n + ld0_5, k - ld0_5);
         double tau = this.tau;
 
         var res = MainFunctions.z_nP1_kM05(z_n_kM05, nabla_zw_nP05_kM05, nabla_w_nP05_kM05, H5_nP05_kM05, tau);
-        //if (double.IsNaN(res))
-        //{
-        //    int c = 0;
-        //}
         return res;
     }
     public double Calculate_a(LimitedDouble n, LimitedDouble k)
     {
-        (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
+        (n, k) = OffseterNK.AppointAndOffset(n, ld1, k, -ld0_5);
 
-        double x_kM05 = x[k - 0.5];
+        double x_kM05 = x[k - ld0_5];
 
-        double a_n_kM05 = g[PN.a, n, k - 0.5];
-        double nabla_aSw_nP05_kM05 = wc.Nabla(PN.a, PN.S, PN.w, n + 0.5, k - 0.5);
-        double S_kM05 = bs.S(x_kM05);
+        double a_n_kM05 = g[PN.a, n, k - ld0_5];
+        double nabla_aSw_nP05_kM05 = _wc.NablaWithS(PN.a, PN.w, n + ld0_5, k - ld0_5);
+        double S_kM05 = _cannon.S(x_kM05);
         double tau = this.tau;
 
         var res = MainFunctions.a_nP1_kM05(a_n_kM05, nabla_aSw_nP05_kM05, S_kM05, tau);
@@ -263,31 +229,27 @@ internal class CalculatorValuesInNodes : ICalculatorValuesInNodes
     }
     public double Calculate_p(LimitedDouble n, LimitedDouble k)
     {
-        if (n == 1078 && k == 79.5)
-        {
-            int c = 0;
-        }
-        (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
+        (n, k) = OffseterNK.AppointAndOffset(n, ld1, k, -ld0_5);
 
-        double x_kM05 = x[k - 0.5];
+        double x_kM05 = x[k - ld0_5];
 
-        double e_nP1_kM05 = g[PN.e, n + 1, k - 0.5];
-        double m_nP1_kM05 = g[PN.m, n + 1, k - 0.5];
-        double S_kM05 = bs.S(x_kM05);
-        double r_nP1_kM05 = g[PN.r, n + 1, k - 0.5];
-        double teta = constP.teta;
-        double alpha = constP.alpha;
+        double e_nP1_kM05 = g[PN.e, n + ld1, k - ld0_5];
+        double m_nP1_kM05 = g[PN.m, n + ld1, k - ld0_5];
+        double S_kM05 = _cannon.S(x_kM05);
+        double r_nP1_kM05 = g[PN.r, n + ld1, k - ld0_5];
+        double theta = _powder.Theta;
+        double alpha = _powder.alpha;
 
-        var res = MainFunctions.p_nP1_kM05(e_nP1_kM05, m_nP1_kM05, S_kM05, r_nP1_kM05, teta, alpha);
+        var res = MainFunctions.p_nP1_kM05(e_nP1_kM05, m_nP1_kM05, S_kM05, r_nP1_kM05, theta, alpha);
         return res;
     }
     public double Calculate_m(LimitedDouble n, LimitedDouble k)
     {
-        (n, k) = OffseterNK.AppointAndOffset(n, 1, k, -0.5);
+        (n, k) = OffseterNK.AppointAndOffset(n, ld1, k, -ld0_5);
 
-        double a_nP1_kM05 = g[PN.a, n + 1, k - 0.5];
-        double psi_nP1_kM05 = g[PN.psi, n + 1, k - 0.5];
-        double LAMBDA0 = powder.LAMBDA0;
+        double a_nP1_kM05 = g[PN.a, n + ld1, k - ld0_5];
+        double psi_nP1_kM05 = g[PN.psi, n + ld1, k - ld0_5];
+        double LAMBDA0 = _powder.LAMBDA0;
 
         var res = MainFunctions.m_nP1_kM05(a_nP1_kM05, psi_nP1_kM05, LAMBDA0);
         res = Validation.Validation01(res);
@@ -307,7 +269,7 @@ internal class CalculatorValuesInNodes : ICalculatorValuesInNodes
 
         double r_n_k = g[PN.r, n, k];
         double m_n_k = g[PN.m, n, k];
-        double S_k = bs.S(x_k);
+        double S_k = _cannon.S(x_k);
 
         var res = MainFunctions.rho_n_k(r_n_k, m_n_k, S_k);
         return res;
@@ -319,13 +281,6 @@ internal class CalculatorValuesInNodes : ICalculatorValuesInNodes
 
     private double q(LimitedDouble n, LimitedDouble k)
     {
-        return PseudoViscosityMechanism.q(g, wc, constP, n, k);
-    }
-
-    public void Update(IGrid grid)
-    {
-        g = grid;
-        wc.Update(grid);
-        hf.Update(grid);
+        return q.Ca(g, wc, constP, n, k);
     }
 }

@@ -1,21 +1,23 @@
 ﻿using Core.Domain.Common;
+using Core.Domain.interfaces;
 using Core.Domain.Points.ValueObjects;
+using System.Net;
 
 namespace Core.Domain.Physical.ValueObjects;
 
 internal class CannonGeometry : ValueObject
 {
-    private СannonRadius _cannonRadius;
-    private CannonVolume _cannonVolume;
+    private СannonRadiusInterpolator _cannonRadiusInterpolator;
+    private CannonVolumeInterpolator _cannonVolumeInterpolator;
 
-    private CannonGeometry(OrderedList<BendPoint> bendPoints)
+    private CannonGeometry(CannonContour cannonContour, IInterpolator interpolator)
     {
-        _cannonRadius = СannonRadius.Create(bendPoints);
-        _cannonVolume = CannonVolume.Create(bendPoints);
+        _cannonRadiusInterpolator = СannonRadiusInterpolator.Create(interpolator);
+        _cannonVolumeInterpolator = CannonVolumeInterpolator.Create(cannonContour, interpolator);
     }
-    public static CannonGeometry Create(OrderedList<BendPoint> bendPoints)
+    public static CannonGeometry Create(CannonContour bendPoints, IInterpolator interpolator)
     {
-        var instance = new CannonGeometry(bendPoints);
+        var instance = new CannonGeometry(bendPoints, interpolator);
         return instance;
     }
 
@@ -23,7 +25,7 @@ internal class CannonGeometry : ValueObject
     {
         //if (_x < 0) return 0;
 
-        return _cannonRadius.GetRadius(x);
+        return _cannonRadiusInterpolator.GetRadius(x);
     }
     public double GetDiameter(double x) 
     { 
@@ -37,13 +39,13 @@ internal class CannonGeometry : ValueObject
     }
     public double GetVolume(double x)
     {
-        return _cannonVolume.GetOccupiedVolume(x);
+        return _cannonVolumeInterpolator.GetOccupiedVolume(x);
     }
     public double GetVolume(double x1, double x2) => Math.Abs(GetVolume(x1) - GetVolume(x2));
       
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        yield return _cannonRadius;
+        yield return _cannonRadiusInterpolator;
     }
 }

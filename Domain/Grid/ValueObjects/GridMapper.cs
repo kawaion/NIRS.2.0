@@ -1,6 +1,7 @@
 ﻿using Core.Domain.Common;
 using Core.Domain.Enums;
 using Core.Domain.Limited_Double;
+using Core.Domain.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,15 @@ internal class GridMapper : ValueObject
     {
         return ConvertToKIndex(k);
     }
+    public int MappingForUntypeNToInt(LimitedDouble n)
+    {
+        return ConvertToNIndexForUntype(n);
+    }
     public int MappingPNToInt(PN pn)
+    {
+        return (int)pn;
+    }
+    public int MappingPNToInt(PNsn pn)
     {
         return (int)pn;
     }
@@ -54,6 +63,16 @@ internal class GridMapper : ValueObject
     private int ConvertToKIndex(LimitedDouble k)
     {
         return (k - _maximumnNegativeK).GetInt();
+    }
+
+    private int ConvertToNIndexForUntype(LimitedDouble n)
+    {
+        var res = (n - _maximumnNegativeN).GetInt() * 2;
+
+        if (ParameterTypeGetter.IsDynamic(n))
+            res += 1;
+
+        return res;
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

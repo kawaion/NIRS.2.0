@@ -1,12 +1,15 @@
 ﻿using Core.Domain.Common;
+using Core.Domain.interfaces;
 using Core.Domain.Physical.Services;
 using FluentValidation;
 
 namespace Core.Domain.Points.ValueObjects;
 
-internal class TableFunction : ValueObject
+internal class TableFunction : ValueObject, IInterpolator
 {
     private OrderedList<Point2D> _points;
+
+    private Dictionary<(Point2D, Point2D), EquationOfLine> equations;
 
     private double minX;
     private double maxX;
@@ -16,6 +19,8 @@ internal class TableFunction : ValueObject
 
         minX = _points.First().X;
         maxX = _points.Last().X;
+
+        equations = InitializeEquations(points);
     }
     public static TableFunction Create(OrderedList<Point2D> points)
     {
@@ -24,15 +29,26 @@ internal class TableFunction : ValueObject
         return instance;
     }
 
+    private Dictionary<(Point2D, Point2D), EquationOfLine> InitializeEquations(OrderedList<Point2D> points)
+    {
+        var equations = new Dictionary<(Point2D, Point2D), EquationOfLine>();
+        for (int i=0; i<points.Count-1; i++)
+        {
+            var left = points[i];
+            var right = points[i+1];
+            EquationOfLine equationOfLine = EquationOfLine.Create(left, right);
 
+            equations.Add((left,right), equationOfLine);
+        }
+        return equations;
+    }
 
     public double Interpolate(double x)
     {
         ValidateXValue(x);
 
         var (left, right) = BinarySearchForAdjacentPoints.Search(_points, x);
-        EquationOfLine equationOfLine = EquationOfLine.Create(left, right);
-        return equationOfLine.GetY(x);
+        return equations[(left, right)].Interpolate(x);
     }    
     private void ValidateXValue(double x)
     {
@@ -53,7 +69,7 @@ internal class TableFunction : ValueObject
                 $"X ({x}) cannot be greater than maximum X ({maxX})");
     }
 
-    public class Validator : AbstractValidator<TableFunction>
+    private class Validator : AbstractValidator<TableFunction>
     {
         public Validator()
         {

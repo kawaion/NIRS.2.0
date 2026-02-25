@@ -26,6 +26,9 @@ public enum PN
     m,
     One_minus_m,
 }
+/// <summary>
+/// PNsn - сокращенно Parameter name projectile
+/// </summary>
 public enum PNsn
 {
     dynamic_m = 0,
@@ -39,7 +42,7 @@ public enum PNsn
     p,
     rho,
     m,
-    x,
     vSn,
     One_minus_m,
+    x,
 }

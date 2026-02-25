@@ -36,4 +36,13 @@ static class ParameterTypeGetter
     {
         return pn.GetTypeFromParameterName() == PT.Mixture;
     }
+
+    public static bool IsDynamic(this PNsn pn)
+    {
+        return pn.GetTypeFromParameterName() == PT.Dynamic;
+    }
+    public static bool IsMixture(this PNsn pn)
+    {
+        return pn.GetTypeFromParameterName() == PT.Mixture;
+    }
 }

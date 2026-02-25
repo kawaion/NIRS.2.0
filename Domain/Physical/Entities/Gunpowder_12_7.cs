@@ -19,11 +19,14 @@ internal class Gunpowder_12_7 : Gunpowder
     public override double S0 { get; }
     public override double LAMBDA0 { get; }
 
+    public override double e1 { get; }
+    private double d0 { get; }
+
     protected override IFunctionOfBurning FunctionOfBurning {  get; }
 
     private Gunpowder_12_7(double D0, double L0, double omega, double delta, double u1)
     {
-        (double d0, double e1) = Initialised0e1(D0);
+        (d0, e1) = Initialised0e1(D0);
         FunctionOfBurning = FunctionOfBurning_12_7.Create(D0, d0, L0, e1, u1);
 
         S0 = InitialiseS0(D0, d0, L0);

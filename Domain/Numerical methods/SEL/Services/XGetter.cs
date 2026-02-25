@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core.Domain.Numerical_methods.SEL.Services;
 
-internal class XGetter
+internal class XGetter : IXGetter
 {
     private double _h;
     public XGetter(INumericalMethodSettings settings)

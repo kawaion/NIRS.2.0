@@ -31,5 +31,26 @@ public static class TypeFromParameterName
             default: throw new Exception("неизвестный параметр");
         }
     }
+    public static PT GetTypeFromParameterName(this PNsn pn)
+    {
+        switch (pn)
+        {
+            case PNsn.dynamic_m:
+            case PNsn.M:
+            case PNsn.vSn:
+                return PT.Dynamic;
+            case PNsn.r:
+            case PNsn.e:
+            case PNsn.eps:
+            case PNsn.psi:
+            case PNsn.z:
+            case PNsn.a:
+            case PNsn.m:
+            case PNsn.p:
+            case PNsn.rho:
+                return PT.Mixture;
+            default: throw new Exception("неизвестный параметр");
+        }
+    }
 
 }

@@ -1,5 +1,6 @@
 ﻿using Core.Domain.Common;
 using Core.Domain.Physical.Servises;
+using Core.Domain.Physical.ValueObjects;
 using Core.Domain.Points.ValueObjects;
 
 namespace Core.Domain.Physical.Services;
