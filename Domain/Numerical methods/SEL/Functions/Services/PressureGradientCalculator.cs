@@ -2,6 +2,7 @@
 using Core.Domain.Grid.Interfaces;
 using Core.Domain.Limited_Double;
 using Core.Domain.Numerical_methods.SEL.Functions.Interfaces;
+using Core.Domain.Numerical_methods.SEL.Helper.Services;
 using Core.Domain.Numerical_methods.SEL.Interfaces;
 using Core.Domain.Numerical_methods.SEL.Services;
 using System;
@@ -36,9 +37,9 @@ internal class PressureGradientCalculator : IPressureGradientCalculator
         var res = (PStroke(n, k + ld0_5) - PStroke(n, k - ld0_5)) / _h;
         return res;
     }
-    private double PStroke(LimitedDouble N, LimitedDouble K)
+    private double PStroke(LimitedDouble n, LimitedDouble k)
     {
-        (var n, var k) = OffseterNK.AppointAndOffset(N, ld0, K, +ld0_5);
+        (n, k) = OffseterNK.AppointAndOffset(n, ld0, k, +ld0_5);
 
         var p = g[PN.p, n, k + ld0_5];
         var res = p + _q.Calculate(n - ld0_5, k + ld0_5);

@@ -3,41 +3,44 @@ using Core.Domain.interfaces;
 using Core.Domain.Physical.Services;
 using Core.Domain.Physical.Servises;
 using Core.Domain.Points.ValueObjects;
+using System.Drawing;
 
 namespace Core.Domain.Physical.ValueObjects;
 
 internal class CannonVolumeInterpolator : ValueObject
 {
-    private IReadOnlyList<PointOfOccupiedVolumes> _volumes;
-    private CannonContour cannonContour;
+    private OrderedList<Point2D> _cannonContour;
     private IInterpolator _interpolator;
-    private CannonVolumeInterpolator(CannonContour cannonContour, IInterpolator interpolator)
+    private readonly Dictionary<Point2D, double> _volumeCache;
+    private CannonVolumeInterpolator(OrderedList<Point2D> cannonContour, IInterpolator interpolator)
     {        
         _interpolator = interpolator;
-        _volumes = OccupiedVolumeCalculatorUpToBendPoint.Calculate(cannonContour);
+        _cannonContour = cannonContour;
+
+        var volumes = OccupiedVolumeCalculatorUpToBendPoint.Calculate(cannonContour);
+        _volumeCache = volumes.ToDictionary(v => v.BendPoint, v => v.Volume);
     }
-    public static CannonVolumeInterpolator Create(CannonContour cannonContour, IInterpolator interpolator)
+    public static CannonVolumeInterpolator Create(OrderedList<Point2D> cannonContour, IInterpolator interpolator)
     {
-        var instance = new CannonVolumeInterpolator(cannonContour);
+        var instance = new CannonVolumeInterpolator(cannonContour, interpolator);
         return instance;
     }
     public double GetOccupiedVolume(double x)
     {
-        (var left, var right) = BinarySearchForAdjacentPoints.Search(_points, x);
+        (var left, var right) = BinarySearchForAdjacentBendPoints.Search(_cannonContour, x);
 
         var RadiusX = _interpolator.Interpolate(x);
-        var bendPointX = BendPoint.Create(x, RadiusX);
+        var bendPointX = Point2D.Create(x, RadiusX);
 
         var volumeAtPoint = GetVolumeAtPoint(left);
-        var segmentVolume = SegmentVolumeCalculator.CalculateSegmentVolume((BendPoint)left, bendPointX);
+        var segmentVolume = SegmentVolumeCalculator.CalculateSegmentVolume(left, bendPointX);
         
         return volumeAtPoint + segmentVolume;
     }
 
-    private double GetVolumeAtPoint(Point2D left)
+    private double GetVolumeAtPoint(Point2D point)
     {
-        var pointOfOccupiedVolumes = _volumes.FirstOrDefault(v => (Point2D)v.BendPoint == left);
-        return pointOfOccupiedVolumes.Volume;
+        return _volumeCache.TryGetValue(point, out var volume) ? volume : 0;
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

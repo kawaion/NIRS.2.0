@@ -4,9 +4,9 @@ using Core.Domain.Points.ValueObjects;
 
 namespace Core.Domain.Physical.Services;
 
-internal static class BinarySearchForAdjacentPoints
+internal static class BinarySearchForAdjacentBendPoints
 {
-    public static (BendPoint, BendPoint) Search(IReadOnlyList<BendPoint> points, double x)
+    public static (Point2D, Point2D) Search(OrderedList<Point2D> points, double x)
     {
         ValidateX(points, x); 
 
@@ -16,7 +16,7 @@ internal static class BinarySearchForAdjacentPoints
         while (right - left > 1)
         {
         int mid = (left + right) / 2;
-        if (points[mid].DistanceFromBottom<x)
+        if (points[mid].X<x)
             left = mid;
         else
             right = mid;
@@ -24,11 +24,11 @@ internal static class BinarySearchForAdjacentPoints
 
         return (points[left], points[right]);
     }
-    private static void ValidateX(IReadOnlyList<BendPoint> points, double x)
+    private static void ValidateX(OrderedList<Point2D> points, double x)
     {
-        if (points[0].DistanceFromBottom > x || points[^1].DistanceFromBottom < x)
+        if (points.First().X > x || points.Last().X < x)
             throw new ArgumentOutOfRangeException(
                 nameof(x),
-                $"X={x} is out of range [{points[0].DistanceFromBottom}, {points[^1].DistanceFromBottom}]");
+                $"X={x} is out of range [{points[0].X}, {points[^1].X}]");
     }
 }

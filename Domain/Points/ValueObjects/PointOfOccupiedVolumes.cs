@@ -6,15 +6,15 @@ namespace Core.Domain.Points.ValueObjects;
 
 internal class PointOfOccupiedVolumes : ValueObject
 {
-    public BendPoint BendPoint {  get; }
+    public Point2D BendPoint {  get; }
     public double Volume {  get; }
 
-    private PointOfOccupiedVolumes(BendPoint bendPoint, double volume)
+    private PointOfOccupiedVolumes(Point2D bendPoint, double volume)
     {
         BendPoint = bendPoint;
         Volume = volume;
     }
-    public static PointOfOccupiedVolumes Create(BendPoint bendPoint, double volume)
+    public static PointOfOccupiedVolumes Create(Point2D bendPoint, double volume)
     { 
         var instance = new PointOfOccupiedVolumes(bendPoint, volume);
         _validator.ValidateAndThrow(instance);

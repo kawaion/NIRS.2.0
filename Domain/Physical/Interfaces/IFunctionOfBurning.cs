@@ -17,4 +17,6 @@ internal interface IFunctionOfBurning
     /// σ(ψ, z) - Отношение текущей поверхности горения к первоначальной
     /// </summary>
     double Sigma(double psi, double z);
+
+    public double Psi(double z);
 }

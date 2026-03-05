@@ -87,6 +87,12 @@ internal class FunctionOfBurning_12_7 : ValueObject, IFunctionOfBurning
         return _u1 * p;
     }
 
+    public double Psi(double z)
+    {
+        return _kappa * (1 + _lamda * z + _mu * Math.Pow(z, 2));
+    }
+
+
     /// <summary>
     /// Проверка, находится ли точка в до-распадной фазе
     /// </summary>

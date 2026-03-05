@@ -2,8 +2,8 @@
 using Core.Domain.Grid.Interfaces;
 using Core.Domain.Limited_Double;
 using Core.Domain.Numerical_methods.SEL.Functions.Interfaces;
+using Core.Domain.Numerical_methods.SEL.Helper.Services;
 using Core.Domain.Numerical_methods.SEL.Interfaces;
-using Core.Domain.Numerical_methods.SEL.Services;
 using Core.Domain.Physical.Interfaces;
 using Core.Domain.Services;
 using static Core.Domain.Limited_Double.LimitedDouble;
@@ -58,17 +58,6 @@ internal class WaypointCalculator : IWaypointCalculator
         }
 
     }
-    private double AverageWithS(double mu, PN v, LimitedDouble n, LimitedDouble k)
-    {
-        // формула преобразуется в значение на n,k
-        double V = g[v, n, k];
-
-        if (V >= 0)
-            return V * _c.S(_x[k - ld0_5]);
-        else
-            return V * _c.S(_x[k + ld0_5]);
-    }
-    //
     private double Get_m(LimitedDouble n, LimitedDouble k, PN mu)
     {
         if (mu == PN.One_minus_m)

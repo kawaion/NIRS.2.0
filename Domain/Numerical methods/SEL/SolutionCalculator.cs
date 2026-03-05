@@ -1,0 +1,88 @@
+﻿using Core.Domain.Grid.Interfaces;
+using Core.Domain.Limited_Double;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Core.Domain.Numerical_methods.SEL.Services
+{
+    class SolutionCalculator
+    {
+        private readonly double _forsingPressure;
+        private readonly LimitedDouble _kChamber;
+        private readonly IGridBorderFiller _gridBorderFiller;
+        private readonly INumericalSolutionInNodes _numericalSolutionInNodes;
+        private readonly INumericalSolutionProjectile _numericalSolutionProjectile;
+        private readonly Visualizator _visualizator;
+        private readonly Progresser _progresser;
+        private bool isBeltIntact;
+        public SolutionCalculator(double forsingPressure,
+                                                     LimitedDouble kChamber,
+                                                     IGridBorderFiller gridBorderFiller,
+                                                     INumericalSolutionInNodes numericalSolutionInNodes,
+                                                     INumericalSolutionProjectile numericalSolutionProjectile,
+                                                     Visualizator visualizator)
+        {
+            isBeltIntact = true;
+
+            _forsingPressure = forsingPressure;
+            _kChamber = kChamber;
+            _gridBorderFiller = gridBorderFiller;
+            _numericalSolutionInNodes = numericalSolutionInNodes;
+            _numericalSolutionProjectile = numericalSolutionProjectile;
+            _visualizator = visualizator;
+        }
+        public IGrid Calculate(IGrid grid)
+        {
+            LimitedDouble n = new LimitedDouble(0);
+
+            while (isBeltIntact || n.IsHalf)
+            {
+                n += 0.5;
+
+                grid = _gridBorderFiller.FillBarrelBordersN(grid, n);
+                //grid = gridBorderFiller.FillBarrelBordersK(grid, n, KChamber);
+                grid = GetNumericalSolutionAtNodesNIfBeltIntact(grid, n);
+                //grid = gridBorderFiller.FillLastNodeOfMixture(grid, n);
+                grid = _gridBorderFiller.FillLastNodeOfMixture(grid, n);
+                grid = _numericalSolutionProjectile.GetProjectileParametersBeforeBeltIntact(grid, n);
+
+                _visualizator.VisualizationProgress(grid, n);
+
+                isBeltIntact = AttemptRipOffBelt(grid, n, isBeltIntact);
+            }
+            return grid;
+        }
+        private bool AttemptRipOffBelt(IGrid grid, LimitedDouble n, bool isBeltIntact)
+        {
+            if (isBeltIntact == true && n.IsInt())
+            {
+                var K = grid.LastIndexK(PN.p, n);
+                if (grid[PN.p, n, K] > _forsingPressure)
+                    return false;
+            }
+            return isBeltIntact;
+        }
+        private IGrid GetNumericalSolutionAtNodesNIfBeltIntact(IGrid grid, LimitedDouble n)
+        {
+            LimitedDouble k = FirstKGetter.Get05_or_1(n);
+            bool isKLimit = CheckLimit(k);
+            List<double> listp = new List<double>();
+            while (!isKLimit)
+            {
+                grid = _numericalSolutionInNodes.GetNodeNK(grid, n, k);
+                listp.Add(grid[PN.p, n, k]);
+                k += 1;
+                isKLimit = CheckLimit(k);
+
+            }
+            return grid;
+        }
+        private bool CheckLimit(LimitedDouble k)
+        {
+            return k > _kChamber - 0.5;//1;
+        }
+    }
+}

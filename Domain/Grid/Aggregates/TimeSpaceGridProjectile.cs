@@ -18,9 +18,6 @@ internal class TimeSpaceGridProjectile : Entity, IGridProjectile
 {
     static readonly int COUNT_PARAMS = Enum.GetValues(typeof(PNsn)).Length;
 
-    private const double MAXIMUM_NEGATIVE_N = -1;
-    private const double MAXIMUM_NEGATIVE_K = -1;
-
     private Dynamic2DArray _data;
     private Dynamic2DArray _dataX;
 

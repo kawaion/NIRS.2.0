@@ -47,7 +47,7 @@ internal class TableFunction : ValueObject, IInterpolator
     {
         ValidateXValue(x);
 
-        var (left, right) = BinarySearchForAdjacentPoints.Search(_points, x);
+        var (left, right) = BinarySearchForAdjacentBendPoints.Search(_points, x);
         return equations[(left, right)].Interpolate(x);
     }    
     private void ValidateXValue(double x)

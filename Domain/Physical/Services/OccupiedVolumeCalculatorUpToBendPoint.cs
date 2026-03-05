@@ -7,40 +7,40 @@ namespace Core.Domain.Physical.Services;
 
 internal class OccupiedVolumeCalculatorUpToBendPoint
 {
-    public static IReadOnlyList<PointOfOccupiedVolumes> Calculate(OrderedList<BendPoint> bendPoints)
+    public static IReadOnlyList<PointOfOccupiedVolumes> Calculate(OrderedList<Point2D> cannonContour)
     {
         List<PointOfOccupiedVolumes> volumes = new List<PointOfOccupiedVolumes>();
 
         double accumulatedVolume;
         accumulatedVolume = 0;
-        volumes = AddVolumeForZeroPoint(bendPoints, volumes, accumulatedVolume);
+        volumes = AddVolumeForZeroPoint(cannonContour, volumes, accumulatedVolume);
 
-        for (int i = 1; i < bendPoints.Count; i++)
+        for (int i = 1; i < cannonContour.Count; i++)
         {
-            var previousPoint = bendPoints[i - 1];
-            var currentPoint = bendPoints[i];
+            var previousPoint = cannonContour[i - 1];
+            var currentPoint = cannonContour[i];
 
             var volumeSegment = CalculateSegmentVolume(previousPoint, currentPoint);
             accumulatedVolume += volumeSegment;
-            var pointOfOccupiedVolumes = CreateVolumePoint(bendPoints[i], accumulatedVolume);
+            var pointOfOccupiedVolumes = CreateVolumePoint(cannonContour[i], accumulatedVolume);
             volumes.Add(pointOfOccupiedVolumes);
         }
 
         return volumes;
     }
 
-    private static List<PointOfOccupiedVolumes> AddVolumeForZeroPoint(OrderedList<BendPoint> bendPoints, List<PointOfOccupiedVolumes> volumes, double accumulatedVolume)
+    private static List<PointOfOccupiedVolumes> AddVolumeForZeroPoint(OrderedList<Point2D> cannonContour, List<PointOfOccupiedVolumes> volumes, double accumulatedVolume)
     {
-        var pointOfOccupiedVolumes = CreateVolumePoint(bendPoints.First(), accumulatedVolume);
+        var pointOfOccupiedVolumes = CreateVolumePoint(cannonContour.First(), accumulatedVolume);
         volumes.Add(pointOfOccupiedVolumes);
         return volumes;
     }
 
-    private static PointOfOccupiedVolumes CreateVolumePoint(BendPoint point, double volume)
+    private static PointOfOccupiedVolumes CreateVolumePoint(Point2D point, double volume)
     {
         return PointOfOccupiedVolumes.Create(point, volume);
     }
-    private static double CalculateSegmentVolume(BendPoint start, BendPoint end)
+    private static double CalculateSegmentVolume(Point2D start, Point2D end)
     {
         return SegmentVolumeCalculator.CalculateSegmentVolume(start, end);
     }

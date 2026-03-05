@@ -10,12 +10,12 @@ internal class CannonGeometry : ValueObject
     private СannonRadiusInterpolator _cannonRadiusInterpolator;
     private CannonVolumeInterpolator _cannonVolumeInterpolator;
 
-    private CannonGeometry(CannonContour cannonContour, IInterpolator interpolator)
+    private CannonGeometry(OrderedList<Point2D> cannonContour, IInterpolator interpolator)
     {
         _cannonRadiusInterpolator = СannonRadiusInterpolator.Create(interpolator);
         _cannonVolumeInterpolator = CannonVolumeInterpolator.Create(cannonContour, interpolator);
     }
-    public static CannonGeometry Create(CannonContour bendPoints, IInterpolator interpolator)
+    public static CannonGeometry Create(OrderedList<Point2D> bendPoints, IInterpolator interpolator)
     {
         var instance = new CannonGeometry(bendPoints, interpolator);
         return instance;

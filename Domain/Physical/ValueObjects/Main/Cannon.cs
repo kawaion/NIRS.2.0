@@ -1,6 +1,7 @@
 ﻿using Core.Domain.Common;
 using Core.Domain.interfaces;
 using Core.Domain.Physical.Interfaces;
+using Core.Domain.Points.ValueObjects;
 using FluentValidation;
 
 namespace Core.Domain.Physical.ValueObjects.Main;
@@ -8,23 +9,23 @@ namespace Core.Domain.Physical.ValueObjects.Main;
 internal sealed class Cannon : ValueObject, ICannon
 {
     private readonly CannonGeometry _cannonGeometry;
-    private readonly CannonContour _cannonContour;
+    private readonly OrderedList<Point2D> _cannonContour;
     public double ChamberLength { get; }
     public double Length { get; }
 
     public double Skn { get; }
     public double Wkm { get; }
 
-    private Cannon(CannonContour cannonContour, double ChamberLength, IInterpolator interpolator)
+    private Cannon(OrderedList<Point2D> cannonContour, double ChamberLength, IInterpolator interpolator)
     {
         _cannonContour = cannonContour;
         _cannonGeometry = CannonGeometry.Create(cannonContour, interpolator);
         this.ChamberLength = ChamberLength;        
-        Length = _cannonContour.Last().DistanceFromBottom;
+        Length = _cannonContour.Last().X;
         Skn = R(ChamberLength);
         Wkm = W(ChamberLength);
     }
-    public static Cannon Create(CannonContour cannonContour, double chamberLength, IInterpolator interpolator)
+    public static Cannon Create(OrderedList<Point2D> cannonContour, double chamberLength, IInterpolator interpolator)
     {
         ValidateInputParameters(cannonContour, chamberLength, interpolator);
 
@@ -56,7 +57,7 @@ internal sealed class Cannon : ValueObject, ICannon
         }
     }
     private static readonly Validator _validator = new Validator();
-    private static void ValidateInputParameters(CannonContour cannonContour, double endChamber, IInterpolator interpolator)
+    private static void ValidateInputParameters(OrderedList<Point2D> cannonContour, double endChamber, IInterpolator interpolator)
     {
         string ex = "";
         if (endChamber <= 0)
@@ -64,7 +65,7 @@ internal sealed class Cannon : ValueObject, ICannon
         for (var i = 0; i < cannonContour.Count; i++)
         {
             var point = cannonContour[i];
-            if (Math.Abs(point.Radius - interpolator.Interpolate(point.DistanceFromBottom)) < 0.000001)
+            if (Math.Abs(point.Y - interpolator.Interpolate(point.X)) < 0.000001)
             {
                 ex += "интерполятор не соответсвует точкам контура";
                 break;

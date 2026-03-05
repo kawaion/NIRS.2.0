@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Domain.Numerical_methods.SEL.Services;
+namespace Core.Domain.Numerical_methods.SEL.Helper.Services;
 
 static class OffseterNK
 {

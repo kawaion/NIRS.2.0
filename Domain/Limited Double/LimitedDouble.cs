@@ -28,6 +28,11 @@ internal sealed class LimitedDouble : ValueObject
     /// </summary>
     public static LimitedDouble ld1_5 { get; private set; } = new LimitedDouble(1.5);
 
+    /// <summary>
+    /// -0.5
+    /// </summary>
+    public static LimitedDouble minus_ld0_5 { get; private set; } = new LimitedDouble(-0.5);
+
     public LimitedDouble(double value) => _scaled = (int)Math.Round(value * 2);
     public LimitedDouble(int value) => _scaled = value * 2;
     private LimitedDouble(int scaled, bool _) => _scaled = scaled; 
@@ -66,6 +71,11 @@ internal sealed class LimitedDouble : ValueObject
         => a._scaled == b._scaled;
     public static bool operator !=(LimitedDouble a, LimitedDouble b)
         => a._scaled != b._scaled;
+
+    public static bool operator >=(LimitedDouble a, LimitedDouble b)
+        => (a > b) && (a == b);
+    public static bool operator <=(LimitedDouble a, LimitedDouble b)
+        => (a < b) && (a == b);
 
     public static implicit operator LimitedDouble(double value) => new(value);
     public static implicit operator LimitedDouble(int value) => new(value);

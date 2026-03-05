@@ -40,4 +40,9 @@ internal abstract class Gunpowder : Entity, IGunpowder
         if (psi > z && psi < 1)
             throw new ArgumentException("psi не может быть больше z");
     }
+
+    public double Psi(double z)
+    {
+        return FunctionOfBurning.Psi(z);
+    }
 }

@@ -9,4 +9,6 @@ namespace Core.Domain.Numerical_methods.SEL.Interfaces;
 internal interface IConstants
 {
     double lamda0 { get; }
+    double OmegaV { get; }
+    double DELTA { get; }
 }

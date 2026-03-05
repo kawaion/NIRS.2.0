@@ -12,17 +12,12 @@ namespace Core.Domain.Grid.ValueObjects;
 
 internal class GridMapper : ValueObject
 {
-    private LimitedDouble _maximumnNegativeN;
-    private LimitedDouble _maximumnNegativeK;
-
-    private GridMapper(double maximumnNegativeN, double maximumnNegativeK)
+    private GridMapper()
     {
-        _maximumnNegativeN = maximumnNegativeN;
-        _maximumnNegativeK = maximumnNegativeK;
     }
-    public static GridMapper Create(double maximumnNegativeN, double maximumnNegativeK)
+    public static GridMapper Create()
     {
-        var instance = new GridMapper(maximumnNegativeN, maximumnNegativeK);
+        var instance = new GridMapper();
 
         return instance;
     }
@@ -57,17 +52,17 @@ internal class GridMapper : ValueObject
     }
     private int ConvertToNIndex(LimitedDouble n)
     {
-        return (n - _maximumnNegativeN).GetInt();
+        return n.GetInt();
     }
 
     private int ConvertToKIndex(LimitedDouble k)
     {
-        return (k - _maximumnNegativeK).GetInt();
+        return k.GetInt();
     }
 
     private int ConvertToNIndexForUntype(LimitedDouble n)
     {
-        var res = (n - _maximumnNegativeN).GetInt() * 2;
+        var res = n.GetInt() * 2;
 
         if (ParameterTypeGetter.IsDynamic(n))
             res += 1;
@@ -77,7 +72,6 @@ internal class GridMapper : ValueObject
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        yield return _maximumnNegativeN;
-        yield return _maximumnNegativeK;
+        yield return true;
     }
 }

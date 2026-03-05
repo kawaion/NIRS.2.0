@@ -10,4 +10,5 @@ internal interface INumericalMethodSettings
 {
     double h { get; }
     double tau { get; }
+    int KSnInStart { get; }
 }

@@ -15,14 +15,9 @@ using System.Threading.Tasks;
 
 namespace Core.Domain.Grid.Aggregates;
 
-internal class TimeSpaceGrid : Entity
+internal class TimeSpaceGrid : Entity, IGrid
 {
-    static readonly int COUNT_PARAMS = Enum.GetValues(typeof(PN)).Length;    
-    
-    private const double MAXIMUM_NEGATIVE_N = -1;
-    private const double MAXIMUM_NEGATIVE_K = -1;
-
-    
+    static readonly int COUNT_PARAMS = Enum.GetValues(typeof(PN)).Length;         
 
     private Dynamic3DArray _data;
 
@@ -32,7 +27,7 @@ internal class TimeSpaceGrid : Entity
     public TimeSpaceGrid()
     {
         _data = Dynamic3DArray.CreateWithExponentialExpansion(COUNT_PARAMS);
-        _gridMapper = GridMapper.Create(MAXIMUM_NEGATIVE_N, MAXIMUM_NEGATIVE_K);
+        _gridMapper = GridMapper.Create();
         _lastIndexer = LastIndexer.Create(_gridMapper, COUNT_PARAMS);
         sn = new TimeSpaceGridProjectile(_gridMapper);
     }
@@ -95,7 +90,7 @@ internal class TimeSpaceGrid : Entity
     }
 
 
-    public TimeSpaceGridProjectile sn {  get; set; }
+    public IGridProjectile sn {  get; }
 
 
     private void Validation(PN pn, LimitedDouble n, LimitedDouble k)
